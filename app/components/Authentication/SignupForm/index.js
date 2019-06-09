@@ -1,5 +1,5 @@
 import React from 'react';
-import {TiChevronRight} from 'react-icons/ti';
+import { TiChevronRight } from 'react-icons/ti';
 import { Link } from 'react-router-dom';
 import { FaGoogle, FaFacebookF } from 'react-icons/fa';
 import HR from '../../Layout/HR';

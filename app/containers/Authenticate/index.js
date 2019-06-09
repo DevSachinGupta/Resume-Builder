@@ -8,11 +8,10 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import LoginFrom from 'components/Authentication/LoginForm';
-import RegistrationFrom from 'components/Authentication/SignUpForm';
+// import LoginFrom from 'components/Authentication/LoginForm';
+import RegistrationFrom from 'components/Authentication/SignupForm';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Form } from 'antd';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import makeSelectAuthenticate from './selectors';
@@ -43,7 +42,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    //  dispatch,
   };
 }
 
