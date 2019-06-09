@@ -1,7 +1,7 @@
 .loginFormContainer {
   position: absolute;
   font-family: Montserrat;
-  bottom: 20%;
+  bottom: 10%;
   right: 10%;
   .header {
     color: white;
@@ -23,15 +23,16 @@
         font-weight: 600;
         display: flex;
         justify-content: space-between;
-        padding: 5px 0px 7  px 0px;
+        padding: 5px 0px 7px 0px;
       }
       input {
         display: block;
         margin-bottom: 10px;
         font-family: Montserrat;
         letter-spacing: 0.5px;
+        border-radius: 4px;
         width: 100%;
-        padding: 10px 8px;
+        padding: 10px 10px;
         background-color: #718096;
         color: white;
         &:focus {
@@ -39,8 +40,30 @@
         }
       }
     }
+    button {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .social-login {
+    button {
+      display: inline-block;
+      font-size: 18px;
+    }
+    .google-login {
+      padding: 8px;
+      background: #ffffff;
+      border-radius: 20rem;
+    }
+    .facebook-login {
+      padding: 8px;
+      background: #ffffff;
+      border-radius: 20rem;
+    }
   }
   .footer {
     font-family: Montserrat;
+    a {
+    }
   }
 }

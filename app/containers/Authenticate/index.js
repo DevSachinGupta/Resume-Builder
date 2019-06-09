@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import LoginFrom from 'components/Authentication/LoginForm';
+import RegistrationFrom from 'components/Authentication/SignUpForm';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Form } from 'antd';
@@ -27,7 +28,7 @@ export function Authenticate() {
         <title>Authenticate</title>
         <meta name="description" content="Description of Authenticate" />
       </Helmet>
-      <LoginFrom />
+      <RegistrationFrom />
     </div>
   );
 }
