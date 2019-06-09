@@ -7,14 +7,23 @@ import './style.css';
 class RegistrationFrom extends React.Component {
   render() {
     return (
-      <div className="registrationFormContainer px-10 py-8 bg-gray-800 rounded shadow-2xl w-1/4">
+      <div className="registrationFormContainer px-10 py-8 bg-gray-800 rounded shadow-2xl w-1/3">
         <div className="header">
-          <div className="title text-4xl">Create Account</div>
+          <div className="title text-4xl capitalize">Create Account</div>
           <div className="sub-title text-sm text-gray-600">
-            Sign in to your account to Continue
+            Create your free account to get your online resume.
           </div>
         </div>
         <form className="registrationForm">
+          <div className="input-group">
+            <label>Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="John Doe"
+              className="text-sm"
+            />
+          </div>
           <div className="input-group">
             <label>Email address</label>
             <input
@@ -27,12 +36,22 @@ class RegistrationFrom extends React.Component {
           <div className="input-group">
             <label>
               <span>Password</span>
-              <span>Lost Password</span>
             </label>
             <input
               type="password"
               name="password"
               placeholder="Password"
+              className="text-sm"
+            />
+          </div>
+          <div className="input-group">
+            <label>
+              <span>Confirm Password</span>
+            </label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Confirm Password"
               className="text-sm"
             />
           </div>
@@ -44,7 +63,7 @@ class RegistrationFrom extends React.Component {
             />
           </button>
         </form>
-        <HR content="Or Continue with" />
+        <HR content="Create Account with" />
         <div className="social-login">
           <button className="google-login mr-2">
             <FaGoogle />
@@ -55,8 +74,8 @@ class RegistrationFrom extends React.Component {
         </div>
         <div className="footer mt-16">
           <div className="text-xs text-gray-600">
-            Not Registered?{' '}
-            <Link className="hover:text-gray-700">Create account</Link>
+            Already Registered?{' '}
+            <Link to="login" className="hover:text-gray-700">Login instead</Link>
           </div>
         </div>
       </div>

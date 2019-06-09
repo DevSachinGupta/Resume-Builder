@@ -7,7 +7,7 @@ import './style.css';
 class LoginForm extends React.Component {
   render() {
     return (
-      <div className="loginFormContainer px-10 py-8 bg-gray-800 rounded shadow-2xl w-1/4">
+      <div className="loginFormContainer px-10 py-8 bg-gray-800 rounded shadow-2xl w-1/3">
         <div className="header">
           <div className="title text-4xl">Login</div>
           <div className="sub-title text-sm text-gray-600">
@@ -56,7 +56,7 @@ class LoginForm extends React.Component {
         <div className="footer mt-16">
           <div className="text-xs text-gray-600">
             Not Registered?{' '}
-            <Link className="hover:text-gray-700">Create account</Link>
+            <Link to="/signup" className="hover:text-gray-700">Create account</Link>
           </div>
         </div>
       </div>

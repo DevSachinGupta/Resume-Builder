@@ -1,70 +1,70 @@
 .registrationFormContainer {
-    position: absolute;
-    font-family: Montserrat;
-    bottom: 10%;
-    right: 10%;
-    .header {
-      color: white;
-      .title {
-        font-weight: 500;
-      }
-      .subtitle {
-        font-weight: 400;
-      }
+  position: absolute;
+  font-family: Montserrat;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 5%;
+  .header {
+    color: white;
+    .title {
+      font-weight: 500;
     }
-    .registrationForm {
-      padding-top: 48px;
-      .input-group {
-        label {
-          font-family: Montserrat;
-          color: #4a5568;
-          letter-spacing: 0.2px;
-          font-size: 12px;
-          font-weight: 600;
-          display: flex;
-          justify-content: space-between;
-          padding: 5px 0px 7px 0px;
-        }
-        input {
-          display: block;
-          margin-bottom: 10px;
-          font-family: Montserrat;
-          letter-spacing: 0.5px;
-          border-radius: 4px;
-          width: 100%;
-          padding: 10px 10px;
-          background-color: #718096;
-          color: white;
-          &:focus {
-            outline: none;
-          }
-        }
-      }
-      button {
-        display: flex;
-        align-items: center;
-      }
-    }
-    .social-login {
-      button {
-        display: inline-block;
-        font-size: 18px;
-      }
-      .google-login {
-        padding: 8px;
-        background: #ffffff;
-        border-radius: 20rem;
-      }
-      .facebook-login {
-        padding: 8px;
-        background: #ffffff;
-        border-radius: 20rem;
-      }
-    }
-    .footer {
-      font-family: Montserrat;
-      a {
-      }
+    .subtitle {
+      font-weight: 400;
     }
   }
-  
+  .registrationForm {
+    padding-top: 48px;
+    .input-group {
+      label {
+        font-family: Montserrat;
+        color: #4a5568;
+        letter-spacing: 0.2px;
+        font-size: 12px;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0px 7px 0px;
+      }
+      input {
+        display: block;
+        margin-bottom: 10px;
+        font-family: Montserrat;
+        letter-spacing: 0.5px;
+        border-radius: 4px;
+        width: 100%;
+        padding: 10px 10px;
+        background-color: #718096;
+        color: white;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+    button {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .social-login {
+    button {
+      display: inline-block;
+      font-size: 18px;
+    }
+    .google-login {
+      padding: 8px;
+      background: #ffffff;
+      border-radius: 20rem;
+    }
+    .facebook-login {
+      padding: 8px;
+      background: #ffffff;
+      border-radius: 20rem;
+    }
+  }
+  .footer {
+    font-family: Montserrat;
+    a {
+    }
+  }
+}

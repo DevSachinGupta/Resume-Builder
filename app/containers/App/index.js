@@ -41,6 +41,15 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={Authenticate} />
         <Route path="/features" component={FeaturePage} />
+        <Route
+          path="/login"
+          render={routeProps => <Authenticate {...routeProps} method="login" />}
+        />
+        <Route
+          path="/signup"
+          render={routeProps => <Authenticate {...routeProps} method="signup" />}
+        />
+        <Route path="/signup" component={Authenticate} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       {/* <Footer /> */}
