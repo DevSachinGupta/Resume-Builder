@@ -17,7 +17,6 @@ import { useInjectReducer } from 'utils/injectReducer';
 import makeSelectAuthenticate from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-
 export function Authenticate() {
   useInjectReducer({ key: 'authenticate', reducer });
   useInjectSaga({ key: 'authenticate', saga });

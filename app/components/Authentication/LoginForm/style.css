@@ -1,0 +1,46 @@
+.loginFormContainer {
+  position: absolute;
+  font-family: Montserrat;
+  bottom: 20%;
+  right: 10%;
+  .header {
+    color: white;
+    .title {
+      font-weight: 500;
+    }
+    .subtitle {
+      font-weight: 400;
+    }
+  }
+  .loginForm {
+    padding-top: 48px;
+    .input-group {
+      label {
+        font-family: Montserrat;
+        color: #4a5568;
+        letter-spacing: 0.2px;
+        font-size: 12px;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0px 7  px 0px;
+      }
+      input {
+        display: block;
+        margin-bottom: 10px;
+        font-family: Montserrat;
+        letter-spacing: 0.5px;
+        width: 100%;
+        padding: 10px 8px;
+        background-color: #718096;
+        color: white;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+  .footer {
+    font-family: Montserrat;
+  }
+}
