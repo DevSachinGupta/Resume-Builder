@@ -15,6 +15,7 @@ import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Authenticate from 'containers/Authenticate/Loadable';
+import Builder from 'containers/Builder/Loadable';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 
@@ -45,9 +46,12 @@ export default function App() {
           path="/login"
           render={routeProps => <Authenticate {...routeProps} method="login" />}
         />
+        <Route path="/builder" component={Builder} />
         <Route
           path="/signup"
-          render={routeProps => <Authenticate {...routeProps} method="signup" />}
+          render={routeProps => (
+            <Authenticate {...routeProps} method="signup" />
+          )}
         />
         <Route path="/signup" component={Authenticate} />
         <Route path="" component={NotFoundPage} />

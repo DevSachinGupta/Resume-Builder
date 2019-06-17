@@ -73,6 +73,7 @@
     "express": "4.16.4",
     "final-form": "^4.13.0",
     "fontfaceobserver": "2.1.0",
+    "grapesjs": "^0.14.62",
     "history": "4.9.0",
     "hoist-non-react-statics": "3.3.0",
     "immer": "3.0.0",
