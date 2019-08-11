@@ -1,0 +1,7 @@
+.builder-sidebar-container {
+  max-width: 20vw;
+  height: calc(100vh - 4rem);
+  float: left;
+  width: 30vw;
+  border-right: 1px solid #cbd5e0;
+}

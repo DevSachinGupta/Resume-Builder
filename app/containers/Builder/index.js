@@ -16,29 +16,22 @@ import { useInjectReducer } from 'utils/injectReducer';
 import makeSelectBuilder from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
+import BuilderSidebar from 'components/Builder/BuilderSidebar';
+import BuilderHeader from 'components/Builder/BuilderHeader';
+import BuilderEditor from 'components/Builder/BuilderEditor';
 import 'grapesjs/dist/css/grapes.min.css';
-import grapesjs from 'grapesjs';
 
 export function Builder() {
   useInjectReducer({ key: 'builder', reducer });
   useInjectSaga({ key: 'builder', saga });
-  let editor = null;
-  useEffect(() => {
-    if (!editor) {
-      editor = grapesjs.init({
-        container: '#gjs',
-        fromElement: true,
-        width: 'auto',
-        storageManager: { type: null },
-        // Avoid any default panel
-        panels: { defaults: [] },
-      });
-    }
-  });
   return (
-    <div id="gjs">
-      <h1>Hello World Component!</h1>
+    <div className="builder-container">
+      {/* <div className="builder-header">
+        <BuilderHeader />
+      </div> */}
+      <div className="builder-workspace">
+        <BuilderEditor />
+      </div>
     </div>
   );
 }
