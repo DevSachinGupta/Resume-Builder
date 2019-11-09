@@ -4,41 +4,33 @@
  *
  */
 
-import React, { useEffect, memo } from 'react';
-import PropTypes from 'prop-types';
+import React, { memo } from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
+import BuilderLayout from 'components/Builder/BuilderLayout';
+import BuilderEditor from 'components/Builder/BuilderEditor';
 import makeSelectBuilder from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import BuilderSidebar from 'components/Builder/BuilderSidebar';
-import BuilderHeader from 'components/Builder/BuilderHeader';
-import BuilderEditor from 'components/Builder/BuilderEditor';
 import 'grapesjs/dist/css/grapes.min.css';
 
 export function Builder() {
   useInjectReducer({ key: 'builder', reducer });
   useInjectSaga({ key: 'builder', saga });
   return (
-    <div className="builder-container">
-      {/* <div className="builder-header">
-        <BuilderHeader />
-      </div> */}
+    <BuilderLayout>
       <div className="builder-workspace">
         <BuilderEditor />
       </div>
-    </div>
+    </BuilderLayout>
   );
 }
 
-Builder.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
+Builder.propTypes = {};
 
 const mapStateToProps = createStructuredSelector({
   builder: makeSelectBuilder(),

@@ -7,9 +7,8 @@
 import React, { memo, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
-import style from './style.css';
-import Sidebar from '../BuilderSidebar/Loadable';
 import grapesjs from 'grapesjs';
+// import style from './style.css';
 function BuilderEditor() {
   let editor = null;
   useEffect(() => {
@@ -74,20 +73,15 @@ function BuilderEditor() {
         ],
       });
       editor.Commands.add('set-device-desktop', {
-        run: editor => editor.setDevice('Desktop'),
+        run: ed => ed.setDevice('Desktop'),
       });
       editor.Commands.add('set-device-mobile', {
-        run: editor => editor.setDevice('Mobile'),
+        run: ed => ed.setDevice('Mobile'),
       });
     }
   }, []);
   return (
     <div>
-      <Sidebar />
-      <div class="panel__top">
-        <div class="panel__basic-actions" />
-        <div class="panel__devices" />
-      </div>
       <div id="gjs" className="editor-container">
         <h1>Hello World Component!</h1>
       </div>

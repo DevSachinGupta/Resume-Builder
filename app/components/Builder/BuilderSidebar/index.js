@@ -5,7 +5,6 @@
  */
 
 import React, { memo } from 'react';
-import PropTypes from 'prop-types';
 import './style.css';
 import SidebarItem from '../../Sidebar/SidebarItem';
 import SidebarItems from './sidebarItems.json';
