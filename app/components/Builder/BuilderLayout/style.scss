@@ -1,3 +1,19 @@
 .builderLayout {
   height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  .headerContainer {
+  }
+  .appContainer {
+    display: flex;
+    .sidebarContainer {
+      display: flex;
+      min-width: 18%;
+    }
+    .editorContainer {
+      display: flex;
+      max-width: 82%;
+    }
+  }
 }

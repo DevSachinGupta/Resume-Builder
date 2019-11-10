@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './style.css';
+import './style.scss';
 
 function SidebarItem(props) {
-  return <div className="">{props.title}</div>;
+  return <div className="sidebarItem">{props.title}</div>;
 }
+SidebarItem.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 export default SidebarItem;

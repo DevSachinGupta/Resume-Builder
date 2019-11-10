@@ -15,16 +15,18 @@ import BuilderSidebar from 'components/Builder/BuilderSidebar';
 import BuilderHeader from 'components/Builder/BuilderHeader';
 import { makeSelectIsSidebarOpen } from 'containers/Builder/selectors';
 import './style.scss';
-function BuilderLayout({ isSidebarOpen }) {
+function BuilderLayout({ isSidebarOpen, ...rest }) {
   return (
     <div className={cx('builderLayout')}>
-      <div className={cx('sidebarContainer')}>
-        {isSidebarOpen && <BuilderSidebar />}
+      <BuilderHeader />
+      <div className={cx('appContainer')}>
+        {isSidebarOpen && (
+          <div className={cx('sidebarContainer')}>
+            <BuilderSidebar />
+          </div>
+        )}
+        <div className={cx('editorContainer')}>{rest.children}</div>
       </div>
-      <div className="">
-        <BuilderHeader />
-      </div>
-      {/* <div>{props.children}</div> */}
     </div>
   );
 }
@@ -33,7 +35,7 @@ const mapStateToProps = createStructuredSelector({
   isSidebarOpen: makeSelectIsSidebarOpen(),
 });
 BuilderLayout.propTypes = {
-  // children: PropTypes.object,
+  children: PropTypes.node,
   isSidebarOpen: PropTypes.bool.isRequired,
 };
 const withConnect = connect(

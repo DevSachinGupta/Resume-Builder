@@ -16,7 +16,6 @@ import BuilderEditor from 'components/Builder/BuilderEditor';
 import makeSelectBuilder from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import 'grapesjs/dist/css/grapes.min.css';
 
 export function Builder() {
   useInjectReducer({ key: 'builder', reducer });

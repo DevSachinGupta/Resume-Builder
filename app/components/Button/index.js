@@ -8,35 +8,33 @@
 
 import React, { Children } from 'react';
 import PropTypes from 'prop-types';
-
-import A from './A';
-import StyledButton from './StyledButton';
+import cx from 'classnames';
 import Wrapper from './Wrapper';
+import './style.scss';
 
-function Button(props) {
-  // Render an anchor tag
-  let button = (
-    <A href={props.href} onClick={props.onClick}>
-      {Children.toArray(props.children)}
-    </A>
+function Button({ className, circular, ...rest }) {
+  return (
+    <Wrapper>
+      {
+        <button
+          type="button"
+          className={cx(``, className, { circularButton: circular })}
+          {...rest}
+        >
+          {Children.toArray(rest.children)}
+        </button>
+      }
+    </Wrapper>
   );
-
-  // If the Button has a handleRoute prop, we want to render a button
-  if (props.handleRoute) {
-    button = (
-      <StyledButton onClick={props.handleRoute}>
-        {Children.toArray(props.children)}
-      </StyledButton>
-    );
-  }
-
-  return <Wrapper>{button}</Wrapper>;
 }
 
 Button.propTypes = {
   handleRoute: PropTypes.func,
-  href: PropTypes.string,
+  iconButton: PropTypes.bool,
+  icon: PropTypes.node,
+  className: PropTypes.string,
   onClick: PropTypes.func,
+  circular: PropTypes.bool,
   children: PropTypes.node.isRequired,
 };
 

@@ -12,7 +12,7 @@ import SidebarItems from './sidebarItems.json';
 
 function BuilderSidebar() {
   return (
-    <div className="builder-sidebar-container my-16">
+    <div className="builder-sidebar-container">
       {SidebarItems.map(item => (
         <SidebarItem title={item.title} />
       ))}

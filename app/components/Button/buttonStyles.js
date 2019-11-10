@@ -22,5 +22,4 @@ const buttonStyles = css`
     color: #fff;
   }
 `;
-
 export default buttonStyles;
