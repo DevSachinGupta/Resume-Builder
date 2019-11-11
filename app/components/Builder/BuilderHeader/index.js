@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import cx from 'classnames';
 import { GoThreeBars } from 'react-icons/go';
 import Button from '../../Button';
 import { toggleSidebar } from '../../../containers/Builder/actions';
@@ -20,11 +21,13 @@ function BuilderHeader({ dispatch }) {
         handleRoute
         iconButton
         circular
-        type="button"
         onClick={() => dispatch(toggleSidebar())}
       >
         <GoThreeBars />
       </Button>
+      <div className={cx('actionContainer')}>
+        <Button>Publish</Button>
+      </div>
     </div>
   );
 }

@@ -2,8 +2,19 @@
 .circularButton {
   padding: 8px;
   border-radius: 20em;
-  transition: 0.5ms;  
+  transition: 0.5ms;
   &:hover {
     background: rgba(0, 0, 0, 0.1);
+  }
+}
+.primary {
+  
+}
+.defaultButton {
+  padding: 4px 8px;
+  border-radius: 4px;
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+    transition: 200ms ease-in;
   }
 }

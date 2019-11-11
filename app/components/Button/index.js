@@ -10,15 +10,19 @@ import React, { Children } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Wrapper from './Wrapper';
+import { ButtonTypes } from './constants';
 import './style.scss';
 
-function Button({ className, circular, ...rest }) {
+function Button({ className, circular, type, ...rest }) {
   return (
     <Wrapper>
       {
         <button
           type="button"
-          className={cx(``, className, { circularButton: circular })}
+          className={cx(`defaultButton`, className, {
+            circularButton: circular,
+            primary: type === ButtonTypes.PRIMARY,
+          })}
           {...rest}
         >
           {Children.toArray(rest.children)}
@@ -35,6 +39,7 @@ Button.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
   circular: PropTypes.bool,
+  type: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 

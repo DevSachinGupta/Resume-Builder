@@ -11,7 +11,7 @@ import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
 import './style.scss';
 const DemoPage = {
-  html: `<button>I am button 1</button><button>I am button 2</button>`,
+  html: `<h1>HELLO WORLD</h1>`,
   css: null,
   components: null,
   style: null,
