@@ -10,15 +10,23 @@ import React, { memo, useEffect } from 'react';
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
 import './style.scss';
-
+const DemoPage = {
+  html: `<button>I am button 1</button><button>I am button 2</button>`,
+  css: null,
+  components: null,
+  style: null,
+};
 function BuilderEditor() {
   useEffect(() => {
     grapesjs.init({
       container: '#gjs',
-      fromElement: true,
       width: '82vw',
       height: 'calc(100vh - 64px)',
-      storageManager: { type: null },
+      components: DemoPage.components || DemoPage.html,
+      style: DemoPage.style || DemoPage.css,
+      storageManager: {
+        autoload: false,
+      },
       panels: {
         defaults: [],
       },
@@ -26,9 +34,7 @@ function BuilderEditor() {
   }, []);
   return (
     <div>
-      <div id="gjs" className="editor-container">
-        <h1>Hello World Component!</h1>
-      </div>
+      <div id="gjs" className="editor-container" />
     </div>
   );
 }
