@@ -11,13 +11,11 @@ import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
-import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Authenticate from 'containers/Authenticate/Loadable';
 import Builder from 'containers/Builder/Loadable';
-import Header from 'components/Header';
-import Footer from 'components/Footer';
+import Modal from 'components/Modal';
 
 import GlobalStyle from '../../global-styles';
 import '../../main.css';
@@ -37,7 +35,6 @@ export default function App() {
       >
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
-      {/* <Header /> */}
       <Switch>
         <Route exact path="/" component={Authenticate} />
         <Route path="/features" component={FeaturePage} />
@@ -55,6 +52,9 @@ export default function App() {
         <Route path="/signup" component={Authenticate} />
         <Route path="" component={NotFoundPage} />
       </Switch>
+      <Modal>
+        <div>HELLO WORLD</div>
+      </Modal>
       {/* <Footer /> */}
       <GlobalStyle />
     </AppWrapper>

@@ -1,0 +1,36 @@
+.modalWrapper {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(42, 67, 101, 0.3);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .modalContainer {
+    background: #ffffff;
+    max-height: 80vh;
+    max-width: 80vw;
+    padding: 16px 32px 32px 32px ;
+    .modalHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 32px;
+      .modalHeading {
+        font-size: 24px;
+      }
+      .actionContainer {
+        .closeButton {
+          padding: 8px;
+          cursor: pointer;
+          border-radius: 20em;
+          &:hover {
+            background: rgba(00, 00, 00, 0.04);
+            transition: 200ms ease-in;
+          }
+        }
+      }
+    }
+  }
+}
