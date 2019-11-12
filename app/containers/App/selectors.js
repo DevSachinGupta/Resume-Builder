@@ -2,6 +2,7 @@
  * The global state selectors
  */
 
+import get from 'lodash/get';
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
@@ -38,7 +39,11 @@ const makeSelectLocation = () =>
     selectRouter,
     routerState => routerState.location,
   );
-
+const makeSelectModalState = () =>
+  createSelector(
+    selectGlobal,
+    globalState => get(globalState, 'modalState.isOpen', false),
+  );
 export {
   selectGlobal,
   makeSelectCurrentUser,
@@ -46,4 +51,5 @@ export {
   makeSelectError,
   makeSelectRepos,
   makeSelectLocation,
+  makeSelectModalState,
 };

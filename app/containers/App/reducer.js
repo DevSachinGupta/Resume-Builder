@@ -8,13 +8,21 @@
  */
 
 import produce from 'immer';
-import { LOAD_REPOS_SUCCESS, LOAD_REPOS, LOAD_REPOS_ERROR } from './constants';
+import {
+  LOAD_REPOS_SUCCESS,
+  LOAD_REPOS,
+  LOAD_REPOS_ERROR,
+  TOGGLE_MODAL,
+} from './constants';
 
 // The initial state of the App
 export const initialState = {
   loading: false,
   error: false,
   currentUser: false,
+  modalState: {
+    isOpen: false,
+  },
   userData: {
     repositories: false,
   },
@@ -35,7 +43,9 @@ const appReducer = (state = initialState, action) =>
         draft.loading = false;
         draft.currentUser = action.username;
         break;
-
+      case TOGGLE_MODAL:
+        draft.modalState.isOpen = !state.modalState.isOpen;
+        break;
       case LOAD_REPOS_ERROR:
         draft.error = action.error;
         draft.loading = false;
