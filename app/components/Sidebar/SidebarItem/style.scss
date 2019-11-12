@@ -1,4 +1,8 @@
 .sidebarItem {
-  width: 100%;
   padding: 20px 40px;
+  cursor: pointer;
+  &:hover {
+    background: rgba(00, 00, 00, 0.04);
+    transition: 100ms ease-in;
+  }
 }

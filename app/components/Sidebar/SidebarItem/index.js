@@ -2,8 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './style.scss';
 
-function SidebarItem(props) {
-  return <div className="sidebarItem">{props.title}</div>;
+function SidebarItem({ title, ...rest }) {
+  return (
+    <div className="sidebarItem" {...rest}>
+      {title}
+    </div>
+  );
 }
 SidebarItem.propTypes = {
   title: PropTypes.string.isRequired,

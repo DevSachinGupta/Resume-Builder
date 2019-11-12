@@ -25,5 +25,14 @@ const makeSelectIsSidebarOpen = () =>
     selectBuilderDomain,
     substate => substate.isSidebarOpen,
   );
+const makeSelectIsSecondarySidebarOpen = () =>
+  createSelector(
+    selectBuilderDomain,
+    substate => substate.isSecondarySidebarOpen,
+  );
 export default makeSelectBuilder;
-export { selectBuilderDomain, makeSelectIsSidebarOpen };
+export {
+  selectBuilderDomain,
+  makeSelectIsSidebarOpen,
+  makeSelectIsSecondarySidebarOpen,
+};
