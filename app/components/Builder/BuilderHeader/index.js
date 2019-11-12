@@ -6,15 +6,19 @@
 
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import cx from 'classnames';
+import { createStructuredSelector } from 'reselect';
 import { GoThreeBars } from 'react-icons/go';
+import { FaUserCircle } from 'react-icons/fa';
+import { toggleHeaderUserMenu } from 'containers/App/actions';
+import { makeSelectIsUserMenuOpen } from 'containers/App/selectors';
 import Button from '../../Button';
 import { toggleSidebar } from '../../../containers/Builder/actions';
-import './style.css';
-function BuilderHeader({ dispatch }) {
+import './style.scss';
+
+function BuilderHeader({ dispatch, isHeaderMenuOpen }) {
   return (
     <div className="header-container flex bg-white border-b border-gray-200 inset-x-0 z-100 h-16 items-center">
       <Button
@@ -26,7 +30,28 @@ function BuilderHeader({ dispatch }) {
         <GoThreeBars />
       </Button>
       <div className={cx('actionContainer')}>
-        <Button>Publish</Button>
+        <div className={cx('publishButton')}>
+          <Button>Publish</Button>
+        </div>
+        <div className={cx('navAccountPill')}>
+          <FaUserCircle
+            onClick={() => dispatch(toggleHeaderUserMenu())}
+            size={24}
+          />
+          <div
+            className={cx('accountMenu', 'bg-white', 'rounded', 'shadow', {
+              hideMenu: isHeaderMenuOpen,
+            })}
+          >
+            <ul>
+              <li>MENU 1</li>
+              <li>MENU 2</li>
+              <li>MENU 3</li>
+              <li>MENU 4</li>
+              <li>MENU 5</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -34,9 +59,12 @@ function BuilderHeader({ dispatch }) {
 
 BuilderHeader.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  isHeaderMenuOpen: PropTypes.bool.isRequired,
 };
 const withConnect = connect(
-  null,
+  createStructuredSelector({
+    isHeaderMenuOpen: makeSelectIsUserMenuOpen(),
+  }),
   null,
 );
 export default compose(

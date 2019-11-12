@@ -44,6 +44,11 @@ const makeSelectIsModalOpen = () =>
     selectGlobal,
     globalState => get(globalState, 'modalState.isOpen', false),
   );
+const makeSelectIsUserMenuOpen = () =>
+  createSelector(
+    selectGlobal,
+    globalState => get(globalState, 'headerState.isUserPillOpen', false),
+  );
 export {
   selectGlobal,
   makeSelectCurrentUser,
@@ -52,4 +57,5 @@ export {
   makeSelectRepos,
   makeSelectLocation,
   makeSelectIsModalOpen,
+  makeSelectIsUserMenuOpen,
 };

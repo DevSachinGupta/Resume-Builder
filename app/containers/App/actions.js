@@ -20,6 +20,7 @@ import {
   LOAD_REPOS_SUCCESS,
   LOAD_REPOS_ERROR,
   TOGGLE_MODAL,
+  TOGGLE_HEADER_USER_PILL,
 } from './constants';
 
 /**
@@ -68,5 +69,13 @@ export function repoLoadingError(error) {
 export function toggleModal() {
   return {
     type: TOGGLE_MODAL,
+  };
+}
+/**
+ * Dispatches when Header user Menu is Toggled
+ */
+export function toggleHeaderUserMenu() {
+  return {
+    type: TOGGLE_HEADER_USER_PILL,
   };
 }

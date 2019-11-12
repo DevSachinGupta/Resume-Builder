@@ -13,6 +13,7 @@ import {
   LOAD_REPOS,
   LOAD_REPOS_ERROR,
   TOGGLE_MODAL,
+  TOGGLE_HEADER_USER_PILL,
 } from './constants';
 
 // The initial state of the App
@@ -22,6 +23,9 @@ export const initialState = {
   currentUser: false,
   modalState: {
     isOpen: false,
+  },
+  headerState: {
+    isUserPillOpen: false,
   },
   userData: {
     repositories: false,
@@ -45,6 +49,9 @@ const appReducer = (state = initialState, action) =>
         break;
       case TOGGLE_MODAL:
         draft.modalState.isOpen = !state.modalState.isOpen;
+        break;
+      case TOGGLE_HEADER_USER_PILL:
+        draft.headerState.isUserPillOpen = !state.headerState.isUserPillOpen;
         break;
       case LOAD_REPOS_ERROR:
         draft.error = action.error;

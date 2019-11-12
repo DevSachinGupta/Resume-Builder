@@ -12,16 +12,44 @@ const primarySidebar = [
 ];
 const secondarySidebar = [
   {
-    title: 'Educations Details',
-    id: 'education',
-  },
-  {
     title: 'Personal Details',
     id: 'personalDetails',
   },
   {
-    title: 'Professional Details',
-    id: 'professionalDetails',
+    title: 'Educations Details',
+    id: 'education',
+  },
+  {
+    title: 'Employment Details',
+    id: 'employmentDetails',
+  },
+  {
+    title: 'Projects',
+    id: 'projects',
+  },
+  {
+    title: 'Skills',
+    id: 'skills',
+  },
+  {
+    title: 'Certificates/Affiliations',
+    id: 'affilication',
+  },
+  {
+    title: 'Social',
+    id: 'social',
+  },
+  {
+    title: 'Hobbies',
+    id: 'hobbies',
+  },
+  {
+    title: 'Publication & Research',
+    id: 'publication',
+  },
+  {
+    title: 'Accomplishments',
+    id: 'accomplishments',
   },
 ];
 module.exports = { primarySidebar, secondarySidebar };

@@ -19,7 +19,7 @@ function Button({ className, circular, type, ...rest }) {
       {
         <button
           type="button"
-          className={cx(`defaultButton`, className, {
+          className={cx(className, {
             circularButton: circular,
             primary: type === ButtonTypes.PRIMARY,
           })}
