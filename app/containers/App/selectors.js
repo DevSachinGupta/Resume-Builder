@@ -39,7 +39,7 @@ const makeSelectLocation = () =>
     selectRouter,
     routerState => routerState.location,
   );
-const makeSelectModalState = () =>
+const makeSelectIsModalOpen = () =>
   createSelector(
     selectGlobal,
     globalState => get(globalState, 'modalState.isOpen', false),
@@ -51,5 +51,5 @@ export {
   makeSelectError,
   makeSelectRepos,
   makeSelectLocation,
-  makeSelectModalState,
+  makeSelectIsModalOpen,
 };

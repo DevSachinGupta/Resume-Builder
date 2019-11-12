@@ -10,29 +10,34 @@ import PropTypes from 'prop-types';
 import { FaTimes } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { makeSelectIsModalOpen } from 'containers/App/selectors';
 import { toggleModal } from 'containers/App/actions';
 import './style.scss';
 
 function Modal(props) {
+  const { isModalOpen } = props;
   return (
-    <div className={cx('modalWrapper')}>
-      <div className={cx('modalContainer', 'shadow-lg', 'rounded')}>
-        <div className={cx('modalHeader')}>
-          {props.heading && (
-            <div className={cx('modalHeading')}>props.heading</div>
-          )}
-          <div className={cx('actionContainer')}>
-            {props.actions && props.actions.map(action => action)}
-            {props.closable && (
-              <div className={cx('closeButton')}>
-                <FaTimes onClick={() => props.dispatch(toggleModal())} />
-              </div>
-            )}
+    isModalOpen && (
+      <div className={cx('modalWrapper')}>
+        <div className={cx('modalContainer', 'shadow-lg', 'rounded')}>
+          <div className={cx('modalHeader')}>
+            <div className={cx('modalHeading')}>
+              {props.heading && props.heading}
+            </div>
+            <div className={cx('actionContainer')}>
+              {props.actions && props.actions.map(action => action)}
+              {props.closable && (
+                <div className={cx('closeButton')}>
+                  <FaTimes onClick={() => props.dispatch(toggleModal())} />
+                </div>
+              )}
+            </div>
           </div>
+          {props.children}
         </div>
-        {props.children}
       </div>
-    </div>
+    )
   );
 }
 Modal.defaultProps = {
@@ -44,9 +49,12 @@ Modal.propTypes = {
   closable: PropTypes.bool,
   actions: PropTypes.array,
   dispatch: PropTypes.func.isRequired,
+  isModalOpen: PropTypes.bool.isRequired,
 };
 const withConnect = connect(
-  null,
+  createStructuredSelector({
+    isModalOpen: makeSelectIsModalOpen(),
+  }),
   null,
 );
 const withCompose = compose(

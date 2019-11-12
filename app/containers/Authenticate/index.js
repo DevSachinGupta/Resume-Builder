@@ -21,7 +21,6 @@ import './style.css';
 export function Authenticate({ method }) {
   useInjectReducer({ key: 'authenticate', reducer });
   useInjectSaga({ key: 'authenticate', saga });
-  console.log('here are props', method);
   return (
     <div>
       <Helmet>
@@ -36,14 +35,14 @@ export function Authenticate({ method }) {
 }
 
 Authenticate.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  method: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
   authenticate: makeSelectAuthenticate(),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps() {
   return {
     //  dispatch,
   };

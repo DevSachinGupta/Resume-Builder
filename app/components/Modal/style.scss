@@ -10,15 +10,16 @@
   .modalContainer {
     background: #ffffff;
     max-height: 80vh;
+    min-width: 30vw;
     max-width: 80vw;
-    padding: 16px 32px 32px 32px ;
+    padding: 24px;
     .modalHeader {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-bottom: 32px;
+      padding-bottom: 18px;
       .modalHeading {
-        font-size: 24px;
+        font-size: 18px;
       }
       .actionContainer {
         .closeButton {

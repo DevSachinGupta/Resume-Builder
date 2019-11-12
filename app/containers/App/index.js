@@ -52,7 +52,7 @@ export default function App() {
         <Route path="/signup" component={Authenticate} />
         <Route path="" component={NotFoundPage} />
       </Switch>
-      <Modal>
+      <Modal heading="Personal Information">
         <div>HELLO WORLD</div>
       </Modal>
       {/* <Footer /> */}
