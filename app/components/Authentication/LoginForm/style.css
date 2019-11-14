@@ -1,5 +1,5 @@
 .loginFormContainer {
-  position: absolute;
+  /* position: absolute;
   font-family: Montserrat;
   top: 50%;
   transform: translateY(-50%);
@@ -66,5 +66,37 @@
     font-family: Montserrat;
     a {
     }
-  }
+  } */
+}
+
+.loginFormContainer .input {
+  transition: border 0.2s ease-in-out;
+  min-width: 280px
+}
+
+.loginFormContainer .input:focus+.label,
+.loginFormContainer .input:active+.label,
+.loginFormContainer .input.filled+.label {
+  font-size: .75rem;
+  transition: all 0.2s ease-out;
+  top: -0.1rem;
+  color: #667eea;
+}
+
+.loginFormContainer .label {
+  transition: all 0.2s ease-out;
+  top: 0.4rem;
+  left: 0;
+}
+
+.loginFormContainer .inputBorderColor1 {
+border-left-color: #ed8936;
+}
+
+.loginFormContainer .inputBorderColor2 {
+border-left-color: #63b3ed;
+}
+
+.loginFormContainer .custom-label input:checked + svg {
+display: block !important;
 }
