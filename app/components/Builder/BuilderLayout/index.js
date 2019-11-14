@@ -21,7 +21,13 @@ function BuilderLayout({ isSidebarOpen, ...rest }) {
       <BuilderHeader />
       <div className={cx('appContainer')}>
         {isSidebarOpen && (
-          <div className={cx('sidebarContainer', 'border-r border-gray-200')}>
+          <div
+            className={cx(
+              'sidebarContainer',
+              'border-r border-gray-200',
+              'shadow',
+            )}
+          >
             <BuilderSidebar />
           </div>
         )}
