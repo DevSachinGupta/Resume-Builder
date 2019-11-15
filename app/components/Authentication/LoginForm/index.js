@@ -10,7 +10,7 @@ class LoginForm extends React.Component {
       <section className="loginFormContainer">
         <div className="flex flex-wrap bg-white rounded overflow-hidden shadow-lg">
           <div className="w-full md:w-1/3 bg-white my-auto">
-            <div className="bg-white max-w-xl px-12 py-6  text-lg flex flex-wrap items-center inline-block">
+            <div className="bg-white max-w-xl px-12 py-6  text-lg flex items-center inline-block">
               <IoIosBrowsers className="mr-4" />
               Corporation
             </div>
