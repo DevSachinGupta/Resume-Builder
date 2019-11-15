@@ -28,7 +28,7 @@ export function Authenticate({ method }) {
         <title>Authenticate</title>
         <meta name="description" content="Description of Authenticate" />
       </Helmet>
-      <div className="flex items-center justify-center h-screen bg-gray-200">
+      <div className="flex items-center justify-center md:h-screen bg-gray-200">
         <div className="container">
           {method === 'login' ? <LoginFrom /> : <RegistrationFrom />}
         </div>
