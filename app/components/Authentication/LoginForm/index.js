@@ -5,6 +5,20 @@ import { FaGoogle, FaFacebookF } from 'react-icons/fa';
 import HR from '../../Layout/HR';
 import './style.css';
 class LoginForm extends React.Component {
+  onClick(e) {
+    // console.log("clicked called");
+    e.target.previousElementSibling.focus();
+  }
+  onkeyUp(e) {
+    // console.log("Keyup called : ");
+    // console.log(e);
+    // console.log(e.target.value);
+    if(e.target.value != "") {
+      e.target.classList.add("filled");
+    } else {
+      e.target.classList.remove("filled");
+    }
+  }
   render() {
     return (
       <section className="loginFormContainer">
@@ -25,10 +39,12 @@ class LoginForm extends React.Component {
                   id="email"
                   type="text"
                   autoFocus
+                  onKeyUp={this.onkeyUp}
                 />
                 <label
                   htmlFor="email"
                   className="label absolute mb-0 -mt-2 pt-4 pl-3 leading-tighter text-gray-400 text-base mt-2 cursor-text"
+                  onClick={this.onClick}
                 >
                   Email Address
                 </label>
@@ -38,11 +54,12 @@ class LoginForm extends React.Component {
                   className="input inputBorderColor2 border-l-4 border border-gray-400 appearance-none w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600"
                   id="password"
                   type="password"
-                  autoFocus
+                  onKeyUp={this.onkeyUp}
                 />
                 <label
                   htmlFor="password"
                   className="label absolute mb-0 -mt-2 pt-4 pl-3 leading-tighter text-gray-400 text-base mt-2 cursor-text"
+                  onClick={this.onClick}
                 >
                   Password
                 </label>
