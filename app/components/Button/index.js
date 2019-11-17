@@ -22,6 +22,7 @@ function Button({ className, circular, type, ...rest }) {
           className={cx(className, {
             circularButton: circular,
             primary: type === ButtonTypes.PRIMARY,
+            defaultButton: type === ButtonTypes.DEFAULT,
           })}
           {...rest}
         >
@@ -31,7 +32,9 @@ function Button({ className, circular, type, ...rest }) {
     </Wrapper>
   );
 }
-
+Button.defaultProps = {
+  type: 'default',
+};
 Button.propTypes = {
   handleRoute: PropTypes.func,
   iconButton: PropTypes.bool,

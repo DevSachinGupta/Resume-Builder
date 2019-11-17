@@ -34,11 +34,18 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen }) {
         handleRoute
         iconButton
         circular
+        type=""
         onClick={() => dispatch(toggleSidebar())}
       >
         <GoThreeBars size={22} />
       </Button>
       <div className={cx('actionContainer')}>
+        <div className={cx('publishButton')}>
+          <Button>Preview</Button>
+        </div>
+        <div className={cx('publishButton')}>
+          <Button>Save</Button>
+        </div>
         <div className={cx('publishButton')}>
           <Button>Publish</Button>
         </div>
@@ -53,11 +60,8 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen }) {
             })}
           >
             <ul>
-              <li>MENU 1</li>
-              <li>MENU 2</li>
-              <li>MENU 3</li>
-              <li>MENU 4</li>
-              <li>MENU 5</li>
+              <li>Login</li>
+              <li>Settings</li>
             </ul>
           </div>
         </div>

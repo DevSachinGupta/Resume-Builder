@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /**
  *
  * BuilderSidebar
@@ -23,6 +25,7 @@ function BuilderSidebar({ isSecondarySidebarOpen, dispatch }) {
     <div className="builder-sidebar-container">
       {primarySidebar.map(item => (
         <SidebarItem
+          icon={item.icon}
           onClick={
             item.hasSecondary ? () => dispatch(toggleSecondarySidebar()) : null
           }
@@ -32,8 +35,11 @@ function BuilderSidebar({ isSecondarySidebarOpen, dispatch }) {
       {isSecondarySidebarOpen && (
         <div className={cx('secondarySidebar')}>
           <div className={cx('header', 'border-b border-gray-200')}>
-            <div className={cx('backButton')}>
-              <FaArrowLeft onClick={() => dispatch(toggleSecondarySidebar())} />
+            <div
+              className={cx('backButton')}
+              onClick={() => dispatch(toggleSecondarySidebar())}
+            >
+              <FaArrowLeft />
             </div>
             <div>My Content</div>
           </div>

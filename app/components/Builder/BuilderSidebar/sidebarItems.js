@@ -4,10 +4,13 @@ const primarySidebar = [
     hasSecondary: true,
   },
   {
-    title: 'Setting',
+    title: 'Share Online',
   },
   {
-    title: 'Account',
+    title: 'Contact us',
+  },
+  {
+    title: 'Feedback',
   },
 ];
 const secondarySidebar = [

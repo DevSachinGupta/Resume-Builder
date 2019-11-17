@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /**
  *
  * Modal
@@ -16,7 +18,7 @@ import { toggleModal } from 'containers/App/actions';
 import './style.scss';
 
 function Modal(props) {
-  const { isModalOpen } = props;
+  const { isModalOpen, heading } = props;
   return (
     isModalOpen && (
       <div className={cx('modalWrapper')}>
@@ -28,8 +30,11 @@ function Modal(props) {
             <div className={cx('actionContainer')}>
               {props.actions && props.actions.map(action => action)}
               {props.closable && (
-                <div className={cx('closeButton')}>
-                  <FaTimes onClick={() => props.dispatch(toggleModal())} />
+                <div
+                  className={cx('closeButton')}
+                  onClick={() => props.dispatch(toggleModal())}
+                >
+                  <FaTimes />
                 </div>
               )}
             </div>
