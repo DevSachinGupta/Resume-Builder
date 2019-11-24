@@ -14,7 +14,7 @@ import { compose } from 'redux';
 import { FaArrowLeft } from 'react-icons/fa';
 import { createStructuredSelector } from 'reselect';
 import { toggleSecondarySidebar } from 'containers/Builder/actions';
-import { toggleModal } from 'containers/App/actions';
+import { setModalContent } from 'containers/MyContent/actions';
 import { makeSelectIsSecondarySidebarOpen } from 'containers/Builder/selectors';
 import SidebarItem from '../../Sidebar/SidebarItem';
 import { primarySidebar, secondarySidebar } from './sidebarItems';
@@ -45,7 +45,7 @@ function BuilderSidebar({ isSecondarySidebarOpen, dispatch }) {
           </div>
           {secondarySidebar.map(item => (
             <SidebarItem
-              onClick={() => dispatch(toggleModal())}
+              onClick={() => dispatch(setModalContent(item.id))}
               title={item.title}
             />
           ))}

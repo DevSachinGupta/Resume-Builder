@@ -24,9 +24,7 @@ function Modal(props) {
       <div className={cx('modalWrapper')}>
         <div className={cx('modalContainer', 'shadow-lg', 'rounded')}>
           <div className={cx('modalHeader')}>
-            <div className={cx('modalHeading')}>
-              {props.heading && props.heading}
-            </div>
+            <div className={cx('modalHeading')}>{heading && heading}</div>
             <div className={cx('actionContainer')}>
               {props.actions && props.actions.map(action => action)}
               {props.closable && (

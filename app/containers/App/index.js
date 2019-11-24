@@ -15,7 +15,7 @@ import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Authenticate from 'containers/Authenticate/Loadable';
 import Builder from 'containers/Builder/Loadable';
-import Modal from 'components/Modal';
+import MyContentContainer from 'containers/MyContent/Loadable';
 
 import GlobalStyle from '../../global-styles';
 import '../../main.css';
@@ -52,10 +52,8 @@ export default function App() {
         <Route path="/signup" component={Authenticate} />
         <Route path="" component={NotFoundPage} />
       </Switch>
-      <Modal heading="Personal Information">
-        <div>HELLO WORLD</div>
-      </Modal>
       {/* <Footer /> */}
+      <MyContentContainer />
       <GlobalStyle />
     </AppWrapper>
   );
