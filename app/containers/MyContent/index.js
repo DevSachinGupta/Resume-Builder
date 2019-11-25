@@ -23,7 +23,9 @@ export function MyContent({ activeModalType }) {
 
   return (
     <Model heading={activeModalType} actions={[]}>
-      {getModalContent(activeModalType)}
+      <Suspense fallback={<div>LOADING</div>}>
+        {getModalContent(activeModalType)}
+      </Suspense>
     </Model>
   );
 }

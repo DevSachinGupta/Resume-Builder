@@ -1,5 +1,4 @@
 import React from 'react';
-import EducationForm from './EducationForm';
 /**
  *
  * MyContentForms
@@ -7,28 +6,41 @@ import EducationForm from './EducationForm';
  */
 
 export const getModalContent = contentType => {
+  let ModalComponent = null;
   switch (contentType) {
     case 'personalDetails':
-      return <div>HELLO WORLD</div>;
+      ModalComponent = React.lazy(() => import('./PersonalDetails'));
+      break;
     case 'education':
-      return <EducationForm />;
+      ModalComponent = React.lazy(() => import('./EducationForm'));
+      break;
     case 'employmentDetails':
-      return <div>HELLO WORLD</div>;
+      ModalComponent = React.lazy(() => import('./EmploymentForm'));
+      break;
     case 'projects':
-      return <div>HELLO WORLD</div>;
+      ModalComponent = React.lazy(() => import('./ProjectsForm'));
+      break;
     case 'skills':
-      return <div>HELLO WORLD</div>;
+      ModalComponent = React.lazy(() => import('./SkillsForms'));
+      break;
     case 'affilication':
-      return <div>HELLO WORLD</div>;
+      ModalComponent = React.lazy(() => import('./AffiliationsForm'));
+      break;
     case 'social':
-      return <div>HELLO WORLD</div>;
+      ModalComponent = React.lazy(() => import('./SocialForm'));
+      break;
     case 'hobbies':
-      return <div>HELLO WORLD</div>;
+      ModalComponent = React.lazy(() => import('./HobbiesForm'));
+      break;
     case 'publication':
-      return <div>HELLO WORLD</div>;
+      ModalComponent = React.lazy(() => import('./PublicationForm'));
+      break;
     case 'accomplishments':
-      return <div>HELLO WORLD</div>;
+      ModalComponent = React.lazy(() => import('./AccomplishmentForm'));
+      break;
     default:
-      return <div>I AM default</div>;
+      ModalComponent = React.lazy(() => import('./EducationForm'));
+      break;
   }
+  return <ModalComponent />;
 };
