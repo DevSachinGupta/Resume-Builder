@@ -5,9 +5,9 @@ import React from 'react';
  *
  */
 
-export const getModalContent = contentType => {
+export const getModalContent = modelId => {
   let ModalComponent = null;
-  switch (contentType) {
+  switch (modelId) {
     case 'personalDetails':
       ModalComponent = React.lazy(() => import('./PersonalDetails'));
       break;
@@ -43,4 +43,16 @@ export const getModalContent = contentType => {
       break;
   }
   return <ModalComponent />;
+};
+export const getModalFooter = modelId => {
+  switch (modelId) {
+    default:
+      break;
+  }
+};
+export const getModalHeader = modelId => {
+  switch (modelId) {
+    default:
+      return <div>I AM HEADER</div>;
+  }
 };
