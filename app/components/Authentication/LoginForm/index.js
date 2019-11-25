@@ -4,6 +4,8 @@ import { IoIosBrowsers } from 'react-icons/io';
 import { FaGoogle, FaFacebookF } from 'react-icons/fa';
 import HR from '../../Layout/HR';
 import './style.css';
+import FloatingLabelTextfield from "../../FloatingLabelTextfield";
+
 class LoginForm extends React.Component {
   onClick(e) {
     // console.log("clicked called");
@@ -34,7 +36,17 @@ class LoginForm extends React.Component {
                 Welcome Back, Please login to your account
               </p>
               <div className="mb-4 relative">
-                <input
+                
+                <FloatingLabelTextfield 
+                  id="email"
+                  fieldtype="text"
+                  labeltxt="Email Address"
+                  autofocus
+                  borderColor="inputBorderColor1"
+                ></FloatingLabelTextfield>
+                
+                
+                {/* <input
                   className="input inputBorderColor1 border-l-4 border border-gray-400 appearance-none w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600"
                   id="email"
                   type="text"
@@ -47,10 +59,19 @@ class LoginForm extends React.Component {
                   onClick={this.onClick}
                 >
                   Email Address
-                </label>
+                </label> */}
               </div>
               <div className="mb-4 relative">
-                <input
+                
+              <FloatingLabelTextfield 
+                  id="password"
+                  fieldtype="password"
+                  labeltxt="Password"
+                  color="2"
+                  borderColor="inputBorderColor2"
+                ></FloatingLabelTextfield>
+
+                {/* <input
                   className="input inputBorderColor2 border-l-4 border border-gray-400 appearance-none w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600"
                   id="password"
                   type="password"
@@ -62,7 +83,7 @@ class LoginForm extends React.Component {
                   onClick={this.onClick}
                 >
                   Password
-                </label>
+                </label> */}
               </div>
             </div>
 

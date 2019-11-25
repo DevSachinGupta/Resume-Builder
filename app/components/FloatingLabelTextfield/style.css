@@ -1,0 +1,31 @@
+.floatingLabelContainer .input {
+    transition: border 0.2s ease-in-out;
+  }
+  
+  .floatingLabelContainer .input:focus+.label,
+  .floatingLabelContainer .input:active+.label,
+  .floatingLabelContainer .input.filled+.label {
+    font-size: .75rem;
+    transition: all 0.2s ease-out;
+    top: -0.1rem;
+    color: #667eea;
+  }
+  
+  .floatingLabelContainer .label {
+    transition: all 0.2s ease-out;
+    top: 0.4rem;
+    left: 0;
+  }
+  
+  .floatingLabelContainer .inputBorderColor1 {
+  border-left-color: #ed8936;
+  }
+  
+  .floatingLabelContainer .inputBorderColor2 {
+  border-left-color: #63b3ed;
+  }
+  
+  .floatingLabelContainer .custom-label input:checked + svg {
+  display: block !important;
+  }
+  
