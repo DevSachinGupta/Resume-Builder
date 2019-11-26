@@ -1,4 +1,6 @@
 import React from 'react';
+import { AppUtils } from '../../utils/app';
+import { get } from 'lodash';
 /**
  *
  * MyContentForms
@@ -51,8 +53,9 @@ export const getModalFooter = modelId => {
   }
 };
 export const getModalHeader = modelId => {
+  console.log(AppUtils.Constants)
   switch (modelId) {
     default:
-      return <div>I AM HEADER</div>;
+      return <div>{get(AppUtils.Constants, ['MyContent', modelId, 'title'], '')}</div>;
   }
 };
