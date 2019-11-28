@@ -1,5 +1,5 @@
 .registrationFormContainer {
-  position: absolute;
+  /* position: absolute;
   font-family: Montserrat;
   top: 50%;
   transform: translateY(-50%);
@@ -66,5 +66,5 @@
     font-family: Montserrat;
     a {
     }
-  }
+  } */
 }

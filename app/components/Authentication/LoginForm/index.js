@@ -7,20 +7,20 @@ import './style.css';
 import FloatingLabelTextfield from "../../FloatingLabelTextfield";
 
 class LoginForm extends React.Component {
-  onClick(e) {
-    // console.log("clicked called");
-    e.target.previousElementSibling.focus();
-  }
-  onkeyUp(e) {
-    // console.log("Keyup called : ");
-    // console.log(e);
-    // console.log(e.target.value);
-    if(e.target.value != "") {
-      e.target.classList.add("filled");
-    } else {
-      e.target.classList.remove("filled");
-    }
-  }
+  // onClick(e) {
+  //   // console.log("clicked called");
+  //   e.target.previousElementSibling.focus();
+  // }
+  // onkeyUp(e) {
+  //   // console.log("Keyup called : ");
+  //   // console.log(e);
+  //   // console.log(e.target.value);
+  //   if(e.target.value != "") {
+  //     e.target.classList.add("filled");
+  //   } else {
+  //     e.target.classList.remove("filled");
+  //   }
+  // }
   render() {
     return (
       <section className="loginFormContainer">
