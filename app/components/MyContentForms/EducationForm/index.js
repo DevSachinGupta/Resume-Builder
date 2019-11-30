@@ -5,7 +5,7 @@
  */
 
 import React, { memo, useState } from 'react';
-import Textfield from "../../FormComponents/TextField"
+import Textfield from "../../FormComponents/TextField";
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
