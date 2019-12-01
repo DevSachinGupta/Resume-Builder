@@ -1,0 +1,23 @@
+.inputContainer {
+  background: #cbd5e0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  input {
+    background: #cbd5e0;
+    padding: 10px 12px;
+    border-radius: 4px;
+    &:focus {
+      outline: none;
+    }
+  }
+  .inputIcon {
+    padding-left: 12px;
+  }
+}
+.fullWidth {
+  width: 100%;
+  input {
+    width: 100%;
+  }
+}
