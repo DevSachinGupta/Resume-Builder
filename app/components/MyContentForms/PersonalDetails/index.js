@@ -1,40 +1,51 @@
 import React from 'react';
 import { Formik } from 'formik';
+import { Validations } from '../../../utils/validations';
 import Input from '../../FormComponents/Input';
-import Button from '../../Button';
 import './style.scss';
 
 function PersonalDetails() {
   return (
     <div>
-      <Formik initialValues={{ val: '' }}>
+      <Formik
+        initialValues={{ val: '' }}
+        validate={Validations.InputValidations}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 400);
+        }}
+      >
         {({
           values,
           errors,
-          touched,
           handleChange,
           handleBlur,
           handleSubmit,
           isSubmitting,
-        }) => (
-          <React.Fragment>
-            <Input
-              placeholder="First Name"
-              name="firstName"
-              value={values.val}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={errors.val && touched.val && errors.val}
-            />
-            <Input
-              placeholder="Last Name"
-              val={values.val}
-              onChange={handleChange}
-              error={errors.val && touched.val && errors.val}
-            />
-            <Button>Save Details</Button>
-          </React.Fragment>
-        )}
+        }) => {
+          return (
+            <React.Fragment>
+              <Input
+                placeholder="First Name"
+                label="First Name"
+                name="firstName"
+                value={values.val}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.val}
+              />
+              <Input
+                placeholder="Last Name"
+                val={values.val}
+                label="Last Name"
+                onChange={handleChange}
+                error={errors.val}
+              />
+            </React.Fragment>
+          );
+        }}
       </Formik>
     </div>
   );

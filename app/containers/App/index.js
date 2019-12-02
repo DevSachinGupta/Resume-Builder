@@ -9,6 +9,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
+import Proptypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
@@ -63,6 +64,9 @@ const App = ({ dispatch }) => (
     <GlobalStyle />
   </AppWrapper>
 );
+App.propTypes = {
+  dispatch: Proptypes.func.isRequired,
+};
 const withConnet = connect(
   null,
   null,

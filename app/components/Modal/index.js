@@ -38,6 +38,7 @@ function Modal(props) {
             </div>
           </div>
           {props.children}
+          <div className={cx('footerContainer')}>{props.footer}</div>
         </div>
       </div>
     )
@@ -53,6 +54,7 @@ Modal.propTypes = {
   actions: PropTypes.array,
   dispatch: PropTypes.func.isRequired,
   isModalOpen: PropTypes.bool.isRequired,
+  footer: PropTypes.node.isRequired,
 };
 const withConnect = connect(
   createStructuredSelector({

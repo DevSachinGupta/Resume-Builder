@@ -1,0 +1,12 @@
+$BORDER_GREY: #cbd5e0;
+
+/** ------ App Level Mixins ----**/
+
+@mixin font($size: 12px, $weight: 400) {
+  font-size: $size;
+  font-weight: $weight;
+}
+
+@mixin padding($dir) {
+  padding: 12px;
+}

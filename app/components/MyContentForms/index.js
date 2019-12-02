@@ -1,5 +1,6 @@
 import React from 'react';
 import { get } from 'lodash';
+import Button from '../Button';
 import { AppUtils } from '../../utils/app';
 /**
  *
@@ -48,6 +49,8 @@ export const getModalContent = modelId => {
 };
 export const getModalFooter = modelId => {
   switch (modelId) {
+    case 'personalDetails':
+      return [<Button>Save Details</Button>];
     default:
       break;
   }
