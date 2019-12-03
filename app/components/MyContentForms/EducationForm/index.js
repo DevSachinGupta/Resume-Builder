@@ -28,20 +28,54 @@ function EducationForm() {
   return (
     <div>
       {educations.map(item => (
-        <div>
+        <div >
           {/* <label for={item.qualificationId}>{item.lable}</label>
           <input type="text" placeholder={item.lable} id={item.qualificationId}/> */}
+			<div class="flex flex-wrap ">
+			  <div class="w-1/2 px-2">
+				  <Textfield labeltxt="Qualification" type="text"></Textfield>
+			  </div>
+			  <div class="w-1/2 px-2">
+				  <Textfield labeltxt="Board/University" type="text"></Textfield>
+			  </div>
+			</div>
+			
+			<div class="flex flex-wrap ">
+			  <div class="w-1/2 px-2">
+				  <Textfield labeltxt="Institute Name" type="text"></Textfield>
+			  </div>
+			  <div class="w-1/2 px-2">
+				  <Textfield labeltxt="Field of Study" type="text"></Textfield>
+			  </div>
+			</div>
+			
+			<div class="flex flex-wrap ">
+			  <div class="w-1/3 px-2">
+				  <Textfield labeltxt="Percentage" type="text"></Textfield>
+			  </div>
+			  <div class="w-1/3 px-2">
+				  <Textfield labeltxt="State" type="text"></Textfield>
+			  </div>
+			  <div class="w-1/3 px-2">
+				  <Textfield labeltxt="Country" type="text"></Textfield>
+			  </div>
+			</div>
+			
+			<div class="flex flex-wrap ">
+			  <div class="w-1/2 px-2">
+				  <Textfield labeltxt="Start date" type="date"></Textfield>
+			  </div>
+			  <div class="w-1/2 px-2">
+				  <Textfield labeltxt="End date" type="date"></Textfield>
+			  </div>
+			</div>
+			
+			<div class="flex flex-wrap ">
+			  <div class="w-full">
+				  <Textfield labeltxt="Description" type="text"></Textfield>
+			  </div>
+			</div>
 
-          <Textfield labeltxt="Qualification" type="text"></Textfield>
-          <Textfield labeltxt="Board/University" type="text"></Textfield>
-          <Textfield labeltxt="Institute Name" type="text"></Textfield>
-          <Textfield labeltxt="Field of Study" type="text"></Textfield>
-          <Textfield labeltxt="State" type="text"></Textfield>
-          <Textfield labeltxt="Country" type="text"></Textfield>
-          <Textfield labeltxt="Start date" type="date"></Textfield>
-          <Textfield labeltxt="End date" type="date"></Textfield>
-          <Textfield labeltxt="Percentage" type="text"></Textfield>
-          <Textfield labeltxt="Description" type="text"></Textfield>
 
         </div>
       ))}
