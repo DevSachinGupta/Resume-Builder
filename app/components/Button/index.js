@@ -13,7 +13,7 @@ import Wrapper from './Wrapper';
 import { ButtonTypes } from './constants';
 import './style.scss';
 
-function Button({ className, circular, type, ...rest }) {
+function Button({ className, circular, type, fullWidth, ...rest }) {
   return (
     <Wrapper>
       {
@@ -23,7 +23,8 @@ function Button({ className, circular, type, ...rest }) {
             circularButton: circular,
             primary: type === ButtonTypes.PRIMARY,
             defaultButton: type === ButtonTypes.DEFAULT,
-          })}
+            fullWidth
+          }, 'button')}
           {...rest}
         >
           {Children.toArray(rest.children)}
