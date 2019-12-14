@@ -28,28 +28,27 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
         <div key={`field-${idx}`}>
 			<div className="flex flex-wrap ">
 			  <div className="w-1/2 px-2">
-				  <label htmlFor={qualificationId}>Qualification</label>
-				  <input
+				  <Textfield
+				    labeltxt="Qualification"
 					type="text"
 					name={qualificationId}
-					data-idx={idx}
+					idx={idx}
 					id={qualificationId}
 					className="qualification"
-					data-name="qualification"
+					namex="qualification"
 					value={educations[idx].qualification}
 					onChange={handleEduChange}
-					
-					/>
+      			   />
 			  </div>
 			  <div className="w-1/2 px-2">
-				  <label htmlFor={universityId}>Board/University</label>
-				  <input
+				  <Textfield
+				    labeltxt="Board/University"
 					type="text"
 					name={universityId}
-					data-idx={idx}
+					idx={idx}
 					id={universityId}
 					className="university"
-					data-name="university"
+					namex="university"
 					value={educations[idx].university}
 					onChange={handleEduChange}
 				  />
@@ -58,29 +57,27 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 			
 			<div className="flex flex-wrap ">
 			  <div className="w-1/2 px-2">
-			
-				  <label htmlFor={instituteId}>Institute Name</label>
-				  <input
+				  <Textfield
+				    labeltxt="Institute Name"
 					type="text"
 					name={instituteId}
-					data-idx={idx}
+					idx={idx}
 					id={instituteId}
 					className="institute"
-					data-name="institute"
+					namex="institute"
 					value={educations[idx].institute}
 					onChange={handleEduChange}
 				  />
 			  </div>
 			  <div className="w-1/2 px-2">
-				
-				  <label htmlFor={fieldOfStudyId}>Field of Study</label>
-				  <input
+				  <Textfield
+				    labeltxt="Field of Study"
 					type="text"
 					name={fieldOfStudyId}
-					data-idx={idx}
+					idx={idx}
 					id={fieldOfStudyId}
 					className="fieldOfStudy"
-					data-name="fieldOfStudy"
+					namex="fieldOfStudy"
 					value={educations[idx].fieldOfStudy}
 					onChange={handleEduChange}
 				  />
@@ -89,40 +86,40 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 			
 			<div className="flex flex-wrap ">
 			  <div className="w-1/3 px-2">
-				  <label htmlFor={percentageId}>Percentage</label>
-				  <input
+				  <Textfield
+				    labeltxt="Percentage"
 					type="text"
 					name={percentageId}
-					data-idx={idx}
+					idx={idx}
 					id={percentageId}
 					className="percentage"
-					data-name="percentage"
+					namex="percentage"
 					value={educations[idx].percentage}
 					onChange={handleEduChange}
 				  />
 			  </div>
 			  <div className="w-1/3 px-2">
-				  <label htmlFor={stateId}>State</label>
-				  <input
+				  <Textfield
+				    labeltxt="State"
 					type="text"
 					name={stateId}
-					data-idx={idx}
+					idx={idx}
 					id={stateId}
 					className="state"
-					data-name="state"
+					namex="state"
 					value={educations[idx].state}
 					onChange={handleEduChange}
 				  />
 			  </div>
 			  <div className="w-1/3 px-2">
-				  <label htmlFor={countryId}>Country</label>
-				  <input
+				  <Textfield
+				    labeltxt="Country"
 					type="text"
 					name={countryId}
-					data-idx={idx}
+					idx={idx}
 					id={countryId}
 					className="country"
-					data-name="country"
+					namex="country"
 					value={educations[idx].country}
 					onChange={handleEduChange}
 				  />
@@ -131,27 +128,27 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 			
 			<div className="flex flex-wrap ">
 			  <div className="w-1/2 px-2">
-				  <label htmlFor={startDateId}>Start Date</label>
-				  <input
+				  <Textfield
+				    labeltxt="Start Date"
 					type="date"
 					name={startDateId}
-					data-idx={idx}
+					idx={idx}
 					id={startDateId}
 					className="startDate"
-					data-name="startDate"
+					namex="startDate"
 					value={educations[idx].startDate}
 					onChange={handleEduChange}
 				  />
 			  </div>
 			  <div className="w-1/2 px-2">
-				  <label htmlFor={endDateId}>End Date</label>
-				  <input
+				  <Textfield
+				    labeltxt="End Date"
 					type="date"
 					name={endDateId}
-					data-idx={idx}
+					idx={idx}
 					id={endDateId}
 					className="endDate"
-					data-name="endDate"
+					namex="endDate"
 					value={educations[idx].endDate}
 					onChange={handleEduChange}
 				  />
@@ -160,12 +157,12 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 			
 			<div className="flex flex-wrap ">
 			  <div className="w-full">
-				  <label htmlFor={descriptionId}>Description</label>
-				  <input
+				  <Textfield
+				    labeltxt="Description"
 					type="text"
 					name={descriptionId}
-					data-idx={idx}
-					data-name="description"
+					idx={idx}
+					namex="description"
 					id={descriptionId}
 					className="description"
 					value={educations[idx].description}
