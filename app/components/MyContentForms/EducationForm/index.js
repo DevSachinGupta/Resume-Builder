@@ -35,6 +35,7 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 					data-idx={idx}
 					id={qualificationId}
 					className="qualification"
+					data-name="qualification"
 					value={educations[idx].qualification}
 					onChange={handleEduChange}
 					
@@ -48,6 +49,7 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 					data-idx={idx}
 					id={universityId}
 					className="university"
+					data-name="university"
 					value={educations[idx].university}
 					onChange={handleEduChange}
 				  />
@@ -64,6 +66,7 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 					data-idx={idx}
 					id={instituteId}
 					className="institute"
+					data-name="institute"
 					value={educations[idx].institute}
 					onChange={handleEduChange}
 				  />
@@ -77,6 +80,7 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 					data-idx={idx}
 					id={fieldOfStudyId}
 					className="fieldOfStudy"
+					data-name="fieldOfStudy"
 					value={educations[idx].fieldOfStudy}
 					onChange={handleEduChange}
 				  />
@@ -92,6 +96,7 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 					data-idx={idx}
 					id={percentageId}
 					className="percentage"
+					data-name="percentage"
 					value={educations[idx].percentage}
 					onChange={handleEduChange}
 				  />
@@ -104,6 +109,7 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 					data-idx={idx}
 					id={stateId}
 					className="state"
+					data-name="state"
 					value={educations[idx].state}
 					onChange={handleEduChange}
 				  />
@@ -116,6 +122,7 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 					data-idx={idx}
 					id={countryId}
 					className="country"
+					data-name="country"
 					value={educations[idx].country}
 					onChange={handleEduChange}
 				  />
@@ -131,6 +138,7 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 					data-idx={idx}
 					id={startDateId}
 					className="startDate"
+					data-name="startDate"
 					value={educations[idx].startDate}
 					onChange={handleEduChange}
 				  />
@@ -143,6 +151,7 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 					data-idx={idx}
 					id={endDateId}
 					className="endDate"
+					data-name="endDate"
 					value={educations[idx].endDate}
 					onChange={handleEduChange}
 				  />
@@ -156,6 +165,7 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 					type="text"
 					name={descriptionId}
 					data-idx={idx}
+					data-name="description"
 					id={descriptionId}
 					className="description"
 					value={educations[idx].description}
@@ -210,8 +220,8 @@ function EducationForm() {
   
   const handleEduChange = (e) => {
         const updatedEdu = [...educations];
-		const fieldName = e.target.id.split("-")[0]
-        updatedEdu[e.target.dataset.idx][fieldName] = e.target.value;
+		console.log(e.target.dataset)
+        updatedEdu[e.target.dataset.idx][e.target.dataset.name] = e.target.value;
         setEducations(updatedEdu);
 		console.log(updatedEdu);
     };
