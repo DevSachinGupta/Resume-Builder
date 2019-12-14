@@ -26,13 +26,11 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 
     return (
         <div key={`field-${idx}`}>
-			<div class="flex flex-wrap ">
-			  <div class="w-1/2 px-2">
+			<div className="flex flex-wrap ">
+			  <div className="w-1/2 px-2">
 				  <label htmlFor={qualificationId}>Qualification</label>
 				  <input
-					
 					type="text"
-					
 					name={qualificationId}
 					data-idx={idx}
 					id={qualificationId}
@@ -42,7 +40,7 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 					
 					/>
 			  </div>
-			  <div class="w-1/2 px-2">
+			  <div className="w-1/2 px-2">
 				  <label htmlFor={universityId}>Board/University</label>
 				  <input
 					type="text"
@@ -56,8 +54,8 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 			  </div>
 			</div>
 			
-			<div class="flex flex-wrap ">
-			  <div class="w-1/2 px-2">
+			<div className="flex flex-wrap ">
+			  <div className="w-1/2 px-2">
 			
 				  <label htmlFor={instituteId}>Institute Name</label>
 				  <input
@@ -70,7 +68,7 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 					onChange={handleEduChange}
 				  />
 			  </div>
-			  <div class="w-1/2 px-2">
+			  <div className="w-1/2 px-2">
 				
 				  <label htmlFor={fieldOfStudyId}>Field of Study</label>
 				  <input
@@ -85,8 +83,8 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 			  </div>
 			</div>
 			
-			<div class="flex flex-wrap ">
-			  <div class="w-1/3 px-2">
+			<div className="flex flex-wrap ">
+			  <div className="w-1/3 px-2">
 				  <label htmlFor={percentageId}>Percentage</label>
 				  <input
 					type="text"
@@ -98,7 +96,7 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 					onChange={handleEduChange}
 				  />
 			  </div>
-			  <div class="w-1/3 px-2">
+			  <div className="w-1/3 px-2">
 				  <label htmlFor={stateId}>State</label>
 				  <input
 					type="text"
@@ -110,7 +108,7 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 					onChange={handleEduChange}
 				  />
 			  </div>
-			  <div class="w-1/3 px-2">
+			  <div className="w-1/3 px-2">
 				  <label htmlFor={countryId}>Country</label>
 				  <input
 					type="text"
@@ -124,8 +122,8 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 			  </div>
 			</div>
 			
-			<div class="flex flex-wrap ">
-			  <div class="w-1/2 px-2">
+			<div className="flex flex-wrap ">
+			  <div className="w-1/2 px-2">
 				  <label htmlFor={startDateId}>Start Date</label>
 				  <input
 					type="date"
@@ -137,7 +135,7 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 					onChange={handleEduChange}
 				  />
 			  </div>
-			  <div class="w-1/2 px-2">
+			  <div className="w-1/2 px-2">
 				  <label htmlFor={endDateId}>End Date</label>
 				  <input
 					type="date"
@@ -151,8 +149,8 @@ const EduInputs = ({ idx, educations, handleEduChange }) => {
 			  </div>
 			</div>
 			
-			<div class="flex flex-wrap ">
-			  <div class="w-full">
+			<div className="flex flex-wrap ">
+			  <div className="w-full">
 				  <label htmlFor={descriptionId}>Description</label>
 				  <input
 					type="text"
@@ -212,7 +210,8 @@ function EducationForm() {
   
   const handleEduChange = (e) => {
         const updatedEdu = [...educations];
-        updatedEdu[e.target.dataset.idx][e.target.className] = e.target.value;
+		const fieldName = e.target.id.split("-")[0]
+        updatedEdu[e.target.dataset.idx][fieldName] = e.target.value;
         setEducations(updatedEdu);
 		console.log(updatedEdu);
     };
