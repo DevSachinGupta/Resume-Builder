@@ -176,47 +176,6 @@ EduInputs.propTypes = {
 };
 
 
-
-			/* 
-			<div class="flex flex-wrap ">
-			  <div class="w-1/2 px-2">
-				  <Textfield labeltxt="Institute Name" type="text"></Textfield>
-			  </div>
-			  <div class="w-1/2 px-2">
-				  <Textfield labeltxt="Field of Study" type="text"></Textfield>
-			  </div>
-			</div>
-			
-			<div class="flex flex-wrap ">
-			  <div class="w-1/3 px-2">
-				  <Textfield labeltxt="Percentage" type="text"></Textfield>
-			  </div>
-			  <div class="w-1/3 px-2">
-				  <Textfield labeltxt="State" type="text"></Textfield>
-			  </div>
-			  <div class="w-1/3 px-2">
-				  <Textfield labeltxt="Country" type="text"></Textfield>
-			  </div>
-			</div>
-			
-			<div class="flex flex-wrap ">
-			  <div class="w-1/2 px-2">
-				  <Textfield labeltxt="Start date" type="date"></Textfield>
-			  </div>
-			  <div class="w-1/2 px-2">
-				  <Textfield labeltxt="End date" type="date"></Textfield>
-			  </div>
-			</div>
-			
-			<div class="flex flex-wrap ">
-			  <div class="w-full">
-				  <Textfield labeltxt="Description" type="text"></Textfield>
-			  </div>
-			</div> */
-			
-
-// ####
-
 function EducationForm() {
   var counter = 0;
   const blankEduFields = { qualification: '', university: '', institute: '', fieldOfStudy: '',percentage:'', state: '', country: '', startDate:'', endDate:'', description: ''};
@@ -224,22 +183,35 @@ function EducationForm() {
      { ...blankEduFields },
   ]);
   
-  const addMore = () => {
+  const handlePrevious = () => {
 	  
 	setEducations([...educations, { ...blankEduFields }]); 
 	console.log(educations);
-/*     counter = counter + 1;
-    educations.push({
-      lable: 'Qualification',
-      qualificationId: "qualification[" + counter+"]"
-      });
-    setEducations([...educations]);
-	 */
   };
+  
+  const addMore = () => {
+	setEducations([...educations, { ...blankEduFields }]); 
+  };
+  
+  const handleSave = () => {
+	const updatedEdu = [...educations];
+	// create JSON
+	console.log(updatedEdu)
+	var jsonString = JSON.stringify(updatedEdu);
+	console.log(jsonString)
+	// call grapesjs component with req JSON
+	
+	// Close the current model
+	// setEducations([...educations, { ...blankEduFields }]); 
+  };
+
+  const handleSaveAndNext = () => {
+	handleSave
+	setEducations([...educations, { ...blankEduFields }]); 
+  };  
   
   const handleEduChange = (e) => {
         const updatedEdu = [...educations];
-		console.log(updatedEdu);
         updatedEdu[e.target.dataset.idx][e.target.className] = e.target.value;
         setEducations(updatedEdu);
 		console.log(updatedEdu);
@@ -262,8 +234,20 @@ function EducationForm() {
 			
         </div>
       ))}
-      <button type="button" onClick={addMore}>
+      <button type="button" onClick={handlePrevious}>
+        Previous
+      </button>
+	  
+	  <button type="button" onClick={addMore}>
         Add More
+      </button>
+	  
+	  <button type="button" onClick={handleSave}>
+        Save
+      </button>
+	  
+	  <button type="button" onClick={handleSaveAndNext}>
+        Save & Next
       </button>
     </div>
   );
