@@ -1,0 +1,258 @@
+{
+  "education": {
+    "history": [
+      {
+        "institution": "Guru Tegh Bahadur Institute of Technology",
+        "state": "Delhi",
+        "country": "INDIA",
+        "title": "B-Tech",
+        "fieldOfStudy": "Computer Science",
+        "start": "04/01/2017",
+        "end": "10/02/2018",
+        "summary": "Pursuing B-TECH in CSE from one of the prestigious college of Delhi , GURU TEGH BAHADUR INSTITUTE OF TECHNOLOGY, Rajouri Garden, New Delhi."
+      },
+      {
+        "institution": "Kendriya Vidyalaya No 2,",
+        "state": "Delhi",
+        "country": "INDIA",
+        "title": "Class XII",
+        "fieldOfStudy": "Computer Science",
+        "start": "04/01/2016",
+        "end": "04/01/2015",
+        "summary": "Percentage 79.98%"
+      },
+      {
+        "institution": "Kendriya Vidyalaya No1",
+        "state": "Gurarat",
+        "country": "INDIA",
+        "title": "Class X",
+        "fieldOfStudy": "",
+        "start": "04/01/2014",
+        "end": "04/01/2013",
+        "summary": "Percentage 89.00%"
+      }
+    ]
+  },
+  "skills": {
+    "sets": [
+      {
+        "name": "PROGRAMMING",
+        "skills": [
+          {
+            "name": "Python",
+            "level": "85"
+          },
+          {
+            "name": "R",
+            "level": "60"
+          },
+          {
+            "name": "Powershell",
+            "level": "80"
+          }
+        ]
+      },
+      {
+        "name": "HADOOP ADMIN & DEV.",
+        "skills": [
+          {
+            "name": "HDFS",
+            "level": "90"
+          },
+          {
+            "name": "Cassandra",
+            "level": "78"
+          },
+          {
+            "name": "ELK",
+            "level": "80"
+          },
+          {
+            "name": "Nifi",
+            "level": "70"
+          }
+        ]
+      },
+      {
+        "name": "MACHINE LEARNING",
+        "skills": [
+          {
+            "name": "Tensorflow",
+            "level": "85"
+          },
+          {
+            "name": "Keras",
+            "level": "50"
+          },
+          {
+            "name": "ML diagnosis",
+            "level": "70"
+          }
+        ]
+      }
+    ]
+  },
+  "projects": [
+    {
+      "title": "ESS",
+      "summary": "Education Surveillance System",
+      "description": "In ESS, Collect educational data from institutions. ● Find insights that help our educational system to improve. ● Tech. use Python, HDFS, Hive, Flume, Zeppelin etc. ● Challenges are to collect and organizing the structure for data.",
+      "keywords": [
+        "Hadoop",
+        " HDFS",
+        " NiFi",
+        " Python"
+      ],
+      "url": "",
+      "start": "06/15/2017",
+      "end": "10/19/2017"
+    },
+    {
+      "title": "Voice Mimic Using Deep Learning",
+      "summary": "Minor Project for Bachelor Degree",
+      "description": "● Aim is to provide respective human voice characteristics in computer voice sample. ● Used for Mimic robotic voice to human voice and Language Translation in human voice. ● Tech. use Python, Tensorflow, Deep Learning Networks, Tacotron network, etc. ● Challenges are to develop a system that work in near real time and handle noise in voice.",
+      "keywords": [
+        "Python",
+        " Tensorflow",
+        " Tactron Network"
+      ],
+      "url": "",
+      "start": "OCT 2017",
+      "end": "DEC 2017"
+    },
+    {
+      "title": "Multilingual Speech Translation: Hinglish to English",
+      "summary": "Aim to translate Hinglish text into meaning full English text.",
+      "description": "Used for understanding Hinglish text commonly used by Indians in social networking site. ● Tech. use Python, Tensorflow, SeqToSeq Network, text to speech API, etc. ● Challenges are to dealing with words having similar spell.",
+      "keywords": [
+        "Python",
+        " Tensorflow",
+        " Tactron Network"
+      ],
+      "url": "",
+      "start": "FEB 2018",
+      "end": "AUG 2018"
+    }
+  ],
+  "employment": {
+    "history": [
+      {
+        "position": "Automation Engg.",
+        "employer": "HCL Technologies",
+        "state": "Delhi NCR",
+        "country": "INDIA",
+        "start": "10/19/2017",
+        "end": "10/03/2019",
+        "summary": "Quick decision making backed by strong analytical ability. Ability to work enclose co-operation as a team, have a positive attitude, initiative and keenness to learn & adopt new thing."
+      }
+    ]
+  },
+  "affiliation": {
+    "history": [
+      {
+        "organization": "IEEE-GTBIT",
+        "role": "Volunteer",
+        "summary": "The IEEE-GTBIT student branch was set up in the year 2008 with the aim to enhance the engineering skills of students in GTBIT.",
+        "start": "10/02/2017",
+        "end": "10/10/2019"
+      }
+    ]
+  },
+  "social": [
+    {
+      "label": "Github",
+      "url": "https://github.com/jitendra-prajapati",
+      "user": "jitendrappr990"
+    },
+    {
+      "label": "Linkedin",
+      "url": "https://www.linkedin.com/in/jitendrappr990",
+      "user": "jitendrappr990"
+    },
+    {
+      "label": "Facebook",
+      "url": "https://www.linkedin.com/in/jitendrappr990",
+      "user": "jitendrappr990"
+    }
+  ],
+  "interests": [
+    {
+      "name": "Cycling",
+      "summary": ""
+    },
+    {
+      "name": "Adventurist",
+      "summary": ""
+    }
+  ],
+  "writing": [
+
+  ],
+  "accomplishment": [
+    {
+      "title": "11th CYBER-OLYMPIAD",
+      "summary": "",
+      "date": "MAR 2016",
+      "rank": "3rd"
+    },
+    {
+      "title": "Machine Learning Course",
+      "summary": "by Andrew Ng, Stanford University (Coursera.org)",
+      "date": "Sept 2016",
+      "rank": ""
+    },
+    {
+      "title": "Exploratory Data Analysis Course",
+      "summary": "by Roger Peng, PhD, Jeff Leek, Johns Hopkins Univ. (Coursera.org)",
+      "date": "Mar 2017",
+      "rank": ""
+    }
+  ],
+  "capabilities": {
+    "list": [
+      {
+        "tag": "Freelancer",
+        "summary": ""
+      },
+      {
+        "tag": "Developer",
+        "summary": ""
+      },
+      {
+        "tag": "Web Developer",
+        "summary": ""
+      },
+      {
+        "tag": "ML Engg.",
+        "summary": ""
+      }
+    ]
+  },
+  "firstName": "JITENDRA",
+  "lastName": "PRAJAPATI",
+  "info": {
+    "brief": "Aiming towards technical growth in Data Analytics, Big-Data, Machine Learning and Data-Science with a reputed organization.",
+    "dateOfBirth": "09/06/2009",
+    "profilePhotoURL": "images\\profile_photo.png",
+    "gender": "male",
+	"profileTags": {
+	  "list": [
+        "Freelancer",
+        "Web Developer",
+        "Developer",
+        "ML Engg."
+      ]
+	}
+  },
+  "contact": {
+    "phone": "8750243990",
+    "email": "jitendrappr990@gmail.com"
+  },
+  "location": {
+    "address": "Smq 37/5 , New Pinto Park, Air Force Palam",
+    "city": "New Delhi",
+    "state": "Delhi",
+    "code": "110010",
+    "country": "INDIA"
+  }
+}

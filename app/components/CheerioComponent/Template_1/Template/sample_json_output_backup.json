@@ -1,0 +1,249 @@
+{
+  "education": {
+    "history": [
+      {
+        "institution": "gtbit",
+        "state": "delhi",
+        "country": "india",
+        "title": "b-tect",
+        "fieldOfStudy": "CSE",
+        "start": "43/43/344",
+        "end": "",
+        "summary": "btech education"
+      },
+      {
+        "institution": "kv",
+        "state": "delhi",
+        "country": "india",
+        "title": "12",
+        "fieldOfStudy": "cse",
+        "start": "567",
+        "end": "687",
+        "summary": "jitendraa"
+      }
+    ]
+  },
+  "capabilities": {
+    "list": [
+      {
+        "tag": "Web Development",
+        "summary": "Amet aspernatur delectus maxime ducimus similique Ratione asperiores corporis provident aut libero."
+      },
+      {
+        "tag": "Web Design",
+        "summary": "Amet aspernatur delectus maxime ducimus similique Ratione asperiores corporis provident aut libero."
+      },
+      {
+        "tag": "Responsive Design",
+        "summary": "Amet aspernatur delectus maxime ducimus similique Ratione asperiores corporis provident aut libero."
+      }
+    ]
+  },
+  "skills": {
+    "sets": [
+      {
+        "name": "designer",
+        "skills": [
+		  {
+			"name": "ghjk",
+			"level": "3"
+		  },
+		  {
+			"name": "hgjk",
+			"level": "6"
+		  },
+		  {
+			"name": "dfghj",
+			"level": "8"
+		  },
+		  {
+			"name": ",,mmnbv",
+			"level": "10"
+		  }
+		]
+      },
+      {
+        "name": "coding",
+		"skills": [
+		  {
+			"name": "ghjk",
+			"level": "3"
+		  },
+		  {
+			"name": "hgjk",
+			"level": "6"
+		  },
+		  {
+			"name": "dfghj",
+			"level": "8"
+		  },
+		  {
+			"name": ",,mmnbv",
+			"level": "10"
+		  }
+		]
+      },
+	  {
+        "name": "designer",
+        "skills": [
+		  {
+			"name": "ghjk",
+			"level": "3"
+		  },
+		  {
+			"name": "hgjk",
+			"level": "6"
+		  },
+		  {
+			"name": "dfghj",
+			"level": "8"
+		  },
+		  {
+			"name": ",,mmnbv",
+			"level": "10"
+		  }
+		]
+      }
+    ]
+  },
+  "projects": [
+    {
+      "title": "dfghj",
+      "summary": "cvbnm",
+      "description": "fvbnm",
+      "keywords": [
+        "vbnm ",
+        " ghjk",
+        " gfhjk"
+      ],
+      "url": "fghj",
+      "start": "5678",
+      "end": "678"
+    },
+	{
+      "title": "dfghj",
+      "summary": "cvbnm",
+      "description": "fvbnm",
+      "keywords": [
+        "vbnm ",
+        " ghjk",
+        " gfhjk"
+      ],
+      "url": "fghj",
+      "start": "5678",
+      "end": "678"
+    }
+  ],
+  "employment": {
+    "history": [
+      {
+        "position": "dev",
+        "employer": "hcl",
+        "state": "delhi",
+        "country": "india",
+        "start": "678",
+        "end": "678",
+        "summary": "developer "
+      },
+      {
+        "position": "eng",
+        "employer": "hcl",
+        "state": "de",
+        "country": "jnj",
+        "start": "678",
+        "end": "6789",
+        "summary": "dfghjhytrfg hhgfvbjuy fgiuyt"
+      }
+    ]
+  },
+  "affiliation": {
+    "history": [
+      {
+        "organization": "IEEE",
+        "role": "volentier",
+        "summary": "ghjk",
+        "start": "89",
+        "end": "6789"
+      }
+    ]
+  },
+  "social": [
+    {
+      "label": "facebook",
+      "url": "hjk"
+    },
+    {
+      "label": "github",
+      "url": "nm"
+    }
+  ],
+  "interests": {
+	"status":"Yes",
+	"list": [
+		{
+		  "name": "ghjk",
+		  "summary": "hjk"
+		},
+		{
+		  "name": "ghjk",
+		  "summary": "ghjkl"
+		}
+	]
+  },
+  "writing": [
+    {
+      "title": "fghjk",
+      "summary": "fghjk",
+      "date": "gfhjk",
+      "url": "fghjk"
+    },
+    {
+      "title": "iuyt",
+      "summary": "kjhgf",
+      "date": "765",
+      "url": "er6yuj"
+    }
+  ],
+  "accomplishment": [
+    {
+      "title": "bnvcdffgh",
+      "summary": "nbvcfdftgyh",
+      "date": "765",
+      "rank": "vcfdfgh"
+    },
+    {
+      "title": "kjjhgf",
+      "summary": "gfyu",
+      "date": "8876",
+      "rank": "bh"
+    }
+  ],
+  "firstName": "jit",
+  "lastName": "pra",
+  "info": {
+    "brief": "testing resume form.",
+    "dateOfBirth": "09/08/2019",
+    "gender": "male",
+	"profilePhotoURL":"images\\about.jpg",
+	"profileTags": {
+	  "status": "Yes",
+	  "list": [
+        "Freelancer",
+        "Web Developer",
+        "Graphics Designer",
+        "UI/UX Designer"
+      ]
+	}
+  },
+  "contact": {
+    "phone": "8767875667",
+    "email": "jitendrappr990@gmail.com"
+  },
+  "location": {
+    "address": "216-C",
+    "city": "palam",
+    "state": "delhi",
+    "code": "110010",
+    "country": "india"
+  }
+}

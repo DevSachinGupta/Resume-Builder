@@ -16,9 +16,14 @@ const DemoPage = {
   components: null,
   style: null,
 };
-function BuilderEditor() {
+function BuilderEditor(DemoPage) {
+  console.log( DemoPage )
+  console.log(DemoPage.DemoPage)
+  
+  DemoPage = DemoPage.DemoPage
+  
   useEffect(() => {
-    grapesjs.init({
+    var editor = grapesjs.init({
       container: '#gjs',
       width: '82vw',
       height: 'calc(100vh - 64px)',

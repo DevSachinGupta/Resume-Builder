@@ -17,13 +17,22 @@ import makeSelectBuilder from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
+const DemoPage = {
+  html: `<h1>HELLO WORLD</h1>`,
+  css: null,
+  components: null,
+  style: null,
+};
+
 export function Builder() {
   useInjectReducer({ key: 'builder', reducer });
   useInjectSaga({ key: 'builder', saga });
   return (
     <BuilderLayout>
       <div className="builder-workspace">
-        <BuilderEditor />
+        <BuilderEditor
+			DemoPage={DemoPage}
+		/>
       </div>
     </BuilderLayout>
   );
