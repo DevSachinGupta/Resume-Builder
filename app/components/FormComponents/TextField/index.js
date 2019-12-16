@@ -13,10 +13,10 @@ function TextField(props) {
 return (
     <Fragment>
 	
-		<div className="">	
-			<label className="" htmlFor={props.id}>{props.labeltxt}</label>
+		<div className="form-field">	
+			<label className="field-label" htmlFor={props.id}>{props.labeltxt}</label>
 			<input 
-				className={props.className} 
+				className="field-input" //+{props.className } 
 				type={props.type} 
 				placeholder={props.labeltxt}
 				name={props.name}
