@@ -18,7 +18,7 @@ const TemplateHTML = `
                 <div class="col-md-4 col-xs-12" id="SidePannel">
                     <div class="card pmd-card bg-sidebar">
                         <!-- <div class="card-header p-0"> -->
-                            <img src="images/profile_male.png" class="card-image-top img-thumbnail profilePhotoURL" alt="Profile Image">
+                            <img src="https://storage.cloud.google.com/content.netcv.site/images/about.jpg" class="card-image-top img-thumbnail profilePhotoURL" alt="Profile Image">
                             <div class="title mx-auto text-center">
                                 <h4 class="fullName" ></h4>
 								<span>I am a <span class="txt-rotate profileTags" data-period="2000" data-rotate='[ "developer.", "designer.", "freelancer." ]'></span></span>
