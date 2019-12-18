@@ -1,5 +1,7 @@
 
+import React from 'react';
 import Textfield from "../../FormComponents/TextField";
+import PropTypes from 'prop-types';
 
 //  *****  Education Form Component *****
 
@@ -139,5 +141,6 @@ EduInputs.propTypes = {
     handleEduChange: PropTypes.func,
 };
 
+export default EduInputs;
 //  *****  Education Form Component : END  ******
 
