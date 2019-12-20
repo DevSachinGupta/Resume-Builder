@@ -5,22 +5,21 @@
  */
 
 import React, { memo, useEffect } from 'react';
+import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
 import './style.scss';
+
+
 const DemoPage = {
   html: `<h1>HELLO WORLD</h1>`,
   css: null,
   components: null,
   style: null,
 };
-function BuilderEditor(DemoPage) {
-  console.log( DemoPage )
-  console.log(DemoPage.DemoPage)
-  
-  DemoPage = DemoPage.DemoPage
+function BuilderEditor({DemoPage,dispatch}) {
   
   useEffect(() => {
     var editor = grapesjs.init({
@@ -36,6 +35,8 @@ function BuilderEditor(DemoPage) {
         defaults: [],
       },
     });
+    dispatch({type: "UPDATED_EDITOR",editor})
+
   }, []);
   return (
     <div>
@@ -44,6 +45,7 @@ function BuilderEditor(DemoPage) {
   );
 }
 
+
 BuilderEditor.propTypes = {};
 
-export default memo(BuilderEditor);
+export default connect()(memo(BuilderEditor));

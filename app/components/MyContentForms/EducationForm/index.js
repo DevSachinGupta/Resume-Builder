@@ -5,6 +5,7 @@
  */
 
 import React, { memo, useState } from 'react';
+import { connect } from 'react-redux';
 import EduInputs from "./EducationItems";
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
@@ -44,10 +45,12 @@ var editor = grapesjs.init({
   },
   canvas: {
 	styles: [
-	  'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
+    'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
 	]
   }
 });
+
+
 
 
 // ReactDOM.render(< BuilderEditor DemoPage={DemoPage}	/>, document.getElementById('gjs'));
@@ -98,7 +101,7 @@ function InjectJSONUsingCheerio(HTMLString , JSONString){
 
 ///  Main Section
 
-function EducationForm() {
+function EducationForm({dispatch}) {
   var counter = 0;
   const blankEduFields = { title: '', institution: '', fieldOfStudy: '', state: '', country: '', start:'', end:'', summary: ''};
   const [educations, setEducations] = useState([
@@ -148,8 +151,10 @@ function EducationForm() {
 		  'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
 		]
 	  }
-	});
-	
+  });
+  console.log(editor)
+  console.log(dispatch)
+	dispatch({type: "UPDATED_EDITOR",editor1})
 
   };
 
@@ -202,4 +207,4 @@ function EducationForm() {
 
 EducationForm.propTypes = {};
 
-export default memo(EducationForm);
+export default connect()(memo(EducationForm));
