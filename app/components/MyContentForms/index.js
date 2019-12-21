@@ -52,7 +52,11 @@ export const getModalFooter = modelId => {
     case 'personalDetails':
       return [<Button>Save Details</Button>];
     default:
-      break;
+      return [
+        <Button fullWidth type="primary">
+          Save Details
+        </Button>,
+      ];
   }
 };
 export const getModalHeader = modelId => {

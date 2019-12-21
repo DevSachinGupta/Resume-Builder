@@ -11,7 +11,6 @@
     align-items: center;
     input {
       padding: 6px 12px;
-      border: 1px solid $BORDER_GREY;
       border-radius: 2px;
       @include font();
       &:focus {

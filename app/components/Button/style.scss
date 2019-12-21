@@ -1,4 +1,6 @@
 @import '../../commonStyles/mixins.scss';
+@import '../../styles/app.scss';
+
 .circularButton {
   padding: 12px;
   border-radius: 20em;
@@ -15,10 +17,17 @@
     transition: 200ms ease-in;
   }
 }
-.fullWidth{
- width: 100%; 
+.fullWidth {
+  width: 100%;
 }
 .primary {
   background: #38b2ac;
 }
-button:focus {outline:0;}
+.flat {
+  &:hover {
+    transition: 200ms ease-in;
+  }
+}
+button:focus {
+  outline: 0;
+}
