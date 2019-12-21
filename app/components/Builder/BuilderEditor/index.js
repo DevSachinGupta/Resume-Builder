@@ -17,6 +17,7 @@ const DemoPage = {
   style: null,
 };
 function BuilderEditor() {
+  useEffect(() => {}, []);
   useEffect(() => {
     grapesjs.init({
       container: '#gjs',

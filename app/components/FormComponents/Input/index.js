@@ -13,7 +13,12 @@ function Input(props) {
   return (
     <div className={cx('inputWrapper')}>
       <div className="label">{props.label}</div>
-      <div className={cx('inputContainer', { fullWidth: !props.fullWidth })}>
+      <div
+        className={cx('inputContainer', {
+          fullWidth: !props.fullWidth,
+          error: !props.error,
+        })}
+      >
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}

@@ -1,6 +1,9 @@
-// import { take, call, put, select } from 'redux-saga/effects';
-
+import { takeLatest, call, put, select } from 'redux-saga/effects';
+import { GET_DEFAULT_THEME } from './constants';
 // Individual exports for testing
 export default function* builderSaga() {
-  // See example in containers/HomePage/saga.js
+  yield takeLatest(GET_DEFAULT_THEME, getThemeDetails);
+}
+function* getThemeDetails() {
+  console.log('HELLO WORLD');
 }

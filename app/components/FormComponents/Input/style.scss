@@ -1,9 +1,9 @@
 @import '../../../styles/app.scss';
 .inputWrapper {
-    margin-bottom: 12px;
+  margin-bottom: 12px;
   .label {
     padding: 4px 0px;
-    //   @include padding()
+    @include font();
   }
   .inputContainer {
     border-radius: 4px;
@@ -12,7 +12,7 @@
     input {
       padding: 6px 12px;
       border: 1px solid $BORDER_GREY;
-      border-radius: 4px;
+      border-radius: 2px;
       @include font();
       &:focus {
         outline: none;
@@ -21,6 +21,9 @@
     .inputIcon {
       padding-left: 12px;
     }
+  }
+  .error {
+      border: 1px solid red;
   }
   .fullWidth {
     width: 100%;
