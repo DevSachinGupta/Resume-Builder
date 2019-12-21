@@ -15,8 +15,8 @@ function Input(props) {
       <div className="label">{props.label}</div>
       <div
         className={cx('inputContainer', {
-          fullWidth: !props.fullWidth,
-          error: !props.error,
+          fullWidth: props.fullWidth,
+          error: props.error,
         })}
       >
         {props.inputIcon && (
