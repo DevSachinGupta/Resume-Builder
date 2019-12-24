@@ -6,58 +6,21 @@
 
 import React, { memo, useState } from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { makeUpdateEditorState } from 'containers/Builder/selectors';
+import { updateEditorState } from 'containers/Builder/actions';
 import EduInputs from "./EducationItems";
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-
-// ***** load template on builder
-console.log("inside render ...")
-
-import BuilderEditor from 'components/Builder/BuilderEditor';
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
-import ReactDOM from 'react-dom';
-
-
-import TemplateHTML from '../../CheerioComponent/Template_1/Template/index.js';
-import TemplateCSS from '../../CheerioComponent/Template_1/Template/css/style.js';
-
-// function GenerateEditor(TemplateHTML, TemplateCSS ){
-const DemoPage = {
-  html: TemplateHTML,
-  css: TemplateCSS,
-  components: null,
-  style: null,
-}; 
-
-var editor = grapesjs.init({
-  container: '#gjs',
-  width: '82vw',
-  height: 'calc(100vh - 64px)',
-  components: DemoPage.components || DemoPage.html,
-  style: DemoPage.style || DemoPage.css,
-  storageManager: {
-	autoload: false,
-  },
-  panels: {
-	defaults: [],
-  },
-  canvas: {
-	styles: [
-    'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
-	]
-  }
-});
-
-
-
-
-// ReactDOM.render(< BuilderEditor DemoPage={DemoPage}	/>, document.getElementById('gjs'));
-
-//  ***** Cheerio Component :START *****
 import cheerio from 'cheerio';
 
+console.log("inside render ...")
+
+//  ***** Cheerio Component :START *****
 function InjectJSONUsingCheerio(HTMLString , JSONString){
 	console.log("inside convert");
 	var $ = cheerio.load(HTMLString);
@@ -97,11 +60,9 @@ function InjectJSONUsingCheerio(HTMLString , JSONString){
 	return $.html();
 }
 
-//  *****  Cheerio Component :END ******
-
 ///  Main Section
 
-function EducationForm({dispatch}) {
+function EducationForm({editor_state , dispatch}) {
   var counter = 0;
   const blankEduFields = { title: '', institution: '', fieldOfStudy: '', state: '', country: '', start:'', end:'', summary: ''};
   const [educations, setEducations] = useState([
@@ -109,52 +70,51 @@ function EducationForm({dispatch}) {
   ]);
   
   const handlePrevious = () => {
-	setEducations([...educations, { ...blankEduFields }]); 
+	  setEducations([...educations, { ...blankEduFields }]); 
   };
   
   const addMore = () => {
-	setEducations([...educations, { ...blankEduFields }]); 
+	  setEducations([...educations, { ...blankEduFields }]); 
   };
   
   const handleSave = () => {
-	const updatedEdu = [...educations];
-	var history = { history : updatedEdu} 
-	var JSONString = JSON.stringify( history );
-	
-	var HTMLString = editor.getHtml();
-	var CSString = editor.getCss();	
-	var ConvertedHTML = InjectJSONUsingCheerio( HTMLString , JSONString );
+    console.log(editor_state,"This is the editor_state:Edu")
+      
+    const updatedEdu = [...educations];
+    var history = { history : updatedEdu} 
+    var JSONString = JSON.stringify( history );
+    var HTMLString = editor_state.getHtml();
+    var TemplateCSS = editor_state.getCss();	
+    var ConvertedHTML = InjectJSONUsingCheerio( HTMLString , JSONString );
 
-	// var editor = GenerateEditor( ConvertedHTML, TemplateCSS );
-	
-	const DemoPage = {
-	  html: ConvertedHTML,
-	  css: TemplateCSS,
-	  components: null,
-	  style: null,
-	}; 
+    // var editor = GenerateEditor( ConvertedHTML, TemplateCSS );
+    
+    const DemoPage = {
+      html: ConvertedHTML,
+      css: TemplateCSS,
+      components: null,
+      style: null,
+    }; 
 
-	var editor1 = grapesjs.init({
-	  container: '#gjs',
-	  width: '82vw',
-	  height: 'calc(100vh - 64px)',
-	  components: DemoPage.components || DemoPage.html,
-	  style: DemoPage.style || DemoPage.css,
-	  storageManager: {
-		autoload: false,
-	  },
-	  panels: {
-		defaults: [],
-	  },
-	  canvas: {
-		styles: [
-		  'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
-		]
-	  }
-  });
-  console.log(editor)
-  console.log(dispatch)
-	dispatch({type: "UPDATED_EDITOR",editor1})
+    var editor = grapesjs.init({
+      container: '#gjs',
+      width: '82vw',
+      height: 'calc(100vh - 64px)',
+      components: DemoPage.components || DemoPage.html,
+      style: DemoPage.style || DemoPage.css,
+      storageManager: {
+      autoload: false,
+      },
+      panels: {
+      defaults: [],
+      },
+      canvas: {
+      styles: [
+        'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
+      ]
+      }
+    });
+    dispatch(updateEditorState(editor))
 
   };
 
@@ -173,17 +133,12 @@ function EducationForm({dispatch}) {
     <div>
       {educations.map((item ,idx ) => (
         <div >
-          {/* <label for={item.titleId}>{item.lable}</label>
-          <input type="text" placeholder={item.lable} id={item.titleId}/> */}
-		  
-			<EduInputs
-				key={`field-${idx}`}
-				idx={idx}
-				educations={educations}
-				handleEduChange={handleEduChange}
-			/>
-		  
-			
+          <EduInputs
+            key={`field-${idx}`}
+            idx={idx}
+            educations={educations}
+            handleEduChange={handleEduChange}
+          />
         </div>
       ))}
       <button type="button" onClick={handlePrevious}>
@@ -207,4 +162,17 @@ function EducationForm({dispatch}) {
 
 EducationForm.propTypes = {};
 
-export default connect()(memo(EducationForm));
+const mapStateToProps = createStructuredSelector({
+  editor_state : makeUpdateEditorState(),
+});
+const mapDispatchToProps = null;
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+const withCompose = compose(
+  withConnect,
+  memo,
+);
+export default withCompose(EducationForm);
+

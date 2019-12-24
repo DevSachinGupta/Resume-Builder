@@ -8,6 +8,7 @@ import {
   DEFAULT_ACTION,
   HANDLE_SIDEBAR_STATE,
   HANDLE_SECONDARY_SIDEBAR_STATE,
+  UPDATE_EDITOR_STATE,
 } from './constants';
 
 export function defaultAction() {
@@ -31,3 +32,13 @@ export function toggleSecondarySidebar() {
     type: HANDLE_SECONDARY_SIDEBAR_STATE,
   };
 }
+/**
+ * @description function to update editor state
+ */
+export function updateEditorState(editor_state) {
+  return {
+    type: UPDATE_EDITOR_STATE,
+    editor_state,
+  };
+}
+

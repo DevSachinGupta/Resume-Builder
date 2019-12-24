@@ -6,21 +6,28 @@
 
 import React, { memo, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { makeUpdateEditorState } from 'containers/Builder/selectors';
+import { updateEditorState } from 'containers/Builder/actions';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
 import './style.scss';
 
+import TemplateHTML from '../../CheerioComponent/Template_1/Template/index.js';
+import TemplateCSS from '../../CheerioComponent/Template_1/Template/css/style.js';
 
+// function GenerateEditor(TemplateHTML, TemplateCSS ){
 const DemoPage = {
-  html: `<h1>HELLO WORLD</h1>`,
-  css: null,
+  html: TemplateHTML,
+  css: TemplateCSS,
   components: null,
   style: null,
-};
-function BuilderEditor({DemoPage,dispatch}) {
-  
+}; 
+function BuilderEditor({editor_state , dispatch}) {
+  console.log(editor_state,"This is the editor_state:Editor")
   useEffect(() => {
     var editor = grapesjs.init({
       container: '#gjs',
@@ -29,13 +36,18 @@ function BuilderEditor({DemoPage,dispatch}) {
       components: DemoPage.components || DemoPage.html,
       style: DemoPage.style || DemoPage.css,
       storageManager: {
-        autoload: false,
+      autoload: false,
       },
       panels: {
-        defaults: [],
+      defaults: [],
       },
+      canvas: {
+      styles: [
+        'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
+      ]
+      }
     });
-    dispatch({type: "UPDATED_EDITOR",editor})
+    dispatch(updateEditorState(editor))
 
   }, []);
   return (
@@ -45,7 +57,18 @@ function BuilderEditor({DemoPage,dispatch}) {
   );
 }
 
-
 BuilderEditor.propTypes = {};
 
-export default connect()(memo(BuilderEditor));
+const mapStateToProps = createStructuredSelector({
+  editor_state : makeUpdateEditorState(),
+});
+const mapDispatchToProps = null;
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+const withCompose = compose(
+  withConnect,
+  memo,
+);
+export default withCompose(BuilderEditor);

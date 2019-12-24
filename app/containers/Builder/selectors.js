@@ -30,9 +30,15 @@ const makeSelectIsSecondarySidebarOpen = () =>
     selectBuilderDomain,
     substate => substate.isSecondarySidebarOpen,
   );
+const makeUpdateEditorState = () =>
+  createSelector(
+    selectBuilderDomain,
+    substate => substate.editor_state,
+  );
 export default makeSelectBuilder;
 export {
   selectBuilderDomain,
   makeSelectIsSidebarOpen,
   makeSelectIsSecondarySidebarOpen,
+  makeUpdateEditorState,
 };
