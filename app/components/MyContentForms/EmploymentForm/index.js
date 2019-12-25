@@ -28,9 +28,6 @@ function EmploymentForm({editor_state , resume_json_state , dispatch}) {
   };
   
   const handleSave = () => {
-    console.log(editor_state,"This is the editor_state:Emp")
-    console.log(resume_json_state,"This is the resume_json_state:Edu")
-
     const updatedEmp = [...employments];
     var history = { history : updatedEmp} 
     var JSONString = JSON.stringify( history );
@@ -42,7 +39,7 @@ function EmploymentForm({editor_state , resume_json_state , dispatch}) {
     
     const DemoPage = {
       html: ConvertedHTML,
-      css: TemplateCSS,
+      css: '{9}',
       components: null,
       style: null,
     }; 

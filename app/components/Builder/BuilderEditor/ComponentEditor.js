@@ -2,7 +2,7 @@
 import grapesjs from 'grapesjs';
 
 export function ComponentEditor(DemoPage) {
-    console.log(DemoPage,"This is the editor_state:component")
+    console.log("This is the editor_state:component")
     var editor = grapesjs.init({
     container: '#gjs',
     width: '82vw',

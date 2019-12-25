@@ -8,7 +8,7 @@ import React, { memo, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { makeUpdateDemoPageState , makeUpdateEditorState } from 'containers/Builder/selectors';
+import { makeUpdateResumeJSONState , makeUpdateDemoPageState , makeUpdateEditorState } from 'containers/Builder/selectors';
 import { updateTemplateNumberState , updateEditorState } from 'containers/Builder/actions';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
@@ -20,19 +20,18 @@ import TemplateHTML from '../../CheerioComponent/templates/Template_1/html.js';
 
 const template_number = '1'
 
-const DemoPage = {
+var DemoPage = {
   html: TemplateHTML,
   css: '{..}',
   components: null,
   style: null,
 }; 
 
-function BuilderEditor({editor_state , demopage_state ,  dispatch}) {
-  console.log(editor_state,"This is the editor_state:Editor")
-  console.log(demopage_state,"This is the editor_state:Editor")
-  console.log(DemoPage,"This is the editor_state:Editor")
-  // DemoPage=demopage_state || DemoPage
-  // var DemoPage = demopage_state
+function BuilderEditor({editor_state , demopage_state ,  resume_json_state , dispatch}) {
+  console.log(resume_json_state,"This is the resume_state :Editor")
+  // console.log(demopage_state,"This is the demopage:Editor")
+  DemoPage=demopage_state || DemoPage
+  // console.log(DemoPage,"This is the demo:Editor")
   useEffect(() => {
     console.log("calling editor dispatch : inside effect")
     var editor = grapesjs.init({
@@ -55,9 +54,8 @@ function BuilderEditor({editor_state , demopage_state ,  dispatch}) {
       ]
       }
     });
-    console.log("calling editor dispatch")
     dispatch(updateEditorState(editor))
-  }, []);
+  }, [ ]);
   // dispatch(updateTemplateNumberState(template_number))
   return (
     <div>
@@ -71,6 +69,7 @@ BuilderEditor.propTypes = {};
 const mapStateToProps = createStructuredSelector({
   editor_state : makeUpdateEditorState(),
   demopage_state : makeUpdateDemoPageState(),
+  resume_json_state : makeUpdateResumeJSONState(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(
