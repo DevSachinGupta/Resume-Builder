@@ -10,6 +10,7 @@ import {
   HANDLE_SECONDARY_SIDEBAR_STATE,
   GET_DEFAULT_THEME,
   SET_DEFAULT_THEME,
+  UPDATE_EDITOR_STATE,
 } from './constants';
 
 export const initialState = {
@@ -19,6 +20,7 @@ export const initialState = {
     data: null,
     isLoaded: false,
   },
+  editor_state: '',
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -38,6 +40,9 @@ const builderReducer = (state = initialState, action) =>
         break;
       case HANDLE_SECONDARY_SIDEBAR_STATE:
         draft.isSecondarySidebarOpen = !state.isSecondarySidebarOpen;
+        break;
+      case UPDATE_EDITOR_STATE:
+        draft.editor_state = action.editor_state;
         break;
       default:
         break;

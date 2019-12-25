@@ -9,6 +9,7 @@ import {
   HANDLE_SIDEBAR_STATE,
   HANDLE_SECONDARY_SIDEBAR_STATE,
   GET_DEFAULT_THEME,
+  UPDATE_EDITOR_STATE,
 } from './constants';
 
 export function defaultAction() {
@@ -41,3 +42,13 @@ export function getBuilderTheme(theme) {
     theme,
   };
 }
+ /** 
+  * @description function to update editor state
+ */
+export function updateEditorState(editor_state) {
+  return {
+    type: UPDATE_EDITOR_STATE,
+    editor_state,
+  };
+}
+

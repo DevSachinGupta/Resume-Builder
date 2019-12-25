@@ -23,7 +23,7 @@ export function Builder() {
   return (
     <BuilderLayout>
       <div className="builder-workspace">
-        <BuilderEditor />
+          <BuilderEditor />  
       </div>
     </BuilderLayout>
   );
