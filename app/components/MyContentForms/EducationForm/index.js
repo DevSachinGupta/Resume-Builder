@@ -8,7 +8,7 @@ import React, { memo, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { makeUpdateEditorState } from 'containers/Builder/selectors';
+import { makeUpdateResumeJSONState , makeUpdateEditorState } from 'containers/Builder/selectors';
 import { updateEditorState , updateDemoPageState , updateResumeJSONState } from 'containers/Builder/actions';
 import { InjectJSONUsingCheerioEducation } from 'components/CheerioComponent/templates/template_1'
 import EduInputs from './EducationItems';
@@ -19,13 +19,12 @@ import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEdito
 
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
-import { Builder } from '../../../containers/Builder';
 
 console.log("inside render ...")
 
 ///  Main Section
 
-function EducationForm({editor_state , dispatch}) {
+function EducationForm({editor_state , resume_json_state , dispatch}) {
   var counter = 0;
   const blankEduFields = { title: '', institution: '', fieldOfStudy: '', state: '', country: '', start:'', end:'', summary: ''};
   const [educations, setEducations] = useState([
@@ -42,6 +41,8 @@ function EducationForm({editor_state , dispatch}) {
   
   const handleSave = () => {
     console.log(editor_state,"This is the editor_state:Edu")
+    console.log(resume_json_state,"This is the resume_json_state:Edu")
+      
       
     const updatedEdu = [...educations];
     var history = { history : updatedEdu} 
@@ -81,7 +82,7 @@ function EducationForm({editor_state , dispatch}) {
     
     dispatch(updateEditorState(ComponentEditor(DemoPage)))
     // dispatch(updateDemoPageState(DemoPage))
-    dispatch(updateResumeJSONState(JSONString))
+    dispatch(updateResumeJSONState(history,"Education"))
   
 
   };
@@ -132,6 +133,7 @@ EducationForm.propTypes = {};
 
 const mapStateToProps = createStructuredSelector({
   editor_state : makeUpdateEditorState(),
+  resume_json_state : makeUpdateResumeJSONState(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(

@@ -48,10 +48,11 @@ export function updateEditorState(editor_state) {
 /**
  * @description function to update resume_json state
  */
-export function updateResumeJSONState(resume_json_state) {
+export function updateResumeJSONState(resume_json_state,section_key_state) {
   return {
     type: UPDATE_RESUMEJSON_STATE,
     resume_json_state,
+    section_key_state,
   };
 }
 /**

@@ -18,7 +18,7 @@ export const initialState = {
   isSidebarOpen: true,
   isSecondarySidebarOpen: false,
   editor_state: null,
-  resume_json_state: null,
+  resume_json_state: {},
   demopage_state: null,
   template_number_state: null,
 };
@@ -39,7 +39,8 @@ const builderReducer = (state = initialState, action) =>
         draft.editor_state = action.editor_state;
         break;
       case UPDATE_RESUMEJSON_STATE:
-        draft.resume_json_state = action.resume_json_state;
+        console.log(action," inside reducer")
+        draft.resume_json_state = {...state.resume_json_state, [action.section_key_state]: action.resume_json_state }
         break;
       case UPDATE_DEMOPAGE_STATE:
         draft.demopage_state = action.demopage_state;
