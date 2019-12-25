@@ -1,24 +1,38 @@
-import React from 'react';
-import cx from 'classnames';
+import React, { useState } from 'react';
 import './style.scss';
-import Button from '../../Button';
 import Dropdown from '../../Dropdown';
 
-const options=[
-  'ABC',
-  'ABC',
-  'ABC',
-  'ABC',
-  'ABC',
-  'ABC',
-  'ABC',
-  'ABC'
+const options = [
+  {
+    key: 'abc',
+    value: 'ABC',
+  },
+  {
+    key: 'a',
+    value: 'A',
+  },
+  {
+    key: 'b',
+    value: 'B',
+  },
+  {
+    key: 'c',
+    value: 'C',
+  },
+  {
+    key: 'abcd',
+    value: 'ABCD',
+  },
 ];
 function SkillsForm() {
-  return <React.Fragment>
-    <Dropdown options={options} />
-    <Button type="primary" fullWidth className={cx('addMoreBtn shadow-md')}>Add Another Skill</Button>
-  </React.Fragment>;
+  const handleOptionSelect = selectedOption => {
+    console.log(selectedOption);
+  };
+  return (
+    <React.Fragment>
+      <Dropdown onSelect={handleOptionSelect} options={options} />
+    </React.Fragment>
+  );
 }
 
 export default SkillsForm;
