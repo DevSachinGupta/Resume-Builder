@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { makeUpdateEditorState } from 'containers/Builder/selectors';
-import { updateDemoPageState , updateResumeJSONState } from 'containers/Builder/actions';
+import { updateEditorState , updateDemoPageState , updateResumeJSONState } from 'containers/Builder/actions';
 import { InjectJSONUsingCheerioEmployement } from 'components/CheerioComponent/templates/template_1'
 import EmpInputs from "./EmploymentItems";
+import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
 
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
@@ -45,25 +46,27 @@ function EmploymentForm({editor_state , dispatch}) {
       style: null,
     }; 
 
-    var editor = grapesjs.init({
-      container: '#gjs',
-      width: '82vw',
-      height: 'calc(100vh - 64px)',
-      components: DemoPage.components || DemoPage.html,
-      style: DemoPage.style || DemoPage.css,
-      storageManager: {
-      autoload: false,
-      },
-      panels: {
-      defaults: [],
-      },
-      canvas: {
-      styles: [
-        'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
-      ]
-      }
-    });
-    // dispatch(updateEditorState(editor))
+    // var editor = grapesjs.init({
+    //   container: '#gjs',
+    //   width: '82vw',
+    //   height: 'calc(100vh - 64px)',
+    //   components: DemoPage.components || DemoPage.html,
+    //   style: DemoPage.style || DemoPage.css,
+    //   storageManager: {
+    //   autoload: false,
+    //   },
+    //   panels: {
+    //   defaults: [],
+    //   },
+    //   canvas: {
+    //   styles: [
+    //     'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
+    //   ]
+    //   }
+    // });
+    dispatch(updateEditorState(ComponentEditor(DemoPage)))
+    dispatch(updateDemoPageState(DemoPage))
+    dispatch(updateResumeJSONState(JSONString))
 
   };
 

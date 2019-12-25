@@ -38,7 +38,7 @@ export function InjectJSONUsingCheerioEducation(HTMLString , JSONString){
 }
 
 /* ##########  Employment  ###########3 */
-export function InjectJSONUsingCheerioEmployment(HTMLString , JSONString){
+export function InjectJSONUsingCheerioEmployement(HTMLString , JSONString){
   var $ = cheerio.load(HTMLString);
   var JSONData = JSON.parse(JSONString);
   var list=[];

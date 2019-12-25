@@ -9,14 +9,17 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { makeUpdateEditorState } from 'containers/Builder/selectors';
-import { updateDemoPageState , updateResumeJSONState } from 'containers/Builder/actions';
+import { updateEditorState , updateDemoPageState , updateResumeJSONState } from 'containers/Builder/actions';
 import { InjectJSONUsingCheerioEducation } from 'components/CheerioComponent/templates/template_1'
-import EduInputs from "./EducationItems";
+import EduInputs from './EducationItems';
+import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
+
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
+import { Builder } from '../../../containers/Builder';
 
 console.log("inside render ...")
 
@@ -54,7 +57,29 @@ function EducationForm({editor_state , dispatch}) {
       components: null,
       style: null,
     }; 
+
+    // var editor = grapesjs.init({
+    //   container: '#gjs',
+    //   width: '82vw',
+    //   height: 'calc(100vh - 64px)',
+    //   components: DemoPage.components || DemoPage.html,
+    //   style: DemoPage.style || DemoPage.css,
+    //   storageManager: {
+    //   autoload: false,
+    //   },
+    //   panels: {
+    //   defaults: [],
+    //   },
+    //   canvas: {
+    //   styles: [
+    //     'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
+    //     // 'https://res.cloudinary.com/rb-app/raw/upload/v1577214082/commons/css/style_t9mzif.css',
+    //     'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style.css',
+    //   ]
+    //   }
+    // });
     
+    dispatch(updateEditorState(ComponentEditor(DemoPage)))
     dispatch(updateDemoPageState(DemoPage))
     dispatch(updateResumeJSONState(JSONString))
   
