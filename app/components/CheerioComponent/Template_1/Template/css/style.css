@@ -5,7 +5,7 @@
 
 html, body {
     font-family: 'Poppins', 'Roboto', sans-serif;
-	background-color: #eae8e7;
+	background-color: #eae8e7 !important;
 }
 .social-icons {
     font-size: 30px;

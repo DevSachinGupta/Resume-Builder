@@ -3,50 +3,12 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { makeUpdateEditorState } from 'containers/Builder/selectors';
-import { updateEditorState } from 'containers/Builder/actions';
+import { updateDemoPageState , updateResumeJSONState } from 'containers/Builder/actions';
+import { InjectJSONUsingCheerioEmployement } from 'components/CheerioComponent/templates/template_1'
 import EmpInputs from "./EmploymentItems";
 
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
-import cheerio from 'cheerio';
-
-//  ***** Cheerio Component :START *****
-function InjectJSONUsingCheerio(HTMLString , JSONString){
-	console.log("inside convert");
-	var $ = cheerio.load(HTMLString);
-	var JSONData = JSON.parse(JSONString);
-	console.log(JSONData);
-	console.log(JSONString);
-	/* ##########  Employment  ###########3 */
-  var list=[];
-  var d = $("#EmploymentSection").clone();
-  var element = JSONData["history"];
-  var keys = Object.keys(element);
-    
-  if( d.html() && keys.length!=0  ){
-    for(var i = 0; i < keys.length; i++){
-      var temp = d.find("List").clone();
-      var inner_keys = Object.keys(element[i]);
-      for(var j = 0; j < inner_keys.length; j++){
-        if(inner_keys[j] == "position"){ 	temp.find(".employmentPosition").text(element[i].position);     }
-        else if(inner_keys[j] == "employer"){   temp.find(".employmentEmployer").text(element[i].employer);   } 
-        else if(inner_keys[j] == "state"){   temp.find(".employmentState").text(element[i].state);   } 
-        else if(inner_keys[j] == "country"){   temp.find(".employmentCountry").text(element[i].country);   } 
-        else if(inner_keys[j] == "summary"){   temp.find(".employmentSummary").text(element[i].summary);   } 
-        else if(inner_keys[j] == "start"){   temp.find(".employmentStart").text(element[i].start);   } 
-        else if(inner_keys[j] == "end"){   temp.find(".employmentEnd").text(element[i].end);   } 
-      }
-      list.push(temp.html());
-    }
-    $("#EmploymentSection List").html(list.join('\n'))
-  }
-  else{
-    console.log("Employment NULL")
-    $("#EmploymentSection").replaceWith("")
-  }
-	console.log(list.join('\n'));
-	return $.html();
-}
 
 ///  Main Section
 function EmploymentForm({editor_state , dispatch}) {
@@ -72,7 +34,7 @@ function EmploymentForm({editor_state , dispatch}) {
     var JSONString = JSON.stringify( history );
     var HTMLString = editor_state.getHtml();
     var TemplateCSS = editor_state.getCss();	
-    var ConvertedHTML = InjectJSONUsingCheerio( HTMLString , JSONString );
+    var ConvertedHTML = InjectJSONUsingCheerioEmployement( HTMLString , JSONString );
 
     // var editor = GenerateEditor( ConvertedHTML, TemplateCSS );
     
@@ -101,7 +63,7 @@ function EmploymentForm({editor_state , dispatch}) {
       ]
       }
     });
-    dispatch(updateEditorState(editor))
+    // dispatch(updateEditorState(editor))
 
   };
 

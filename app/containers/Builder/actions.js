@@ -9,6 +9,10 @@ import {
   HANDLE_SIDEBAR_STATE,
   HANDLE_SECONDARY_SIDEBAR_STATE,
   UPDATE_EDITOR_STATE,
+  UPDATE_RESUMEJSON_STATE,
+  UPDATE_DEMOPAGE_STATE,
+  UPDATE_TEMPLATE_NUMBER_STATE,
+
 } from './constants';
 
 export function defaultAction() {
@@ -41,4 +45,30 @@ export function updateEditorState(editor_state) {
     editor_state,
   };
 }
-
+/**
+ * @description function to update resume_json state
+ */
+export function updateResumeJSONState(resume_json_state) {
+  return {
+    type: UPDATE_RESUMEJSON_STATE,
+    resume_json_state,
+  };
+}
+/**
+ * @description function to update demopage state
+ */
+export function updateDemoPageState(demopage_state) {
+  return {
+    type: UPDATE_DEMOPAGE_STATE,
+    demopage_state,
+  };
+}
+/**
+ * @description function to update template_number state
+ */
+export function updateTemplateNumberState(template_number_state) {
+  return {
+    type: UPDATE_TEMPLATE_NUMBER_STATE,
+    template_number_state,
+  };
+}
