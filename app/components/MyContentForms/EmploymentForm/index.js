@@ -65,7 +65,7 @@ function EmploymentForm({editor_state , dispatch}) {
     //   }
     // });
     dispatch(updateEditorState(ComponentEditor(DemoPage)))
-    dispatch(updateDemoPageState(DemoPage))
+    // dispatch(updateDemoPageState(DemoPage))
     dispatch(updateResumeJSONState(JSONString))
 
   };
