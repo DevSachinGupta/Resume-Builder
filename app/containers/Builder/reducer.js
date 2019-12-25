@@ -11,6 +11,9 @@ import {
   GET_DEFAULT_THEME,
   SET_DEFAULT_THEME,
   UPDATE_EDITOR_STATE,
+  UPDATE_RESUMEJSON_STATE,
+  UPDATE_DEMOPAGE_STATE,
+  UPDATE_TEMPLATE_NUMBER_STATE,
 } from './constants';
 
 export const initialState = {
@@ -20,7 +23,10 @@ export const initialState = {
     data: null,
     isLoaded: false,
   },
-  editor_state: '',
+  editor_state: null,
+  resume_json_state: {},
+  demopage_state: null,
+  template_number_state: null,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -43,6 +49,16 @@ const builderReducer = (state = initialState, action) =>
         break;
       case UPDATE_EDITOR_STATE:
         draft.editor_state = action.editor_state;
+        break;
+      case UPDATE_RESUMEJSON_STATE:
+        console.log(action," inside reducer")
+        draft.resume_json_state = {...state.resume_json_state, [action.section_key_state]: action.resume_json_state }
+        break;
+      case UPDATE_DEMOPAGE_STATE:
+        draft.demopage_state = action.demopage_state;
+        break;
+      case UPDATE_TEMPLATE_NUMBER_STATE:
+        draft.template_number_state = action.template_number_state;
         break;
       default:
         break;

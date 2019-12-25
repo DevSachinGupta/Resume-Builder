@@ -2,54 +2,17 @@ import React,{ memo, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { makeUpdateEditorState } from 'containers/Builder/selectors';
-import { updateEditorState } from 'containers/Builder/actions';
+import { makeUpdateResumeJSONState , makeUpdateEditorState } from 'containers/Builder/selectors';
+import { updateEditorState , updateDemoPageState , updateResumeJSONState } from 'containers/Builder/actions';
+import { InjectJSONUsingCheerioEmployement } from 'components/CheerioComponent/templates/template_1'
 import EmpInputs from "./EmploymentItems";
+import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
 
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
-import cheerio from 'cheerio';
-
-//  ***** Cheerio Component :START *****
-function InjectJSONUsingCheerio(HTMLString , JSONString){
-	console.log("inside convert");
-	var $ = cheerio.load(HTMLString);
-	var JSONData = JSON.parse(JSONString);
-	console.log(JSONData);
-	console.log(JSONString);
-	/* ##########  Employment  ###########3 */
-  var list=[];
-  var d = $("#EmploymentSection").clone();
-  var element = JSONData["history"];
-  var keys = Object.keys(element);
-    
-  if( d.html() && keys.length!=0  ){
-    for(var i = 0; i < keys.length; i++){
-      var temp = d.find("List").clone();
-      var inner_keys = Object.keys(element[i]);
-      for(var j = 0; j < inner_keys.length; j++){
-        if(inner_keys[j] == "position"){ 	temp.find(".employmentPosition").text(element[i].position);     }
-        else if(inner_keys[j] == "employer"){   temp.find(".employmentEmployer").text(element[i].employer);   } 
-        else if(inner_keys[j] == "state"){   temp.find(".employmentState").text(element[i].state);   } 
-        else if(inner_keys[j] == "country"){   temp.find(".employmentCountry").text(element[i].country);   } 
-        else if(inner_keys[j] == "summary"){   temp.find(".employmentSummary").text(element[i].summary);   } 
-        else if(inner_keys[j] == "start"){   temp.find(".employmentStart").text(element[i].start);   } 
-        else if(inner_keys[j] == "end"){   temp.find(".employmentEnd").text(element[i].end);   } 
-      }
-      list.push(temp.html());
-    }
-    $("#EmploymentSection List").html(list.join('\n'))
-  }
-  else{
-    console.log("Employment NULL")
-    $("#EmploymentSection").replaceWith("")
-  }
-	console.log(list.join('\n'));
-	return $.html();
-}
 
 ///  Main Section
-function EmploymentForm({editor_state , dispatch}) {
+function EmploymentForm({editor_state , resume_json_state , dispatch}) {
   var counter = 0;
   const blankEmpFields = { position: '', employer: '', state: '', country: '', start:'', end:'', summary: ''};  
   const [employments, setEmployments] = useState([
@@ -66,13 +29,14 @@ function EmploymentForm({editor_state , dispatch}) {
   
   const handleSave = () => {
     console.log(editor_state,"This is the editor_state:Emp")
-      
+    console.log(resume_json_state,"This is the resume_json_state:Edu")
+
     const updatedEmp = [...employments];
     var history = { history : updatedEmp} 
     var JSONString = JSON.stringify( history );
     var HTMLString = editor_state.getHtml();
     var TemplateCSS = editor_state.getCss();	
-    var ConvertedHTML = InjectJSONUsingCheerio( HTMLString , JSONString );
+    var ConvertedHTML = InjectJSONUsingCheerioEmployement( HTMLString , JSONString );
 
     // var editor = GenerateEditor( ConvertedHTML, TemplateCSS );
     
@@ -83,25 +47,27 @@ function EmploymentForm({editor_state , dispatch}) {
       style: null,
     }; 
 
-    var editor = grapesjs.init({
-      container: '#gjs',
-      width: '82vw',
-      height: 'calc(100vh - 64px)',
-      components: DemoPage.components || DemoPage.html,
-      style: DemoPage.style || DemoPage.css,
-      storageManager: {
-      autoload: false,
-      },
-      panels: {
-      defaults: [],
-      },
-      canvas: {
-      styles: [
-        'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
-      ]
-      }
-    });
-    dispatch(updateEditorState(editor))
+    // var editor = grapesjs.init({
+    //   container: '#gjs',
+    //   width: '82vw',
+    //   height: 'calc(100vh - 64px)',
+    //   components: DemoPage.components || DemoPage.html,
+    //   style: DemoPage.style || DemoPage.css,
+    //   storageManager: {
+    //   autoload: false,
+    //   },
+    //   panels: {
+    //   defaults: [],
+    //   },
+    //   canvas: {
+    //   styles: [
+    //     'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
+    //   ]
+    //   }
+    // });
+    dispatch(updateEditorState(ComponentEditor(DemoPage)))
+    // dispatch(updateDemoPageState(DemoPage))
+    dispatch(updateResumeJSONState(history,"Employement"))
 
   };
 
@@ -150,6 +116,7 @@ EmploymentForm.propTypes = {};
 
 const mapStateToProps = createStructuredSelector({
   editor_state : makeUpdateEditorState(),
+  resume_json_state : makeUpdateResumeJSONState(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(
