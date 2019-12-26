@@ -16,12 +16,17 @@ import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
 import './style.scss';
 
-import TemplateHTML from '../../CheerioComponent/templates/Template_1/html.js';
-
 const template_number = '1'
+let TemplateHTML = null;
+// import TemplateHTML from '../../CheerioComponent/templates/template_1/html.js';
+// const TemplateHTML = import(`../../CheerioComponent/templates/template_${template_number}/html.js`)
+TemplateHTML = require(`../../CheerioComponent/templates/template_${template_number}/html.js`)
+// TemplateHTML = React.lazy(() => import(`components/CheerioComponent/templates/template_${template_number}/html.js`));
+// console.log(TemplateHTML.default , "template")
+// import TemplateHTML from importstr;
 
 var DemoPage = {
-  html: TemplateHTML,
+  html: TemplateHTML.default,
   css: '{..}',
   components: null,
   style: null,

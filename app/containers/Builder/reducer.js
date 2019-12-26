@@ -10,6 +10,7 @@ import {
   HANDLE_SECONDARY_SIDEBAR_STATE,
   UPDATE_EDITOR_STATE,
   UPDATE_RESUMEJSON_STATE,
+  UPDATE_CURRENT_EDITABLE_ITEM_ID_STATE,
   UPDATE_DEMOPAGE_STATE,
   UPDATE_TEMPLATE_NUMBER_STATE,
 } from './constants';
@@ -19,6 +20,7 @@ export const initialState = {
   isSecondarySidebarOpen: false,
   editor_state: null,
   resume_json_state: {},
+  currentEditableItemId_state: 0,
   demopage_state: null,
   template_number_state: null,
 };
@@ -40,6 +42,9 @@ const builderReducer = (state = initialState, action) =>
         break;
       case UPDATE_RESUMEJSON_STATE:
         draft.resume_json_state = {...state.resume_json_state, [action.section_key_state]: action.resume_json_state }
+        break;
+      case UPDATE_CURRENT_EDITABLE_ITEM_ID_STATE:
+        draft.currentEditableItemId_state = action.currentEditableItemId_state;
         break;
       case UPDATE_DEMOPAGE_STATE:        
         draft.demopage_state = action.demopage_state;

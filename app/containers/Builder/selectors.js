@@ -40,6 +40,11 @@ const makeUpdateResumeJSONState = () =>
     selectBuilderDomain,
     substate => substate.resume_json_state,
   );
+const makeUpdateCurrentEditableItemId = () =>
+  createSelector(
+    selectBuilderDomain,
+    substate => substate.currentEditableItemId_state,
+  );
 const makeUpdateDemoPageState = () =>
   createSelector(
     selectBuilderDomain,
@@ -57,6 +62,7 @@ export {
   makeSelectIsSecondarySidebarOpen,
   makeUpdateEditorState,
   makeUpdateResumeJSONState,
+  makeUpdateCurrentEditableItemId,
   makeUpdateDemoPageState,
   makeUpdateTemplateNumberState,
 };

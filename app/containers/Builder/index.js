@@ -23,6 +23,7 @@ export function Builder({dispatch}) {
   useInjectReducer({ key: 'builder', reducer });
   useInjectSaga({ key: 'builder', saga });
   dispatch(updateTemplateNumberState(template_number));
+  console.log("inside main builder")
   return (
     <BuilderLayout>
       <div className="builder-workspace">

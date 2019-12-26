@@ -4,6 +4,8 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { makeUpdateResumeJSONState , makeUpdateEditorState } from 'containers/Builder/selectors';
 import { updateEditorState , updateDemoPageState , updateResumeJSONState } from 'containers/Builder/actions';
+import { setModalContent } from 'containers/MyContent/actions';
+import { toggleModal } from 'containers/App/actions';
 import { InjectJSONUsingCheerioEmployement } from 'components/CheerioComponent/templates/template_1'
 import EmpInputs from "./EmploymentItems";
 import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
@@ -20,7 +22,8 @@ function EmploymentForm({editor_state , resume_json_state , dispatch}) {
   ]);
 
   const handlePrevious = () => {
-	  setEmployments([...employments, { ...blankEmpFields }]); 
+    dispatch(toggleModal())
+    dispatch(setModalContent("education"))
   };
   
   const addMore = () => {
@@ -70,7 +73,8 @@ function EmploymentForm({editor_state , resume_json_state , dispatch}) {
 
   const handleSaveAndNext = () => {
     handleSave();
-    setEmployments([...employments, { ...blankEmpFields }]); 
+    dispatch(toggleModal())
+    dispatch(setModalContent("education"))
   };  
   
   const handleEmpChange = (e) => {

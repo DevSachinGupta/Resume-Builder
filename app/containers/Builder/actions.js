@@ -10,6 +10,7 @@ import {
   HANDLE_SECONDARY_SIDEBAR_STATE,
   UPDATE_EDITOR_STATE,
   UPDATE_RESUMEJSON_STATE,
+  UPDATE_CURRENT_EDITABLE_ITEM_ID_STATE,
   UPDATE_DEMOPAGE_STATE,
   UPDATE_TEMPLATE_NUMBER_STATE,
 
@@ -53,6 +54,15 @@ export function updateResumeJSONState(resume_json_state , section_key_state) {
     type: UPDATE_RESUMEJSON_STATE,
     resume_json_state,
     section_key_state,
+  };
+}
+/**
+ * @description function to update current_editable_item_Id
+ */
+export function updateCurrentEditableItemId(currentEditableItemId_state) {
+  return {
+    type: UPDATE_CURRENT_EDITABLE_ITEM_ID_STATE,
+    currentEditableItemId_state,
   };
 }
 /**
