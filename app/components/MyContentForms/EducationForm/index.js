@@ -12,7 +12,8 @@ import { makeUpdateCurrentEditableItemId , makeUpdateResumeJSONState , makeUpdat
 import { updateCurrentEditableItemId , updateEditorState , updateDemoPageState , updateResumeJSONState } from 'containers/Builder/actions';
 import { setModalContent } from 'containers/MyContent/actions';
 import { InjectJSONUsingCheerioEducation } from 'components/CheerioComponent/templates/template_1'
-import EduInputs from './EducationItems';
+import EduInputsEditable from './EducationItemsEditable';
+import EduInputsNonEditable from './EducationItemsNonEditable';
 import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
 import { toggleModal } from 'containers/App/actions';
 
@@ -27,21 +28,21 @@ console.log("inside render ...")
 ///  Main Section
 
 function EducationForm({editor_state , resume_json_state , currentEditableItemId_state , dispatch}) {
-  var counter = 0;
-  var currentEditableItemId = currentEditableItemId_state; 
+  var counter = 0; 
   // console.log("ResumeJSON: ", { ...resume_json_state['Education']['history']} )
   const blankEduFields = { title: '', institution: '', fieldOfStudy: '', state: '', country: '', start:'', end:'', summary: ''};
   const [educations, setEducations] = useState([
      { ...blankEduFields },
   ]);
 
+  // TODO: variables should revert back in Models(in sessions)
   // console.log(educations)
   // console.log({ ...blankEduFields })
   // var data=resume_json_state['Education']['history'][0];
   // var data1=[{...{...{...data}}}]
   // console.log(data1)
 
-  console.log(currentEditableItemId)
+  console.log("curent edit idx: " , currentEditableItemId_state)
   
   const handlePrevious = () => {
 	  setEducations([...educations, { ...blankEduFields }]); 
@@ -49,9 +50,7 @@ function EducationForm({editor_state , resume_json_state , currentEditableItemId
   
   const addMore = () => {
     setEducations([...educations, { ...blankEduFields }]); 
-    currentEditableItemId = educations.length; 
     dispatch(updateCurrentEditableItemId(educations.length))
-    console.log("len add : " , currentEditableItemId)
   };
   
   const handleSave = () => {      
@@ -89,29 +88,43 @@ function EducationForm({editor_state , resume_json_state , currentEditableItemId
 
   const handleRemove = (e) => {
         const updatedEdu = [...educations];
-        console.log("len: " , educations.length -1 ) 
         var updatedEdu1 = updatedEdu.filter((s, sidx) => e.target.dataset.idx != sidx)
         setEducations(updatedEdu1);
-        if(currentEditableItemId >= e.target.dataset.idx){ 
-          currentEditableItemId = updatedEdu1.length - 1 ;
-          dispatch(updateCurrentEditableItemId(currentEditableItemId))
-          console.log("inside if")
+        if(currentEditableItemId_state > e.target.dataset.idx){ 
+          dispatch(updateCurrentEditableItemId(currentEditableItemId_state - 1 ))
         }
-        console.log("len: " , updatedEdu1.length -1 ) 
-        console.log("len: " , currentEditableItemId)
+        if(currentEditableItemId_state == e.target.dataset.idx){ 
+          dispatch(updateCurrentEditableItemId(updatedEdu1.length -1))
+        } 
+    };
+
+  const handleEdit = (e) => {
+        dispatch(updateCurrentEditableItemId(e.target.dataset.idx))
     };
 
   return (
     <div>
       {educations.map((item ,idx ) => (
         <div >
-          <EduInputs
-            key={`field-${idx}`}
-            idx={idx}
-            educations={educations}
-            handleEduChange={handleEduChange}
-            handleRemove={handleRemove}
-          />
+          { currentEditableItemId_state == idx &&
+            <EduInputsEditable
+              key={`field-${idx}`}
+              idx={idx}
+              educations={educations}
+              handleEduChange={handleEduChange}
+              handleRemove={handleRemove}
+            />
+          }
+          { currentEditableItemId_state != idx &&
+            <EduInputsNonEditable
+              key={`field-${idx}`}
+              idx={idx}
+              educations={educations}
+              handleEduChange={handleEduChange}
+              handleRemove={handleRemove}
+              handleEdit={handleEdit}
+            />
+          }
         </div>
       ))}
       <button type="button" onClick={handlePrevious}>
