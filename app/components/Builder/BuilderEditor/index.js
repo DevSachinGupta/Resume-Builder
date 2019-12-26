@@ -22,8 +22,6 @@ let TemplateHTML = null;
 // const TemplateHTML = import(`../../CheerioComponent/templates/template_${template_number}/html.js`)
 TemplateHTML = require(`../../CheerioComponent/templates/template_${template_number}/html.js`)
 // TemplateHTML = React.lazy(() => import(`components/CheerioComponent/templates/template_${template_number}/html.js`));
-// console.log(TemplateHTML.default , "template")
-// import TemplateHTML from importstr;
 
 var DemoPage = {
   html: TemplateHTML.default,
@@ -33,12 +31,9 @@ var DemoPage = {
 }; 
 
 function BuilderEditor({editor_state , demopage_state ,  resume_json_state , dispatch}) {
-  console.log(resume_json_state,"This is the resume_state :Editor")
-  // console.log(demopage_state,"This is the demopage:Editor")
+  console.log(resume_json_state , "This is the resume_state_json")
   DemoPage=demopage_state || DemoPage
-  // console.log(DemoPage,"This is the demo:Editor")
   useEffect(() => {
-    console.log("calling editor dispatch : inside effect")
     var editor = grapesjs.init({
       container: '#gjs',
       width: '82vw',

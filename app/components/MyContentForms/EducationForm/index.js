@@ -20,29 +20,18 @@ import { toggleModal } from 'containers/App/actions';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-import grapesjs from 'grapesjs';
-import 'grapesjs/dist/css/grapes.min.css';
-
-console.log("inside render ...")
-
 ///  Main Section
 
 function EducationForm({editor_state , resume_json_state , currentEditableItemId_state , dispatch}) {
   var counter = 0; 
-  // console.log("ResumeJSON: ", { ...resume_json_state['Education']['history']} )
+  var storeEducation=null;
+  // TODO: variables should revert back in Models(in sessions)
+  if(resume_json_state['Education']){ storeEducation=resume_json_state['Education']['history']; }
+
   const blankEduFields = { title: '', institution: '', fieldOfStudy: '', state: '', country: '', start:'', end:'', summary: ''};
-  const [educations, setEducations] = useState([
+  const [educations, setEducations] = useState(storeEducation || [
      { ...blankEduFields },
   ]);
-
-  // TODO: variables should revert back in Models(in sessions)
-  // console.log(educations)
-  // console.log({ ...blankEduFields })
-  // var data=resume_json_state['Education']['history'][0];
-  // var data1=[{...{...{...data}}}]
-  // console.log(data1)
-
-  console.log("curent edit idx: " , currentEditableItemId_state)
   
   const handlePrevious = () => {
 	  setEducations([...educations, { ...blankEduFields }]); 
@@ -53,8 +42,7 @@ function EducationForm({editor_state , resume_json_state , currentEditableItemId
     dispatch(updateCurrentEditableItemId(educations.length))
   };
   
-  const handleSave = () => {      
-    console.log("rducation: ", educations)
+  const handleSave = () => {
     const updatedEdu = [...educations];
     var history = { history : updatedEdu} 
     var JSONString = JSON.stringify( history );

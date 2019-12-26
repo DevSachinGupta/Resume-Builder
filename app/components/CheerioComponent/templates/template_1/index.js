@@ -33,7 +33,6 @@ export function InjectJSONUsingCheerioEducation(HTMLString , JSONString){
         console.log("EDUCATION NULL")
         $("#EducationSection").replaceWith("")	
     }
-	console.log(list.join('\n'));
 	return $.html();
 }
 
@@ -67,7 +66,6 @@ export function InjectJSONUsingCheerioEmployement(HTMLString , JSONString){
     console.log("Employment NULL")
     $("#EmploymentSection").replaceWith("")
   }
-	console.log(list.join('\n'));
 	return $.html();
 }
 

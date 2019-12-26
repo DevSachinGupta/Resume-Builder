@@ -20,7 +20,6 @@ import saga from './saga';
 export function MyContent({ activeModalType }) {
   useInjectReducer({ key: 'myContent', reducer });
   useInjectSaga({ key: 'myContent', saga });
-  console.log("active modeltype: " , activeModalType)
   return (
     <Model heading={getModalHeader(activeModalType)} actions={[]}>
       <Suspense fallback={<div>LOADING</div>}>
