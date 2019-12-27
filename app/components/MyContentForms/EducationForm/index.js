@@ -47,11 +47,12 @@ function EducationForm({editor_state , resume_json_state , currentEditableItemId
     var history = { history : updatedEdu} 
     var JSONString = JSON.stringify( history );
     var HTMLString = editor_state.getHtml();
+    var TemplateCss = editor_state.getCss();
     var ConvertedHTML = InjectJSONUsingCheerioEducation( HTMLString , JSONString );
     
     const DemoPage = {
       html: ConvertedHTML,
-      css: '{8}',
+      css: TemplateCss,
       components: null,
       style: null,
     }; 

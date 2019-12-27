@@ -8,6 +8,8 @@ const TemplateHTML = `
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style.css">
 
     </head>
     <body>
@@ -297,10 +299,10 @@ const TemplateHTML = `
 
 
         <!-- Scripts -->
-        <script src="js/jquery-3.3.1.slim.min.js"></script>
-        <script src="js/popper.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/main.js"></script>
+        <script src="https://resumebuilder.s3.ap-south-1.amazonaws.com/js/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://resumebuilder.s3.ap-south-1.amazonaws.com/js/popper.min.js"></script>
+        <script src="https://resumebuilder.s3.ap-south-1.amazonaws.com/js/bootstrap.min.js"></script>
+        <script src="https://resumebuilder.s3.ap-south-1.amazonaws.com/js/main.js"></script>
 
     </body>
 </html>

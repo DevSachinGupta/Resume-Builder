@@ -25,7 +25,7 @@ TemplateHTML = require(`../../CheerioComponent/templates/template_${template_num
 
 var DemoPage = {
   html: TemplateHTML.default,
-  css: '{..}',
+  css: '',
   components: null,
   style: null,
 }; 
@@ -40,6 +40,8 @@ function BuilderEditor({editor_state , demopage_state ,  resume_json_state , dis
       height: 'calc(100vh - 64px)',
       components: DemoPage.components || DemoPage.html,
       style: DemoPage.style || DemoPage.css,
+      allowScripts: true,
+      jsInHtml: true,
       storageManager: {
       autoload: false,
       },
@@ -47,11 +49,17 @@ function BuilderEditor({editor_state , demopage_state ,  resume_json_state , dis
       defaults: [],
       },
       canvas: {
-      styles: [
-        'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
-        // 'https://res.cloudinary.com/rb-app/raw/upload/v1577214082/commons/css/style_t9mzif.css',
-        'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style.css',
-      ]
+        scripts: [
+          // 'https://resumebuilder.s3.ap-south-1.amazonaws.com/js/bootstrap.min.js',
+          // 'https://resumebuilder.s3.ap-south-1.amazonaws.com/js/jquery-3.3.1.slim.min.js',
+          // 'https://resumebuilder.s3.ap-south-1.amazonaws.com/js/main.js',
+
+        ],
+        styles: [
+          // 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
+          // 'https://res.cloudinary.com/rb-app/raw/upload/v1577214082/commons/css/style_t9mzif.css',
+          // 'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style.css',
+        ]
       }
     });
     dispatch(updateEditorState(editor))
