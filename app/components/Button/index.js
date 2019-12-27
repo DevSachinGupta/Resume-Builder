@@ -13,17 +13,22 @@ import Wrapper from './Wrapper';
 import { ButtonTypes } from './constants';
 import './style.scss';
 
-function Button({ className, circular, type, ...rest }) {
+function Button({ className, circular, type, fullWidth, ...rest }) {
   return (
     <Wrapper>
       {
         <button
           type="button"
-          className={cx(className, {
-            circularButton: circular,
-            primary: type === ButtonTypes.PRIMARY,
-            defaultButton: type === ButtonTypes.DEFAULT,
-          })}
+          className={cx(
+            className,
+            {
+              circularButton: circular,
+              defaultButton: type === ButtonTypes.DEFAULT,
+              fullWidth,
+            },
+            [type],
+            'button',
+          )}
           {...rest}
         >
           {Children.toArray(rest.children)}
@@ -40,6 +45,7 @@ Button.propTypes = {
   iconButton: PropTypes.bool,
   icon: PropTypes.node,
   className: PropTypes.string,
+  fullWidth: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   circular: PropTypes.bool,
   type: PropTypes.string,

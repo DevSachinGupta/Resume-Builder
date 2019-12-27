@@ -10,7 +10,11 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import Model from 'components/Modal';
-import { getModalContent, getModalHeader } from 'components/MyContentForms';
+import {
+  getModalContent,
+  getModalHeader,
+  getModalFooter,
+} from 'components/MyContentForms';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { makeSelectActiveModalType } from './selectors';
@@ -21,7 +25,11 @@ export function MyContent({ activeModalType }) {
   useInjectReducer({ key: 'myContent', reducer });
   useInjectSaga({ key: 'myContent', saga });
   return (
-    <Model heading={getModalHeader(activeModalType)} actions={[]}>
+    <Model
+      heading={getModalHeader(activeModalType)}
+      actions={[]}
+      footer={getModalFooter(activeModalType)}
+    >
       <Suspense fallback={<div>LOADING</div>}>
         {getModalContent(activeModalType)}
       </Suspense>

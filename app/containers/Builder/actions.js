@@ -8,6 +8,7 @@ import {
   DEFAULT_ACTION,
   HANDLE_SIDEBAR_STATE,
   HANDLE_SECONDARY_SIDEBAR_STATE,
+  GET_DEFAULT_THEME,
   UPDATE_EDITOR_STATE,
   UPDATE_RESUMEJSON_STATE,
   UPDATE_CURRENT_EDITABLE_ITEM_ID_STATE,
@@ -38,7 +39,16 @@ export function toggleSecondarySidebar() {
   };
 }
 /**
- * @description function to update editor state
+ * @description function to be dispatched when new theme added
+ */
+export function getBuilderTheme(theme) {
+  return {
+    type: GET_DEFAULT_THEME,
+    theme,
+  };
+}
+ /** 
+  * @description function to update editor state
  */
 export function updateEditorState(editor_state) {
   return {

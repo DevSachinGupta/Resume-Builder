@@ -1,6 +1,7 @@
 import React from 'react';
-import { AppUtils } from '../../utils/app';
 import { get } from 'lodash';
+import Button from '../Button';
+import { AppUtils } from '../../utils/app';
 /**
  *
  * MyContentForms
@@ -48,14 +49,23 @@ export const getModalContent = modelId => {
 };
 export const getModalFooter = modelId => {
   switch (modelId) {
+    case 'personalDetails':
+      return [<Button>Save Details</Button>];
     default:
-      break;
+      return [
+        <Button fullWidth type="primary">
+          Save Details
+        </Button>,
+      ];
   }
 };
 export const getModalHeader = modelId => {
-  console.log(AppUtils.Constants)
   switch (modelId) {
     default:
-      return <div>{get(AppUtils.Constants, ['MyContent', modelId, 'title'], '')}</div>;
+      return (
+        <div>
+          {get(AppUtils.Constants, ['MyContent', modelId, 'title'], '')}
+        </div>
+      );
   }
 };

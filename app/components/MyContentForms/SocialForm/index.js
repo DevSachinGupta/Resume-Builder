@@ -1,49 +1,26 @@
-import React,{ useState } from 'react';
-import Textfield from "../../FormComponents/TextField";
-
-function EmploymentForm() {
-  var counter = 0;
-  var checkboxState = false;
-  const [social, setSocial] = useState([
-    {
-      lable: 'Qualification',
-      qualificationId : "qualification[0]",
-      checkboxState : checkboxState
-    },
-  ]);
-  const addMore = () => {
-    counter = counter + 1;
-    social.push({
-      lable: 'Employeer',
-      qualificationId: "employer[" + counter+"]",
-      checkboxState : checkboxState
-      });
-    setSocial([...social]);
-  };
-  const checkboxStateChange = () => {
-    console.log("Checkbox state changed");
-    checkboxState = "disabled"};
-  return (<div>
-    {social.map(item => (
-      <div>
-        <label>Type</label>
-        <select>
-          <option>Select</option>
-          <option>Facebook</option>
-          <option>Github</option>
-          <option>Google</option>
-          <option>LinkedIn</option>
-          <option>Twitter</option>
-          <option>Custom</option>
-        </select>
-        <Textfield labeltxt="URL" type="text"></Textfield>
-        <Textfield labeltxt="Username" type="text"></Textfield>
-      </div>
-    ))}
-    <button type="button" onClick={addMore}>
-      Add More
-    </button>
-  </div>);
+import React from 'react';
+import {
+  FaFacebook,
+  FaTwitter,
+  FaDribbble,
+  FaLinkedin,
+  FaGlobeAsia,
+} from 'react-icons/fa';
+import Button from '../../Button';
+import Input from '../../FormComponents/Input';
+function SocialForm() {
+  return (
+    <div>
+      <Input inputIcon={<FaFacebook />} placeholder="https://facebook.com" />
+      <Input inputIcon={<FaTwitter />} placeholder="https://twitter.com" />
+      <Input inputIcon={<FaDribbble />} placeholder="https://dribbe.com" />
+      <Input inputIcon={<FaLinkedin />} placeholder="https://linkedIn.com" />
+      <Input inputIcon={<FaGlobeAsia />} placeholder="your website url" />
+      <Button fullWidth type="flat">
+        Add Another
+      </Button>
+    </div>
+  );
 }
 
-export default EmploymentForm;
+export default SocialForm;

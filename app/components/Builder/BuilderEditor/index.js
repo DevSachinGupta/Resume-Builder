@@ -8,9 +8,9 @@ import React, { memo, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { makeUpdateResumeJSONState , makeUpdateDemoPageState , makeUpdateEditorState } from 'containers/Builder/selectors';
-import { updateTemplateNumberState , updateEditorState } from 'containers/Builder/actions';
-// import PropTypes from 'prop-types';
+import { makeUpdateResumeJSONState, makeUpdateDemoPageState, makeUpdateEditorState } from 'containers/Builder/selectors';
+import { updateTemplateNumberState, updateEditorState } from 'containers/Builder/actions';
+import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
@@ -28,7 +28,7 @@ var DemoPage = {
   css: '',
   components: null,
   style: null,
-}; 
+};
 
 function BuilderEditor({editor_state , demopage_state ,  resume_json_state , dispatch}) {
   console.log(resume_json_state , "This is the resume_state_json")
@@ -43,10 +43,10 @@ function BuilderEditor({editor_state , demopage_state ,  resume_json_state , dis
       allowScripts: true,
       jsInHtml: true,
       storageManager: {
-      autoload: false,
+        autoload: false,
       },
       panels: {
-      defaults: [],
+        defaults: [],
       },
       canvas: {
         scripts: [
@@ -72,7 +72,9 @@ function BuilderEditor({editor_state , demopage_state ,  resume_json_state , dis
   );
 }
 
-BuilderEditor.propTypes = {};
+BuilderEditor.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = createStructuredSelector({
   editor_state : makeUpdateEditorState(),
