@@ -23,6 +23,8 @@ function Input(props) {
           <span className="inputIcon">{props.inputIcon}</span>
         )}
         <input {...props} onChange={props.onChange} />
+      </div>
+      <div className={cx('hint', { error_hint: props.error })}>
         {props.error && props.error}
       </div>
     </div>
