@@ -12,6 +12,7 @@
     align-items: center;
     input {
       padding: 6px 12px;
+      width: 100%;
       border-radius: 2px;
       @include font();
       &:focus {
@@ -23,7 +24,13 @@
     }
   }
   .error {
-      border: 1px solid red;
+    border: 1px solid red;
+  }
+  .hint {
+    @include font();
+  }
+  .error_hint {
+    color: red;
   }
   .fullWidth {
     width: 100%;

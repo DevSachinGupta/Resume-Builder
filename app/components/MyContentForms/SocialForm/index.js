@@ -8,6 +8,7 @@ import {
 } from 'react-icons/fa';
 import Button from '../../Button';
 import Input from '../../FormComponents/Input';
+import { isEmpty, isLink } from '../../../utils/validations/input';
 function SocialForm() {
   return (
     <div>

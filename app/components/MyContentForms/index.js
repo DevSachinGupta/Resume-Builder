@@ -50,7 +50,11 @@ export const getModalContent = modelId => {
 export const getModalFooter = modelId => {
   switch (modelId) {
     case 'personalDetails':
-      return [<Button>Save Details</Button>];
+      return [
+        <Button fullWidth type="primary">
+          Save Details
+        </Button>,
+      ];
     default:
       return [
         <Button fullWidth type="primary">
