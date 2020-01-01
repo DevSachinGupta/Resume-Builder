@@ -15,13 +15,23 @@ import { GoThreeBars } from 'react-icons/go';
 import { FaUserCircle } from 'react-icons/fa';
 import { toggleHeaderUserMenu } from 'containers/App/actions';
 import { makeSelectIsUserMenuOpen } from 'containers/App/selectors';
-import { makeUpdateResumeJSONState , makeUpdateTemplateNumberState , makeUpdateEditorState } from 'containers/Builder/selectors';
+import {
+  makeUpdateResumeJSONState,
+  makeUpdateTemplateNumberState,
+  makeUpdateEditorState,
+} from 'containers/Builder/selectors';
 import Button from '../../Button';
 import { toggleSidebar } from '../../../containers/Builder/actions';
 import './progress.css';
 import './style.scss';
 
-function BuilderHeader({ isHeaderMenuOpen , editor_state , resume_json_state , template_number_state , dispatch}) {
+function BuilderHeader({
+  isHeaderMenuOpen,
+  editorState,
+  resumeJSONState,
+  templateNumberState,
+  dispatch,
+}) {
   useEffect(() => {
     np.configure({
       showSpinner: false,
@@ -31,72 +41,81 @@ function BuilderHeader({ isHeaderMenuOpen , editor_state , resume_json_state , t
   }, []);
 
   const handlePublish = () => {
-    const data = new FormData();
-    data.append('UserName', 'test004');
-    data.append('TemplateNumber', template_number_state);
-    data.append('TemplateHTML', editor_state.getHtml());
-    data.append('TemplateCSS', editor_state.getCss());
+    const dataSet = {};
+    dataSet.registeredEmail = 'test004';
+    dataSet.bucketName = 'test004';
+    dataSet.resumeJSON = resumeJSONState;
+    dataSet.templateNumber = templateNumberState;
+    dataSet.templateHTML = editorState.getHtml();
+    dataSet.templateCSS = editorState.getCss();
 
-	  fetch('http://35.232.22.82:3001/publish', {
+    fetch('http://localhost:2000/builder/publish', {
       method: 'POST',
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
       },
-      body: data
-    }).then(response => {
-      response.json().then(body => {
-        console.log("return data: ", body)
+      body: JSON.stringify(dataSet),
+    })
+      .then(response => {
+        response.json().then(body => {
+          console.log('return data: ', body);
+        });
+      })
+      .catch(err => {
+        console.log(err);
       });
-    }).catch(err => {
-      console.log(err)
-    });
   };
 
   const handleSave = () => {
-    const data = new FormData();
-    data.append('UserName', 'test004');
-    data.append('ResumeJson', resume_json_state);
-    data.append('TemplateNumber', template_number_state);
-    data.append('TemplateHTML', editor_state.getHtml());
-    data.append('TemplateCSS', editor_state.getCss());
+    const dataSet = {};
+    dataSet.registeredEmail = 'test006';
+    dataSet.bucketName = 'test004';
+    dataSet.resumeJSON = resumeJSONState;
+    dataSet.templateNumber = templateNumberState;
+    dataSet.templateHTML = editorState.getHtml();
+    dataSet.templateCSS = editorState.getCss();
 
-	  fetch('http://35.232.22.82:3001/save', {
+    fetch('http://localhost:2000/builder/storeSession', {
       method: 'POST',
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
       },
-      body: data
-    }).then(response => {
-      response.json().then(body => {
-        console.log("return data: ", body)
+      body: JSON.stringify(dataSet),
+    })
+      .then(response => {
+        response.json().then(body => {
+          console.log('return data: ', body);
+        });
+      })
+      .catch(err => {
+        console.log(err);
       });
-    }).catch(err => {
-      console.log(err)
-    });
   };
- 
+
   const handlePreview = () => {
     const data = new FormData();
     data.append('UserName', 'test004');
-    data.append('TemplateNumber', template_number_state);
-    data.append('TemplateHTML', editor_state.getHtml());
-    data.append('TemplateCSS', editor_state.getCss());
+    data.append('TemplateNumber', templateNumberState);
+    data.append('TemplateHTML', editorState.getHtml());
+    data.append('TemplateCSS', editorState.getCss());
 
-	  fetch('http://35.232.22.82:3001/preview', {
+    fetch('http://35.232.22.82:3001/preview', {
       method: 'POST',
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-      body: data
-    }).then(response => {
-      response.json().then(body => {
-        console.log("return data: ", body)
+      body: data,
+    })
+      .then(response => {
+        response.json().then(body => {
+          console.log('return data: ', body);
+        });
+      })
+      .catch(err => {
+        console.log(err);
       });
-    }).catch(err => {
-      console.log(err)
-    });
   };
-  
+
   return (
     <div className="header-container flex bg-white border-b border-gray-200 inset-x-0 z-100 h-16 items-center shadow-lg">
       <Button
@@ -110,19 +129,13 @@ function BuilderHeader({ isHeaderMenuOpen , editor_state , resume_json_state , t
       </Button>
       <div className={cx('actionContainer')}>
         <div className={cx('publishButton')}>
-          <Button onClick={handlePreview}>
-            Preview
-          </Button>
+          <Button onClick={handlePreview}>Preview</Button>
         </div>
         <div className={cx('publishButton')}>
-          <Button onClick={handleSave}>
-            Save
-          </Button>
+          <Button onClick={handleSave}>Save</Button>
         </div>
         <div className={cx('publishButton')}>
-          <Button onClick={handlePublish}>
-            Publish
-          </Button>
+          <Button onClick={handlePublish}>Publish</Button>
         </div>
         <div className={cx('navAccountPill')}>
           <FaUserCircle
@@ -152,9 +165,9 @@ BuilderHeader.propTypes = {
 const withConnect = connect(
   createStructuredSelector({
     isHeaderMenuOpen: makeSelectIsUserMenuOpen(),
-    editor_state : makeUpdateEditorState(),
-    resume_json_state : makeUpdateResumeJSONState(),
-    template_number_state : makeUpdateTemplateNumberState(),
+    editorState: makeUpdateEditorState(),
+    resumeJSONState: makeUpdateResumeJSONState(),
+    templateNumberState: makeUpdateTemplateNumberState(),
   }),
   null,
 );

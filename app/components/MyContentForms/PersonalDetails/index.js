@@ -46,6 +46,7 @@ function PersonalDetails() {
                     val={values.val}
                     label="Last Name"
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     error={errors.val}
                   />
                 </Column>

@@ -4,21 +4,24 @@
  *
  */
 
-import React, { memo } from 'react';
-// import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import {
+  InjectJSONUsingCheerioEmployement,
+  InjectJSONUsingCheerioEducation,
+} from 'components/CheerioComponent/templates/template_1';
 
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+/**
+ * Use when need to change template and want to load existing json into template(without css)
+ * var data = InjectFullJSONUsingCheerio(DemoPage.html , resumeJSON_state)
+ */
 
-function CheerioComponent() {
-  return (
-    <div>
-      <FormattedMessage {...messages.header} />
-    </div>
-  );
+export function InjectFullJSONUsingCheerio(HTMLString, resumeJSON) {
+  if (resumeJSON.Education) {
+    const JSONString = JSON.stringify(resumeJSON.Education);
+    HTMLString = InjectJSONUsingCheerioEducation(HTMLString, JSONString);
+  }
+  if (resumeJSON.Employement) {
+    const JSONString = JSON.stringify(resumeJSON.Employement);
+    HTMLString = InjectJSONUsingCheerioEmployement(HTMLString, JSONString);
+  }
+  return HTMLString;
 }
-
-CheerioComponent.propTypes = {};
-
-export default memo(CheerioComponent);

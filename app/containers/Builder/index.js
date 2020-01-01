@@ -13,20 +13,21 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import BuilderLayout from 'components/Builder/BuilderLayout';
 import BuilderEditor from 'components/Builder/BuilderEditor';
+import { updateTemplateNumberState } from 'containers/Builder/actions';
 import makeSelectBuilder from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { updateTemplateNumberState } from 'containers/Builder/actions';
 
-const template_number = '2'
-export function Builder({dispatch}) {
+const templateNumber = '2';
+
+export function Builder({ dispatch }) {
   useInjectReducer({ key: 'builder', reducer });
   useInjectSaga({ key: 'builder', saga });
-  dispatch(updateTemplateNumberState(template_number));
+  dispatch(updateTemplateNumberState(templateNumber));
   return (
     <BuilderLayout>
       <div className="builder-workspace">
-          <BuilderEditor />  
+        <BuilderEditor />
       </div>
     </BuilderLayout>
   );

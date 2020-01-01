@@ -39,7 +39,14 @@ var TxtRotate = function(el, toRotate, period) {
     }, delta);
   };
   
-  window.onload = function() {
+  // Here's how you'd do this with jQuery
+  $('.gjs-frame').on('load', () => {
+    console.log('iframe is completely loaded');
+  })
+
+  // window.onload = function() {
+  $('.gjs-frame').on("load", function() {
+    console.log("inside iframe even Listner")
     var elements = document.getElementsByClassName('txt-rotate');
     for (var i=0; i<elements.length; i++) {
       var toRotate = elements[i].getAttribute('data-rotate');
@@ -53,7 +60,7 @@ var TxtRotate = function(el, toRotate, period) {
     css.type = "text/css";
     css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
     document.body.appendChild(css);
-  };
+  });
   
   
   $(document).ready(function(){

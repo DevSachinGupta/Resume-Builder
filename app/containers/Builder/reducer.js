@@ -53,12 +53,15 @@ const builderReducer = (state = initialState, action) =>
         draft.editor_state = action.editor_state;
         break;
       case UPDATE_RESUMEJSON_STATE:
-        draft.resume_json_state = {...state.resume_json_state, [action.section_key_state]: action.resume_json_state }
+        draft.resume_json_state = {
+          ...state.resume_json_state,
+          [action.section_key_state]: action.resume_json_state,
+        };
         break;
       case UPDATE_CURRENT_EDITABLE_ITEM_ID_STATE:
         draft.currentEditableItemId_state = action.currentEditableItemId_state;
         break;
-      case UPDATE_DEMOPAGE_STATE:        
+      case UPDATE_DEMOPAGE_STATE:
         draft.demopage_state = action.demopage_state;
         break;
       case UPDATE_TEMPLATE_NUMBER_STATE:
