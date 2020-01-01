@@ -22,7 +22,7 @@ import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEdito
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-import EduInputs from './EducationItems';
+import EduInputsEditable from './EducationItemsEditable';
 import Accordian from '../../Accordion';
 
 // /  Main Section
@@ -89,7 +89,7 @@ function EducationForm({ editor_state, resume_json_state, dispatch }) {
           label={item.title ? item.title : `Education ${idx + 1}`}
           content={
             <div>
-              <EduInputs
+              <EduInputsEditable
                 key={`field-${idx}`}
                 idx={idx}
                 educations={educations}
