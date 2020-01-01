@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import Input from '../../FormComponents/Input';
 import { Row, Column } from '../../Layout';
 function EmploymentForm() {
-  var counter = 0;
-  var checkboxState = false;
+  let counter = 0;
+  let checkboxState = false;
   const [accomplishments, setAccomplishments] = useState([
     {
       lable: 'Qualification',
       qualificationId: 'qualification[0]',
-      checkboxState: checkboxState,
+      checkboxState,
     },
   ]);
   const addMore = () => {
-    counter = counter + 1;
+    counter += 1;
     accomplishments.push({
       lable: 'Employeer',
-      qualificationId: 'employer[' + counter + ']',
-      checkboxState: checkboxState,
+      qualificationId: `employer[${counter}]`,
+      checkboxState,
     });
     setAccomplishments([...accomplishments]);
   };

@@ -24,6 +24,7 @@ import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEdito
 import { toggleModal } from 'containers/App/actions';
 import EduInputsEditable from './EducationItemsEditable';
 import EduInputsNonEditable from './EducationItemsNonEditable';
+import './style.scss';
 
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
@@ -122,26 +123,40 @@ function EducationForm({
   return (
     <div>
       {educations.map((item, idx) => (
-        <div>
-          {currentEditableItemIdState == idx && (
-            <EduInputsEditable
-              key={`field-${idx}`}
-              idx={idx}
-              educations={educations}
-              handleEduChange={handleEduChange}
-              handleRemove={handleRemove}
-            />
-          )}
-          {currentEditableItemIdState != idx && (
-            <EduInputsNonEditable
-              key={`field-${idx}`}
-              idx={idx}
-              educations={educations}
-              handleEduChange={handleEduChange}
-              handleRemove={handleRemove}
-              handleEdit={handleEdit}
-            />
-          )}
+        <div className="tab w-full overflow-hidden border-t">
+          <input
+            className="absolute opacity-0"
+            id={idx}
+            type="checkbox"
+            name="tabs2"
+          />
+          <label
+            className="block p-5 leading-normal cursor-pointer"
+            htmlFor={idx}
+          >
+            Label {idx}
+          </label>
+          <div className="tab-content overflow-hidden border-l-2 bg-gray-100 border-indigo-500 leading-normal">
+            {/* {currentEditableItemIdState == idx && ( */}
+              <EduInputsEditable
+                key={`field-${idx}`}
+                idx={idx}
+                educations={educations}
+                handleEduChange={handleEduChange}
+                handleRemove={handleRemove}
+              />
+            {/* )}
+            {currentEditableItemIdState != idx && (
+              <EduInputsNonEditable
+                key={`field-${idx}`}
+                idx={idx}
+                educations={educations}
+                handleEduChange={handleEduChange}
+                handleRemove={handleRemove}
+                handleEdit={handleEdit}
+              />
+            )} */}
+          </div>
         </div>
       ))}
       <button type="button" onClick={handlePrevious}>
