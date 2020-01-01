@@ -22,9 +22,9 @@ import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
 import './style.scss';
 
-import TemplateHTML from '../../CheerioComponent/templates/Template_1/html.js';
+import TemplateHTML from '../../CheerioComponent/templates/template_1/html.js';
 
-const template_number = '1';
+const template_number = 1;
 
 const DemoPage = {
   html: TemplateHTML,

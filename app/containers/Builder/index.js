@@ -18,7 +18,7 @@ import reducer from './reducer';
 import saga from './saga';
 import { updateTemplateNumberState , updateDemoPageState } from 'containers/Builder/actions';
 
-import TemplateHTML from 'components/CheerioComponent/templates/Template_1/html.js';
+import TemplateHTML from 'components/CheerioComponent/templates/template_1/html.js';
 
 const DemoPage = {
   html: TemplateHTML,

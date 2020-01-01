@@ -8,121 +8,111 @@ import React, { memo, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { makeUpdateResumeJSONState , makeUpdateEditorState } from 'containers/Builder/selectors';
-import { updateEditorState , updateDemoPageState , updateResumeJSONState } from 'containers/Builder/actions';
-import { InjectJSONUsingCheerioEducation } from 'components/CheerioComponent/templates/template_1'
-import EduInputs from './EducationItems';
+import {
+  makeUpdateResumeJSONState,
+  makeUpdateEditorState,
+} from 'containers/Builder/selectors';
+import {
+  updateEditorState,
+  updateResumeJSONState,
+} from 'containers/Builder/actions';
+import { InjectJSONUsingCheerioEducation } from 'components/CheerioComponent/templates/template_1';
 import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
 
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-import grapesjs from 'grapesjs';
-import 'grapesjs/dist/css/grapes.min.css';
+import EduInputs from './EducationItems';
+import Accordian from '../../Accordion';
 
-console.log("inside render ...")
+// /  Main Section
 
-///  Main Section
+function EducationForm({ editor_state, resume_json_state, dispatch }) {
+  // const counter = 0;
+  const blankEduFields = {
+    title: '',
+    institution: '',
+    fieldOfStudy: '',
+    state: '',
+    country: '',
+    start: '',
+    end: '',
+    summary: '',
+  };
+  const [educations, setEducations] = useState([{ ...blankEduFields }]);
 
-function EducationForm({editor_state , resume_json_state , dispatch}) {
-  var counter = 0;
-  const blankEduFields = { title: '', institution: '', fieldOfStudy: '', state: '', country: '', start:'', end:'', summary: ''};
-  const [educations, setEducations] = useState([
-     { ...blankEduFields },
-  ]);
-  
   const handlePrevious = () => {
-	  setEducations([...educations, { ...blankEduFields }]); 
+    setEducations([...educations, { ...blankEduFields }]);
   };
-  
+
   const addMore = () => {
-	  setEducations([...educations, { ...blankEduFields }]); 
+    setEducations([...educations, { ...blankEduFields }]);
   };
-  
+
   const handleSave = () => {
-    console.log(editor_state,"This is the editor_state:Edu")
-    console.log(resume_json_state,"This is the resume_json_state:Edu")
-      
-      
     const updatedEdu = [...educations];
-    var history = { history : updatedEdu} 
-    var JSONString = JSON.stringify( history );
-    var HTMLString = editor_state.getHtml();
-    // var TemplateCSS = editor_state.getCss();	
-    var ConvertedHTML = InjectJSONUsingCheerioEducation( HTMLString , JSONString );
-    // var editor = GenerateEditor( ConvertedHTML, TemplateCSS );
-    
+    const history = { history: updatedEdu };
+    const JSONString = JSON.stringify(history);
+    const HTMLString = editor_state.getHtml();
+    const TemplateCSS = editor_state.getCss();
+    const ConvertedHTML = InjectJSONUsingCheerioEducation(
+      HTMLString,
+      JSONString,
+    );
     const DemoPage = {
       html: ConvertedHTML,
-      css: '{}',
+      css: TemplateCSS,
       components: null,
       style: null,
-    }; 
+    };
 
-    // var editor = grapesjs.init({
-    //   container: '#gjs',
-    //   width: '82vw',
-    //   height: 'calc(100vh - 64px)',
-    //   components: DemoPage.components || DemoPage.html,
-    //   style: DemoPage.style || DemoPage.css,
-    //   storageManager: {
-    //   autoload: false,
-    //   },
-    //   panels: {
-    //   defaults: [],
-    //   },
-    //   canvas: {
-    //   styles: [
-    //     'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
-    //     // 'https://res.cloudinary.com/rb-app/raw/upload/v1577214082/commons/css/style_t9mzif.css',
-    //     'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style.css',
-    //   ]
-    //   }
-    // });
-    
-    dispatch(updateEditorState(ComponentEditor(DemoPage)))
-    // dispatch(updateDemoPageState(DemoPage))
-    dispatch(updateResumeJSONState(history,"Education"))
-  
-
+    dispatch(updateEditorState(ComponentEditor(DemoPage)));
+    dispatch(updateResumeJSONState(history, 'Education'));
   };
 
   const handleSaveAndNext = () => {
-	handleSave();
-	setEducations([...educations, { ...blankEduFields }]); 
-  };  
-  
-  const handleEduChange = (e) => {
-        const updatedEdu = [...educations];
-        updatedEdu[e.target.dataset.idx][e.target.dataset.name] = e.target.value;
-        setEducations(updatedEdu);
-    };
+    handleSave();
+    setEducations([...educations, { ...blankEduFields }]);
+  };
+
+  const handleEduChange = e => {
+    const updatedEdu = [...educations];
+    updatedEdu[e.target.dataset.idx][e.target.dataset.name] = e.target.value;
+    setEducations(updatedEdu);
+  };
 
   return (
     <div>
-      {educations.map((item ,idx ) => (
-        <div >
-          <EduInputs
-            key={`field-${idx}`}
-            idx={idx}
-            educations={educations}
-            handleEduChange={handleEduChange}
-          />
-        </div>
+      {educations.map((item, idx) => (
+        <Accordian
+          id={idx}
+          label={item.title ? item.title : `Education ${idx + 1}`}
+          content={
+            <div>
+              <EduInputs
+                key={`field-${idx}`}
+                idx={idx}
+                educations={educations}
+                handleEduChange={handleEduChange}
+              />
+            </div>
+          }
+        />
       ))}
+
       <button type="button" onClick={handlePrevious}>
         Previous
       </button>
-	  
-	  <button type="button" onClick={addMore}>
+
+      <button type="button" onClick={addMore}>
         Add More
       </button>
-	  
-	  <button type="button" onClick={handleSave}>
+
+      <button type="button" onClick={handleSave}>
         Save
       </button>
-	  
-	  <button type="button" onClick={handleSaveAndNext}>
+
+      <button type="button" onClick={handleSaveAndNext}>
         Save & Next
       </button>
     </div>
@@ -132,8 +122,8 @@ function EducationForm({editor_state , resume_json_state , dispatch}) {
 EducationForm.propTypes = {};
 
 const mapStateToProps = createStructuredSelector({
-  editor_state : makeUpdateEditorState(),
-  resume_json_state : makeUpdateResumeJSONState(),
+  editor_state: makeUpdateEditorState(),
+  resume_json_state: makeUpdateResumeJSONState(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(
@@ -145,4 +135,3 @@ const withCompose = compose(
   memo,
 );
 export default withCompose(EducationForm);
-
