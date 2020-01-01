@@ -6,7 +6,7 @@
 
 import React, { memo, useState } from 'react';
 import './style.scss';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
 // import { FormattedMessage } from 'react-intl';
@@ -44,6 +44,10 @@ function Accordion(props) {
   );
 }
 
-Accordion.propTypes = {};
+Accordion.propTypes = {
+  id: PropTypes.number,
+  label: PropTypes.string,
+  content: PropTypes.oneOfType,
+};
 
 export default memo(Accordion);
