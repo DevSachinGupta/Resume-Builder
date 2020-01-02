@@ -38,7 +38,7 @@ function Accordion(props) {
         {props.label}
       </label>
       <div className="tab-content overflow-hidden leading-normal">
-        {props.content}
+        {props.children}
       </div>
     </div>
   );
@@ -47,7 +47,7 @@ function Accordion(props) {
 Accordion.propTypes = {
   id: PropTypes.number,
   label: PropTypes.string,
-  content: PropTypes.oneOfType,
+  children: PropTypes.node.isRequired
 };
 
 export default memo(Accordion);

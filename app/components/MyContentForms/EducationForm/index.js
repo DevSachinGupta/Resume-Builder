@@ -87,17 +87,14 @@ function EducationForm({ editor_state, resume_json_state, dispatch }) {
         <Accordian
           id={idx}
           label={item.title ? item.title : `Education ${idx + 1}`}
-          content={
-            <div>
-              <EduInputsEditable
-                key={`field-${idx}`}
-                idx={idx}
-                educations={educations}
-                handleEduChange={handleEduChange}
-              />
-            </div>
-          }
-        />
+        >
+          <EduInputsEditable
+            key={`field-${idx}`}
+            idx={idx}
+            educations={educations}
+            handleEduChange={handleEduChange}
+          />
+        </Accordian>
       ))}
 
       <button type="button" onClick={handlePrevious}>
