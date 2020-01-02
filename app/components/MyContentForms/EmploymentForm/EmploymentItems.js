@@ -62,6 +62,7 @@ const EmpInputs = ({ values, handleChange, handleBlur, errors }) => (
           placeholder="Start Date"
           label="Start Date"
           name="start"
+          type="date"
           value={values.start}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -73,6 +74,7 @@ const EmpInputs = ({ values, handleChange, handleBlur, errors }) => (
           placeholder="End Date"
           label="End Date"
           name="end"
+          type="date"
           value={values.end}
           onChange={handleChange}
           onBlur={handleBlur}
