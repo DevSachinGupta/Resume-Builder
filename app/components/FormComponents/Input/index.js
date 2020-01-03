@@ -5,7 +5,7 @@
  */
 
 import React, { memo } from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import DatePicker from '../DatePicker';
 import DateRangePicker from '../DateRangePicker';
 import Text from '../Text';
@@ -22,7 +22,7 @@ function Input(props) {
   }
 }
 Input.propTypes = {
-  type: Proptypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default memo(Input);

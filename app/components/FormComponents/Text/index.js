@@ -1,10 +1,12 @@
 import React, { memo } from 'react';
 import cx from 'classnames';
+import { useField } from 'formik';
 import { MdCancel } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import './style.scss';
 
 function Text(props) {
+  const [field, meta, helpers] = useField(props.name);
   return (
     <div className={cx('inputWrapper')}>
       <div className="label">{props.label}</div>
@@ -17,16 +19,18 @@ function Text(props) {
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}
-        <input {...props} onChange={props.onChange} />
+        <input {...field} {...props} onChange={props.onChange} />
         {props.clearable && props.value.length > 0 && (
           <span className="input-right-Icon cursor-pointer">
             {<MdCancel />}
           </span>
         )}
       </div>
-      <div className={cx('hint', { error_hint: props.error })}>
-        {props.error && props.error}
-      </div>
+      {
+        meta.error && meta.touched && <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
+          {props.error && props.error}
+        </div>
+      }
     </div>
   );
 }
@@ -40,6 +44,7 @@ Text.propTypes = {
   inputIcon: PropTypes.node.isRequired,
   value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
   error: PropTypes.string,
+  name: PropTypes.string.isRequired,
   label: PropTypes.string,
 };
 export default memo(Text);
