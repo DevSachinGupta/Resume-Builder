@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from '../../FormComponents/Input';
 import { Row, Column } from '../../Layout';
+import TextArea from '../../FormComponents/TextArea';
 import Textfield from '../../FormComponents/TextField';
 
 //  *****  Employement Form Component *****
@@ -97,7 +98,7 @@ const EmpInputs = ({ values, handleChange, handleBlur, errors }) => (
     </Row>
     <Row>
       <Column width="full" className="px-1">
-        <Input
+        <TextArea
           placeholder="Summary"
           label="Summary"
           name="summary"

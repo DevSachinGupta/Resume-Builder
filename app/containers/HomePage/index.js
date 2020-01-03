@@ -88,7 +88,7 @@ export function HomePage({
               </AtPrefix>
             </label>
           </Form>
-          <DatePicker />
+          <DatePicker onChange={date => console.log('my date ', date)} />
           <ReposList {...reposListProps} />
         </Section>
       </div>

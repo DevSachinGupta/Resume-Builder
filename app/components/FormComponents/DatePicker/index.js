@@ -13,39 +13,51 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import Text from '../Text';
 import './style.scss';
 
-function DatePicker({ type, ...rest }) {
+function DatePicker({ type, onChange, ...rest }) {
   let refNode = useRef(null);
   const [isPickerActive, toggleDatePicker] = useState(false);
   useEffect(() => {
-    document.addEventListener("mousedown", handleGlobalClick, true)
+    document.addEventListener('mousedown', handleGlobalClick, true);
     return function cleanup() {
-      document.removeEventListener("mousedown", handleGlobalClick, false)
-    }
+      document.removeEventListener('mousedown', handleGlobalClick, false);
+    };
   });
-  const handleSelect = (date) => {
-    console.log(date); // native Date object
-  }
-  const handleGlobalClick = (e) => {
+  const handleSelect = date => {
+    onChange(date);
+    handleDatePicker();
+  };
+  const handleGlobalClick = e => {
     if (refNode !== null && !refNode.contains(e.target) && isPickerActive) {
       handleDatePicker();
     }
-  }
+  };
   const handleDatePicker = () => {
     toggleDatePicker(!isPickerActive);
-  }
-  return <div className={cx('relative', 'calenderWrapper')} ref={node => refNode = node}>
-    <Text onClick={handleDatePicker} {...rest} clearable />
-    {
-      isPickerActive && <Calendar
-        date={new Date()}
-        className="shadow rounded z-10 absolute floating-calender"
-        onChange={handleSelect}
-      />
-    }</div>;
+  };
+  return (
+    <div
+      className={cx('relative', 'calenderWrapper')}
+      ref={node => (refNode = node)}
+    >
+      <Text onClick={handleDatePicker} {...rest} clearable />
+      {isPickerActive && (
+        <Calendar
+          date={new Date()}
+          className="shadow rounded z-10 absolute floating-calender"
+          onChange={handleSelect}
+        />
+      )}
+    </div>
+  );
 }
-
+DatePicker.defaultProps = {
+  onChange: date => {
+    console.log(date);
+  },
+};
 DatePicker.propTypes = {
-
+  type: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
 };
 
 export default memo(DatePicker);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './style.scss';
-import Dropdown from '../../Dropdown';
+import Dropdown from '../../FormComponents/Dropdown';
 
 const options = [
   {

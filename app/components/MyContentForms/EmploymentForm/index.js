@@ -96,17 +96,13 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
           isSubmitting,
         }) => (
           <React.Fragment>
-            {employments.map((item , idx) => (
-              
-
+            {employments.map((item, idx) => (
               <EmpInputs
                 values={values}
-                handleChange={handleChange}
+                handleChange={date => console.log(date)}
                 handleBlur={handleBlur}
                 errors={errors}
               />
-
-
             ))}
             <button type="button" onClick={addMore}>
               Add More
