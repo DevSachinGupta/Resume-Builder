@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 import { Validations } from '../../../utils/validations';
 import Input from '../../FormComponents/Input';
+import TextArea from '../../FormComponents/TextArea';
 import { Row, Column } from '../../Layout';
 
 function EmploymentForm() {
@@ -101,6 +102,7 @@ function EmploymentForm() {
                       placeholder="Date"
                       label="Date"
                       name="date"
+                      type="date"
                       value={values.date}
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -110,7 +112,7 @@ function EmploymentForm() {
                 </Row>
                 <Row>
                   <Column width="full" className="px-1">
-                    <Input
+                    <TextArea
                       placeholder="Description"
                       label="Description"
                       name="description"

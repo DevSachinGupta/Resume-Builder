@@ -30,6 +30,9 @@ function Text(props) {
     </div>
   );
 }
+Text.defaultProps = {
+  value: ""
+}
 Text.propTypes = {
   clearable: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
