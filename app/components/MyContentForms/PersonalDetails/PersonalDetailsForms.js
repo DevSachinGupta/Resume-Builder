@@ -61,11 +61,31 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => {
         </Column>
         <Column width="1/2" className="px-1">
           <Input
+            type="radio"
             placeholder="Gender"
             val={values.val}
             label="Gender"
             onChange={handleChange}
             error={errors.val}
+            text="Male"
+          />
+          <Input
+            type="radio"
+            placeholder="Gender"
+            val={values.val}
+            // label="Gender"
+            onChange={handleChange}
+            error={errors.val}
+            text="Female"
+          />
+          <Input
+            type="radio"
+            placeholder="Gender"
+            val={values.val}
+            // label="Gender"
+            onChange={handleChange}
+            error={errors.val}
+            text="Other"
           />
         </Column>
       </Row>
@@ -83,7 +103,7 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => {
       </Row>
 
       <Row>
-        <Column width="1/4" className="px-1" >
+        <Column width="1/4" className="px-1">
           <Input
             placeholder="City"
             val={values.val}
@@ -92,7 +112,7 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => {
             error={errors.val}
           />
         </Column>
-        <Column width="1/4" className="px-1" >
+        <Column width="1/4" className="px-1">
           <Input
             placeholder="State"
             val={values.val}
@@ -101,7 +121,7 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => {
             error={errors.val}
           />
         </Column>
-        <Column width="1/4" className="px-1" >
+        <Column width="1/4" className="px-1">
           <Input
             placeholder="Pincode"
             val={values.val}
@@ -110,7 +130,7 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => {
             error={errors.val}
           />
         </Column>
-        <Column width="1/4" className="px-1" >
+        <Column width="1/4" className="px-1">
           <Input
             placeholder="Country"
             val={values.val}
