@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from '../../FormComponents/Input';
 import { Row, Column } from '../../Layout';
+import TextArea from '../../FormComponents/TextArea';
 import Textfield from '../../FormComponents/TextField';
 
 //  *****  Employement Form Component *****
@@ -62,6 +63,7 @@ const EmpInputs = ({ values, handleChange, handleBlur, errors }) => (
           placeholder="Start Date"
           label="Start Date"
           name="start"
+          type="date"
           value={values.start}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -73,6 +75,7 @@ const EmpInputs = ({ values, handleChange, handleBlur, errors }) => (
           placeholder="End Date"
           label="End Date"
           name="end"
+          type="date"
           value={values.end}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -95,7 +98,7 @@ const EmpInputs = ({ values, handleChange, handleBlur, errors }) => (
     </Row>
     <Row>
       <Column width="full" className="px-1">
-        <Input
+        <TextArea
           placeholder="Summary"
           label="Summary"
           name="summary"

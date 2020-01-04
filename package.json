@@ -90,6 +90,7 @@
     "prop-types": "15.7.2",
     "ramda": "^0.26.1",
     "react": "16.8.6",
+    "react-date-range": "^1.0.0-beta",
     "react-dom": "16.8.6",
     "react-final-form": "^5.1.2",
     "react-helmet": "6.0.0-beta",
