@@ -70,39 +70,40 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
 
   const handleEmpChange = e => {
     const updatedEmp = [...employments];
-    updatedEmp[e.target.dataset.idx][e.target.dataset.name] = e.target.value;
+    updatedEmp[e.target.dataset.idx][e.target.name] = e.target.value;
     setEmployments(updatedEmp);
   };
 
   return (
     <div>
       <Formik
-        initialValues={{ ...blankEmpFields }}
-        validate={Validations.InputValidations}
-        onSubmit={(values, { setSubmitting }) => {
+        initialValues={{ ...employments }}
+        // validate={Validations.InputValidations}
+        validate={values => {
+          console.log('values: ', values);
+          // TODO: Create a error array same size as of employments and validate for each field.
+          // employments.map((item, idx) => console.log('id: ', idx));
+        }}
+        onSubmit={(employments, { setSubmitting }) => {
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+            alert(JSON.stringify(employments, null, 2));
             setSubmitting(false);
           }, 400);
         }}
+        enableReinitialize
       >
-        {({
-          values,
-          errors,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-        }) => (
+        {({ errors, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
           <React.Fragment>
+            {console.log('emp: ', employments)}
             {employments.map((item, idx) => (
               <Accordian
                 id={idx}
                 label={item.title ? item.title : `Employment ${idx + 1}`}
               >
                 <EmploymentInputs
-                  values={values}
-                  handleChange={handleChange}
+                  idx={idx}
+                  values={item}
+                  handleChange={handleEmpChange}
                   handleBlur={handleBlur}
                   errors={errors}
                 />

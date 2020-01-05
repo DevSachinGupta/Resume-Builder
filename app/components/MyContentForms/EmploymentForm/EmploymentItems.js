@@ -6,11 +6,18 @@ import TextArea from '../../FormComponents/TextArea';
 
 //  *****  Employment Form Component *****
 
-const EmploymentInputs = ({ values, handleChange, handleBlur, errors }) => (
+const EmploymentInputs = ({
+  idx,
+  values,
+  handleChange,
+  handleBlur,
+  errors,
+}) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
         <Input
+          data-idx={idx}
           placeholder="Position"
           label="Position"
           name="position"
@@ -22,6 +29,7 @@ const EmploymentInputs = ({ values, handleChange, handleBlur, errors }) => (
       </Column>
       <Column width="1/2" className="px-1">
         <Input
+          data-idx={idx}
           placeholder="Employer"
           label="Employer"
           name="employer"
@@ -35,6 +43,8 @@ const EmploymentInputs = ({ values, handleChange, handleBlur, errors }) => (
     <Row>
       <Column width="1/2" className="px-1">
         <Input
+          data-idx={idx}
+          data-name="state"
           placeholder="State"
           label="State"
           name="state"
@@ -46,6 +56,8 @@ const EmploymentInputs = ({ values, handleChange, handleBlur, errors }) => (
       </Column>
       <Column width="1/2" className="px-1">
         <Input
+          data-idx={idx}
+          data-name="country"
           placeholder="Country"
           label="Country"
           name="country"
@@ -111,6 +123,7 @@ const EmploymentInputs = ({ values, handleChange, handleBlur, errors }) => (
 );
 
 EmploymentInputs.propTypes = {
+  idx: PropTypes.number,
   values: PropTypes.array,
   handleChange: PropTypes.func,
   handleBlur: PropTypes.func,
