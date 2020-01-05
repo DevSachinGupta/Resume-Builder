@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { Formik } from 'formik';
 import { Validations } from '../../../utils/validations';
-import Input from '../../FormComponents/Input';
-import { Row, Column } from '../../Layout';
-import Textfield from '../../FormComponents/TextField';
+import Accordian from '../../Accordion';
+import AffiliationInputs from './AffiliationItems';
 
-function EmploymentForm() {
-  let counter = 0;
-  let checkboxState = false;
+function AffiliationForm() {
   const blankAffFields = {
     organization: '',
     role: '',
@@ -17,26 +14,12 @@ function EmploymentForm() {
     tillDate: '',
   };
 
-  const [affiliations, setAffiliations] = useState([
-    {
-      lable: 'Qualification',
-      qualificationId: 'qualification[0]',
-      checkboxState,
-    },
-  ]);
+  const [affiliations, setAffiliations] = useState([{ ...blankAffFields }]);
+
   const addMore = () => {
-    counter += 1;
-    affiliations.push({
-      lable: 'Employeer',
-      qualificationId: `employer[${counter}]`,
-      checkboxState,
-    });
-    setAffiliations([...affiliations]);
+    setAffiliations([...affiliations, { ...blankAffFields }]);
   };
-  const checkboxStateChange = () => {
-    console.log('Checkbox state changed');
-    checkboxState = 'disabled';
-  };
+
   return (
     <div>
       <Formik
@@ -58,86 +41,18 @@ function EmploymentForm() {
           isSubmitting,
         }) => (
           <React.Fragment>
-            {affiliations.map(item => (
-              <div>
-                <Row>
-                  <Column width="1/2" className="px-1">
-                    <Input
-                      placeholder="Organisation"
-                      label="Organisation"
-                      name="organization"
-                      value={values.organization}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                  <Column width="1/2" className="px-1">
-                    <Input
-                      placeholder="Role"
-                      label="Role"
-                      name="role"
-                      value={values.role}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                </Row>
-                <Row>
-                  <Column width="2/5" className="px-1">
-                    <Input
-                      placeholder="Start Date"
-                      label="Start Date"
-                      name="start"
-                      value={values.start}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                  <Column width="2/5" className="px-1">
-                    <Input
-                      placeholder="End Date"
-                      label="End Date"
-                      name="end"
-                      value={values.end}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                  <Column width="1/5" className="px-1">
-                    {/* TODO: Change this textfield with checkbox */}
-                    <Textfield
-                      labeltxt="Till date"
-                      type="checkbox"
-                      name="tillDate"
-                      disabled={checkboxState}
-                      onClick={checkboxStateChange}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                </Row>
-                <Row>
-                  <Column width="full" className="px-1">
-                    <Input
-                      placeholder="Summary"
-                      label="Summary"
-                      name="summary"
-                      value={values.summary}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                </Row>
-
-                {/* <Textfield labeltxt="Till date" type="checkbox" disabled={item.checkboxState} onClick={checkboxStateChange}></Textfield> */}
-                {/* <Textfield labeltxt="Percentage" type="text"></Textfield> */}
-              </div>
+            {affiliations.map((item, idx) => (
+              <Accordian
+                id={idx}
+                label={item.title ? item.title : `Affiliation ${idx + 1}`}
+              >
+                <AffiliationInputs
+                  values={values}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  errors={errors}
+                />
+              </Accordian>
             ))}
             <button type="button" onClick={addMore}>
               Add More
@@ -149,4 +64,4 @@ function EmploymentForm() {
   );
 }
 
-export default EmploymentForm;
+export default AffiliationForm;

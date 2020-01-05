@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Formik } from 'formik';
-import { Validations } from '../../../utils/validations';
 import {
   makeUpdateResumeJSONState,
   makeUpdateEditorState,
@@ -16,11 +15,11 @@ import { setModalContent } from 'containers/MyContent/actions';
 import { toggleModal } from 'containers/App/actions';
 import { InjectJSONUsingCheerioEmployement } from 'components/CheerioComponent/templates/template_1';
 import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
-import EmpInputs from './EmploymentItems';
+import { Validations } from '../../../utils/validations';
+import Accordian from '../../Accordion';
+import EmploymentInputs from './EmploymentItems';
 
-//  Main Section
 function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
-  const counter = 0;
   const blankEmpFields = {
     position: '',
     employer: '',
@@ -97,12 +96,17 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
         }) => (
           <React.Fragment>
             {employments.map((item, idx) => (
-              <EmpInputs
-                values={values}
-                handleChange={date => console.log(date)}
-                handleBlur={handleBlur}
-                errors={errors}
-              />
+              <Accordian
+                id={idx}
+                label={item.title ? item.title : `Employment ${idx + 1}`}
+              >
+                <EmploymentInputs
+                  values={values}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  errors={errors}
+                />
+              </Accordian>
             ))}
             <button type="button" onClick={addMore}>
               Add More

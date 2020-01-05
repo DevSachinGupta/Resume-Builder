@@ -5,10 +5,24 @@ import PersonalDetailsForms from './PersonalDetailsForms';
 import './style.scss';
 
 function PersonalDetails() {
+  const blankPersonalFields = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    dateOfBirth: '',
+    gender: '',
+    address: '',
+    city: '',
+    state: '',
+    pincode: '',
+    country: '',
+    brief: '',
+  };
   return (
     <div>
       <Formik
-        initialValues={{ val: '' }}
+        initialValues={{ blankPersonalFields }}
         validate={Validations.InputValidations}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -24,16 +38,16 @@ function PersonalDetails() {
           handleBlur,
           handleSubmit,
           isSubmitting,
-        }) => {
-          return (
+        }) => (
+          <React.Fragment>
             <PersonalDetailsForms
               values={values}
               errors={errors}
               handleBlur={handleBlur}
               handleChange={handleChange}
             />
-          );
-        }}
+          </React.Fragment>
+        )}
       </Formik>
     </div>
   );

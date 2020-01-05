@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
 import { Formik } from 'formik';
 import { Validations } from '../../../utils/validations';
-import Input from '../../FormComponents/Input';
-import TextArea from '../../FormComponents/TextArea';
-import { Row, Column } from '../../Layout';
+import Accordian from '../../Accordion';
+import PublicationInputs from './PublicationItems';
 
-function EmploymentForm() {
+function PublicationForm() {
   let counter = 0;
   let checkboxState = false;
   const blankPubFields = {
     title: '',
     summary: '',
-    keywords: '',
     url: '',
-    start: '',
-    end: '',
+    date: '',
     description: '',
-    tillDate: '',
   };
   const [publications, setPublications] = useState([
     {
@@ -59,80 +55,18 @@ function EmploymentForm() {
           isSubmitting,
         }) => (
           <React.Fragment>
-            {publications.map(item => (
-              <div>
-                <Row>
-                  <Column width="1/2" className="px-1">
-                    <Input
-                      placeholder="Title"
-                      label="Title"
-                      name="title"
-                      value={values.title}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                  <Column width="1/2" className="px-1">
-                    <Input
-                      placeholder="Summary"
-                      label="Summary"
-                      name="summary"
-                      value={values.summary}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                </Row>
-                <Row>
-                  <Column width="1/2" className="px-1">
-                    <Input
-                      placeholder="Reference Link"
-                      label="Reference Link"
-                      name="url"
-                      value={values.url}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                  <Column width="1/2" className="px-1">
-                    <Input
-                      placeholder="Date"
-                      label="Date"
-                      name="date"
-                      type="date"
-                      value={values.date}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                </Row>
-                <Row>
-                  <Column width="full" className="px-1">
-                    <TextArea
-                      placeholder="Description"
-                      label="Description"
-                      name="description"
-                      value={values.description}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                </Row>
-                {/* <Textfield labeltxt="Title" type="text" />
-                <Textfield labeltxt="Summary" type="text" />
-                <Textfield labeltxt="Description" type="text" />
-                <Textfield labeltxt="Technology Used" type="text"></Textfield>
-                <Textfield labeltxt="Reference Link" type="text" />
-                <Textfield labeltxt="Date" type="date" /> */}
-                {/* <Textfield labeltxt="End date" type="date"></Textfield> */}
-                {/* <Textfield labeltxt="Till date" type="checkbox" disabled={item.checkboxState} onClick={checkboxStateChange}></Textfield> */}
-                {/* <Textfield labeltxt="Percentage" type="text"></Textfield> */}
-              </div>
+            {publications.map((item, idx) => (
+              <Accordian
+                id={idx}
+                label={item.title ? item.title : `Publication ${idx + 1}`}
+              >
+                <PublicationInputs
+                  values={values}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  errors={errors}
+                />
+              </Accordian>
             ))}
             <button type="button" onClick={addMore}>
               Add More
@@ -143,4 +77,4 @@ function EmploymentForm() {
     </div>
   );
 }
-export default EmploymentForm;
+export default PublicationForm;

@@ -7,6 +7,7 @@
 import React, { memo, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { Formik } from 'formik';
 import { createStructuredSelector } from 'reselect';
 import {
   makeUpdateResumeJSONState,
@@ -18,14 +19,11 @@ import {
 } from 'containers/Builder/actions';
 import { InjectJSONUsingCheerioEducation } from 'components/CheerioComponent/templates/template_1';
 import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
-
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
-
-import EduInputsEditable from './EducationItemsEditable';
+import { Validations } from '../../../utils/validations';
+import EducationInputs from './EducationItems';
 import Accordian from '../../Accordion';
-
-// /  Main Section
 
 function EducationForm({ editor_state, resume_json_state, dispatch }) {
   // const counter = 0;
@@ -83,39 +81,47 @@ function EducationForm({ editor_state, resume_json_state, dispatch }) {
 
   return (
     <div>
-      {educations.map((item, idx) => (
-        <Accordian
-          id={idx}
-          label={item.title ? item.title : `Education ${idx + 1}`}
-        >
-          <EduInputsEditable
-            key={`field-${idx}`}
-            idx={idx}
-            educations={educations}
-            handleEduChange={handleEduChange}
-          />
-        </Accordian>
-      ))}
-
-      <button type="button" onClick={handlePrevious}>
-        Previous
-      </button>
-
-      <button type="button" onClick={addMore}>
-        Add More
-      </button>
-
-      <button type="button" onClick={handleSave}>
-        Save
-      </button>
-
-      <button type="button" onClick={handleSaveAndNext}>
-        Save & Next
-      </button>
+      <Formik
+        initialValues={{ ...blankEduFields }}
+        validate={Validations.InputValidations}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 400);
+        }}
+      >
+        {({
+          values,
+          errors,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+        }) => (
+          <React.Fragment>
+            {educations.map((item, idx) => (
+              <Accordian
+                id={idx}
+                label={item.title ? item.title : `Education ${idx + 1}`}
+              >
+                <EducationInputs
+                  values={values}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  errors={errors}
+                />
+              </Accordian>
+            ))}
+            <button type="button" onClick={addMore}>
+              Add More
+            </button>
+          </React.Fragment>
+        )}
+      </Formik>
     </div>
   );
 }
-
 EducationForm.propTypes = {};
 
 const mapStateToProps = createStructuredSelector({

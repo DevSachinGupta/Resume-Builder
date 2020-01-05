@@ -1,69 +1,58 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Column } from '../../Layout';
 import Input from '../../FormComponents/Input';
+import { Row, Column } from '../../Layout';
 import TextArea from '../../FormComponents/TextArea';
 
-//  *****  Education Form Component *****
+//  *****  Project Form Component *****
 
-const EducationInputs = ({ values, handleChange, handleBlur, errors }) => (
-  <div>
+const ProjectInputs = ({ values, handleChange, handleBlur, errors }) => (
+<div>
     <Row>
       <Column width="1/2" className="px-1">
         <Input
-          placeholder="Degree"
-          label="Degree"
+          placeholder="Title"
+          label="Title"
           name="title"
           value={values.title}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.title}
+          error={errors.val}
         />
       </Column>
       <Column width="1/2" className="px-1">
         <Input
-          placeholder="Institute Name"
-          label="Institute Name"
-          name="institution"
-          value={values.institution}
+          placeholder="Summary"
+          label="Summary"
+          name="summary"
+          value={values.summary}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.institution}
+          error={errors.val}
         />
       </Column>
     </Row>
     <Row>
-      <Column width="1/3" className="px-1">
+      <Column width="1/2" className="px-1">
         <Input
-          placeholder="Field of Study"
-          label="Field of Study"
-          name="fieldOfStudy"
-          value={values.fieldOfStudy}
+          placeholder="Technology Used"
+          label="Technology Used"
+          name="keywords"
+          value={values.keywords}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.fieldOfStudy}
+          error={errors.val}
         />
       </Column>
-      <Column width="1/3" className="px-1">
+      <Column width="1/2" className="px-1">
         <Input
-          placeholder="State"
-          label="State"
-          name="state"
-          value={values.state}
+          placeholder="Reference Link"
+          label="Reference Link"
+          name="url"
+          value={values.url}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.state}
-        />
-      </Column>
-      <Column width="1/3" className="px-1">
-        <Input
-          placeholder="Country"
-          label="Country"
-          name="country"
-          value={values.country}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.country}
+          error={errors.val}
         />
       </Column>
     </Row>
@@ -93,6 +82,7 @@ const EducationInputs = ({ values, handleChange, handleBlur, errors }) => (
         />
       </Column>
       <Column width="1/5" className="px-1">
+        {/* TODO: Change this textfield with checkbox */}
         <Input
           type="checkbox"
           placeholder="Till date"
@@ -107,25 +97,27 @@ const EducationInputs = ({ values, handleChange, handleBlur, errors }) => (
     <Row>
       <Column width="full" className="px-1">
         <TextArea
-          placeholder="Summary"
-          label="Summary"
-          name="summary"
-          value={values.summary}
+          placeholder="Description"
+          label="Description"
+          name="description"
+          value={values.description}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={errors.summary}
+          error={errors.description}
         />
       </Column>
     </Row>
   </div>
 );
 
-EducationInputs.propTypes = {
+ProjectInputs.propTypes = {
   values: PropTypes.array,
   handleChange: PropTypes.func,
   handleBlur: PropTypes.func,
   errors: PropTypes.array,
 };
 
-export default EducationInputs;
-//  *****  Education Form Component : END  ******
+export default ProjectInputs;
+
+//  *****  Project Form Component : END  ******
+

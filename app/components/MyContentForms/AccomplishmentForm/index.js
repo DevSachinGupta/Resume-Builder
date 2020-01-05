@@ -1,55 +1,66 @@
 import React, { useState } from 'react';
-import Input from '../../FormComponents/Input';
-import { Row, Column } from '../../Layout';
-function EmploymentForm() {
-  var counter = 0;
-  var checkboxState = false;
+import { Formik } from 'formik';
+import { Validations } from '../../../utils/validations';
+import Accordian from '../../Accordion';
+import AccomplishmentInputs from './AccomplishmentItems';
+
+function AccomplishmentForm() {
+  const blankAccompFields = {
+    title: '',
+    date: '',
+    rank: '',
+    summary: '',
+  };
+
   const [accomplishments, setAccomplishments] = useState([
-    {
-      lable: 'Qualification',
-      qualificationId: 'qualification[0]',
-      checkboxState: checkboxState,
-    },
+    { ...blankAccompFields },
   ]);
+
   const addMore = () => {
-    counter = counter + 1;
-    accomplishments.push({
-      lable: 'Employeer',
-      qualificationId: 'employer[' + counter + ']',
-      checkboxState: checkboxState,
-    });
-    setAccomplishments([...accomplishments]);
+    setAccomplishments([...accomplishments, { ...blankAccompFields }]);
   };
-  const checkboxStateChange = () => {
-    console.log('Checkbox state changed');
-    checkboxState = 'disabled';
-  };
+
   return (
     <div>
-      {accomplishments.map(item => (
-        <div>
-          <Input placeholder="Title" type="text" />
-          <Input placeholder="Description" type="text" />
-          <Input placeholder="Summary" type="text" />
-          {/* <Textfield labeltxt="Technology Used" type="text"></Textfield> */}
-          <Row>
-            <Column width="1/2" className="px-1">
-              <Input placeholder="Reference Link" type="text" />
-            </Column>
-            <Column width="1/2" className="px-1">
-              <Input placeholder="Date" type="date" />
-            </Column>
-          </Row>
-          {/* <Textfield labeltxt="End date" type="date"></Textfield> */}
-          {/* <Textfield labeltxt="Till date" type="checkbox" disabled={item.checkboxState} onClick={checkboxStateChange}></Textfield> */}
-          {/* <Textfield labeltxt="Percentage" type="text"></Textfield> */}
-        </div>
-      ))}
-      <button type="button" onClick={addMore}>
-        Add More
-      </button>
+      <Formik
+        initialValues={{ ...blankAccompFields }}
+        validate={Validations.InputValidations}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 400);
+        }}
+      >
+        {({
+          values,
+          errors,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+        }) => (
+          <React.Fragment>
+            {accomplishments.map((item, idx) => (
+              <Accordian
+                id={idx}
+                label={item.title ? item.title : `Accomplishment ${idx + 1}`}
+              >
+                <AccomplishmentInputs
+                  values={values}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  errors={errors}
+                />
+              </Accordian>
+            ))}
+            <button type="button" onClick={addMore}>
+              Add More
+            </button>
+          </React.Fragment>
+        )}
+      </Formik>
     </div>
   );
 }
-
-export default EmploymentForm;
+export default AccomplishmentForm;

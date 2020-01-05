@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Formik } from 'formik';
 import { Validations } from '../../../utils/validations';
-import Input from '../../FormComponents/Input';
-import { Row, Column } from '../../Layout';
-import Textfield from '../../FormComponents/TextField';
+import Accordian from '../../Accordion';
+import ProjectInputs from './ProjectItems';
 
 function ProjectForm() {
   let counter = 0;
@@ -55,106 +54,17 @@ function ProjectForm() {
         }) => (
           <React.Fragment>
             {projects.map((item , idx) => (
-              <div>
-                <Row>
-                  <Column width="1/2" className="px-1">
-                    <Input
-                      placeholder="Title"
-                      label="Title"
-                      name="title"
-                      value={values.title}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                  <Column width="1/2" className="px-1">
-                    <Input
-                      placeholder="Summary"
-                      label="Summary"
-                      name="summary"
-                      value={values.summary}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                </Row>
-                <Row>
-                  <Column width="full" className="px-1">
-                    <Input
-                      placeholder="Description"
-                      label="Description"
-                      name="description"
-                      value={values.description}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                </Row>
-                <Row>
-                  <Column width="1/2" className="px-1">
-                    <Input
-                      placeholder="Technology Used"
-                      label="Technology Used"
-                      name="keywords"
-                      value={values.keywords}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                  <Column width="1/2" className="px-1">
-                    <Input
-                      placeholder="Reference Link"
-                      label="Reference Link"
-                      name="url"
-                      value={values.url}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                </Row>
-                <Row>
-                  <Column width="2/5" className="px-1">
-                    <Input
-                      placeholder="Start Date"
-                      label="Start Date"
-                      name="start"
-                      value={values.start}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                  <Column width="2/5" className="px-1">
-                    <Input
-                      placeholder="End Date"
-                      label="End Date"
-                      name="end"
-                      value={values.end}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                  <Column width="1/5" className="px-1">
-                    {/* TODO: Change this textfield with checkbox */}
-                    <Textfield
-                      labeltxt="Till date"
-                      type="checkbox"
-                      name="tillDate"
-                      disabled={checkboxState}
-                      onClick={checkboxStateChange}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={errors.val}
-                    />
-                  </Column>
-                </Row>
-              </div>
+              <Accordian
+                id={idx}
+                label={item.title ? item.title : `Project ${idx + 1}`}
+              >
+                <ProjectInputs
+                  values={values}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  errors={errors}
+                />
+              </Accordian>
             ))}
             <button type="button" onClick={addMore}>
               Add More
