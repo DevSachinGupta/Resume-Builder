@@ -69,6 +69,7 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
   };
 
   const handleEmpChange = e => {
+    console.log(e.target.value, 'date value');
     const updatedEmp = [...employments];
     updatedEmp[e.target.dataset.idx][e.target.name] = e.target.value;
     setEmployments(updatedEmp);

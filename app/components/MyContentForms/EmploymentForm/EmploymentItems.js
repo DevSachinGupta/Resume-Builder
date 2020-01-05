@@ -72,6 +72,7 @@ const EmploymentInputs = ({
       <Column width="2/5" className="px-1">
         <Input
           type="date"
+          data-idx={idx}
           placeholder="Start Date"
           label="Start Date"
           name="start"
@@ -84,6 +85,7 @@ const EmploymentInputs = ({
       <Column width="2/5" className="px-1">
         <Input
           type="date"
+          data-idx={idx}
           placeholder="End Date"
           label="End Date"
           name="end"
@@ -97,6 +99,7 @@ const EmploymentInputs = ({
         {/* TODO: Change this textfield with checkbox */}
         <Input
           type="checkbox"
+          data-idx={idx}
           placeholder="Till date"
           label="Till date"
           name="tillDate"
@@ -109,6 +112,7 @@ const EmploymentInputs = ({
     <Row>
       <Column width="full" className="px-1">
         <TextArea
+          data-idx={idx}
           placeholder="Summary"
           label="Summary"
           name="summary"
