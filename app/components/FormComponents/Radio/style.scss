@@ -1,0 +1,15 @@
+@import "../../../styles/app.scss";
+.radio-group {
+    padding: 2px 9px;
+}
+.radio-group input {
+    width: auto!important;
+    vertical-align: middle;
+}
+.radio-group span {
+    font-family: Georgia,Times,'Times New Roman',serif;
+    @include font($size: 14px);
+    padding-left: 2px;
+    display: inline-block;
+    vertical-align: text-top;
+}

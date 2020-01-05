@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Input from '../../FormComponents/Input';
 import { Row, Column } from '../../Layout';
 import TextArea from '../../FormComponents/TextArea';
+import Radio from '../../FormComponents/Radio';
 
 //  *****  Personal Form Component *****
 
@@ -68,8 +69,17 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => (
         />
       </Column>
       <Column width="1/2" className="px-1">
+        <Radio
+          placeholder="Gender"
+          label="Gender"
+          name="gender"
+          value={values.gender}
+          values={['Male', 'Female', 'Others']}
+          onChange={handleChange}
+          error={errors.gender}
+        />
         {/* TODO: Gender variable Mapping */}
-        <Input
+        {/* <Input
           type="radio"
           name="genderMale"
           value={values.genderMale}
@@ -92,7 +102,7 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => (
           onChange={handleChange}
           error={errors.genderOther}
           text="Other"
-        />
+        /> */}
       </Column>
     </Row>
 
