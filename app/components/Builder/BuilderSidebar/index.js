@@ -47,6 +47,7 @@ function BuilderSidebar({ isSecondarySidebarOpen, dispatch }) {
             <SidebarItem
               onClick={() => dispatch(setModalContent(item.id))}
               title={item.title}
+              {...item}
             />
           ))}
         </div>

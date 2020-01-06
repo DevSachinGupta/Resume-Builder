@@ -7,10 +7,6 @@
 import React, { memo, useState } from 'react';
 import './style.scss';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
-
-// import { FormattedMessage } from 'react-intl';
-// import messages from './messages';
 
 function Accordion(props) {
   const [checkbox, setCheckbox] = useState(props.id);
@@ -47,7 +43,7 @@ function Accordion(props) {
 Accordion.propTypes = {
   id: PropTypes.number,
   label: PropTypes.string,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export default memo(Accordion);

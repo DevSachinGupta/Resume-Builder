@@ -94,7 +94,6 @@ const EmploymentInputs = ({
         />
       </Column>
       <Column width="1/5" className="px-1">
-        {/* TODO: Change this textfield with checkbox */}
         <Input
           type="checkbox"
           placeholder="Till date"

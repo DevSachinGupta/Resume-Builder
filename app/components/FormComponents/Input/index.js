@@ -8,8 +8,8 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from '../DatePicker';
 import DateRangePicker from '../DateRangePicker';
-import Checkbox from "../Checkbox";
-import Radio from "../Radio";
+import Checkbox from '../Checkbox';
+import Radio from '../Radio';
 import Text from '../Text';
 import './style.scss';
 
