@@ -51,8 +51,10 @@ const builderReducer = (state = initialState, action) =>
         draft.editor_state = action.editor_state;
         break;
       case UPDATE_RESUMEJSON_STATE:
-        console.log(action," inside reducer")
-        draft.resume_json_state = {...state.resume_json_state, [action.section_key_state]: action.resume_json_state }
+        draft.resume_json_state = {
+          ...state.resume_json_state,
+          [action.section_key_state]: action.resume_json_state,
+        };
         break;
       case UPDATE_DEMOPAGE_STATE:
         draft.demopage_state = action.demopage_state;

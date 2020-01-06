@@ -69,10 +69,10 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
   };
 
   const handleEmpChange = e => {
-    console.log(e.target.value, 'date value');
     const updatedEmp = [...employments];
     updatedEmp[e.target.dataset.idx][e.target.name] = e.target.value;
     setEmployments(updatedEmp);
+    console.log('data: ', employments);
   };
 
   return (
@@ -81,9 +81,32 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
         initialValues={{ ...employments }}
         // validate={Validations.InputValidations}
         validate={values => {
-          console.log('values: ', values);
-          // TODO: Create a error array same size as of employments and validate for each field.
-          // employments.map((item, idx) => console.log('id: ', idx));
+          const blankEmpErrorFields = {
+            position: null,
+            employer: null,
+            state: null,
+            country: null,
+            start: null,
+            end: null,
+            summary: null,
+          };
+          const errors = [];
+          console.log("errors1", errors);
+          Object.keys(values).map((item, idx) => {
+            let errorCopy = blankEmpErrorFields;
+            if (!values[idx].position) {
+              console.log("called req")
+              errorCopy.position = 'Required';
+            }
+            if (!values[idx].employer) {
+              errorCopy.employer = 'Required';
+            }
+            errors[idx] = errorCopy;
+            console.log("errors2", errors);
+            console.log("errorscopy2", errorCopy);
+          });
+          console.log("errors", errors);
+          return errors;
         }}
         onSubmit={(employments, { setSubmitting }) => {
           setTimeout(() => {
@@ -95,7 +118,6 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
       >
         {({ errors, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
           <React.Fragment>
-            {console.log('emp: ', employments)}
             {employments.map((item, idx) => (
               <Accordian
                 id={idx}
