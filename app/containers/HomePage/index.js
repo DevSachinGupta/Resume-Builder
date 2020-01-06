@@ -24,7 +24,6 @@ import ReposList from 'components/ReposList';
 import AtPrefix from './AtPrefix';
 import CenteredSection from './CenteredSection';
 import Form from './Form';
-import { DatePicker } from 'antd';
 import Input from './Input';
 import Section from './Section';
 import messages from './messages';

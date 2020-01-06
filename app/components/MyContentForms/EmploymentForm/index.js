@@ -15,7 +15,6 @@ import { setModalContent } from 'containers/MyContent/actions';
 import { toggleModal } from 'containers/App/actions';
 import { InjectJSONUsingCheerioEmployement } from 'components/CheerioComponent/templates/template_1';
 import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
-import { Validations } from '../../../utils/validations';
 import Accordian from '../../Accordion';
 import EmploymentInputs from './EmploymentItems';
 
@@ -95,7 +94,6 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
       >
         {({ errors, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
           <React.Fragment>
-            {console.log('emp: ', employments)}
             {employments.map((item, idx) => (
               <Accordian
                 id={idx}

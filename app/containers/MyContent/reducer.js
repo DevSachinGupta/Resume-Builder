@@ -5,7 +5,7 @@
  */
 import produce from 'immer';
 import { DEFAULT_ACTION, SET_MODEL_CONTENT } from './constants';
-
+import { TOGGLE_MODAL } from '../App/constants';
 export const initialState = {
   activeModalType: '',
 };

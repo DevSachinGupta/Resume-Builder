@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /**
  *
  * Dropdown
@@ -81,9 +83,7 @@ function Dropdown({ options, onSelect }) {
   );
 }
 Dropdown.defaultProps = {
-  onSelect: value => {
-    console.log(value);
-  },
+  onSelect: () => {},
 };
 Dropdown.propTypes = {
   options: PropTypes.array.isRequired,
