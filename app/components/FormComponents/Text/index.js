@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import cx from 'classnames';
-import { useField, useFormikContext } from 'formik';
+import { useField } from 'formik';
 import { MdCancel } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import './style.scss';
