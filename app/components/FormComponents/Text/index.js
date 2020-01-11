@@ -13,7 +13,7 @@ function Text(props) {
       <div
         className={cx('inputContainer', {
           fullWidth: props.fullWidth,
-          error: props.error,
+          error: props.touched && props.error,
         })}
       >
         {props.inputIcon && (
@@ -26,17 +26,19 @@ function Text(props) {
           </span>
         )}
       </div>
-      {
-        meta.error && meta.touched && <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
+      {props.touched && props.error && (
+        <div
+          className={cx('hint', { error_hint: props.touched && props.error })}
+        >
           {props.error && props.error}
         </div>
-      }
+      )}
     </div>
   );
 }
 Text.defaultProps = {
-  value: ""
-}
+  value: '',
+};
 Text.propTypes = {
   clearable: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -44,6 +46,7 @@ Text.propTypes = {
   inputIcon: PropTypes.node.isRequired,
   value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
   error: PropTypes.string,
+  touched: PropTypes.string,
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
 };

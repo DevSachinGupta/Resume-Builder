@@ -29,15 +29,28 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
     end: '',
     summary: '',
   };
+  const nullEmpFields = {
+    position: null,
+    employer: null,
+    state: null,
+    country: null,
+    start: null,
+    end: null,
+    summary: null,
+  };
   const [employments, setEmployments] = useState([{ ...blankEmpFields }]);
+  const [touched, setTouched] = useState([{ ...nullEmpFields }]);
+  const [errors, setErrors] = useState([{ ...nullEmpFields }]);
+
+  const addMore = () => {
+    setEmployments([...employments, { ...blankEmpFields }]);
+    setTouched([...touched, { ...nullEmpFields }]);
+    setErrors([...errors, { ...nullEmpFields }]);
+  };
 
   const handlePrevious = () => {
     dispatch(toggleModal());
     dispatch(setModalContent('education'));
-  };
-
-  const addMore = () => {
-    setEmployments([...employments, { ...blankEmpFields }]);
   };
 
   const handleSave = () => {
@@ -72,7 +85,37 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
     const updatedEmp = [...employments];
     updatedEmp[e.target.dataset.idx][e.target.name] = e.target.value;
     setEmployments(updatedEmp);
-    console.log('data: ', employments);
+  };
+
+  const validateFields = e => {
+    // console.log('valida: ', Validations.InputValidations.isEmpty('fsd'));
+    const updatedErrors = [...errors];
+    const { idx } = e.target.dataset;
+    updatedErrors[idx] = { ...nullEmpFields };
+    if (Validations.InputValidations.isEmpty(employments[idx].position)) {
+      updatedErrors[idx]['position'] = 'Required';
+    }
+    if (Validations.InputValidations.isEmpty(employments[idx].employer)) {
+      updatedErrors[idx]['employer'] = 'Required';
+    }
+    if (Validations.InputValidations.isEmpty(employments[idx].state)) {
+      updatedErrors[idx]['state'] = 'Required';
+    }
+    if (Validations.InputValidations.isEmpty(employments[idx].country)) {
+      updatedErrors[idx]['country'] = 'Required';
+    }
+    setErrors(updatedErrors);
+  };
+
+  const handleTouchChange = e => {
+    const updatedTouch = [...touched];
+    updatedTouch[e.target.dataset.idx][e.target.name] = true;
+    setTouched(updatedTouch);
+  };
+
+  const handleBlur = e => {
+    handleTouchChange(e);
+    validateFields(e);
   };
 
   return (
@@ -80,43 +123,15 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
       <Formik
         initialValues={{ ...employments }}
         // validate={Validations.InputValidations}
-        validate={values => {
-          const blankEmpErrorFields = {
-            position: null,
-            employer: null,
-            state: null,
-            country: null,
-            start: null,
-            end: null,
-            summary: null,
-          };
-          const errors = [];
-          console.log("errors1", errors);
-          Object.keys(values).map((item, idx) => {
-            let errorCopy = blankEmpErrorFields;
-            if (!values[idx].position) {
-              console.log("called req")
-              errorCopy.position = 'Required';
-            }
-            if (!values[idx].employer) {
-              errorCopy.employer = 'Required';
-            }
-            errors[idx] = errorCopy;
-            console.log("errors2", errors);
-            console.log("errorscopy2", errorCopy);
-          });
-          console.log("errors", errors);
-          return errors;
-        }}
-        onSubmit={(employments, { setSubmitting }) => {
+        onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
-            alert(JSON.stringify(employments, null, 2));
+            alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
           }, 400);
         }}
         enableReinitialize
       >
-        {({ errors, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+        {({ handleChange, handleSubmit, isSubmitting, }) => (
           <React.Fragment>
             {employments.map((item, idx) => (
               <Accordian
@@ -129,6 +144,7 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
                   handleChange={handleEmpChange}
                   handleBlur={handleBlur}
                   errors={errors}
+                  touched={touched}
                 />
               </Accordian>
             ))}

@@ -34,13 +34,7 @@ const DemoPage = {
 };
 
 function BuilderEditor({ editor_state, demopage_state, dispatch }) {
-  console.log(editor_state, 'This is the editor_state:Editor');
-  console.log(demopage_state, 'This is the editor_state:Editor');
-  console.log(DemoPage, 'This is the editor_state:Editor');
-  // DemoPage=demopage_state || DemoPage
-  // var DemoPage = demopage_state
   useEffect(() => {
-    console.log('calling editor dispatch : inside effect');
     const editor = grapesjs.init({
       container: '#gjs',
       width: '82vw',
@@ -61,7 +55,6 @@ function BuilderEditor({ editor_state, demopage_state, dispatch }) {
         ],
       },
     });
-    console.log('calling editor dispatch');
     dispatch(updateEditorState(editor));
   }, []);
   // dispatch(updateTemplateNumberState(template_number))

@@ -5,19 +5,20 @@ export const isEmail = value => {
   return false;
 };
 export const isLink = value => {
-  let pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+  const pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
   if (pattern.test(value)) {
     return true;
   }
   return false;
 };
 export const isEmpty = value => {
-  if (value) {
+  if (!value) {
     return true;
   }
   return false;
 };
 export const isOverFlowing = () => {};
+
 export const InputValidations = {
   isEmail,
   isLink,
