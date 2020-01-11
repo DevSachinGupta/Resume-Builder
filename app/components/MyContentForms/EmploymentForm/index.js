@@ -93,16 +93,16 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
     const { idx } = e.target.dataset;
     updatedErrors[idx] = { ...nullEmpFields };
     if (Validations.InputValidations.isEmpty(employments[idx].position)) {
-      updatedErrors[idx]['position'] = 'Required';
+      updatedErrors[idx].position = 'Required';
     }
     if (Validations.InputValidations.isEmpty(employments[idx].employer)) {
-      updatedErrors[idx]['employer'] = 'Required';
+      updatedErrors[idx].employer = 'Required';
     }
     if (Validations.InputValidations.isEmpty(employments[idx].state)) {
-      updatedErrors[idx]['state'] = 'Required';
+      updatedErrors[idx].state = 'Required';
     }
     if (Validations.InputValidations.isEmpty(employments[idx].country)) {
-      updatedErrors[idx]['country'] = 'Required';
+      updatedErrors[idx].country = 'Required';
     }
     setErrors(updatedErrors);
   };
@@ -131,7 +131,7 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
         }}
         enableReinitialize
       >
-        {({ handleChange, handleSubmit, isSubmitting, }) => (
+        {({ handleChange, handleSubmit, isSubmitting }) => (
           <React.Fragment>
             {employments.map((item, idx) => (
               <Accordian

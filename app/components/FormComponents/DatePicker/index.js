@@ -23,7 +23,17 @@ function DatePicker({ type, onChange, ...rest }) {
     };
   });
   const handleSelect = date => {
-    onChange(date);
+    const data = {
+      target: {
+        type,
+        value: date.toString(),
+        name: rest.name,
+        dataset: {
+          idx: rest['data-idx'],
+        },
+      },
+    };
+    onChange(data);
     handleDatePicker();
   };
   const handleGlobalClick = e => {
@@ -43,7 +53,7 @@ function DatePicker({ type, onChange, ...rest }) {
       {isPickerActive && (
         <Calendar
           date={new Date()}
-          className="shadow rounded z-10 absolute floating-calender"
+          className="shadow rounded z-10 fixed floating-calender"
           onChange={handleSelect}
         />
       )}
@@ -52,12 +62,13 @@ function DatePicker({ type, onChange, ...rest }) {
 }
 DatePicker.defaultProps = {
   onChange: date => {
-    console.log(date);
+    console.log('Date: ', date);
   },
 };
 DatePicker.propTypes = {
   type: PropTypes.string.isRequired,
   onChange: PropTypes.func,
+  idx: PropTypes.string.isRequired,
 };
 
 export default memo(DatePicker);

@@ -91,6 +91,7 @@ const EmploymentInputs = ({
       <Column width="2/5" className="px-1">
         <Input
           type="date"
+          format="DD/MM/YYYY"
           data-idx={idx}
           placeholder="End Date"
           label="End Date"
