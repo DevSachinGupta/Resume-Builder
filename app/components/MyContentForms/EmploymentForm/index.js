@@ -27,6 +27,7 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
     country: '',
     start: '',
     end: '',
+    tillDate: false,
     summary: '',
   };
   const nullEmpFields = {
@@ -41,12 +42,15 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
   const [employments, setEmployments] = useState([{ ...blankEmpFields }]);
   const [touched, setTouched] = useState([{ ...nullEmpFields }]);
   const [errors, setErrors] = useState([{ ...nullEmpFields }]);
+  // const [isTillDateActive, toggleTillDate] = useState([false]);
 
   const addMore = () => {
     setEmployments([...employments, { ...blankEmpFields }]);
     setTouched([...touched, { ...nullEmpFields }]);
     setErrors([...errors, { ...nullEmpFields }]);
   };
+  // console.log('empl: ', employments);
+  // console.log('err: ', errors);
 
   const handlePrevious = () => {
     dispatch(toggleModal());
@@ -83,12 +87,19 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
 
   const handleEmpChange = e => {
     const updatedEmp = [...employments];
-    updatedEmp[e.target.dataset.idx][e.target.name] = e.target.value;
+    if (e.target.name == 'tillDate') {
+      if (!updatedEmp[e.target.dataset.idx].tillDate) {
+        updatedEmp[e.target.dataset.idx].end = '';
+      }
+      updatedEmp[e.target.dataset.idx][e.target.name] = !updatedEmp[
+        e.target.dataset.idx
+      ].tillDate;
+    } else updatedEmp[e.target.dataset.idx][e.target.name] = e.target.value;
+
     setEmployments(updatedEmp);
   };
 
   const validateFields = e => {
-    // console.log('valida: ', Validations.InputValidations.isEmpty('fsd'));
     const updatedErrors = [...errors];
     const { idx } = e.target.dataset;
     updatedErrors[idx] = { ...nullEmpFields };
@@ -104,6 +115,17 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
     if (Validations.InputValidations.isEmpty(employments[idx].country)) {
       updatedErrors[idx].country = 'Required';
     }
+    if (Validations.InputValidations.isEmpty(employments[idx].start)) {
+      updatedErrors[idx].start = 'Required';
+    }
+    if (!employments[idx].tillDate) {
+      if (Validations.InputValidations.isEmpty(employments[idx].end)) {
+        updatedErrors[idx].end = 'Required';
+      }
+    }
+    if (Validations.InputValidations.isEmpty(employments[idx].summary)) {
+      updatedErrors[idx].summary = 'Required';
+    }
     setErrors(updatedErrors);
   };
 
@@ -117,7 +139,15 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
     handleTouchChange(e);
     validateFields(e);
   };
-
+  const handleRemove = e => {
+    const { idx } = e.target.dataset;
+    const updatedEmp = [...employments];
+    setEmployments(updatedEmp.filter((_s, sidx) => idx != sidx));
+    const updatedErrors = [...errors];
+    setErrors(updatedErrors.filter((_s, sidx) => idx != sidx));
+    const updatedTouch = [...touched];
+    setTouched(updatedTouch.filter((_s, sidx) => idx != sidx));
+  };
   return (
     <div>
       <Formik
@@ -137,6 +167,7 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
               <Accordian
                 id={idx}
                 label={item.title ? item.title : `Employment ${idx + 1}`}
+                handleRemove={handleRemove}
               >
                 <EmploymentInputs
                   idx={idx}

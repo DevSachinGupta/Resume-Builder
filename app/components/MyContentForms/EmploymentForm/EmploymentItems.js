@@ -101,6 +101,7 @@ const EmploymentInputs = ({
           onBlur={handleBlur}
           error={errors[idx].end}
           touched={touched[idx].end}
+          disabled={values.tillDate}
         />
       </Column>
       <Column width="1/5" className="px-1">
