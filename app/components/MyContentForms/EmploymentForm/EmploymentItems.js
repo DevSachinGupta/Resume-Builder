@@ -114,6 +114,7 @@ const EmploymentInputs = ({
           name="tillDate"
           value={values.tillDate}
           onChange={handleChange}
+          onBlur={handleBlur}
           error={errors[idx].tillDate}
           touched={touched[idx].tillDate}
         />

@@ -94,6 +94,10 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
       updatedEmp[e.target.dataset.idx][e.target.name] = !updatedEmp[
         e.target.dataset.idx
       ].tillDate;
+      handleBlur(e);
+    } else if (e.target.type == 'date') {
+      updatedEmp[e.target.dataset.idx][e.target.name] = e.target.value;
+      handleBlur(e);
     } else updatedEmp[e.target.dataset.idx][e.target.name] = e.target.value;
 
     setEmployments(updatedEmp);

@@ -7,6 +7,7 @@
 import React, { memo, useState } from 'react';
 import './style.scss';
 import PropTypes from 'prop-types';
+import { Row, Column } from '../Layout';
 // import styled from 'styled-components';
 
 // import { FormattedMessage } from 'react-intl';
@@ -31,7 +32,7 @@ function Accordion(props) {
         id={props.id}
         name="test"
       />
-      <div>
+      <div className="flex justify-between">
         <label
           className="block p-1 leading-normal cursor-pointer"
           htmlFor={props.id}

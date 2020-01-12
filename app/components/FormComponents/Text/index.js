@@ -44,7 +44,7 @@ Text.propTypes = {
   onChange: PropTypes.func.isRequired,
   fullWidth: PropTypes.bool.isRequired,
   inputIcon: PropTypes.node.isRequired,
-  value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   error: PropTypes.string,
   touched: PropTypes.string,
   name: PropTypes.string.isRequired,
