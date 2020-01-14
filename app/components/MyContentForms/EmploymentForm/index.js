@@ -72,39 +72,17 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
     updatedEmp[e.target.dataset.idx][e.target.name] = e.target.value;
     setEmployments(updatedEmp);
   };
-
   return (
     <div>
-      <Formik
-        initialValues={{ ...employments }}
-        // validate={Validations.InputValidations}
-        validate={values => {
-          console.log('values: ', values);
-          // TODO: Create a error array same size as of employments and validate for each field.
-          // employments.map((item, idx) => console.log('id: ', idx));
-        }}
-        onSubmit={(employments, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(employments, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}
-        enableReinitialize
-      >
-        {({ errors, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+      <Formik initialValues={{ ...employments }}>
+        {({ handleSubmit, isSubmitting }) => (
           <React.Fragment>
             {employments.map((item, idx) => (
               <Accordian
                 id={idx}
                 label={item.title ? item.title : `Employment ${idx + 1}`}
               >
-                <EmploymentInputs
-                  idx={idx}
-                  values={item}
-                  handleChange={handleEmpChange}
-                  handleBlur={handleBlur}
-                  errors={errors}
-                />
+                <EmploymentInputs idx={idx} values={item} />
               </Accordian>
             ))}
             <button type="button" onClick={addMore}>

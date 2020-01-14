@@ -6,13 +6,7 @@ import TextArea from '../../FormComponents/TextArea';
 
 //  *****  Employment Form Component *****
 
-const EmploymentInputs = ({
-  idx,
-  values,
-  handleChange,
-  handleBlur,
-  errors,
-}) => (
+const EmploymentInputs = ({ idx, values }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -22,9 +16,6 @@ const EmploymentInputs = ({
           label="Position"
           name="position"
           value={values.position}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.position}
         />
       </Column>
       <Column width="1/2" className="px-1">
@@ -34,9 +25,6 @@ const EmploymentInputs = ({
           label="Employer"
           name="employer"
           value={values.employer}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.employer}
         />
       </Column>
     </Row>
@@ -49,9 +37,6 @@ const EmploymentInputs = ({
           label="State"
           name="state"
           value={values.state}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.state}
         />
       </Column>
       <Column width="1/2" className="px-1">
@@ -62,9 +47,6 @@ const EmploymentInputs = ({
           label="Country"
           name="country"
           value={values.country}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.country}
         />
       </Column>
     </Row>
@@ -76,9 +58,6 @@ const EmploymentInputs = ({
           label="Start Date"
           name="start"
           value={values.start}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.start}
         />
       </Column>
       <Column width="2/5" className="px-1">
@@ -88,9 +67,6 @@ const EmploymentInputs = ({
           label="End Date"
           name="end"
           value={values.end}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.end}
         />
       </Column>
       <Column width="1/5" className="px-1">
@@ -100,8 +76,6 @@ const EmploymentInputs = ({
           label="Till date"
           name="tillDate"
           value={values.tillDate}
-          onChange={handleChange}
-          error={errors.tillDate}
         />
       </Column>
     </Row>
@@ -112,9 +86,6 @@ const EmploymentInputs = ({
           label="Summary"
           name="summary"
           value={values.summary}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.summary}
         />
       </Column>
     </Row>
@@ -124,9 +95,6 @@ const EmploymentInputs = ({
 EmploymentInputs.propTypes = {
   idx: PropTypes.number,
   values: PropTypes.array,
-  handleChange: PropTypes.func,
-  handleBlur: PropTypes.func,
-  errors: PropTypes.array,
 };
 
 export default EmploymentInputs;
