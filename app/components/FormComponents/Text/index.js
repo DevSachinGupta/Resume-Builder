@@ -8,7 +8,7 @@ import './style.scss';
 function Text(props) {
   const [field, meta] = useField({
     name: props.name,
-    validate: value => {},
+    validate: props.validate,
   });
   return (
     <div className={cx('inputWrapper')}>
@@ -16,7 +16,7 @@ function Text(props) {
       <div
         className={cx('inputContainer', {
           fullWidth: props.fullWidth,
-          error: props.error,
+          error: meta.error && meta.touched,
         })}
       >
         {props.inputIcon && (
@@ -31,7 +31,7 @@ function Text(props) {
       </div>
       {meta.error && meta.touched && (
         <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
-          {props.error && props.error}
+          {meta.error && meta.error}
         </div>
       )}
     </div>
@@ -50,5 +50,6 @@ Text.propTypes = {
   error: PropTypes.string,
   name: PropTypes.string,
   label: PropTypes.string,
+  validate: PropTypes.object,
 };
 export default memo(Text);
