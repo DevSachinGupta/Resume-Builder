@@ -2,17 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from '../../FormComponents/Input';
 import { Row, Column } from '../../Layout';
+import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
 
 //  *****  Employment Form Component *****
-
-const EmploymentInputs = ({
-  idx,
-  values,
-  handleChange,
-  handleBlur,
-  errors,
-}) => (
+console.log(validationMap['position']);
+const EmploymentInputs = ({ idx, values }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -20,11 +15,9 @@ const EmploymentInputs = ({
           data-idx={idx}
           placeholder="Position"
           label="Position"
-          name="position"
+          name={`position-${idx}`}
+          validate={validationMap['position']}
           value={values.position}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.position}
         />
       </Column>
       <Column width="1/2" className="px-1">
@@ -32,11 +25,9 @@ const EmploymentInputs = ({
           data-idx={idx}
           placeholder="Employer"
           label="Employer"
-          name="employer"
+          name={`employer-${idx}`}
+          validate={validationMap['employer']}
           value={values.employer}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.employer}
         />
       </Column>
     </Row>
@@ -47,11 +38,9 @@ const EmploymentInputs = ({
           data-name="state"
           placeholder="State"
           label="State"
-          name="state"
+          name={`state-${idx}`}
+          validate={validationMap['state']}
           value={values.state}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.state}
         />
       </Column>
       <Column width="1/2" className="px-1">
@@ -60,11 +49,9 @@ const EmploymentInputs = ({
           data-name="country"
           placeholder="Country"
           label="Country"
-          name="country"
+          name={`country-${idx}`}
+          validate={validationMap['country']}
           value={values.country}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.country}
         />
       </Column>
     </Row>
@@ -75,11 +62,9 @@ const EmploymentInputs = ({
           data-idx={idx}
           placeholder="Start Date"
           label="Start Date"
-          name="start"
+          name={`start-${idx}`}
+          validate={validationMap['start']}
           value={values.start}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.start}
         />
       </Column>
       <Column width="2/5" className="px-1">
@@ -88,11 +73,9 @@ const EmploymentInputs = ({
           data-idx={idx}
           placeholder="End Date"
           label="End Date"
-          name="end"
+          name={`end-${idx}`}
+          validate={validationMap['end']}
           value={values.end}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.end}
         />
       </Column>
       <Column width="1/5" className="px-1">
@@ -101,10 +84,9 @@ const EmploymentInputs = ({
           data-idx={idx}
           placeholder="Till date"
           label="Till date"
-          name="tillDate"
+          name={`tillDate-${idx}`}
+          validate={validationMap['tillDate']}
           value={values.tillDate}
-          onChange={handleChange}
-          error={errors.tillDate}
         />
       </Column>
     </Row>
@@ -114,11 +96,9 @@ const EmploymentInputs = ({
           data-idx={idx}
           placeholder="Summary"
           label="Summary"
-          name="summary"
+          name={`summary-${idx}`}
+          validate={validationMap['summary']}
           value={values.summary}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.summary}
         />
       </Column>
     </Row>
@@ -128,9 +108,6 @@ const EmploymentInputs = ({
 EmploymentInputs.propTypes = {
   idx: PropTypes.number,
   values: PropTypes.array,
-  handleChange: PropTypes.func,
-  handleBlur: PropTypes.func,
-  errors: PropTypes.array,
 };
 
 export default EmploymentInputs;

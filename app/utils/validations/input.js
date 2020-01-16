@@ -1,3 +1,4 @@
+import { string } from 'yup';
 export const isEmail = value => {
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
     return true;
@@ -11,12 +12,7 @@ export const isLink = value => {
   }
   return false;
 };
-export const isEmpty = value => {
-  if (value) {
-    return true;
-  }
-  return false;
-};
+
 export const isOverFlowing = () => {};
 export const InputValidations = {
   isEmail,
