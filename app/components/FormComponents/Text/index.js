@@ -8,7 +8,7 @@ import './style.scss';
 function Text(props) {
   const [field, meta] = useField({
     name: props.name,
-    validate: props.validate,
+    validate: async (value) => await props.validate(value),
   });
   return (
     <div className={cx('inputWrapper')}>
@@ -22,7 +22,7 @@ function Text(props) {
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}
-        <input {...field} />
+        <input {...field} {...props} />
         {props.clearable && props.value.length > 0 && (
           <span className="input-right-Icon cursor-pointer">
             {<MdCancel />}

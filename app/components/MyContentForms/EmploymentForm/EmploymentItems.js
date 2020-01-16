@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from '../../FormComponents/Input';
 import { Row, Column } from '../../Layout';
+import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
 
 //  *****  Employment Form Component *****
-
+console.log(validationMap['position']);
 const EmploymentInputs = ({ idx, values }) => (
   <div>
     <Row>
@@ -14,7 +15,8 @@ const EmploymentInputs = ({ idx, values }) => (
           data-idx={idx}
           placeholder="Position"
           label="Position"
-          name="position"
+          name={`position-${idx}`}
+          validate={validationMap['position']}
           value={values.position}
         />
       </Column>
@@ -23,7 +25,8 @@ const EmploymentInputs = ({ idx, values }) => (
           data-idx={idx}
           placeholder="Employer"
           label="Employer"
-          name="employer"
+          name={`employer-${idx}`}
+          validate={validationMap['employer']}
           value={values.employer}
         />
       </Column>
@@ -35,7 +38,8 @@ const EmploymentInputs = ({ idx, values }) => (
           data-name="state"
           placeholder="State"
           label="State"
-          name="state"
+          name={`state-${idx}`}
+          validate={validationMap['state']}
           value={values.state}
         />
       </Column>
@@ -45,7 +49,8 @@ const EmploymentInputs = ({ idx, values }) => (
           data-name="country"
           placeholder="Country"
           label="Country"
-          name="country"
+          name={`country-${idx}`}
+          validate={validationMap['country']}
           value={values.country}
         />
       </Column>
@@ -56,7 +61,8 @@ const EmploymentInputs = ({ idx, values }) => (
           type="date"
           placeholder="Start Date"
           label="Start Date"
-          name="start"
+          name={`start-${idx}`}
+          validate={validationMap['start']}
           value={values.start}
         />
       </Column>
@@ -65,7 +71,8 @@ const EmploymentInputs = ({ idx, values }) => (
           type="date"
           placeholder="End Date"
           label="End Date"
-          name="end"
+          name={`end-${idx}`}
+          validate={validationMap['end']}
           value={values.end}
         />
       </Column>
@@ -74,7 +81,8 @@ const EmploymentInputs = ({ idx, values }) => (
           type="checkbox"
           placeholder="Till date"
           label="Till date"
-          name="tillDate"
+          name={`tillDate-${idx}`}
+          validate={validationMap['tillDate']}
           value={values.tillDate}
         />
       </Column>
@@ -84,7 +92,8 @@ const EmploymentInputs = ({ idx, values }) => (
         <TextArea
           placeholder="Summary"
           label="Summary"
-          name="summary"
+          name={`summary-${idx}`}
+          validate={validationMap['summary']}
           value={values.summary}
         />
       </Column>
