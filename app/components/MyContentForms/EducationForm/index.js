@@ -21,7 +21,6 @@ import { InjectJSONUsingCheerioEducation } from 'components/CheerioComponent/tem
 import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
-import { Validations } from '../../../utils/validations';
 import EducationInputs from './EducationItems';
 import Accordian from '../../Accordion';
 
@@ -75,30 +74,15 @@ function EducationForm({ editor_state, resume_json_state, dispatch }) {
 
   const handleEduChange = e => {
     const updatedEdu = [...educations];
-    updatedEdu[e.target.dataset.idx][e.target.dataset.name] = e.target.value;
+    const fieldName = e.target.name.split('-')[0];
+    updatedEdu[e.target.dataset.idx][fieldName] = e.target.value;
     setEducations(updatedEdu);
   };
 
   return (
     <div>
-      <Formik
-        initialValues={{ ...blankEduFields }}
-        validate={Validations.InputValidations}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}
-      >
-        {({
-          values,
-          errors,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-        }) => (
+      <Formik initialValues={{ ...educations }}>
+        {({ handleSubmit, isSubmitting }) => (
           <React.Fragment>
             {educations.map((item, idx) => (
               <Accordian
@@ -106,10 +90,9 @@ function EducationForm({ editor_state, resume_json_state, dispatch }) {
                 label={item.title ? item.title : `Education ${idx + 1}`}
               >
                 <EducationInputs
-                  values={values}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  errors={errors}
+                  idx={idx}
+                  values={item}
+                  handleChange={handleEduChange}
                 />
               </Accordian>
             ))}

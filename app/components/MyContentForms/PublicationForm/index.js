@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { Formik } from 'formik';
-import { Validations } from '../../../utils/validations';
 import Accordian from '../../Accordion';
 import PublicationInputs from './PublicationItems';
 
 function PublicationForm() {
-  let counter = 0;
-  let checkboxState = false;
   const blankPubFields = {
     title: '',
     summary: '',
@@ -14,46 +11,24 @@ function PublicationForm() {
     date: '',
     description: '',
   };
-  const [publications, setPublications] = useState([
-    {
-      lable: 'Qualification',
-      qualificationId: 'qualification[0]',
-      checkboxState,
-    },
-  ]);
+
+  const [publications, setPublications] = useState([{ ...blankPubFields }]);
+
   const addMore = () => {
-    counter += 1;
-    publications.push({
-      lable: 'Employeer',
-      qualificationId: `employer[${counter}]`,
-      checkboxState,
-    });
-    setPublications([...publications]);
+    setPublications([...publications, { ...blankPubFields }]);
   };
-  const checkboxStateChange = () => {
-    console.log('Checkbox state changed');
-    checkboxState = 'disabled';
+
+  const handlePubChange = e => {
+    const updatedPub = [...publications];
+    const fieldName = e.target.name.split('-')[0];
+    updatedPub[e.target.dataset.idx][fieldName] = e.target.value;
+    setPublications(updatedPub);
   };
+
   return (
     <div>
-      <Formik
-        initialValues={{ ...blankPubFields }}
-        validate={Validations.InputValidations}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}
-      >
-        {({
-          values,
-          errors,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-        }) => (
+      <Formik initialValues={{ ...publications }}>
+        {({ handleSubmit, isSubmitting }) => (
           <React.Fragment>
             {publications.map((item, idx) => (
               <Accordian
@@ -61,10 +36,9 @@ function PublicationForm() {
                 label={item.title ? item.title : `Publication ${idx + 1}`}
               >
                 <PublicationInputs
-                  values={values}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  errors={errors}
+                  idx={idx}
+                  values={item}
+                  handleChange={handlePubChange}
                 />
               </Accordian>
             ))}

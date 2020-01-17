@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Formik } from 'formik';
-import { Validations } from '../../../utils/validations';
 import Accordian from '../../Accordion';
 import AccomplishmentInputs from './AccomplishmentItems';
 
@@ -20,26 +19,17 @@ function AccomplishmentForm() {
     setAccomplishments([...accomplishments, { ...blankAccompFields }]);
   };
 
+  const handleAccChange = e => {
+    const updatedAcc = [...accomplishments];
+    const fieldName = e.target.name.split('-')[0];
+    updatedAcc[e.target.dataset.idx][fieldName] = e.target.value;
+    setAccomplishments(updatedAcc);
+  };
+
   return (
     <div>
-      <Formik
-        initialValues={{ ...blankAccompFields }}
-        validate={Validations.InputValidations}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}
-      >
-        {({
-          values,
-          errors,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-        }) => (
+      <Formik initialValues={{ ...accomplishments }}>
+        {({ handleSubmit, isSubmitting }) => (
           <React.Fragment>
             {accomplishments.map((item, idx) => (
               <Accordian
@@ -47,10 +37,9 @@ function AccomplishmentForm() {
                 label={item.title ? item.title : `Accomplishment ${idx + 1}`}
               >
                 <AccomplishmentInputs
-                  values={values}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  errors={errors}
+                  idx={idx}
+                  values={item}
+                  handleChange={handleAccChange}
                 />
               </Accordian>
             ))}

@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from '../../FormComponents/Input';
 import { Row, Column } from '../../Layout';
+import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
 import Radio from '../../FormComponents/Radio';
 
 //  *****  Personal Form Component *****
-
-const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => (
+const PersonalDetailsForm = ({ values, handleChange }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -15,20 +15,19 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => (
           placeholder="First Name"
           label="First Name"
           name="firstName"
+          validate={validationMap.firstName}
           value={values.firstName}
           onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.firstName}
         />
       </Column>
       <Column width="1/2" className="px-1">
         <Input
           placeholder="Last Name"
           label="Last Name"
-          name="lasttName"
-          value={values.lasttName}
+          name="lastName"
+          validate={validationMap.lastName}
+          value={values.lastName}
           onChange={handleChange}
-          error={errors.lasttName}
         />
       </Column>
     </Row>
@@ -39,9 +38,9 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => (
           placeholder="Email Address"
           label="Email Address"
           name="email"
+          validate={validationMap.email}
           value={values.email}
           onChange={handleChange}
-          error={errors.email}
         />
       </Column>
       <Column width="1/2" className="px-1">
@@ -49,9 +48,9 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => (
           placeholder="Contact Number"
           label="Contact Number"
           name="phone"
+          validate={validationMap.phone}
           value={values.phone}
           onChange={handleChange}
-          error={errors.phone}
         />
       </Column>
     </Row>
@@ -63,9 +62,9 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => (
           placeholder="Date of Birth"
           label="Date of Birth"
           name="dateOfBirth"
+          validate={validationMap.dateOfBirth}
           value={values.dateOfBirth}
           onChange={handleChange}
-          error={errors.dateOfBirth}
         />
       </Column>
       <Column width="1/2" className="px-1">
@@ -73,10 +72,10 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => (
           placeholder="Gender"
           label="Gender"
           name="gender"
+          validate={validationMap.gender}
           value={values.gender}
           values={['Male', 'Female', 'Others']}
           onChange={handleChange}
-          error={errors.gender}
         />
         {/* TODO: Gender variable Mapping */}
         {/* <Input
@@ -112,9 +111,9 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => (
           placeholder="Address Line"
           label="Address"
           name="address"
+          validate={validationMap.address}
           value={values.address}
           onChange={handleChange}
-          error={errors.address}
         />
       </Column>
     </Row>
@@ -125,9 +124,9 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => (
           placeholder="City"
           label="City"
           name="city"
+          validate={validationMap.city}
           value={values.city}
           onChange={handleChange}
-          error={errors.city}
         />
       </Column>
       <Column width="1/4" className="px-1">
@@ -135,9 +134,9 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => (
           placeholder="State"
           label="State"
           name="state"
+          validate={validationMap.state}
           value={values.state}
           onChange={handleChange}
-          error={errors.state}
         />
       </Column>
       <Column width="1/4" className="px-1">
@@ -145,9 +144,9 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => (
           placeholder="Pincode"
           label="Pincode"
           name="pincode"
+          validate={validationMap.pincode}
           value={values.pincode}
           onChange={handleChange}
-          error={errors.pincode}
         />
       </Column>
       <Column width="1/4" className="px-1">
@@ -155,9 +154,9 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => (
           placeholder="Country"
           label="Country"
           name="country"
+          validate={validationMap.country}
           value={values.country}
           onChange={handleChange}
-          error={errors.country}
         />
       </Column>
     </Row>
@@ -168,9 +167,9 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => (
           placeholder="Summary"
           label="Summary"
           name="brief"
+          validate={validationMap.brief}
           value={values.brief}
           onChange={handleChange}
-          error={errors.brief}
         />
       </Column>
     </Row>
@@ -180,8 +179,6 @@ const PersonalDetailsForm = ({ values, handleChange, handleBlur, errors }) => (
 PersonalDetailsForm.propTypes = {
   values: PropTypes.array,
   handleChange: PropTypes.func,
-  handleBlur: PropTypes.func,
-  errors: PropTypes.array,
 };
 
 export default PersonalDetailsForm;

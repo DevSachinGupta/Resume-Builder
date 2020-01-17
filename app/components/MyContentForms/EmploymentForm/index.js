@@ -69,7 +69,8 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
 
   const handleEmpChange = e => {
     const updatedEmp = [...employments];
-    updatedEmp[e.target.dataset.idx][e.target.name] = e.target.value;
+    const fieldName = e.target.name.split('-')[0];
+    updatedEmp[e.target.dataset.idx][fieldName] = e.target.value;
     setEmployments(updatedEmp);
   };
   return (
@@ -82,7 +83,11 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
                 id={idx}
                 label={item.title ? item.title : `Employment ${idx + 1}`}
               >
-                <EmploymentInputs idx={idx} values={item} />
+                <EmploymentInputs
+                  idx={idx}
+                  values={item}
+                  handleChange={handleEmpChange}
+                />
               </Accordian>
             ))}
             <button type="button" onClick={addMore}>

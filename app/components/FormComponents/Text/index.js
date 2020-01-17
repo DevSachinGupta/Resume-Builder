@@ -22,7 +22,7 @@ function Text(props) {
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}
-        <input {...field} {...props} />
+        <input {...field} {...props} onChange={props.onChange} />
         {props.clearable && props.value.length > 0 && (
           <span className="input-right-Icon cursor-pointer">
             {<MdCancel />}
