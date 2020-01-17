@@ -7,7 +7,6 @@ import TextArea from '../../FormComponents/TextArea';
 import Radio from '../../FormComponents/Radio';
 
 //  *****  Personal Form Component *****
-
 const PersonalDetailsForm = ({ values, handleChange }) => (
   <div>
     <Row>
@@ -25,9 +24,9 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
         <Input
           placeholder="Last Name"
           label="Last Name"
-          name="lasttName"
-          validate={validationMap.lasttName}
-          value={values.lasttName}
+          name="lastName"
+          validate={validationMap.lastName}
+          value={values.lastName}
           onChange={handleChange}
         />
       </Column>

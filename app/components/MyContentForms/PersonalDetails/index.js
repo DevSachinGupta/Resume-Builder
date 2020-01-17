@@ -18,14 +18,13 @@ function PersonalDetails() {
     country: '',
     brief: '',
   };
-  const [personal, setPersonal] = useState([{ ...blankPersonalFields }]);
+  const [personal, setPersonal] = useState({ ...blankPersonalFields });
 
   const handlePerChange = e => {
-    const updatedPer = [...personal];
+    const updatedPer = { ...personal };
     updatedPer[e.target.name] = e.target.value;
     setPersonal(updatedPer);
   };
-
   return (
     <div>
       <Formik initialValues={{ personal }}>
