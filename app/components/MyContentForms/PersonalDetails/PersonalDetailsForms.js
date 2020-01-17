@@ -121,6 +121,7 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
     <Row>
       <Column width="1/4" className="px-1">
         <Input
+          type="autocomplete"
           placeholder="City"
           label="City"
           name="city"
@@ -131,6 +132,7 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
       </Column>
       <Column width="1/4" className="px-1">
         <Input
+          type="autocomplete"
           placeholder="State"
           label="State"
           name="state"
@@ -151,6 +153,7 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
       </Column>
       <Column width="1/4" className="px-1">
         <Input
+          type="autocomplete"
           placeholder="Country"
           label="Country"
           name="country"

@@ -12,6 +12,7 @@ import Checkbox from '../Checkbox';
 import Radio from '../Radio';
 import Text from '../Text';
 import './style.scss';
+import AutocompleteInput from '../AutocompleteInput';
 
 function Input(props) {
   switch (props.type) {
@@ -23,6 +24,8 @@ function Input(props) {
       return <Radio {...props} />;
     case 'checkbox':
       return <Checkbox {...props} />;
+    case 'autocomplete':
+      return <AutocompleteInput {...props} />;
     default:
       return <Text {...props} />;
   }
