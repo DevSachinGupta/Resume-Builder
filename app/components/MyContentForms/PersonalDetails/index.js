@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik } from 'formik';
-import { Validations } from '../../../utils/validations';
 import PersonalDetailsForms from './PersonalDetailsForms';
 import './style.scss';
 
@@ -19,32 +18,22 @@ function PersonalDetails() {
     country: '',
     brief: '',
   };
+  const [personal, setPersonal] = useState([{ ...blankPersonalFields }]);
+
+  const handlePerChange = e => {
+    const updatedPer = [...personal];
+    updatedPer[e.target.name] = e.target.value;
+    setPersonal(updatedPer);
+  };
+
   return (
     <div>
-      <Formik
-        initialValues={{ blankPersonalFields }}
-        validate={Validations.InputValidations}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}
-      >
-        {({
-          values,
-          errors,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-        }) => (
+      <Formik initialValues={{ personal }}>
+        {({ handleSubmit, isSubmitting }) => (
           <React.Fragment>
             <PersonalDetailsForms
-              values={values}
-              errors={errors}
-              handleBlur={handleBlur}
-              handleChange={handleChange}
+              values={personal}
+              handleChange={handlePerChange}
             />
           </React.Fragment>
         )}

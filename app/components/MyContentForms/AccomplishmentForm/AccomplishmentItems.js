@@ -2,60 +2,61 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from '../../FormComponents/Input';
 import { Row, Column } from '../../Layout';
+import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
 
 //  *****  Accomplishment Form Component *****
 
-const AccomplishmentInputs = ({ values, handleChange, handleBlur, errors }) => (
+const AccomplishmentInputs = ({ idx, values, handleChange }) => (
   <div>
     <Row>
       <Column width="full" className="px-1">
         <Input
+          data-idx={idx}
           placeholder="Title"
           label="Title"
-          name="title"
+          name={`title-${idx}`}
           value={values.title}
+          validate={validationMap.title}
           onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.title}
         />
       </Column>
     </Row>
     <Row>
       <Column width="1/2" className="px-1">
         <Input
+          data-idx={idx}
           type="date"
           placeholder="Date"
           label="Date"
-          name="date"
+          name={`date-${idx}`}
           value={values.date}
+          validate={validationMap.date}
           onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.date}
         />
       </Column>
       <Column width="1/2" className="px-1">
         <Input
+          data-idx={idx}
           placeholder="Rank"
           label="Rank"
-          name="rank"
+          name={`rank-${idx}`}
           value={values.rank}
+          validate={validationMap.rank}
           onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.rank}
         />
       </Column>
     </Row>
     <Row>
       <Column width="full" className="px-1">
         <TextArea
+          data-idx={idx}
           placeholder="Summary"
           label="Summary"
-          name="summary"
+          name={`summary-${idx}`}
           value={values.summary}
+          validate={validationMap.summary}
           onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.summary}
         />
       </Column>
     </Row>
@@ -63,10 +64,9 @@ const AccomplishmentInputs = ({ values, handleChange, handleBlur, errors }) => (
 );
 
 AccomplishmentInputs.propTypes = {
+  idx: PropTypes.number,
   values: PropTypes.array,
   handleChange: PropTypes.func,
-  handleBlur: PropTypes.func,
-  errors: PropTypes.array,
 };
 
 export default AccomplishmentInputs;

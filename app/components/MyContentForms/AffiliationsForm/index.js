@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Formik } from 'formik';
-import { Validations } from '../../../utils/validations';
 import Accordian from '../../Accordion';
 import AffiliationInputs from './AffiliationItems';
 
@@ -20,26 +19,17 @@ function AffiliationForm() {
     setAffiliations([...affiliations, { ...blankAffFields }]);
   };
 
+  const handleAffChange = e => {
+    const updatedAff = [...affiliations];
+    const fieldName = e.target.name.split('-')[0];
+    updatedAff[e.target.dataset.idx][fieldName] = e.target.value;
+    setAffiliations(updatedAff);
+  };
+
   return (
     <div>
-      <Formik
-        initialValues={{ ...blankAffFields }}
-        validate={Validations.InputValidations}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}
-      >
-        {({
-          values,
-          errors,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-        }) => (
+      <Formik initialValues={{ ...affiliations }}>
+        {({ handleSubmit, isSubmitting }) => (
           <React.Fragment>
             {affiliations.map((item, idx) => (
               <Accordian
@@ -47,10 +37,9 @@ function AffiliationForm() {
                 label={item.title ? item.title : `Affiliation ${idx + 1}`}
               >
                 <AffiliationInputs
-                  values={values}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  errors={errors}
+                  idx={idx}
+                  values={item}
+                  handleChange={handleAffChange}
                 />
               </Accordian>
             ))}
