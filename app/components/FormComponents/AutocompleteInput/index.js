@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, createElement } from 'react';
+import React, { memo, createElement, useState } from 'react';
 import cx from 'classnames';
 import { useField } from 'formik';
 import { MdCancel } from 'react-icons/md';
@@ -17,6 +17,11 @@ function AutocompleteInput(props) {
     name: props.name,
     validate: async value => await props.validate(value),
   });
+  const [showOptions, setShowOptions] = useState(false);
+  const [filteredOptions, setFilteredOptions] = useState([]);
+  const [activeOption, setActiveOption] = useState(0);
+  const [userValue, setUserValue] = useState('');
+  const [optionList, setOptionList] = useState([]);
 
   const clearListDiv = (e) => {
     const id = "autocomplete-data-"+ e.target.name;
@@ -43,15 +48,14 @@ function AutocompleteInput(props) {
         break;
     }
     let b;
-
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i].substr(0, value.length).toUpperCase() == value.toUpperCase()) {
-        b = document.createElement('DIV');
-        b.innerHTML = '<strong>' + arr[i].substr(0, value.length) + '</strong>';
-        b.innerHTML += arr[i].substr(value.length);
-        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-        b.addEventListener('click', setData);
-        document.getElementById(id).appendChild(b);
+    if (showOptions && userValue) {
+      if (filteredOptions.length) {
+        optionList = (
+          <ul className="options">
+            arr.map((option, index) => {
+              // code for the list 
+            });
+          </ul>);
       }
     }
   };
@@ -77,7 +81,8 @@ function AutocompleteInput(props) {
           onChange={props.onChange}
           onInput={onInput}
         />
-        <div id={`autocomplete-data-${props.name}`} />
+        <div id={`autocomplete-data-${props.name}`}>{optionList}</div>
+
         {props.clearable && props.value.length > 0 && (
           <span className="input-right-Icon cursor-pointer">
             {<MdCancel />}
