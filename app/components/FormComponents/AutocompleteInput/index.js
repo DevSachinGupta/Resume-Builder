@@ -11,58 +11,112 @@ import { MdCancel } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import { COUNTRY, CITY, STATE } from './constantArrays';
 import './style.scss';
+import { prop } from 'ramda';
 
 function AutocompleteInput(props) {
   const [field, meta] = useField({
     name: props.name,
     validate: async value => await props.validate(value),
   });
-  const [showOptions, setShowOptions] = useState(false);
-  const [filteredOptions, setFilteredOptions] = useState([]);
-  const [activeOption, setActiveOption] = useState(0);
-  const [userValue, setUserValue] = useState('');
-  const [optionList, setOptionList] = useState([]);
 
-  const clearListDiv = (e) => {
-    const id = "autocomplete-data-"+ e.target.name;
-    console.log(id);
-    document.getElementById(id).innerHTML = '';
+  const [autocomplete, setAutocomplete] = useState({
+    activeOption: 0,
+    filteredOptions: [],
+    showOptions: false,
+    userInput: '',
+  });
+
+  // const [showOptions, setShowOptions] = useState(false);
+  // const [filteredOptions, setFilteredOptions] = useState([]);
+  // const [activeOption, setActiveOption] = useState(0);
+  // const [userValue, setUserValue] = useState('');
+  // const [optionList, setOptionList] = useState([]);
+
+  const onChange = (e) => {
+    console.log('onChanges');
+
+    const { options } = props;
+    const userInput = e.currentTarget.value;
+
+    const filteredOptions = options.filter(
+      (optionName) =>
+        optionName.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
+    );
+
+    const updatedAutocomplete = { ...autocomplete };
+    updatedAutocomplete.activeOption = 0;
+    updatedAutocomplete.filteredOptions = filteredOptions;
+    updatedAutocomplete.showOptions = true;
+    updatedAutocomplete.userInput = e.currentTarget.value;
+    setAutocomplete(updatedAutocomplete);
   };
-  const onInput = e => {
-    clearListDiv(e);
-    const { value } = e.target;
-    let arr;
-    const id = "autocomplete-data-"+ e.target.name;
-    switch (props.name.toLowerCase()) {
-      case 'country':
-        arr = COUNTRY;
-        break;
-      case 'state':
-        arr = STATE;
-        break;
-      case 'city':
-        arr = CITY;
-        break;
-      default:
-        arr = [];
-        break;
-    }
-    let b;
-    if (showOptions && userValue) {
-      if (filteredOptions.length) {
-        optionList = (
-          <ul className="options">
-            arr.map((option, index) => {
-              // code for the list 
-            });
-          </ul>);
+
+  const onClick = (e) => {
+    setAutocomplete({
+      activeOption: 0,
+      filteredOptions: [],
+      showOptions: false,
+      userInput: e.currentTarget.innerText,
+    });
+  };
+
+  const onKeyDown = (e) => {
+    const { activeOption, filteredOptions } = { ...autocomplete };
+    if (e.keyCode === 13) {
+      const updatedAutocomplete = { ...autocomplete };
+      updatedAutocomplete.activeOption = 0;
+      updatedAutocomplete.showOptions = false;
+      updatedAutocomplete.userInput = filteredOptions[activeOption];
+      setAutocomplete(updatedAutocomplete);
+    } else if (e.keyCode === 38) {
+      if (activeOption === 0) {
+        return;
       }
+      const updatedAutocomplete = { ...autocomplete };
+      updatedAutocomplete.activeOption = activeOption - 1;
+      setAutocomplete(updatedAutocomplete);
+    } else if (e.keyCode === 40) {
+      if (activeOption === filteredOptions.length - 1) {
+        console.log(activeOption);
+        return;
+      }
+      const updatedAutocomplete = { ...autocomplete };
+      updatedAutocomplete.activeOption = activeOption + 1;
+      setAutocomplete(updatedAutocomplete);
     }
   };
-  const setData = data => {
-    props.value = data;
-    clearListDiv();
-  };
+
+  let optionList;
+  const { activeOption, filteredOptions, showOptions, userInput } = { ...autocomplete };
+  console.log("prop:", props);
+  if (showOptions && userInput) {
+    if (filteredOptions.length) {
+      optionList = (
+        <ul className="options">
+          {filteredOptions.map((optionName, index) => {
+            let className;
+            if (index === activeOption) {
+              className = 'option-active';
+            }
+            return (
+              <li className={className} key={optionName} onClick={onClick}>
+                {optionName}
+              </li>
+            );
+          })}
+          {/* arr.map((option, index) => {
+            // code for the list 
+          }); */}
+        </ul>);
+    } else {
+      optionList = (
+        <div className="no-options">
+          <em>No Option!</em>
+        </div>
+      );
+    }
+  }
+
   return (
     <div className={cx('inputWrapper')}>
       <div className="label">{props.label}</div>
@@ -78,10 +132,12 @@ function AutocompleteInput(props) {
         <input
           {...field}
           {...props}
-          onChange={props.onChange}
-          onInput={onInput}
+          className="search-box"
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          value={userInput}
         />
-        <div id={`autocomplete-data-${props.name}`}>{optionList}</div>
+        {/* <div id={`autocomplete-data-${props.name}`}>{optionList}</div> */}
 
         {props.clearable && props.value.length > 0 && (
           <span className="input-right-Icon cursor-pointer">
@@ -89,6 +145,7 @@ function AutocompleteInput(props) {
           </span>
         )}
       </div>
+      <div id={`autocomplete-data-${props.name}`}>{optionList}</div>
       {meta.error && meta.touched && (
         <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
           {meta.error && meta.error}

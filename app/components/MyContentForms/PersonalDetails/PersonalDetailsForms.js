@@ -125,6 +125,15 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
           placeholder="City"
           label="City"
           name="city"
+          options={[
+            'Papaya',
+            'Persimmon',
+            'Paw Paw',
+            'Prickly Pear',
+            'Peach',
+            'Pomegranate',
+            'Pineapple',
+          ]}
           validate={validationMap.city}
           value={values.city}
           onChange={handleChange}
