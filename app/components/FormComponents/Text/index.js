@@ -8,7 +8,11 @@ import './style.scss';
 function Text(props) {
   const [field, meta] = useField({
     name: props.name,
-    validate: async value => await props.validate(value).catch(err => err),
+    validate: async value => {
+      const val = await props.validate(value).catch(err => err);
+      console.log(val);
+      return val;
+    }
   });
   return (
     <div className={cx('inputWrapper')}>
@@ -31,7 +35,7 @@ function Text(props) {
       </div>
       {meta.error && meta.touched && (
         <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
-          {meta.error && meta.error}
+          {meta.error && meta.error.message}
         </div>
       )}
     </div>

@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 const validationHandler = validation =>
   new Promise((resolve, reject) => {
-    validation.then(valid => resolve(valid)).catch(err => reject(err));
+    validation.then(_ => resolve(false)).catch(err => reject(err));
   });
 const validationMap = {
   position: value =>
@@ -10,6 +10,7 @@ const validationMap = {
       yup
         .string()
         .required('HELLO WORLD')
+        .max(5, 'ARE JYADA HOGAYA BHAI')
         .validate(value),
     ),
   employer: value =>
