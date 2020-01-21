@@ -7,7 +7,7 @@ import TextArea from '../../FormComponents/TextArea';
 
 //  *****  Project Form Component *****
 
-const ProjectInputs = ({ idx, values, handleChange }) => (
+const ProjectInputs = ({ idx }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -16,9 +16,7 @@ const ProjectInputs = ({ idx, values, handleChange }) => (
           placeholder="Title"
           label="Title"
           name={`title-${idx}`}
-          value={values.title}
           validate={validationMap.title}
-          onChange={handleChange}
         />
       </Column>
       <Column width="1/2" className="px-1">
@@ -27,9 +25,7 @@ const ProjectInputs = ({ idx, values, handleChange }) => (
           placeholder="Summary"
           label="Summary"
           name={`summary-${idx}`}
-          value={values.summary}
           validate={validationMap.summary}
-          onChange={handleChange}
         />
       </Column>
     </Row>
@@ -40,9 +36,7 @@ const ProjectInputs = ({ idx, values, handleChange }) => (
           placeholder="Technology Used"
           label="Technology Used"
           name={`keywords-${idx}`}
-          value={values.keywords}
           validate={validationMap.keywords}
-          onChange={handleChange}
         />
       </Column>
       <Column width="1/2" className="px-1">
@@ -51,48 +45,40 @@ const ProjectInputs = ({ idx, values, handleChange }) => (
           placeholder="Reference Link"
           label="Reference Link"
           name={`url-${idx}`}
-          value={values.url}
           validate={validationMap.url}
-          onChange={handleChange}
         />
       </Column>
     </Row>
     <Row>
       <Column width="2/5" className="px-1">
         <Input
-          data-idx={idx}
           type="date"
+          data-idx={idx}
           placeholder="Start Date"
           label="Start Date"
           name={`start-${idx}`}
-          value={values.start}
           validate={validationMap.start}
-          onChange={handleChange}
         />
       </Column>
       <Column width="2/5" className="px-1">
         <Input
-          data-idx={idx}
           type="date"
+          data-idx={idx}
           placeholder="End Date"
           label="End Date"
           name={`end-${idx}`}
-          value={values.end}
           validate={validationMap.end}
-          onChange={handleChange}
         />
       </Column>
       <Column width="1/5" className="px-1">
         {/* TODO: Change this textfield with checkbox */}
         <Input
-          data-idx={idx}
           type="checkbox"
+          data-idx={idx}
           placeholder="Till date"
           label="Till date"
           name={`tillDate-${idx}`}
-          value={values.tillDate}
           validate={validationMap.tillDate}
-          onChange={handleChange}
         />
       </Column>
     </Row>
@@ -103,9 +89,7 @@ const ProjectInputs = ({ idx, values, handleChange }) => (
           placeholder="Description"
           label="Description"
           name={`description-${idx}`}
-          value={values.description}
           validate={validationMap.description}
-          onChange={handleChange}
         />
       </Column>
     </Row>
@@ -114,8 +98,6 @@ const ProjectInputs = ({ idx, values, handleChange }) => (
 
 ProjectInputs.propTypes = {
   idx: PropTypes.number,
-  values: PropTypes.array,
-  handleChange: PropTypes.func,
 };
 
 export default ProjectInputs;

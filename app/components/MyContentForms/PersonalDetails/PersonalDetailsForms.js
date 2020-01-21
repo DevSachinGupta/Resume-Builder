@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Input from '../../FormComponents/Input';
 import { Row, Column } from '../../Layout';
 import { validationMap } from './validation';
@@ -7,7 +7,7 @@ import TextArea from '../../FormComponents/TextArea';
 import Radio from '../../FormComponents/Radio';
 
 //  *****  Personal Form Component *****
-const PersonalDetailsForm = ({ values, handleChange }) => (
+const PersonalDetailsForm = () => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -16,8 +16,6 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
           label="First Name"
           name="firstName"
           validate={validationMap.firstName}
-          value={values.firstName}
-          onChange={handleChange}
         />
       </Column>
       <Column width="1/2" className="px-1">
@@ -26,8 +24,6 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
           label="Last Name"
           name="lastName"
           validate={validationMap.lastName}
-          value={values.lastName}
-          onChange={handleChange}
         />
       </Column>
     </Row>
@@ -39,8 +35,6 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
           label="Email Address"
           name="email"
           validate={validationMap.email}
-          value={values.email}
-          onChange={handleChange}
         />
       </Column>
       <Column width="1/2" className="px-1">
@@ -49,8 +43,6 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
           label="Contact Number"
           name="phone"
           validate={validationMap.phone}
-          value={values.phone}
-          onChange={handleChange}
         />
       </Column>
     </Row>
@@ -63,8 +55,6 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
           label="Date of Birth"
           name="dateOfBirth"
           validate={validationMap.dateOfBirth}
-          value={values.dateOfBirth}
-          onChange={handleChange}
         />
       </Column>
       <Column width="1/2" className="px-1">
@@ -73,9 +63,7 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
           label="Gender"
           name="gender"
           validate={validationMap.gender}
-          value={values.gender}
           values={['Male', 'Female', 'Others']}
-          onChange={handleChange}
         />
         {/* TODO: Gender variable Mapping */}
         {/* <Input
@@ -112,8 +100,6 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
           label="Address"
           name="address"
           validate={validationMap.address}
-          value={values.address}
-          onChange={handleChange}
         />
       </Column>
     </Row>
@@ -135,8 +121,6 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
             'Pineapple',
           ]}
           validate={validationMap.city}
-          value={values.city}
-          onChange={handleChange}
         />
       </Column>
       <Column width="1/4" className="px-1">
@@ -146,8 +130,6 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
           label="State"
           name="state"
           validate={validationMap.state}
-          value={values.state}
-          onChange={handleChange}
         />
       </Column>
       <Column width="1/4" className="px-1">
@@ -156,8 +138,6 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
           label="Pincode"
           name="pincode"
           validate={validationMap.pincode}
-          value={values.pincode}
-          onChange={handleChange}
         />
       </Column>
       <Column width="1/4" className="px-1">
@@ -167,8 +147,6 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
           label="Country"
           name="country"
           validate={validationMap.country}
-          value={values.country}
-          onChange={handleChange}
         />
       </Column>
     </Row>
@@ -180,18 +158,13 @@ const PersonalDetailsForm = ({ values, handleChange }) => (
           label="Summary"
           name="brief"
           validate={validationMap.brief}
-          value={values.brief}
-          onChange={handleChange}
         />
       </Column>
     </Row>
   </div>
 );
 
-PersonalDetailsForm.propTypes = {
-  values: PropTypes.array,
-  handleChange: PropTypes.func,
-};
+PersonalDetailsForm.propTypes = {};
 
 export default PersonalDetailsForm;
 

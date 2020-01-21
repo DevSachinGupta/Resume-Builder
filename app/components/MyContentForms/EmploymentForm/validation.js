@@ -9,7 +9,7 @@ const validationMap = {
     validationHandler(
       yup
         .string()
-        .required('HELLO WORLD')
+        .required('Required')
         .max(5, 'ARE JYADA HOGAYA BHAI')
         .validate(value),
     ),
@@ -17,49 +17,49 @@ const validationMap = {
     validationHandler(
       yup
         .string()
-        .required('HELLO WORLD')
+        .required('Required')
         .validate(value),
     ),
   state: value =>
     validationHandler(
       yup
         .string()
-        .required('HELLO WORLD')
+        .required('Required')
         .validate(value),
     ),
   country: value =>
     validationHandler(
       yup
         .string()
-        .required()
+        .required('Required')
         .validate(value),
     ),
   start: value =>
     validationHandler(
       yup
         .date()
-        .required()
+        .required('Required')
         .validate(value),
     ),
   end: value =>
     validationHandler(
       yup
         .date()
-        .required()
+        .required('Required')
         .validate(value),
     ),
   tillDate: value =>
     validationHandler(
       yup
         .bool()
-        .required()
+        .required('Required')
         .validate(value),
     ),
   summary: value =>
     validationHandler(
       yup
         .string()
-        .required()
+        .required('Required')
         .validate(value),
     ),
 };

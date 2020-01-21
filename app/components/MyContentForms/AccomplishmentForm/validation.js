@@ -5,9 +5,33 @@ const validationHandler = validation =>
     validation.then(valid => resolve(valid)).catch(err => reject(err));
   });
 const validationMap = {
-  title: value => validationHandler(yup.string().isValid(value)),
-  rank: value => validationHandler(yup.string().isValid(value)),
-  date: value => validationHandler(yup.date().isValid(value)),
-  summary: value => validationHandler(yup.string().isValid(value)),
+  title: value =>
+    validationHandler(
+      yup
+        .string()
+        .required('Required')
+        .validate(value),
+    ),
+  rank: value =>
+    validationHandler(
+      yup
+        .string()
+        .required('Required')
+        .validate(value),
+    ),
+  date: value =>
+    validationHandler(
+      yup
+        .date()
+        .required('Required')
+        .validate(value),
+    ),
+  summary: value =>
+    validationHandler(
+      yup
+        .string()
+        .required('Required')
+        .validate(value),
+    ),
 };
 export { validationMap };

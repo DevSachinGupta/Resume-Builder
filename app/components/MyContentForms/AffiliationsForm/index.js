@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 import Accordian from '../../Accordion';
 import AffiliationInputs from './AffiliationItems';
+import Button from '../../Button';
 
 function AffiliationForm() {
   const blankAffFields = {
@@ -19,13 +20,6 @@ function AffiliationForm() {
     setAffiliations([...affiliations, { ...blankAffFields }]);
   };
 
-  const handleAffChange = e => {
-    const updatedAff = [...affiliations];
-    const fieldName = e.target.name.split('-')[0];
-    updatedAff[e.target.dataset.idx][fieldName] = e.target.value;
-    setAffiliations(updatedAff);
-  };
-
   return (
     <div>
       <Formik initialValues={{ ...affiliations }}>
@@ -36,16 +30,12 @@ function AffiliationForm() {
                 id={idx}
                 label={item.title ? item.title : `Affiliation ${idx + 1}`}
               >
-                <AffiliationInputs
-                  idx={idx}
-                  values={item}
-                  handleChange={handleAffChange}
-                />
+                <AffiliationInputs idx={idx} />
               </Accordian>
             ))}
-            <button type="button" onClick={addMore}>
-              Add More
-            </button>
+            <Button onClick={addMore} fullWidth type="flat">
+              Add Another
+            </Button>
           </React.Fragment>
         )}
       </Formik>

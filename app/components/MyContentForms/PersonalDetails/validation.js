@@ -5,23 +5,89 @@ const validationHandler = validation =>
     validation.then(valid => resolve(valid)).catch(err => reject(err));
   });
 const validationMap = {
-  firstName: value => validationHandler(yup.string().isValid(value)),
-  lastName: value => validationHandler(yup.string().isValid(value)),
+  firstName: value =>
+    validationHandler(
+      yup
+        .string()
+        .required('Required')
+        .validate(value),
+    ),
+  lastName: value =>
+    validationHandler(
+      yup
+        .string()
+        .required('Required')
+        .validate(value),
+    ),
   email: value =>
     validationHandler(
       yup
         .string()
-        .email('Please enter a valid email')
-        .isValid(value),
+        .required('Required')
+        .validate(value),
     ),
-  phone: value => validationHandler(yup.string().isValid(value)),
-  dateOfBirth: value => validationHandler(yup.date().isValid(value)),
-  gender: value => validationHandler(yup.string().isValid(value)),
-  address: value => validationHandler(yup.string().isValid(value)),
-  city: value => validationHandler(yup.string().isValid(value)),
-  state: value => validationHandler(yup.string().isValid(value)),
-  pincode: value => validationHandler(yup.string().isValid(value)),
-  country: value => validationHandler(yup.string().isValid(value)),
-  brief: value => validationHandler(yup.string().isValid(value)),
+  phone: value =>
+    validationHandler(
+      yup
+        .string()
+        .required('Required')
+        .validate(value),
+    ),
+  dateOfBirth: value =>
+    validationHandler(
+      yup
+        .date()
+        .required('Required')
+        .validate(value),
+    ),
+  gender: value =>
+    validationHandler(
+      yup
+        .string()
+        .required('Required')
+        .validate(value),
+    ),
+  address: value =>
+    validationHandler(
+      yup
+        .string()
+        .required('Required')
+        .validate(value),
+    ),
+  city: value =>
+    validationHandler(
+      yup
+        .string()
+        .required('Required')
+        .validate(value),
+    ),
+  state: value =>
+    validationHandler(
+      yup
+        .string()
+        .required('Required')
+        .validate(value),
+    ),
+  pincode: value =>
+    validationHandler(
+      yup
+        .string()
+        .required('Required')
+        .validate(value),
+    ),
+  country: value =>
+    validationHandler(
+      yup
+        .string()
+        .required('Required')
+        .validate(value),
+    ),
+  brief: value =>
+    validationHandler(
+      yup
+        .string()
+        .required('Required')
+        .validate(value),
+    ),
 };
 export { validationMap };

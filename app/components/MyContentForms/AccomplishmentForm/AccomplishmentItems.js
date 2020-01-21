@@ -7,7 +7,7 @@ import TextArea from '../../FormComponents/TextArea';
 
 //  *****  Accomplishment Form Component *****
 
-const AccomplishmentInputs = ({ idx, values, handleChange }) => (
+const AccomplishmentInputs = ({ idx }) => (
   <div>
     <Row>
       <Column width="full" className="px-1">
@@ -16,23 +16,20 @@ const AccomplishmentInputs = ({ idx, values, handleChange }) => (
           placeholder="Title"
           label="Title"
           name={`title-${idx}`}
-          value={values.title}
           validate={validationMap.title}
-          onChange={handleChange}
         />
       </Column>
     </Row>
     <Row>
       <Column width="1/2" className="px-1">
         <Input
+          type="date"
           data-idx={idx}
           type="date"
           placeholder="Date"
           label="Date"
           name={`date-${idx}`}
-          value={values.date}
           validate={validationMap.date}
-          onChange={handleChange}
         />
       </Column>
       <Column width="1/2" className="px-1">
@@ -41,9 +38,7 @@ const AccomplishmentInputs = ({ idx, values, handleChange }) => (
           placeholder="Rank"
           label="Rank"
           name={`rank-${idx}`}
-          value={values.rank}
           validate={validationMap.rank}
-          onChange={handleChange}
         />
       </Column>
     </Row>
@@ -54,9 +49,7 @@ const AccomplishmentInputs = ({ idx, values, handleChange }) => (
           placeholder="Summary"
           label="Summary"
           name={`summary-${idx}`}
-          value={values.summary}
           validate={validationMap.summary}
-          onChange={handleChange}
         />
       </Column>
     </Row>
@@ -65,8 +58,6 @@ const AccomplishmentInputs = ({ idx, values, handleChange }) => (
 
 AccomplishmentInputs.propTypes = {
   idx: PropTypes.number,
-  values: PropTypes.array,
-  handleChange: PropTypes.func,
 };
 
 export default AccomplishmentInputs;

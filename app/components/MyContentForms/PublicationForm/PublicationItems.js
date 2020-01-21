@@ -7,7 +7,7 @@ import TextArea from '../../FormComponents/TextArea';
 
 //  *****  Publication Form Component *****
 
-const PublicationInputs = ({ idx, values, handleChange }) => (
+const PublicationInputs = ({ idx }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -16,9 +16,7 @@ const PublicationInputs = ({ idx, values, handleChange }) => (
           placeholder="Title"
           label="Title"
           name={`title-${idx}`}
-          value={values.title}
           validate={validationMap.title}
-          onChange={handleChange}
         />
       </Column>
       <Column width="1/2" className="px-1">
@@ -27,9 +25,7 @@ const PublicationInputs = ({ idx, values, handleChange }) => (
           placeholder="Summary"
           label="Summary"
           name={`summary-${idx}`}
-          value={values.summary}
           validate={validationMap.summary}
-          onChange={handleChange}
         />
       </Column>
     </Row>
@@ -40,21 +36,17 @@ const PublicationInputs = ({ idx, values, handleChange }) => (
           placeholder="Reference Link"
           label="Reference Link"
           name={`url-${idx}`}
-          value={values.url}
           validate={validationMap.url}
-          onChange={handleChange}
         />
       </Column>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           type="date"
+          data-idx={idx}
           placeholder="Date"
           label="Date"
           name={`date-${idx}`}
-          value={values.date}
           validate={validationMap.date}
-          onChange={handleChange}
         />
       </Column>
     </Row>
@@ -65,9 +57,7 @@ const PublicationInputs = ({ idx, values, handleChange }) => (
           placeholder="Description"
           label="Description"
           name={`description-${idx}`}
-          value={values.description}
           validate={validationMap.description}
-          onChange={handleChange}
         />
       </Column>
     </Row>
@@ -76,8 +66,6 @@ const PublicationInputs = ({ idx, values, handleChange }) => (
 
 PublicationInputs.propTypes = {
   idx: PropTypes.number,
-  values: PropTypes.array,
-  handleChange: PropTypes.func,
 };
 
 export default PublicationInputs;

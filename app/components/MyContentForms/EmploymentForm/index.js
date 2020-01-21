@@ -68,12 +68,6 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
     dispatch(setModalContent('education'));
   };
 
-  const handleEmpChange = e => {
-    const updatedEmp = [...employments];
-    const fieldName = e.target.name.split('-')[0];
-    updatedEmp[e.target.dataset.idx][fieldName] = e.target.value;
-    setEmployments(updatedEmp);
-  };
   return (
     <div>
       <Formik initialValues={{ ...employments }}>
@@ -84,7 +78,7 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
                 id={idx}
                 label={item.title ? item.title : `Employment ${idx + 1}`}
               >
-                <EmploymentInputs idx={idx} values={item} />
+                <EmploymentInputs idx={idx} />
               </Accordian>
             ))}
           </React.Fragment>

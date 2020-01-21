@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 import Accordian from '../../Accordion';
 import AccomplishmentInputs from './AccomplishmentItems';
+import Button from '../../Button';
 
 function AccomplishmentForm() {
   const blankAccompFields = {
@@ -19,13 +20,6 @@ function AccomplishmentForm() {
     setAccomplishments([...accomplishments, { ...blankAccompFields }]);
   };
 
-  const handleAccChange = e => {
-    const updatedAcc = [...accomplishments];
-    const fieldName = e.target.name.split('-')[0];
-    updatedAcc[e.target.dataset.idx][fieldName] = e.target.value;
-    setAccomplishments(updatedAcc);
-  };
-
   return (
     <div>
       <Formik initialValues={{ ...accomplishments }}>
@@ -36,16 +30,12 @@ function AccomplishmentForm() {
                 id={idx}
                 label={item.title ? item.title : `Accomplishment ${idx + 1}`}
               >
-                <AccomplishmentInputs
-                  idx={idx}
-                  values={item}
-                  handleChange={handleAccChange}
-                />
+                <AccomplishmentInputs idx={idx} />
               </Accordian>
             ))}
-            <button type="button" onClick={addMore}>
-              Add More
-            </button>
+            <Button onClick={addMore} fullWidth type="flat">
+              Add Another
+            </Button>
           </React.Fragment>
         )}
       </Formik>

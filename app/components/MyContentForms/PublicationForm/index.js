@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 import Accordian from '../../Accordion';
 import PublicationInputs from './PublicationItems';
+import Button from '../../Button';
 
 function PublicationForm() {
   const blankPubFields = {
@@ -18,13 +19,6 @@ function PublicationForm() {
     setPublications([...publications, { ...blankPubFields }]);
   };
 
-  const handlePubChange = e => {
-    const updatedPub = [...publications];
-    const fieldName = e.target.name.split('-')[0];
-    updatedPub[e.target.dataset.idx][fieldName] = e.target.value;
-    setPublications(updatedPub);
-  };
-
   return (
     <div>
       <Formik initialValues={{ ...publications }}>
@@ -35,16 +29,12 @@ function PublicationForm() {
                 id={idx}
                 label={item.title ? item.title : `Publication ${idx + 1}`}
               >
-                <PublicationInputs
-                  idx={idx}
-                  values={item}
-                  handleChange={handlePubChange}
-                />
+                <PublicationInputs idx={idx} />
               </Accordian>
             ))}
-            <button type="button" onClick={addMore}>
-              Add More
-            </button>
+            <Button onClick={addMore} fullWidth type="flat">
+              Add Another
+            </Button>
           </React.Fragment>
         )}
       </Formik>

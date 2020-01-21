@@ -20,20 +20,12 @@ function PersonalDetails() {
   };
   const [personal, setPersonal] = useState({ ...blankPersonalFields });
 
-  const handlePerChange = e => {
-    const updatedPer = { ...personal };
-    updatedPer[e.target.name] = e.target.value;
-    setPersonal(updatedPer);
-  };
   return (
     <div>
       <Formik initialValues={{ personal }}>
         {({ handleSubmit, isSubmitting }) => (
           <React.Fragment>
-            <PersonalDetailsForms
-              values={personal}
-              handleChange={handlePerChange}
-            />
+            <PersonalDetailsForms />
           </React.Fragment>
         )}
       </Formik>

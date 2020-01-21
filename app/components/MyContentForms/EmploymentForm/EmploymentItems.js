@@ -6,7 +6,7 @@ import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
 
 //  *****  Employment Form Component *****
-const EmploymentInputs = ({ idx, values, handleChange }) => (
+const EmploymentInputs = ({ idx }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -98,8 +98,6 @@ const EmploymentInputs = ({ idx, values, handleChange }) => (
 
 EmploymentInputs.propTypes = {
   idx: PropTypes.number,
-  values: PropTypes.array,
-  handleChange: PropTypes.func,
 };
 
 export default EmploymentInputs;

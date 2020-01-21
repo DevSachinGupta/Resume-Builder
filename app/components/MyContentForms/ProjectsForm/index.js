@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 import Accordian from '../../Accordion';
 import ProjectInputs from './ProjectItems';
+import Button from '../../Button';
 
 function ProjectForm() {
   const blankProFields = {
@@ -20,13 +21,6 @@ function ProjectForm() {
     setProjects([...projects, { ...blankProFields }]);
   };
 
-  const handleProChange = e => {
-    const updatedPro = [...projects];
-    const fieldName = e.target.name.split('-')[0];
-    updatedPro[e.target.dataset.idx][fieldName] = e.target.value;
-    setProjects(updatedPro);
-  };
-
   return (
     <div>
       <Formik initialValues={{ ...projects }}>
@@ -37,16 +31,12 @@ function ProjectForm() {
                 id={idx}
                 label={item.title ? item.title : `Project ${idx + 1}`}
               >
-                <ProjectInputs
-                  idx={idx}
-                  values={item}
-                  handleChange={handleProChange}
-                />
+                <ProjectInputs idx={idx} />
               </Accordian>
             ))}
-            <button type="button" onClick={addMore}>
-              Add More
-            </button>
+            <Button onClick={addMore} fullWidth type="flat">
+              Add Another
+            </Button>
           </React.Fragment>
         )}
       </Formik>

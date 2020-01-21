@@ -23,6 +23,7 @@ import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEdito
 // import styled from 'styled-components';
 import EducationInputs from './EducationItems';
 import Accordian from '../../Accordion';
+import Button from '../../Button';
 
 function EducationForm({ editor_state, resume_json_state, dispatch }) {
   // const counter = 0;
@@ -72,13 +73,6 @@ function EducationForm({ editor_state, resume_json_state, dispatch }) {
     setEducations([...educations, { ...blankEduFields }]);
   };
 
-  const handleEduChange = e => {
-    const updatedEdu = [...educations];
-    const fieldName = e.target.name.split('-')[0];
-    updatedEdu[e.target.dataset.idx][fieldName] = e.target.value;
-    setEducations(updatedEdu);
-  };
-
   return (
     <div>
       <Formik initialValues={{ ...educations }}>
@@ -89,16 +83,12 @@ function EducationForm({ editor_state, resume_json_state, dispatch }) {
                 id={idx}
                 label={item.title ? item.title : `Education ${idx + 1}`}
               >
-                <EducationInputs
-                  idx={idx}
-                  values={item}
-                  handleChange={handleEduChange}
-                />
+                <EducationInputs idx={idx} />
               </Accordian>
             ))}
-            <button type="button" onClick={addMore}>
-              Add More
-            </button>
+            <Button onClick={addMore} fullWidth type="flat">
+              Add Another
+            </Button>
           </React.Fragment>
         )}
       </Formik>
