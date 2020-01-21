@@ -8,7 +8,7 @@ import './style.scss';
 function Text(props) {
   const [field, meta] = useField({
     name: props.name,
-    validate: async value => await props.validate(value),
+    validate: async value => await props.validate(value).catch(err => err),
   });
   return (
     <div className={cx('inputWrapper')}>
