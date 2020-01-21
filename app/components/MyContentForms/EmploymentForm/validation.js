@@ -19,4 +19,3 @@ const validationMap = {
   summary: value => validationHandler(yup.string().isValid(value)),
 };
 export { validationMap };
-˝
