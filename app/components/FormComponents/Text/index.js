@@ -8,7 +8,7 @@ import './style.scss';
 function Text(props) {
   const [field, meta] = useField({
     name: props.name,
-    validate: async (value) => await props.validate(value),
+    validate: async value => await props.validate(value),
   });
   return (
     <div className={cx('inputWrapper')}>
@@ -22,8 +22,8 @@ function Text(props) {
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}
-        <input {...field} {...props} onChange={props.onChange} />
-        {props.clearable && props.value.length > 0 && (
+        <input {...field} {...props} />
+        {props.clearable && (
           <span className="input-right-Icon cursor-pointer">
             {<MdCancel />}
           </span>
@@ -38,7 +38,6 @@ function Text(props) {
   );
 }
 Text.defaultProps = {
-  value: '',
   name: '',
 };
 Text.propTypes = {

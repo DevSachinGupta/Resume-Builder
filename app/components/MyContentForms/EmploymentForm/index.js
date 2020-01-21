@@ -83,11 +83,7 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
                 id={idx}
                 label={item.title ? item.title : `Employment ${idx + 1}`}
               >
-                <EmploymentInputs
-                  idx={idx}
-                  values={item}
-                  handleChange={handleEmpChange}
-                />
+                <EmploymentInputs idx={idx} values={item} />
               </Accordian>
             ))}
             <button type="button" onClick={addMore}>
