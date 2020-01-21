@@ -17,6 +17,7 @@ import { InjectJSONUsingCheerioEmployement } from 'components/CheerioComponent/t
 import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
 import Accordian from '../../Accordion';
 import EmploymentInputs from './EmploymentItems';
+import Button from '../../Button';
 
 function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
   const blankEmpFields = {
@@ -83,19 +84,15 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
                 id={idx}
                 label={item.title ? item.title : `Employment ${idx + 1}`}
               >
-                <EmploymentInputs
-                  idx={idx}
-                  values={item}
-                  handleChange={handleEmpChange}
-                />
+                <EmploymentInputs idx={idx} values={item} />
               </Accordian>
             ))}
-            <button type="button" onClick={addMore}>
-              Add More
-            </button>
           </React.Fragment>
         )}
       </Formik>
+      <Button onClick={addMore} fullWidth type="flat">
+        Add Another
+      </Button>
     </div>
   );
 }
