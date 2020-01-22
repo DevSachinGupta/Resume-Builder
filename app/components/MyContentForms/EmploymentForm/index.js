@@ -29,7 +29,30 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
     end: '',
     summary: '',
   };
-  const [employments, setEmployments] = useState([{ ...blankEmpFields }]);
+  // const empStoreState = null;
+  const empStoreState = [
+    {
+      position: 'Senior Analyst',
+      employer: 'HCL',
+      state: 'Delhi',
+      country: 'India',
+      start: '10-10-2020',
+      end: '10-10-2020',
+      summary: 'My employment summary',
+    },
+    {
+      position: 'GTE',
+      employer: 'HCL',
+      state: 'Delhi',
+      country: 'India',
+      start: '10-10-2020',
+      end: '10-10-2020',
+      summary: 'My employment summary',
+    },
+  ];
+  const [employments, setEmployments] = useState(
+    empStoreState || [{ ...blankEmpFields }],
+  );
 
   const handlePrevious = () => {
     dispatch(toggleModal());
@@ -67,6 +90,12 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
     dispatch(toggleModal());
     dispatch(setModalContent('education'));
   };
+  console.log('emp1: ', employments);
+  const handleRemove = e => {
+    const { idx } = e.target.dataset;
+    const updatedEmp = [...employments];
+    setEmployments(updatedEmp.filter((_s, sidx) => idx != sidx));
+  };
 
   return (
     <div>
@@ -77,6 +106,7 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
               <Accordian
                 id={idx}
                 label={item.title ? item.title : `Employment ${idx + 1}`}
+                handleRemove={handleRemove}
               >
                 <EmploymentInputs idx={idx} />
               </Accordian>

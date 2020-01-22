@@ -27,12 +27,17 @@ function Accordion(props) {
         id={props.id}
         name="test"
       />
-      <label
-        className="block p-1 leading-normal cursor-pointer"
-        htmlFor={props.id}
-      >
-        {props.label}
-      </label>
+      <div className="flex justify-between">
+        <label
+          className="block p-1 leading-normal cursor-pointer"
+          htmlFor={props.id}
+        >
+          {props.label}
+        </label>
+        <button type="button" data-idx={props.id} onClick={props.handleRemove}>
+          Remove
+        </button>
+      </div>
       <div className="tab-content overflow-hidden leading-normal">
         {props.children}
       </div>
