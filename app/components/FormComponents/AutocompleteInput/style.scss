@@ -1,6 +1,5 @@
+@import "../../../styles/app.scss";
 .search-box {
-
-    // font-size: 2rem;
     width: 100%;
     padding: 1rem;
     transition: width 0.3s;
@@ -18,15 +17,16 @@ ul.options {
   }
   
   ul.options li {
+    @include font($size: 12px);
     display: block;
     background: white;
-    margin: 10px auto;
-    padding: 10px;
+    // margin: 10px auto;
+    padding: 5px;
     width: 100%;
-    border-radius: 2px;
+    //border-radius: 2px;
   }
   ul.options li:hover {
-    font-weight: bold;
+    // font-weight: bold;
     color: #00b4cc;
     cursor: pointer;
     transition: 0.3s all;
