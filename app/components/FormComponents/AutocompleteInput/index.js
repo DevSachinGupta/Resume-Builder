@@ -155,11 +155,11 @@ function AutocompleteInput(props) {
   );
 }
 
-Text.defaultProps = {
+AutocompleteInput.defaultProps = {
   value: '',
   name: '',
 };
-Text.propTypes = {
+AutocompleteInput.propTypes = {
   clearable: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
   fullWidth: PropTypes.bool.isRequired,
