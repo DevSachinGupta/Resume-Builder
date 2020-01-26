@@ -14,7 +14,7 @@ import './style.scss';
 function MultiselectAutocomplete(props) {
   const [field, meta] = useField({
     name: props.name,
-    validate: async value => await props.validate(value),
+    // validate: async value => await props.validate(value),
   });
 
   const [multiselect, setMultiselect] = useState({
@@ -61,11 +61,14 @@ function MultiselectAutocomplete(props) {
       updatedAutocomplete.activeOption = 0;
       updatedAutocomplete.showOptions = false;
       updatedAutocomplete.userInput = filteredOptions[activeOption];
+      updatedAutocomplete.userData = [
+        ...userData,
+        filteredOptions[activeOption],
+      ];
       setMultiselect(updatedAutocomplete);
     } else if (e.keyCode === 38) {
       if (activeOption === 0) {
         return;
-        d;
       }
       const updatedAutocomplete = { ...multiselect };
       updatedAutocomplete.activeOption = activeOption - 1;
@@ -116,6 +119,16 @@ function MultiselectAutocomplete(props) {
     }
   }
 
+  let showUserData;
+  if (userData) {
+    showUserData = userData.map((item, index) => (
+      <label>
+        {item}
+        <span className="input-right-Icon cursor-pointer">{<MdCancel />}</span>
+      </label>
+    ));
+  }
+
   return (
     <div className={cx('inputWrapper')}>
       <div className="label">{props.label}</div>
@@ -129,13 +142,7 @@ function MultiselectAutocomplete(props) {
           <span className="inputIcon">{props.inputIcon}</span>
         )}
         <div className="multiselectDiv">
-            {userData && (
-              userData.map((value, index) => {
-                return (
-                  <label>item<span className="input-right-Icon cursor-pointer">{<MdCancel/>}</span></label>
-                );
-              })
-            }
+          {showUserData}
 
           <input
             {...field}
