@@ -5,8 +5,10 @@
  */
 
 import React, { memo, useState } from 'react';
-import './style.scss';
+import { FaTimes } from 'react-icons/fa';
 import PropTypes from 'prop-types';
+import Button from '../Button';
+import './style.scss';
 
 function Accordion(props) {
   const [checkbox, setCheckbox] = useState(props.id);
@@ -19,7 +21,7 @@ function Accordion(props) {
     }
   };
   return (
-    <div className="tab w-full overflow-hidden">
+    <div className="tab hover:shadow py-1 px-2 rounded mb-2 w-full overflow-hidden">
       <input
         type="radio"
         onClick={onClickRadio}
@@ -34,9 +36,14 @@ function Accordion(props) {
         >
           {props.label}
         </label>
-        <button type="button" data-idx={props.id} onClick={props.handleRemove}>
-          Remove
-        </button>
+        <Button
+          circular
+          type="button"
+          data-idx={props.id}
+          onClick={props.handleRemove}
+        >
+          <FaTimes />
+        </Button>
       </div>
       <div className="tab-content overflow-hidden leading-normal">
         {props.children}
@@ -48,6 +55,7 @@ function Accordion(props) {
 Accordion.propTypes = {
   id: PropTypes.number,
   label: PropTypes.string,
+  handleRemove: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
 
