@@ -22,6 +22,7 @@ function MultiselectAutocomplete(props) {
     filteredOptions: [],
     showOptions: false,
     userInput: '',
+    userData: [],
   });
 
   const onChange = e => {
@@ -49,11 +50,12 @@ function MultiselectAutocomplete(props) {
       filteredOptions: [],
       showOptions: false,
       userInput: e.currentTarget.innerText,
+      userData: [...userData, e.currentTarget.innerText],
     });
   };
 
   const onKeyDown = e => {
-    const { activeOption, filteredOptions } = { ...multiselect };
+    const { activeOption, filteredOptions, userData } = { ...multiselect };
     if (e.keyCode === 13) {
       const updatedAutocomplete = { ...multiselect };
       updatedAutocomplete.activeOption = 0;
@@ -63,6 +65,7 @@ function MultiselectAutocomplete(props) {
     } else if (e.keyCode === 38) {
       if (activeOption === 0) {
         return;
+        d;
       }
       const updatedAutocomplete = { ...multiselect };
       updatedAutocomplete.activeOption = activeOption - 1;
@@ -79,7 +82,7 @@ function MultiselectAutocomplete(props) {
   };
 
   let optionList;
-  const { activeOption, filteredOptions, showOptions, userInput } = {
+  const { activeOption, filteredOptions, showOptions, userInput, userData } = {
     ...multiselect,
   };
   // console.log("prop:", props);
@@ -94,10 +97,13 @@ function MultiselectAutocomplete(props) {
             }
             return (
               <li className={className} key={optionName} onClick={onClick}>
-                {optionName.icon ? (
-                  <span className=""></span> {optionName[title]}
+                {optionName[0] ? (
+                  <div>
+                    <span className="no class">{optionName[0]}</span>{' '}
+                    {optionName[1]}
+                  </div>
                 ) : (
-                  {optionName[title]}
+                  <div>{optionName[1]}</div>
                 )}
               </li>
             );
@@ -122,21 +128,30 @@ function MultiselectAutocomplete(props) {
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}
-        <input
-          {...field}
-          {...props}
-          className="search-box"
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-          value={userInput}
-        />
-        {/* <div id={`autocomplete-data-${props.name}`}>{optionList}</div> */}
+        <div className="multiselectDiv">
+            {userData && (
+              userData.map((value, index) => {
+                return (
+                  <label>item<span className="input-right-Icon cursor-pointer">{<MdCancel/>}</span></label>
+                );
+              })
+            }
 
-        {props.clearable && props.value.length > 0 && (
-          <span className="input-right-Icon cursor-pointer">
-            {<MdCancel />}
-          </span>
-        )}
+          <input
+            {...field}
+            {...props}
+            className="search-box"
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+            value={userInput}
+          />
+
+          {props.clearable && props.value.length > 0 && (
+            <span className="input-right-Icon cursor-pointer">
+              {<MdCancel />}
+            </span>
+          )}
+        </div>
       </div>
       <div id={`autocomplete-data-${props.name}`}>{optionList}</div>
       {meta.error && meta.touched && (
