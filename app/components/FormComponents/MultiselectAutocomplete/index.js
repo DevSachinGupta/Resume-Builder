@@ -30,17 +30,25 @@ function MultiselectAutocomplete(props) {
 
     const { options } = props;
     const userInput = e.currentTarget.value;
-
-    const filteredOptions = options.filter(
-      optionName =>
-        optionName.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
+    console.log(options[0]);
+    console.log(options[0].label);
+    const filteredOptions = options.filter(optionName =>
+      typeof optionName === 'string'
+        ? optionName.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+        : optionName.label.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
     );
 
     const updatedAutocomplete = { ...multiselect };
     updatedAutocomplete.activeOption = 0;
     updatedAutocomplete.filteredOptions = filteredOptions;
     updatedAutocomplete.showOptions = true;
-    updatedAutocomplete.userInput = e.currentTarget.value;
+    if (e.keyCode === 188) {
+      // updatedAutocomplete.userData = [..]
+      updatedAutocomplete.userInput = '';
+      e.target.value = '';
+    } else {
+      updatedAutocomplete.userInput = e.currentTarget.value;
+    }
     setMultiselect(updatedAutocomplete);
   };
 
@@ -49,22 +57,20 @@ function MultiselectAutocomplete(props) {
       activeOption: 0,
       filteredOptions: [],
       showOptions: false,
-      userInput: e.currentTarget.innerText,
+      userInput: '', // e.currentTarget.innerText,
       userData: [...userData, e.currentTarget.innerText],
     });
   };
 
   const onKeyDown = e => {
     const { activeOption, filteredOptions, userData } = { ...multiselect };
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 || e.keyCode === 188) {
+      e.preventDefault();
       const updatedAutocomplete = { ...multiselect };
       updatedAutocomplete.activeOption = 0;
       updatedAutocomplete.showOptions = false;
-      updatedAutocomplete.userInput = filteredOptions[activeOption];
-      updatedAutocomplete.userData = [
-        ...userData,
-        filteredOptions[activeOption],
-      ];
+      updatedAutocomplete.userInput = ''; // filteredOptions[activeOption];
+      updatedAutocomplete.userData = [...userData, e.target.value];
       setMultiselect(updatedAutocomplete);
     } else if (e.keyCode === 38) {
       if (activeOption === 0) {
@@ -100,14 +106,10 @@ function MultiselectAutocomplete(props) {
             }
             return (
               <li className={className} key={optionName} onClick={onClick}>
-                {optionName[0] ? (
-                  <div>
-                    <span className="no class">{optionName[0]}</span>{' '}
-                    {optionName[1]}
-                  </div>
-                ) : (
-                  <div>{optionName[1]}</div>
-                )}
+                {typeof optionName === 'string'
+                  ? optionName
+                  : optionName.icon + optionName.label}
+                {optionName}
               </li>
             );
           })}
@@ -163,7 +165,7 @@ function MultiselectAutocomplete(props) {
       <div id={`autocomplete-data-${props.name}`}>{optionList}</div>
       {meta.error && meta.touched && (
         <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
-          {meta.error && meta.error}
+          {/* {meta.error && meta.error} */}
         </div>
       )}
     </div>

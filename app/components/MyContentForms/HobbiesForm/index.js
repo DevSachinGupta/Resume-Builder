@@ -5,6 +5,7 @@ import MultiselectAutocomplete from '../../FormComponents/MultiselectAutocomplet
 
 function HobbiesForm() {
   const hobbyData = [
+    { "label": "test", "icon": "test" },
     'Music',
     'Singing',
     'Reading',
