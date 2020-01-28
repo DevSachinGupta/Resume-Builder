@@ -1,8 +1,4 @@
-.multiselectDiv label{
-    display: inline-flex!important;
-}
-
-.input-box{
+.multiselectDiv{
     border: 1px solid #c1c1c1;
     background: #e1e1e1;
     font-size: 14px;
@@ -11,7 +7,13 @@
     margin-bottom: 10px;
     width: calc(100% - 15px);
 }
-
+.multiselectDiv label{
+    display: inline-flex!important;
+}
+.multiselectDiv input{
+    min-width: 10px;
+    max-width: fit-content;
+}
 .tags{
     display: inline-block;
     color: white;
@@ -21,3 +23,9 @@
     min-width: 50px;
 }
 
+.tags span{
+    margin-left: 2px;
+    display: inline;
+    vertical-align: middle;
+    height: auto;
+}

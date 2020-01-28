@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /**
  *
  * MultiselectAutocomplete
@@ -7,6 +10,7 @@
 import React, { memo, useState } from 'react';
 import cx from 'classnames';
 import { useField } from 'formik';
+import { FaTimes } from 'react-icons/fa';
 import { MdCancel } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import './style.scss';
@@ -25,13 +29,22 @@ function MultiselectAutocomplete(props) {
     userData: [],
   });
 
+  const removeTag = (e, item) => {
+    const updatedAutocomplete = { ...multiselect };
+    const { userData } = updatedAutocomplete;
+    updatedAutocomplete.userData = userData.filter(
+      (_value, index) => index !== item,
+    );
+    setMultiselect(updatedAutocomplete);
+  };
+
   const onChange = e => {
     // console.log('onChanges');
 
     const { options } = props;
     const userInput = e.currentTarget.value;
-    console.log(options[0]);
-    console.log(options[0].label);
+    // console.log(options[0]);
+    // console.log(options[0].label);
     const filteredOptions = options.filter(optionName =>
       typeof optionName === 'string'
         ? optionName.toLowerCase().indexOf(userInput.toLowerCase()) > -1
@@ -109,7 +122,6 @@ function MultiselectAutocomplete(props) {
                 {typeof optionName === 'string'
                   ? optionName
                   : optionName.icon + optionName.label}
-                {optionName}
               </li>
             );
           })}
@@ -126,7 +138,15 @@ function MultiselectAutocomplete(props) {
     showUserData = userData.map((item, index) => (
       <label className="tags">
         {item}
-        <span className="input-right-Icon cursor-pointer">{<MdCancel />}</span>
+        <span
+          className="cursor-pointer"
+          onClick={e => {
+            e.preventDefault();
+            removeTag(e, index);
+          }}
+        >
+          {<FaTimes />}
+        </span>
       </label>
     ));
   }
@@ -143,7 +163,7 @@ function MultiselectAutocomplete(props) {
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}
-        <div className="multiselectDiv input-box">
+        <div className="multiselectDiv">
           {showUserData}
 
           <input
