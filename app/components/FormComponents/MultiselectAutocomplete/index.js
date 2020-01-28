@@ -124,7 +124,7 @@ function MultiselectAutocomplete(props) {
   let showUserData;
   if (userData) {
     showUserData = userData.map((item, index) => (
-      <label>
+      <label className="tags">
         {item}
         <span className="input-right-Icon cursor-pointer">{<MdCancel />}</span>
       </label>
@@ -143,7 +143,7 @@ function MultiselectAutocomplete(props) {
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}
-        <div className="multiselectDiv">
+        <div className="multiselectDiv input-box">
           {showUserData}
 
           <input

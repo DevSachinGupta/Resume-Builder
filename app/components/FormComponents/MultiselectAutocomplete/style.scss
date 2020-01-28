@@ -1,3 +1,23 @@
 .multiselectDiv label{
     display: inline-flex!important;
 }
+
+.input-box{
+    border: 1px solid #c1c1c1;
+    background: #e1e1e1;
+    font-size: 14px;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: calc(100% - 15px);
+}
+
+.tags{
+    display: inline-block;
+    color: white;
+    background: green;
+    margin: 2px;
+    padding: 5px;
+    min-width: 50px;
+}
+
