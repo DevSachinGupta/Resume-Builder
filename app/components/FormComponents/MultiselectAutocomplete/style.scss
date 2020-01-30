@@ -9,10 +9,12 @@
 }
 .multiselectDiv label{
     display: inline-flex!important;
+    font-weight: bold;
 }
 .multiselectDiv input{
-    min-width: 10px;
-    max-width: fit-content;
+    width: 1ch;
+    margin: 2px;
+    padding: 5px;
 }
 .tags{
     display: inline-block;
@@ -25,7 +27,5 @@
 
 .tags span{
     margin-left: 2px;
-    display: inline;
-    vertical-align: middle;
-    height: auto;
+    margin-top: 3px;
 }

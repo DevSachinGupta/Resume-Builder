@@ -65,6 +65,10 @@ function MultiselectAutocomplete(props) {
     setMultiselect(updatedAutocomplete);
   };
 
+  const onInput = e => {
+    e.target.style.width = `${e.target.value.length}ch`;
+  };
+
   const onClick = e => {
     setMultiselect({
       activeOption: 0,
@@ -173,6 +177,7 @@ function MultiselectAutocomplete(props) {
             onChange={onChange}
             onKeyDown={onKeyDown}
             value={userInput}
+            onInput={onInput}
           />
 
           {props.clearable && props.value.length > 0 && (
