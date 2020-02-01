@@ -52,7 +52,7 @@ function HobbiesForm() {
   return (
     <Formik initialValues={{ blankHobbiesField }}>
       {({ handleSubmit, isSubmitting }) => (
-        <MultiselectAutocomplete options={hobbyData} />
+        <MultiselectAutocomplete options={hobbyData} showDefaultOptions />
       )}
     </Formik>
   );

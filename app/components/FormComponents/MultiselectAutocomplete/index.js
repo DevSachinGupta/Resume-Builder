@@ -59,6 +59,7 @@ function MultiselectAutocomplete(props) {
       // updatedAutocomplete.userData = [..]
       updatedAutocomplete.userInput = '';
       e.target.value = '';
+      e.target.style.width = '0ch';
     } else {
       updatedAutocomplete.userInput = e.currentTarget.value;
     }
@@ -112,6 +113,25 @@ function MultiselectAutocomplete(props) {
     ...multiselect,
   };
   // console.log("prop:", props);
+  if (props.showDefaultOptions === true) {
+    optionList = (
+      <ul className="options">
+        {props.options.map((optionName, index) => {
+          let className;
+          if (index === activeOption) {
+            className = 'option-active';
+          }
+          return (
+            <li className={className} key={optionName} onClick={onClick}>
+              {typeof optionName === 'string'
+                ? optionName
+                : optionName.icon + optionName.label}
+            </li>
+          );
+        })}
+      </ul>
+    );
+  }
   if (showOptions && userInput) {
     if (filteredOptions.length) {
       optionList = (
@@ -201,6 +221,7 @@ MultiselectAutocomplete.defaultProps = {
   value: '',
   name: '',
   options: [],
+  showDefaultOptions: false,
 };
 
 MultiselectAutocomplete.propTypes = {
@@ -214,6 +235,7 @@ MultiselectAutocomplete.propTypes = {
   label: PropTypes.string,
   validate: PropTypes.object,
   options: PropTypes.array,
+  showDefaultOptions: PropTypes.bool,
 };
 
 export default memo(MultiselectAutocomplete);
