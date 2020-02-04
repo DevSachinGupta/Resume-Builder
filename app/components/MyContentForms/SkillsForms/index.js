@@ -1,37 +1,39 @@
 import React, { useState } from 'react';
+import { Formik } from 'formik';
+import Textfield from '../../FormComponents/TextField';
+import MultiselectSkill from '../../FormComponents/MultiselectSkill';
 import './style.scss';
 import Dropdown from '../../FormComponents/Dropdown';
 
-const options = [
-  {
-    key: 'abc',
-    value: 'ABC',
-  },
-  {
-    key: 'a',
-    value: 'A',
-  },
-  {
-    key: 'b',
-    value: 'B',
-  },
-  {
-    key: 'c',
-    value: 'C',
-  },
-  {
-    key: 'abcd',
-    value: 'ABCD',
-  },
-];
 function SkillsForm() {
-  const handleOptionSelect = selectedOption => {
-    console.log(selectedOption);
+  const skillData = [
+    'Music',
+    'Singing',
+    'Reading',
+    'Writing',
+    'Bloging',
+    'Poetry',
+    'Sketching',
+    'Photography',
+    'Designing',
+    'Painting',
+    'Volunteering',
+    'Socializing',
+    'Gaming',
+    'Sport',
+  ];
+  const blankSkillsField = {
+    type: '',
   };
   return (
-    <React.Fragment>
-      <Dropdown onSelect={handleOptionSelect} options={options} />
-    </React.Fragment>
+    <Formik initialValues={{ blankSkillsField }}>
+      {({ handleSubmit, isSubmitting }) => (
+        <MultiselectSkill options={skillData} showDefaultOptions />
+      )}
+    </Formik>
+    // <React.Fragment>
+    //   <Dropdown onSelect={handleOptionSelect} options={options} />
+    // </React.Fragment>
   );
 }
 

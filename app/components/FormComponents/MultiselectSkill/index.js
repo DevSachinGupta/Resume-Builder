@@ -1,9 +1,6 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /**
  *
- * MultiselectAutocomplete
+ * MultiselectSkill
  *
  */
 
@@ -13,12 +10,17 @@ import { useField } from 'formik';
 import { FaTimes } from 'react-icons/fa';
 import { MdCancel } from 'react-icons/md';
 import PropTypes from 'prop-types';
+import RangeSlider from '../RangeSlider';
 import './style.scss';
 
-function MultiselectAutocomplete(props) {
+function MultiselectSkill(props) {
   const [field, meta] = useField({
     name: props.name,
     // validate: async value => await props.validate(value),
+  });
+
+  const [state, setState] = useState({
+    value: 10,
   });
 
   const [multiselect, setMultiselect] = useState({
@@ -112,6 +114,21 @@ function MultiselectAutocomplete(props) {
   const { activeOption, filteredOptions, showOptions, userInput, userData } = {
     ...multiselect,
   };
+
+  const handleChangeStart = () => {
+    console.log('Change event started');
+  };
+
+  const handleChange = value => {
+    setState({
+      value,
+    });
+  };
+
+  const handleChangeComplete = () => {
+    console.log('Change event completed');
+  };
+
   // console.log("prop:", props);
   if (props.showDefaultOptions === true) {
     optionList = (
@@ -172,6 +189,7 @@ function MultiselectAutocomplete(props) {
   }
 
   let showUserData;
+  const { value } = state;
   if (userData) {
     showUserData = userData.map((item, index) => (
       <label className="tags">
@@ -181,6 +199,27 @@ function MultiselectAutocomplete(props) {
             src="https://randomuser.me/api/portraits/women/34.jpg"
           />
           <span className="ml-3">{item}</span>
+          <span className="w-20">
+            {/* <input
+              type="range"
+              min="1"
+              max="100"
+              value="50"
+              className="slider w-20"
+              id="myRange"
+            /> */}
+            <div className="slider">
+              <RangeSlider
+                min={0}
+                max={100}
+                value={value}
+                onChangeStart={handleChangeStart}
+                onChange={handleChange}
+                onChangeComplete={handleChangeComplete}
+              />
+              <div className='value'>{value}</div>
+            </div>
+          </span>
           <span
             className="inline-block align-middle"
             onClick={e => {
@@ -247,14 +286,14 @@ function MultiselectAutocomplete(props) {
   );
 }
 
-MultiselectAutocomplete.defaultProps = {
+MultiselectSkill.defaultProps = {
   value: '',
   name: '',
   options: [],
   showDefaultOptions: false,
 };
 
-MultiselectAutocomplete.propTypes = {
+MultiselectSkill.propTypes = {
   clearable: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
   fullWidth: PropTypes.bool.isRequired,
@@ -268,4 +307,4 @@ MultiselectAutocomplete.propTypes = {
   showDefaultOptions: PropTypes.bool,
 };
 
-export default memo(MultiselectAutocomplete);
+export default memo(MultiselectSkill);
