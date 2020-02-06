@@ -17,6 +17,7 @@ import Authenticate from 'containers/Authenticate/Loadable';
 import Builder from 'containers/Builder/Loadable';
 import MyContentContainer from 'containers/MyContent/Loadable';
 import { connect } from 'react-redux';
+
 import { setModalContent } from '../MyContent/actions';
 import GlobalStyle from '../../global-styles';
 import '../../main.css';

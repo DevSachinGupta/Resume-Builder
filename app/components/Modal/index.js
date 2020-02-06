@@ -6,7 +6,7 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { FaTimes } from 'react-icons/fa';
@@ -18,11 +18,15 @@ import { toggleModal } from 'containers/App/actions';
 import './style.scss';
 
 function Modal(props) {
-  const { isModalOpen, heading } = props;
+  const { isModalOpen, heading, loading } = props;
+  useEffect(() => {
+    NProgress.start();
+  });
   return (
     isModalOpen && (
       <div className={cx('modalWrapper')}>
         <div className={cx('modalContainer', 'shadow-lg', 'rounded')}>
+          {loading && <div className="loading">Loading</div>}
           <div className={cx('modalHeader')}>
             <div className={cx('modalHeading')}>{heading && heading}</div>
             <div className={cx('actionContainer')}>
@@ -46,6 +50,7 @@ function Modal(props) {
 }
 Modal.defaultProps = {
   closable: true,
+  loading: true,
 };
 Modal.propTypes = {
   heading: PropTypes.string,
@@ -55,6 +60,7 @@ Modal.propTypes = {
   dispatch: PropTypes.func.isRequired,
   isModalOpen: PropTypes.bool.isRequired,
   footer: PropTypes.node.isRequired,
+  loading: PropTypes.bool,
 };
 const withConnect = connect(
   createStructuredSelector({
