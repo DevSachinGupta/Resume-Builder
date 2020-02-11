@@ -31,6 +31,15 @@ function MultiselectSkill(props) {
     userData: [],
   });
 
+  const rangeVal = 0;
+
+  const [range, setRange] = useState(rangeVal);
+
+  const updateRange = e => {
+    setRange(e.target.value);
+  }
+  
+
   const removeTag = (e, item) => {
     const updatedAutocomplete = { ...multiselect };
     const { userData } = updatedAutocomplete;
@@ -200,15 +209,15 @@ function MultiselectSkill(props) {
           />
           <span className="ml-3">{item}</span>
           <span className="w-20">
-            {/* <input
-              type="range"
-              min="1"
-              max="100"
-              value="50"
-              className="slider w-20"
-              id="myRange"
-            /> */}
-            <div className="slider">
+            <input id="range" type="range"
+              value={range}
+              min="0"
+              max="20"
+              step="1"
+              onChange={updateRange}
+            />
+            <span id="output">{range}</span>
+            {/* <div className="slider">
               <RangeSlider
                 min={0}
                 max={100}
@@ -218,7 +227,7 @@ function MultiselectSkill(props) {
                 onChangeComplete={handleChangeComplete}
               />
               <div className='value'>{value}</div>
-            </div>
+            </div> */}
           </span>
           <span
             className="inline-block align-middle"
