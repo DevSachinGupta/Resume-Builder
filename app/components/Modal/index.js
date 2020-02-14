@@ -6,7 +6,7 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { FaTimes } from 'react-icons/fa';
@@ -19,14 +19,10 @@ import './style.scss';
 
 function Modal(props) {
   const { isModalOpen, heading, loading } = props;
-  useEffect(() => {
-    NProgress.start();
-  });
   return (
     isModalOpen && (
       <div className={cx('modalWrapper')}>
         <div className={cx('modalContainer', 'shadow-lg', 'rounded')}>
-          {loading && <div className="loading">Loading</div>}
           <div className={cx('modalHeader')}>
             <div className={cx('modalHeading')}>{heading && heading}</div>
             <div className={cx('actionContainer')}>
