@@ -18,7 +18,7 @@ import { toggleModal } from 'containers/App/actions';
 import './style.scss';
 
 function Modal(props) {
-  const { isModalOpen, heading } = props;
+  const { isModalOpen, heading, loading } = props;
   return (
     isModalOpen && (
       <div className={cx('modalWrapper')}>
@@ -46,6 +46,7 @@ function Modal(props) {
 }
 Modal.defaultProps = {
   closable: true,
+  loading: true,
 };
 Modal.propTypes = {
   heading: PropTypes.string,
@@ -55,6 +56,7 @@ Modal.propTypes = {
   dispatch: PropTypes.func.isRequired,
   isModalOpen: PropTypes.bool.isRequired,
   footer: PropTypes.node.isRequired,
+  loading: PropTypes.bool,
 };
 const withConnect = connect(
   createStructuredSelector({

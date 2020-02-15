@@ -90,7 +90,6 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
     dispatch(toggleModal());
     dispatch(setModalContent('education'));
   };
-  console.log('emp1: ', employments);
   const handleRemove = e => {
     const { idx } = e.target.dataset;
     const updatedEmp = [...employments];

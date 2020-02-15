@@ -2,8 +2,8 @@
 @import '../../styles/app.scss';
 
 .circularButton {
-  padding: 12px;
-  border-radius: 20em;
+  padding: 6px !important;
+  border-radius: 20em !important;
   transition: 0.5ms;
   &:hover {
     background: rgba(0, 0, 0, 0.1);

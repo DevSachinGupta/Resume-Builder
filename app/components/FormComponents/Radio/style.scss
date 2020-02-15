@@ -1,4 +1,5 @@
 @import "../../../styles/app.scss";
+//<<<<<<< HEAD
 $color1: #f4f4f4;
 $color2: #3197EE;
 
@@ -62,4 +63,18 @@ $color2: #3197EE;
         }
         }
     }
+// =======
+// .radio-group {
+//     padding: 2px 9px;
+// }
+// .radio-group input {
+//     width: auto!important;
+//     vertical-align: middle;
+// }
+// .radio-group span {
+//     @include font($size: 14px);
+//     padding-left: 2px;
+//     display: inline-block;
+//     vertical-align: text-top;
+//>>>>>>> f103a710cf4cabc4d0e8c74dbf2c34053d1eb402
 }
