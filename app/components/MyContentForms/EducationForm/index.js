@@ -7,7 +7,7 @@
 import React, { memo, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { Formik } from 'formik';
+import { Formik, withFormik } from 'formik';
 import { createStructuredSelector } from 'reselect';
 import {
   makeUpdateResumeJSONState,
@@ -25,7 +25,12 @@ import EducationInputs from './EducationItems';
 import Accordian from '../../Accordion';
 import Button from '../../Button';
 
-function EducationForm({ editor_state, resume_json_state, dispatch }) {
+function EducationForm({
+  displayName,
+  editor_state,
+  resume_json_state,
+  dispatch,
+}) {
   // const counter = 0;
   const blankEduFields = {
     title: '',
@@ -72,26 +77,24 @@ function EducationForm({ editor_state, resume_json_state, dispatch }) {
     handleSave();
     setEducations([...educations, { ...blankEduFields }]);
   };
-
+  console.log(displayName);
   return (
     <div>
-      <Formik initialValues={{ ...educations }}>
-        {({ handleSubmit, isSubmitting }) => (
-          <React.Fragment>
-            {educations.map((item, idx) => (
-              <Accordian
-                id={idx}
-                label={item.title ? item.title : `Education ${idx + 1}`}
-              >
-                <EducationInputs idx={idx} />
-              </Accordian>
-            ))}
-            <Button onClick={addMore} fullWidth type="flat">
-              Add Another
-            </Button>
-          </React.Fragment>
-        )}
-      </Formik>
+      <form>
+        <React.Fragment>
+          {educations.map((item, idx) => (
+            <Accordian
+              id={idx}
+              label={item.title ? item.title : `Education ${idx + 1}`}
+            >
+              <EducationInputs idx={idx} />
+            </Accordian>
+          ))}
+          <Button onClick={addMore} fullWidth type="flat">
+            Add Another
+          </Button>
+        </React.Fragment>
+      </form>
     </div>
   );
 }
@@ -106,8 +109,13 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
+const withConnectedFormik = withFormik({
+  mapPropsToValues: () => {},
+  displayName: 'educationForm',
+});
 const withCompose = compose(
   withConnect,
   memo,
+  withConnectedFormik,
 );
 export default withCompose(EducationForm);

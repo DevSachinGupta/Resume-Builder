@@ -55,6 +55,12 @@ export const getModalFooter = modelId => {
           Save Details
         </Button>,
       ];
+    case 'education':
+      return [
+        <Button onClick={()=>alert("HELLO WORLD")} fullWidth type="primary">
+          Save Details
+        </Button>,
+      ];
     default:
       return [
         <Button fullWidth type="primary">
