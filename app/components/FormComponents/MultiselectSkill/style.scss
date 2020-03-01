@@ -1,7 +1,7 @@
 @import "../../../styles/app.scss";
 .search-box {
   width: 100%;
-  padding: 1rem;
+  padding: 5px;
   transition: width 0.3s;
   }
   .search-box:focus {
@@ -14,6 +14,8 @@ ul.options {
   transition: width 0.3s;
   margin: auto;
   position: relative;
+  height: 150px;
+  overflow-y: auto;
 }
 
 ul.options li {
@@ -171,4 +173,3 @@ ul.options li.option-active {
     background: $primary;
     border-radius: 5px;
   }
-  

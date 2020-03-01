@@ -87,7 +87,8 @@ function MultiselectSkill(props) {
   const onKeyDown = e => {
     const { activeOption, filteredOptions, userData } = { ...multiselect };
     if (e.keyCode === 13 || e.keyCode === 188) {
-      if (!(userData.indexOf(e.target.value) >= 0)) {
+      const userDataLower = userData.map(a => a.toLowerCase());
+      if (!(userDataLower.indexOf(e.target.value.toLowerCase()) >= 0)) {
         if (activeOption != -1) {
           e.preventDefault();
           const updatedAutocomplete = { ...multiselect };
@@ -179,8 +180,8 @@ function MultiselectSkill(props) {
             }
             return (
               <li className={className} key={optionName} onClick={onClick}>
-                <div className="inline-block mb-1 rounded-full bg-gray-300 pr-5 h-8 line-height-username1">
-                  <span className="ml-3">{optionName}</span>
+                <div className="">
+                  <span className="ml-2">{optionName}</span>
                 </div>
               </li>
             );
@@ -194,7 +195,7 @@ function MultiselectSkill(props) {
   if (userData) {
     showUserData = userData.map((item, index) => (
       <div className="tags">
-        <div className="">
+        <div className="inline-block mb-1 bg-gray-200 pr-5 h-8 line-height-username1">
           <span className="ml-3">{item}</span>
           <span className="w-20">
             <input
@@ -224,7 +225,7 @@ function MultiselectSkill(props) {
   }
 
   return (
-    <div className={cx('inputWrapper')}>
+    <div className={cx('inputWrapper', 'multiselectskill')}>
       <div className="label">{props.label}</div>
       <div
         className={cx('inputContainer', {
