@@ -31,8 +31,16 @@ function MultiselectSkill(props) {
     const updatedAutocomplete = { ...multiselect };
     updatedAutocomplete.userRangeVal[e.target.dataset.idx] = e.target.value;
     setMultiselect(updatedAutocomplete);
-    console.log('mult1: ', updatedAutocomplete);
+    // console.log('mult1: ', updatedAutocomplete);
   };
+
+  const onTextboxClick = e => {
+    const updatedAutocomplete = { ...multiselect };
+    updatedAutocomplete.showOptions = true;
+    updatedAutocomplete.filteredOptions = props.options;
+    console.log(updatedAutocomplete);
+    setMultiselect(updatedAutocomplete);
+  }
 
   const removeTag = (e, item) => {
     const updatedAutocomplete = { ...multiselect };
@@ -99,6 +107,7 @@ function MultiselectSkill(props) {
             ...userData,
             filteredOptions[activeOption],
           ];
+          updatedAutocomplete.userRangeVal = [...userRangeVal, 10];
           setMultiselect(updatedAutocomplete);
         } else {
           e.preventDefault();
@@ -107,6 +116,7 @@ function MultiselectSkill(props) {
           updatedAutocomplete.showOptions = false;
           updatedAutocomplete.userInput = '';
           updatedAutocomplete.userData = [...userData, e.target.value];
+          updatedAutocomplete.userRangeVal = [...userRangeVal, 10];
           setMultiselect(updatedAutocomplete);
         }
       } else {
@@ -169,7 +179,7 @@ function MultiselectSkill(props) {
   //     </ul>
   //   );
   // }
-  if (showOptions && userInput) {
+  if (showOptions) { //} && userInput) {
     if (filteredOptions.length) {
       optionList = (
         <ul className="options">
@@ -246,6 +256,7 @@ function MultiselectSkill(props) {
             onChange={onChange}
             onKeyDown={onKeyDown}
             value={userInput}
+            onClick={onTextboxClick}
           />
 
           {props.clearable && props.value.length > 0 && (
