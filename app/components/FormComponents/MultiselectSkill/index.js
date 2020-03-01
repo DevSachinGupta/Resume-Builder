@@ -10,7 +10,6 @@ import { useField } from 'formik';
 import { FaTimes } from 'react-icons/fa';
 import { MdCancel } from 'react-icons/md';
 import PropTypes from 'prop-types';
-import RangeSlider from '../RangeSlider';
 import './style.scss';
 
 function MultiselectSkill(props) {
@@ -19,26 +18,21 @@ function MultiselectSkill(props) {
     // validate: async value => await props.validate(value),
   });
 
-  const [state, setState] = useState({
-    value: 10,
-  });
-
   const [multiselect, setMultiselect] = useState({
-    activeOption: 0,
+    activeOption: -1,
     filteredOptions: [],
     showOptions: false,
     userInput: '',
     userData: [],
+    userRangeVal: [],
   });
 
-  const rangeVal = 0;
-
-  const [range, setRange] = useState(rangeVal);
-
   const updateRange = e => {
-    setRange(e.target.value);
-  }
-  
+    const updatedAutocomplete = { ...multiselect };
+    updatedAutocomplete.userRangeVal[e.target.dataset.idx] = e.target.value;
+    setMultiselect(updatedAutocomplete);
+    console.log('mult1: ', updatedAutocomplete);
+  };
 
   const removeTag = (e, item) => {
     const updatedAutocomplete = { ...multiselect };
@@ -46,63 +40,85 @@ function MultiselectSkill(props) {
     updatedAutocomplete.userData = userData.filter(
       (_value, index) => index !== item,
     );
+    const { userRangeVal } = updatedAutocomplete;
+    updatedAutocomplete.userRangeVal = userRangeVal.filter(
+      (_value, index) => index !== item,
+    );
     setMultiselect(updatedAutocomplete);
   };
 
-  const onChange = e => {
-    // console.log('onChanges');
+  const onClick = e => {
+    setMultiselect({
+      activeOption: -1,
+      filteredOptions: [],
+      showOptions: false,
+      userInput: '',
+      userData: [...userData, e.currentTarget.innerText],
+      userRangeVal: [...userRangeVal, 10],
+    });
+  };
 
+  const onChange = e => {
     const { options } = props;
     const userInput = e.currentTarget.value;
-    // console.log(options[0]);
-    // console.log(options[0].label);
-    const filteredOptions = options.filter(optionName =>
+    let filteredOptions = options.filter(optionName =>
       typeof optionName === 'string'
         ? optionName.toLowerCase().indexOf(userInput.toLowerCase()) > -1
         : optionName.label.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
     );
-
     const updatedAutocomplete = { ...multiselect };
-    updatedAutocomplete.activeOption = 0;
+    updatedAutocomplete.activeOption = -1;
+
+    updatedAutocomplete.userData.map((optionName, index) => {
+      filteredOptions = filteredOptions.filter(_value => _value !== optionName);
+    });
+
     updatedAutocomplete.filteredOptions = filteredOptions;
     updatedAutocomplete.showOptions = true;
     if (e.keyCode === 188) {
-      // updatedAutocomplete.userData = [..]
       updatedAutocomplete.userInput = '';
       e.target.value = '';
-      e.target.style.width = '0ch';
     } else {
       updatedAutocomplete.userInput = e.currentTarget.value;
     }
     setMultiselect(updatedAutocomplete);
   };
 
-  const onInput = e => {
-    e.target.style.width = `${e.target.value.length}ch`;
-  };
-
-  const onClick = e => {
-    setMultiselect({
-      activeOption: 0,
-      filteredOptions: [],
-      showOptions: false,
-      userInput: '', // e.currentTarget.innerText,
-      userData: [...userData, e.currentTarget.innerText],
-    });
-  };
-
   const onKeyDown = e => {
     const { activeOption, filteredOptions, userData } = { ...multiselect };
     if (e.keyCode === 13 || e.keyCode === 188) {
-      e.preventDefault();
-      const updatedAutocomplete = { ...multiselect };
-      updatedAutocomplete.activeOption = 0;
-      updatedAutocomplete.showOptions = false;
-      updatedAutocomplete.userInput = ''; // filteredOptions[activeOption];
-      updatedAutocomplete.userData = [...userData, e.target.value];
-      setMultiselect(updatedAutocomplete);
+      if (!(userData.indexOf(e.target.value) >= 0)) {
+        if (activeOption != -1) {
+          e.preventDefault();
+          const updatedAutocomplete = { ...multiselect };
+          updatedAutocomplete.activeOption = -1;
+          updatedAutocomplete.showOptions = false;
+          updatedAutocomplete.userInput = '';
+          updatedAutocomplete.userData = [
+            ...userData,
+            filteredOptions[activeOption],
+          ];
+          setMultiselect(updatedAutocomplete);
+        } else {
+          e.preventDefault();
+          const updatedAutocomplete = { ...multiselect };
+          updatedAutocomplete.activeOption = -1;
+          updatedAutocomplete.showOptions = false;
+          updatedAutocomplete.userInput = '';
+          updatedAutocomplete.userData = [...userData, e.target.value];
+          setMultiselect(updatedAutocomplete);
+        }
+      } else {
+        e.preventDefault();
+        const updatedAutocomplete = { ...multiselect };
+        updatedAutocomplete.activeOption = -1;
+        updatedAutocomplete.showOptions = false;
+        updatedAutocomplete.userInput = '';
+        updatedAutocomplete.userData = [...userData];
+        setMultiselect(updatedAutocomplete);
+      }
     } else if (e.keyCode === 38) {
-      if (activeOption === 0) {
+      if (activeOption === -1) {
         return;
       }
       const updatedAutocomplete = { ...multiselect };
@@ -110,7 +126,9 @@ function MultiselectSkill(props) {
       setMultiselect(updatedAutocomplete);
     } else if (e.keyCode === 40) {
       if (activeOption === filteredOptions.length - 1) {
-        // console.log(activeOption);
+        const updatedAutocomplete = { ...multiselect };
+        updatedAutocomplete.activeOption = filteredOptions.length - 1;
+        setMultiselect(updatedAutocomplete);
         return;
       }
       const updatedAutocomplete = { ...multiselect };
@@ -120,51 +138,36 @@ function MultiselectSkill(props) {
   };
 
   let optionList;
-  const { activeOption, filteredOptions, showOptions, userInput, userData } = {
+  const {
+    activeOption,
+    filteredOptions,
+    showOptions,
+    userInput,
+    userData,
+    userRangeVal,
+  } = {
     ...multiselect,
   };
-
-  const handleChangeStart = () => {
-    console.log('Change event started');
-  };
-
-  const handleChange = value => {
-    setState({
-      value,
-    });
-  };
-
-  const handleChangeComplete = () => {
-    console.log('Change event completed');
-  };
-
   // console.log("prop:", props);
-  if (props.showDefaultOptions === true) {
-    optionList = (
-      <ul className="options">
-        {props.options.map((optionName, index) => {
-          let className;
-          if (index === activeOption) {
-            className = 'option-active';
-          }
-          return (
-            <li className={className} key={optionName} onClick={onClick}>
-              <div className="inline-block mb-1 rounded-full bg-gray-300 pr-5 h-8 line-height-username1">
-                <img
-                  className="rounded-full float-left h-full"
-                  src="https://randomuser.me/api/portraits/women/34.jpg"
-                />
-                <span className="ml-3">{optionName}</span>
-              </div>
-              {/* {typeof optionName === 'string'
-                ? optionName
-                : optionName.icon + optionName.label} */}
-            </li>
-          );
-        })}
-      </ul>
-    );
-  }
+  // if (props.showDefaultOptions === true) {
+  //   optionList = (
+  //     <ul className="options">
+  //       {props.options.map((optionName, index) => {
+  //         let className;
+  //         if (index === activeOption) {
+  //           className = 'option-active';
+  //         }
+  //         return (
+  //           <li className={className} key={optionName} onClick={onClick}>
+  //             <div className="inline-block mb-1 rounded-full bg-gray-300 pr-5 h-8 line-height-username1">
+  //               <span className="ml-3">{optionName}</span>
+  //             </div>
+  //           </li>
+  //         );
+  //       })}
+  //     </ul>
+  //   );
+  // }
   if (showOptions && userInput) {
     if (filteredOptions.length) {
       optionList = (
@@ -177,57 +180,34 @@ function MultiselectSkill(props) {
             return (
               <li className={className} key={optionName} onClick={onClick}>
                 <div className="inline-block mb-1 rounded-full bg-gray-300 pr-5 h-8 line-height-username1">
-                  <img
-                    className="rounded-full float-left h-full"
-                    src="https://rrandomuser.me/api/portraits/women/34.jpg"
-                  />
                   <span className="ml-3">{optionName}</span>
                 </div>
-                {/* {typeof optionName === 'string'
-                  ? optionName
-                  : optionName.icon + optionName.label} */}
               </li>
             );
           })}
-          {/* arr.map((option, index) => {
-            // code for the list 
-          }); */}
         </ul>
       );
     }
   }
 
   let showUserData;
-  const { value } = state;
   if (userData) {
     showUserData = userData.map((item, index) => (
-      <label className="tags">
-        <div className="inline-block mb-1 rounded-full bg-gray-300 pr-5 h-8 line-height-username1">
-          <img
-            className="rounded-full float-left h-full"
-            src="https://randomuser.me/api/portraits/women/34.jpg"
-          />
+      <div className="tags">
+        <div className="">
           <span className="ml-3">{item}</span>
           <span className="w-20">
-            <input id="range" type="range"
-              value={range}
+            <input
+              id="range"
+              data-idx={index}
+              type="range"
+              value={userRangeVal[index]}
               min="0"
-              max="20"
+              max="10"
               step="1"
               onChange={updateRange}
             />
-            <span id="output">{range}</span>
-            {/* <div className="slider">
-              <RangeSlider
-                min={0}
-                max={100}
-                value={value}
-                onChangeStart={handleChangeStart}
-                onChange={handleChange}
-                onChangeComplete={handleChangeComplete}
-              />
-              <div className='value'>{value}</div>
-            </div> */}
+            <span id="output">{userRangeVal[index]}</span>
           </span>
           <span
             className="inline-block align-middle"
@@ -239,17 +219,7 @@ function MultiselectSkill(props) {
             {<FaTimes />}
           </span>
         </div>
-        {/* {item}
-        <span
-          className="cursor-pointer"
-          onClick={e => {
-            e.preventDefault();
-            removeTag(e, index);
-          }}
-        >
-          {<FaTimes />}
-        </span> */}
-      </label>
+      </div>
     ));
   }
 
@@ -266,7 +236,7 @@ function MultiselectSkill(props) {
           <span className="inputIcon">{props.inputIcon}</span>
         )}
         <div className="multiselectDiv">
-          {showUserData}
+          {/* {showUserData} */}
 
           <input
             {...field}
@@ -275,7 +245,6 @@ function MultiselectSkill(props) {
             onChange={onChange}
             onKeyDown={onKeyDown}
             value={userInput}
-            onInput={onInput}
           />
 
           {props.clearable && props.value.length > 0 && (
@@ -285,7 +254,10 @@ function MultiselectSkill(props) {
           )}
         </div>
       </div>
-      <div id={`autocomplete-data-${props.name}`}>{optionList}</div>
+      <div id={`autocomplete-data-${props.name}`} className="absolute">
+        {optionList}
+      </div>
+      <div className="multiselectDiv"> {showUserData}</div>
       {meta.error && meta.touched && (
         <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
           {/* {meta.error && meta.error} */}
