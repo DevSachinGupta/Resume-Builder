@@ -77,7 +77,6 @@ function EducationForm({
     handleSave();
     setEducations([...educations, { ...blankEduFields }]);
   };
-  console.log(displayName);
   return (
     <div>
       <form>
