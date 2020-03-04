@@ -47,23 +47,23 @@ export const getModalContent = modelId => {
   }
   return <ModalComponent />;
 };
-export const getModalFooter = modelId => {
+export const getModalFooter = (modelId, submitHandler) => {
   switch (modelId) {
     case 'personalDetails':
       return [
-        <Button fullWidth type="primary">
+        <Button onClick={submitHandler} fullWidth type="primary">
           Save Details
         </Button>,
       ];
     case 'education':
       return [
-        <Button onClick={()=>alert("HELLO WORLD")} fullWidth type="primary">
+        <Button onClick={submitHandler} fullWidth type="primary">
           Save Details
         </Button>,
       ];
     default:
       return [
-        <Button fullWidth type="primary">
+        <Button onClick={submitHandler} fullWidth type="primary">
           Save Details
         </Button>,
       ];
