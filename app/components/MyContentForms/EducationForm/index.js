@@ -71,8 +71,8 @@ function EducationForm(props) {
           console.log(values);
         }}
       >
-        {props => (
-          <form onSubmit={props.handleSubmit}>
+        {({ handleSubmit }) => (
+          <React.Fragment>
             {educations.map((item, idx) => (
               <Accordian
                 id={idx}
@@ -81,15 +81,15 @@ function EducationForm(props) {
                 <EducationInputs idx={idx} />
               </Accordian>
             ))}
-            <Button onClick={props.handleSubmit} fullWidth type="flat">
+            {/* <Button onClick={addMore} fullWidth type="flat">
               Add Another
-            </Button>
+            </Button> */}
             <div className={cx('footerContainer')}>
-              <Button fullWidth type="primary">
+              <Button onClick={handleSubmit} fullWidth type="primary">
                 Save Details
               </Button>
             </div>
-          </form>
+          </React.Fragment>
         )}
       </Formik>
     </div>
@@ -106,13 +106,8 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
-const withConnectedFormik = withFormik({
-  mapPropsToValues: () => {},
-  displayName: 'educationForm',
-});
 const withCompose = compose(
   withConnect,
   memo,
-  withConnectedFormik,
 );
 export default withCompose(EducationForm);
