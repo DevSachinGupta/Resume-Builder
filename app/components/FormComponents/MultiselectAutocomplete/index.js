@@ -38,17 +38,20 @@ function MultiselectAutocomplete(props) {
     setMultiselect(updatedAutocomplete);
   };
 
+  console.log(multiselect);
+
   const onTextboxClick = () => {
     const updatedAutocomplete = { ...multiselect };
     updatedAutocomplete.showOptions = true;
     let filteredOptions = props.options;
     updatedAutocomplete.activeOption = -1;
-
+    // console.log("1")
     updatedAutocomplete.userData.map((optionName, index) => {
       filteredOptions = filteredOptions.filter(_value => _value !== optionName);
     });
-
+    
     updatedAutocomplete.filteredOptions = filteredOptions;
+    // console.log("2",updatedAutocomplete)
     setMultiselect(updatedAutocomplete);
   };
 
@@ -56,10 +59,13 @@ function MultiselectAutocomplete(props) {
     const { options } = props;
     const userInput = e.currentTarget.value;
     let filteredOptions = options.filter(optionName =>
-      typeof optionName === 'string'
-        ? optionName.toLowerCase().indexOf(userInput.toLowerCase()) > -1
-        : optionName.label.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
+        optionName.name.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
+    // let filteredOptions = options.filter(optionName =>
+    //   typeof optionName === 'string'
+    //     ? optionName.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+    //     : optionName.label.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
+    // );
     const updatedAutocomplete = { ...multiselect };
     updatedAutocomplete.activeOption = -1;
 
@@ -79,19 +85,37 @@ function MultiselectAutocomplete(props) {
   };
 
   const onClick = e => {
-    setMultiselect({
-      activeOption: 0,
-      filteredOptions: [],
-      showOptions: false,
-      userInput: '', // e.currentTarget.innerText,
-      userData: [...userData, e.currentTarget.innerText],
-    });
+    const updatedAutocomplete = { ...multiselect };
+    updatedAutocomplete.showOptions = false;
+    // let filteredOptions = props.options;
+    let filteredOptions = updatedAutocomplete.filteredOptions;
+    updatedAutocomplete.activeOption = 0;
+    console.log("1")
+    filteredOptions.map((optionName, index) => {
+      // filteredOptions = filteredOptions.filter(_value => _value !== optionName);
+      if(optionName.name == e.currentTarget.innerText){
+        console.log("inside if", optionName)
+        updatedAutocomplete.userData = [...userData, optionName];
+      }
+    });    
+    updatedAutocomplete.filteredOptions = [];
+    updatedAutocomplete.userInput = '';
+    console.log("2",updatedAutocomplete)
+    setMultiselect(updatedAutocomplete);
+
+    // setMultiselect({
+    //   activeOption: 0,
+    //   filteredOptions: [],
+    //   showOptions: false,
+    //   userInput: '', // e.currentTarget.innerText,
+    //   userData: [...userData, e.currentTarget.innerText],
+    // });
   };
 
   const onKeyDown = e => {
     const { activeOption, filteredOptions, userData } = { ...multiselect };
     if (e.keyCode === 13 || e.keyCode === 188) {
-      const userFilterLower = filteredOptions.map(a => a.toLowerCase());
+      const userFilterLower = filteredOptions.map(a => a.name.toLowerCase());
       if (userFilterLower.indexOf(e.target.value.toLowerCase()) >= 0) {
         if (activeOption != -1) {
           e.preventDefault();
@@ -132,7 +156,7 @@ function MultiselectAutocomplete(props) {
         ];
         setMultiselect(updatedAutocomplete);
       } else if (activeOption == -1) {
-        const userDataLower = userData.map(a => a.toLowerCase());
+        const userDataLower = userData.map(a => a.name.toLowerCase());
         if (userDataLower.indexOf(e.target.value.toLowerCase()) >= 0) {
           e.preventDefault();
           const updatedAutocomplete = { ...multiselect };
@@ -205,13 +229,15 @@ function MultiselectAutocomplete(props) {
               className = 'option-active';
             }
             return (
-              <li className={className} key={optionName} onClick={onClick}>
+              <li className={className} key={optionName.name} onClick={onClick}>
                 <div className="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1">
-                  <img
+                  <span className="rounded-full float-left h-full">{optionName.icon}</span>
+                  {/* <img
                     className="rounded-full float-left h-full"
                     src="https://rrandomuser.me/api/portraits/women/34.jpg"
-                  />
-                  <span className="ml-3">{optionName}</span>
+                  /> */}
+                   {/* {<{optionName.icon} />} */}
+                  <span className="ml-3">{optionName.name}</span>
                 </div>
               </li>
             );
@@ -226,11 +252,12 @@ function MultiselectAutocomplete(props) {
     showUserData = userData.map((item, index) => (
       <label className="tags">
         <div className="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1">
-          <img
+          <span className="rounded-full float-left h-full">{optionName.icon}</span>
+          {/* <img
             className="rounded-full float-left h-full"
             src="https://randomuser.me/api/portraits/women/34.jpg"
-          />
-          <span className="ml-3">{item}</span>
+          /> */}
+          <span className="ml-3">{item.name}</span>
           <span
             className="inline-block align-middle"
             onClick={e => {
