@@ -40,18 +40,14 @@ function Text(props) {
     </div>
   );
 }
-Text.defaultProps = {
-  name: '',
-};
 Text.propTypes = {
   clearable: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
   fullWidth: PropTypes.bool.isRequired,
   inputIcon: PropTypes.node.isRequired,
   value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-  error: PropTypes.string,
-  name: PropTypes.string,
   label: PropTypes.string,
-  validate: PropTypes.object,
+  name: PropTypes.string,
+  validate: PropTypes.func.isRequired,
 };
 export default memo(Text);
