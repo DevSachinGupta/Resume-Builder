@@ -1,20 +1,67 @@
+@import "../../../styles/app.scss";
+.search-box {
+  width: 100%;
+  padding: 5px;
+  transition: width 0.3s;
+  }
+  .search-box:focus {
+  width: 100%;
+  outline: none;
+  }
+ul.options {
+  display: block;
+  list-style: none;
+  transition: width 0.3s;
+  margin: auto;
+  position: relative;
+  height: 150px;
+  overflow-y: auto;
+}
+
+ul.options li {
+  @include font($size: 12px);
+  display: block;
+  background: white;
+  // margin: 10px auto;
+  padding: 5px;
+  width: 100%;
+  //border-radius: 2px;
+}
+ul.options li:hover {
+  // font-weight: bold;
+  color: #00b4cc;
+  cursor: pointer;
+  transition: 0.3s all;
+}
+
+ul.options li.option-active {
+  background: whitesmoke;
+  // font-size: 1.5rem;
+  color: #00b4cc;
+}
+.no-options {
+  color: white;
+}
+
+
+
 .multiselectDiv{
     border: 1px solid #c1c1c1;
-    background: #e1e1e1;
+    // background: white;
     font-size: 14px;
-    padding: 5px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: calc(100% - 15px);
+    // padding: 5px;
+    // margin-top: 10px;
+    // margin-bottom: 10px;
+    // width: calc(100% - 15px);
 }
-.multiselectDiv label{
+.multiselectDiv div.tags{
     display: inline-flex!important;
     font-weight: bold;
 }
 .multiselectDiv input{
-    width: 1ch;
-    margin: 2px;
-    padding: 5px;
+    width: 100%;
+    // margin: 2px;
+    // padding: 5px;
 }
 .tags{
     display: inline-block;
