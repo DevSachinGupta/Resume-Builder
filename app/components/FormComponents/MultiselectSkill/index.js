@@ -34,13 +34,19 @@ function MultiselectSkill(props) {
     // console.log('mult1: ', updatedAutocomplete);
   };
 
-  const onTextboxClick = e => {
+  const onTextboxClick = () => {
     const updatedAutocomplete = { ...multiselect };
     updatedAutocomplete.showOptions = true;
-    updatedAutocomplete.filteredOptions = props.options;
-    console.log(updatedAutocomplete);
+    let filteredOptions = props.options;
+    updatedAutocomplete.activeOption = -1;
+
+    updatedAutocomplete.userData.map((optionName, index) => {
+      filteredOptions = filteredOptions.filter(_value => _value !== optionName);
+    });
+
+    updatedAutocomplete.filteredOptions = filteredOptions;
     setMultiselect(updatedAutocomplete);
-  }
+  };
 
   const removeTag = (e, item) => {
     const updatedAutocomplete = { ...multiselect };
@@ -159,26 +165,7 @@ function MultiselectSkill(props) {
   } = {
     ...multiselect,
   };
-  // console.log("prop:", props);
-  // if (props.showDefaultOptions === true) {
-  //   optionList = (
-  //     <ul className="options">
-  //       {props.options.map((optionName, index) => {
-  //         let className;
-  //         if (index === activeOption) {
-  //           className = 'option-active';
-  //         }
-  //         return (
-  //           <li className={className} key={optionName} onClick={onClick}>
-  //             <div className="inline-block mb-1 rounded-full bg-gray-300 pr-5 h-8 line-height-username1">
-  //               <span className="ml-3">{optionName}</span>
-  //             </div>
-  //           </li>
-  //         );
-  //       })}
-  //     </ul>
-  //   );
-  // }
+
   if (showOptions) { //} && userInput) {
     if (filteredOptions.length) {
       optionList = (
