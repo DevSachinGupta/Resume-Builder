@@ -38,7 +38,6 @@ function Modal(props) {
             </div>
           </div>
           {props.children}
-          <div className={cx('footerContainer')}>{props.footer}</div>
         </div>
       </div>
     )

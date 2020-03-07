@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Column } from '../../Layout';
 import Input from '../../FormComponents/Input';
-import Dropdown from '../../FormComponents/Dropdown';
 import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
 

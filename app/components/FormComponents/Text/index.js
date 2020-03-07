@@ -10,9 +10,8 @@ function Text(props) {
     name: props.name,
     validate: async value => {
       const val = await props.validate(value).catch(err => err);
-      // console.log(val);
       return val;
-    }
+    },
   });
   return (
     <div className={cx('inputWrapper')}>
