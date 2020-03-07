@@ -231,7 +231,7 @@ function MultiselectAutocomplete(props) {
             return (
               <li className={className} key={optionName.name} onClick={onClick}>
                 <div className="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1">
-                  <span className="rounded-full float-left h-full">{optionName.icon}</span>
+                  <span className="rounded-full p-1 float-left h-full" >{optionName.icon}</span>
                   {/* <img
                     className="rounded-full float-left h-full"
                     src="https://rrandomuser.me/api/portraits/women/34.jpg"
@@ -252,7 +252,7 @@ function MultiselectAutocomplete(props) {
     showUserData = userData.map((item, index) => (
       <label className="tags">
         <div className="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1">
-          <span className="rounded-full float-left h-full">{optionName.icon}</span>
+          <span className="rounded-full p-1 float-left h-full" >{item.icon}</span>
           {/* <img
             className="rounded-full float-left h-full"
             src="https://randomuser.me/api/portraits/women/34.jpg"
