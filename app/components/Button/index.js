@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 /**
  *
  * Button.js
@@ -13,12 +14,12 @@ import Wrapper from './Wrapper';
 import { ButtonTypes } from './constants';
 import './style.scss';
 
-function Button({ className, circular, type, fullWidth, ...rest }) {
+function Button({ className, as, circular, type, fullWidth, ...rest }) {
   return (
     <Wrapper>
       {
         <button
-          type="button"
+          type={as}
           className={cx(
             className,
             {
@@ -39,10 +40,12 @@ function Button({ className, circular, type, fullWidth, ...rest }) {
 }
 Button.defaultProps = {
   type: 'default',
+  as: 'button',
 };
 Button.propTypes = {
   handleRoute: PropTypes.func,
   iconButton: PropTypes.bool,
+  as: PropTypes.string,
   icon: PropTypes.node,
   className: PropTypes.string,
   fullWidth: PropTypes.string.isRequired,

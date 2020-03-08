@@ -15,8 +15,8 @@ const EducationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Degree"
           label="Degree"
-          name={`title-${idx}`}
           validate={validationMap.title}
+          name={`${idx}[title]`}
         />
       </Column>
       <Column width="1/2" className="px-1">
@@ -24,8 +24,8 @@ const EducationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Institute Name"
           label="Institute Name"
-          name={`institution-${idx}`}
-          validate={validationMap.institution}
+          validate={validationMap.title}
+          name={`${idx}[institution]`}
         />
       </Column>
     </Row>
@@ -44,7 +44,7 @@ const EducationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="State"
           label="State"
-          name={`state-${idx}`}
+          name={`${idx}[state]`}
           validate={validationMap.state}
         />
       </Column>
@@ -53,7 +53,7 @@ const EducationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Country"
           label="Country"
-          name={`country-${idx}`}
+          name={`${idx}[country]`}
           validate={validationMap.country}
         />
       </Column>
@@ -65,7 +65,7 @@ const EducationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Start Date"
           label="Start Date"
-          name={`start-${idx}`}
+          name={`${idx}[start]`}
           validate={validationMap.start}
         />
       </Column>
@@ -75,7 +75,7 @@ const EducationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="End Date"
           label="End Date"
-          name={`end-${idx}`}
+          name={`${idx}[end]`}
           validate={validationMap.end}
         />
       </Column>
@@ -85,7 +85,7 @@ const EducationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Till date"
           label="Till date"
-          name={`tillDate-${idx}`}
+          name={`${idx}[tillDate]`}
           validate={validationMap.tillDate}
         />
       </Column>
@@ -96,7 +96,7 @@ const EducationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Summary"
           label="Summary"
-          name={`summary-${idx}`}
+          name={`${idx}[summary]`}
           validate={validationMap.summary}
         />
       </Column>
