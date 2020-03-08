@@ -8,7 +8,7 @@ import React, { memo, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import cx from 'classnames';
-import { Formik, withFormik } from 'formik';
+import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
 import {
   makeUpdateResumeJSONState,
@@ -39,10 +39,6 @@ function EducationForm(props) {
   };
   const [educations, setEducations] = useState([{ ...blankEduFields }]);
 
-  const addMore = () => {
-    setEducations([...educations, { ...blankEduFields }]);
-  };
-
   // const handleSave = () => {
   //   const updatedEdu = [...educations];
   //   const history = { history: updatedEdu };
@@ -66,30 +62,40 @@ function EducationForm(props) {
   return (
     <div>
       <Formik
-        initialValues={{ ...educations }}
+        initialValues={educations}
         onSubmit={(values, actions) => {
           console.log(values);
         }}
       >
-        {({ handleSubmit }) => (
-          <React.Fragment>
-            {educations.map((item, idx) => (
-              <Accordian
-                id={idx}
-                label={item.title ? item.title : `Education ${idx + 1}`}
-              >
-                <EducationInputs idx={idx} />
-              </Accordian>
-            ))}
-            {/* <Button onClick={addMore} fullWidth type="flat">
-              Add Another
-            </Button> */}
-            <div className={cx('footerContainer')}>
-              <Button onClick={handleSubmit} fullWidth type="primary">
-                Save Details
-              </Button>
-            </div>
-          </React.Fragment>
+        {({ values }) => (
+          <Form>
+            <FieldArray name="educations">
+              {({ push }) => (
+                <React.Fragment>
+                  {values.map((item, idx) => (
+                    <Accordian
+                      id={idx}
+                      label={item.title ? item.title : `Education ${idx + 1}`}
+                    >
+                      <EducationInputs idx={idx} />
+                    </Accordian>
+                  ))}
+                  <Button
+                    onClick={() => push(educations)}
+                    fullWidth
+                    type="flat"
+                  >
+                    Add Another
+                  </Button>
+                  <div className={cx('footerContainer')}>
+                    <Button as="submit" fullWidth type="primary">
+                      Save Details
+                    </Button>
+                  </div>
+                </React.Fragment>
+              )}
+            </FieldArray>
+          </Form>
         )}
       </Formik>
     </div>
