@@ -7,7 +7,7 @@ import TextArea from '../../FormComponents/TextArea';
 import Radio from '../../FormComponents/Radio';
 
 //  *****  Personal Form Component *****
-const PersonalDetailsForm = () => (
+const PersonalDetailsForm = ({countriesList}) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -111,6 +111,7 @@ const PersonalDetailsForm = () => (
           placeholder="Country"
           label="Country"
           name="country"
+          options={countriesList}
           validate={validationMap.country}
         />
       </Column>

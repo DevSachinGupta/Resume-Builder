@@ -192,8 +192,8 @@ function MultiselectSkill(props) {
   if (userData) {
     showUserData = userData.map((item, index) => (
       <div className="tags">
-        <div className="inline-block mb-1 bg-gray-200 pr-5 h-8 line-height-username1">
-          <span className="ml-3">{item}</span>
+        <div className="">
+          <span className="tag-name ml-3">{item}</span>
           <span className="w-20">
             <input
               id="range"

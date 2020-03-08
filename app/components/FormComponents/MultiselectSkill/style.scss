@@ -55,7 +55,7 @@ ul.options li.option-active {
 }
 .multiselectDiv div.tags{
     display: inline-flex!important;
-    font-weight: bold;
+    // font-weight: bold;
 }
 .multiselectDiv input{
     width: 100%;
@@ -66,7 +66,17 @@ ul.options li.option-active {
     display: inline-block;
     // color: white;
     // background: green;
-    margin: 2px;
+    border: 1px solid #e8e8e8;
+    border-radius: 2px;
+    box-sizing: content-box;
+    display: flex;
+    align-items: center;
+    height: 24px;
+    line-height: 22px;
+    background-color: #fafafa;
+    outline: 0;
+    overflow: hidden;
+    margin: 3px;
     padding: 5px;
     min-width: 50px;
 }
@@ -74,6 +84,12 @@ ul.options li.option-active {
 .tags span{
     margin-left: 4px;
     // margin-top: 3px;
+}
+
+.tag-name{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .line-height-username1 {
@@ -97,7 +113,7 @@ ul.options li.option-active {
   .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 25px;
+    width: 25spx;
     height: 25px;
     background: #4CAF50;
     cursor: pointer;
@@ -144,8 +160,8 @@ ul.options li.option-active {
     -webkit-appearance: none;
     outline: none;
     background: $primary;
-    height: 2px;
-    width: 200px;
+    height: 3px;
+    width: 150px;
     border-radius: 5px;
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
