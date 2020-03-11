@@ -23,10 +23,11 @@ ul.options li {
   display: block;
   background: white;
   // margin: 10px auto;
-  padding: 5px;
+  padding: 1px;
   width: 100%;
   //border-radius: 2px;
 }
+ul.options li:focus ,
 ul.options li:hover {
   // font-weight: bold;
   color: #00b4cc;

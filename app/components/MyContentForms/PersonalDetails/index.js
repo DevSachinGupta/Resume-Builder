@@ -35,6 +35,13 @@ function PersonalDetails() {
     statesList[index] = item.name
   ));
 
+  const updateState = (e) => {
+    let statesList=[]
+    states.map((item,index) => (
+      statesList[index] = item.name
+    ));
+  }
+
   console.log("countries: ", countriesList)
   console.log("states: ", statesList)
 

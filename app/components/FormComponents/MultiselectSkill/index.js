@@ -97,7 +97,7 @@ function MultiselectSkill(props) {
     }
     setMultiselect(updatedAutocomplete);
   };
-
+  
   const onKeyDown = e => {
     const { activeOption, filteredOptions, userData } = { ...multiselect };
     if (e.keyCode === 13 || e.keyCode === 188) {
@@ -109,6 +109,7 @@ function MultiselectSkill(props) {
           updatedAutocomplete.activeOption = -1;
           updatedAutocomplete.showOptions = false;
           updatedAutocomplete.userInput = '';
+          updatedAutocomplete.filteredOptions = [];
           updatedAutocomplete.userData = [
             ...userData,
             filteredOptions[activeOption],
@@ -116,14 +117,17 @@ function MultiselectSkill(props) {
           updatedAutocomplete.userRangeVal = [...userRangeVal, 10];
           setMultiselect(updatedAutocomplete);
         } else {
-          e.preventDefault();
-          const updatedAutocomplete = { ...multiselect };
-          updatedAutocomplete.activeOption = -1;
-          updatedAutocomplete.showOptions = false;
-          updatedAutocomplete.userInput = '';
-          updatedAutocomplete.userData = [...userData, e.target.value];
-          updatedAutocomplete.userRangeVal = [...userRangeVal, 10];
-          setMultiselect(updatedAutocomplete);
+          if(e.target.value != ""){
+            e.preventDefault();
+            const updatedAutocomplete = { ...multiselect };
+            updatedAutocomplete.activeOption = -1;
+            updatedAutocomplete.showOptions = false;
+            updatedAutocomplete.userInput = '';
+            updatedAutocomplete.filteredOptions = [];
+            updatedAutocomplete.userData = [...userData, e.target.value];
+            updatedAutocomplete.userRangeVal = [...userRangeVal, 10];
+            setMultiselect(updatedAutocomplete);
+          }
         }
       } else {
         e.preventDefault();
@@ -131,9 +135,13 @@ function MultiselectSkill(props) {
         updatedAutocomplete.activeOption = -1;
         updatedAutocomplete.showOptions = false;
         updatedAutocomplete.userInput = '';
+        updatedAutocomplete.filteredOptions = [];
         updatedAutocomplete.userData = [...userData];
         setMultiselect(updatedAutocomplete);
       }
+      // const updatedAutocomplete = { ...multiselect };
+      // updatedAutocomplete.filteredOptions = [];
+      // setMultiselect(updatedAutocomplete);
     } else if (e.keyCode === 38) {
       if (activeOption === -1) {
         return;

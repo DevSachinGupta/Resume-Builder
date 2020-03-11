@@ -123,6 +123,7 @@ function MultiselectAutocomplete(props) {
           updatedAutocomplete.activeOption = -1;
           updatedAutocomplete.showOptions = false;
           updatedAutocomplete.userInput = '';
+          updatedAutocomplete.filteredOptions = [];
           updatedAutocomplete.userData = [
             ...userData,
             filteredOptions[activeOption],
@@ -135,6 +136,7 @@ function MultiselectAutocomplete(props) {
           updatedAutocomplete.activeOption = -1;
           updatedAutocomplete.showOptions = false;
           updatedAutocomplete.userInput = '';
+          updatedAutocomplete.filteredOptions = [];
           updatedAutocomplete.userData = [
             ...userData,
             filteredOptions[
@@ -150,6 +152,7 @@ function MultiselectAutocomplete(props) {
         updatedAutocomplete.activeOption = -1;
         updatedAutocomplete.showOptions = false;
         updatedAutocomplete.userInput = '';
+        updatedAutocomplete.filteredOptions = [];
         updatedAutocomplete.userData = [
           ...userData,
           filteredOptions[activeOption],
@@ -163,6 +166,7 @@ function MultiselectAutocomplete(props) {
           updatedAutocomplete.activeOption = -1;
           updatedAutocomplete.showOptions = false;
           updatedAutocomplete.userInput = '';
+          updatedAutocomplete.filteredOptions = [];
           updatedAutocomplete.userData = [...userData];
           setMultiselect(updatedAutocomplete);
         }
@@ -304,7 +308,7 @@ function MultiselectAutocomplete(props) {
           )}
         </div>
       </div>
-      <div id={`autocomplete-data-${props.name}`}>{optionList}</div>
+      <div id={`autocomplete-data-${props.name}`} className="absolute">{optionList}</div>
       {meta.error && meta.touched && (
         <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
           {/* {meta.error && meta.error} */}
