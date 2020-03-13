@@ -6,7 +6,14 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 function Checkbox(props) {
-  const [field, meta, helpers] = useField(props.name);
+  const [field, meta, helpers] = useField({
+    name: props.name,
+    validate: async value => {
+      const val = await props.validate(value).catch(err => err);
+      return val;
+    },
+  });
+  // console.log("field: ", field , " meta: ", meta)
   return (
     <div className={cx('inputWrapper')}>
       <div className="label">{props.label}</div>

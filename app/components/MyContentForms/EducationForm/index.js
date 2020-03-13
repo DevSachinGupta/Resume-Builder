@@ -35,6 +35,7 @@ function EducationForm(props) {
     country: '',
     start: '',
     end: '',
+    tillDate: false,
     summary: '',
   };
   const [educations, setEducations] = useState([{ ...blankEduFields }]);
@@ -67,20 +68,20 @@ function EducationForm(props) {
           console.log(values);
         }}
       >
-        {({ values }) => (
+        {({ values, setFieldValue }) => (
           <Form>
             <FieldArray
               name="education"
               render={arrayHelpers => (
                 <React.Fragment>
-                  {console.log(arrayHelpers, ' value: ', values)}
+                  {/* {console.log(arrayHelpers, ' value: ', values)} */}
                   {values.education.map((item, idx) => (
                     <Accordian
                       id={idx}
                       label={item.title ? item.title : `Education ${idx + 1}`}
                       onClickRemove={() => arrayHelpers.remove(idx)}
                     >
-                      <EducationInputs idx={idx} />
+                      <EducationInputs idx={idx} values={item} setFieldValue={setFieldValue} />
                     </Accordian>
                   ))}
 
@@ -91,7 +92,7 @@ function EducationForm(props) {
                   >
                     Add Another
                   </Button>
-                  {console.log(arrayHelpers, ' value: ', values)}
+                  {console.log(' value: ', values)}
                   <div className={cx('footerContainer')}>
                     <Button as="submit" fullWidth type="primary">
                       Save Details
