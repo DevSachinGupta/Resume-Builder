@@ -62,17 +62,18 @@ function EducationForm(props) {
   return (
     <div>
       <Formik
-        initialValues={{'education': educations}}
+        initialValues={{ education: educations }}
         onSubmit={(values, actions) => {
           console.log(values);
         }}
       >
         {({ values }) => (
           <Form>
-            <FieldArray  name="education"
-                 render={arrayHelpers => (
+            <FieldArray
+              name="education"
+              render={arrayHelpers => (
                 <React.Fragment>
-                  {console.log(arrayHelpers," value: ", values)}
+                  {console.log(arrayHelpers, ' value: ', values)}
                   {values.education.map((item, idx) => (
                     <Accordian
                       id={idx}
@@ -90,7 +91,7 @@ function EducationForm(props) {
                   >
                     Add Another
                   </Button>
-                  {console.log(arrayHelpers," value: ", values)}
+                  {console.log(arrayHelpers, ' value: ', values)}
                   <div className={cx('footerContainer')}>
                     <Button as="submit" fullWidth type="primary">
                       Save Details

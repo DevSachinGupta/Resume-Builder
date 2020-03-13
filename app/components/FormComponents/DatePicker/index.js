@@ -10,6 +10,7 @@ import cx from 'classnames';
 import { Calendar } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
+import { useField, useFormikContext } from 'formik';
 import Text from '../Text';
 import './style.scss';
 
@@ -22,10 +23,16 @@ function DatePicker({ type, onChange, ...rest }) {
       document.removeEventListener('mousedown', handleGlobalClick, false);
     };
   });
+
+  const { setFieldValue } = useFormikContext();
+  const [field] = useField(rest);
+
   const handleSelect = date => {
     onChange(date);
+    setFieldValue(field.name, date);
     handleDatePicker();
   };
+
   const handleGlobalClick = e => {
     if (refNode !== null && !refNode.contains(e.target) && isPickerActive) {
       handleDatePicker();
@@ -45,6 +52,7 @@ function DatePicker({ type, onChange, ...rest }) {
           date={new Date()}
           className="shadow rounded z-10 absolute floating-calender"
           onChange={handleSelect}
+          dateDisplayFormat="MM/DD/YYYY"
         />
       )}
     </div>

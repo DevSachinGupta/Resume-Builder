@@ -9,8 +9,8 @@ function Text(props) {
   const [field, meta] = useField({
     name: props.name,
     validate: async value => {
-      // const val = await props.validate(value).catch(err => err);
-      // return val;
+      const val = await props.validate(value).catch(err => err);
+      return val;
     },
   });
   return (
