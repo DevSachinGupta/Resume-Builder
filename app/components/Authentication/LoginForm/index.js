@@ -38,6 +38,20 @@ function LoginForm() {
               fullWidth
               validate={validationMap.password}
             />
+            <Row>
+              <Column width="1/2" className="inline-block">
+                <Input type="checkbox" placeholder="Remember me" />
+              </Column>
+              <Column width="1/2">
+                <Link
+                  to="login"
+                  className="float-right"
+                  style={{ 'padding-top': '0.5rem' }}
+                >
+                  Forget Password
+                </Link>
+              </Column>
+            </Row>
             <Button as="submit" fullWidth type="primary">
               Login <TiChevronRight className="inline float-r" />
             </Button>
@@ -61,7 +75,7 @@ function LoginForm() {
             </Row>
           </Column>
           <Column width="2/3" className="px-1">
-            <Carousel showArrows showIndicators id="loginCarousel">
+            <Carousel showArrows showIndicators autoplay id="loginCarousel">
               <div className="w-full h-full text-center">1</div>
               <div className="w-full h-full text-center">2</div>
               <div className="w-full h-full text-center">3</div>

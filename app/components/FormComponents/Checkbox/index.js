@@ -20,22 +20,23 @@ function Checkbox(props) {
           <span className="inputIcon">{props.inputIcon}</span>
         )}
         <input {...field} {...props} onChange={props.onChange} />
+        {` ${props.placeholder}`}
         {props.clearable && props.value.length > 0 && (
           <span className="input-right-Icon cursor-pointer">
             {<MdCancel />}
           </span>
         )}
       </div>
-      {
-        meta.error && meta.touched && <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
+      {meta.error && meta.touched && (
+        <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
           {props.error && props.error}
         </div>
-      }
+      )}
     </div>
   );
 }
 Checkbox.defaultProps = {
-  value: ""
+  value: '',
 }
 Checkbox.propTypes = {
   clearable: PropTypes.bool.isRequired,
@@ -46,5 +47,6 @@ Checkbox.propTypes = {
   error: PropTypes.string,
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 export default memo(Checkbox);

@@ -80,9 +80,14 @@ function Carousel(props) {
     </ul>
   );
 
-  // React.useEffect() {
-
-  // }
+  React.useEffect(() => {
+    if (props.autoplay) {
+      const id = setTimeout(onRightArrowClick, props.duration * 1000);
+      return () => {
+        clearInterval(id);
+      }
+    }
+  }, [carouselDetails]);
 
   return (
     <div className="carousel">
@@ -119,14 +124,14 @@ function Carousel(props) {
 
 Carousel.defaultProps = {
   id: 'carousel',
-  // duration: 500,
+  duration: 5,
   // interval: 100,
 };
 
 Carousel.propTypes = {
-  // duration: PropTypes.number,
+  duration: PropTypes.number,
   // loop: PropTypes.bool,
-  // autoplay: PropTypes.bool,
+  autoplay: PropTypes.bool,
   // interval: PropTypes.number,
   showArrows: PropTypes.bool,
   showIndicators: PropTypes.bool,
