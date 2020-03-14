@@ -62,9 +62,9 @@ function LoginForm() {
           </Column>
           <Column width="2/3" className="px-1">
             <Carousel showArrows showIndicators id="loginCarousel">
-              <div>1</div>
-              <div>2</div>
-              <div>3</div>
+              <div className="w-full h-full text-center">1</div>
+              <div className="w-full h-full text-center">2</div>
+              <div className="w-full h-full text-center">3</div>
             </Carousel>
           </Column>
         </Row>

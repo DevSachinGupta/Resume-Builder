@@ -15,17 +15,31 @@ function Carousel(props) {
     isNext: true,
   });
   const onLeftArrowClick = () => {
-    const { activeChildren } = carouselDetails;
-    const ac = activeChildren - 1;
+    let index = carouselDetails.activeChildren;
+    const length = React.Children.count(props.children);
+
+    if (index < 1) {
+      index = length;
+    }
+
+    index -= 1;
     setCrouselDetails({
-      activeChildren: ac,
+      activeChildren: index,
+      isNext: false,
     });
   };
   const onRightArrowClick = () => {
-    const { activeChildren } = carouselDetails;
-    const ac = activeChildren + 1;
+    let index = carouselDetails.activeChildren;
+    const length = React.Children.count(props.children) - 1;
+
+    if (index === length) {
+      index = -1;
+    }
+
+    index += 1;
     setCrouselDetails({
-      activeChildren: ac,
+      activeChildren: index,
+      isNext: true,
     });
   };
   const goToHistoryClick = (curIndex, index) => {
@@ -66,10 +80,16 @@ function Carousel(props) {
     </ul>
   );
 
+  // React.useEffect() {
+
+  // }
+
   return (
     <div className="carousel">
       <div>
-        <div>{mappedChildrenWithWrapper}</div>
+        <div className="carousel_item" key={carouselDetails.activeChildren}>
+          {props.children[carouselDetails.activeChildren]}
+        </div>
       </div>
       {props.showArrows && (
         <button
