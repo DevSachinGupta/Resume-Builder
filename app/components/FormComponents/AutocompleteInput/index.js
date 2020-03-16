@@ -62,7 +62,7 @@ function AutocompleteInput(props) {
     let filteredOptions = props.options;
     updatedAutocomplete.activeOption = activeOptionDefault;
     updatedAutocomplete.userData.map(optionName => {
-      filteredOptions = filteredOptions.filter(_value => _value !== optionName);
+      filteredOptions = filteredOptions.filter(_value => _value.name !== optionName.name);
     });
     updatedAutocomplete.filteredOptions = filteredOptions;
     setAutocomplete(updatedAutocomplete);
@@ -162,7 +162,7 @@ function AutocompleteInput(props) {
 
       if (props.allowCustomText === true && props.allowMultiselect === false) {
         // Deafault Autocomplete
-        updatedAutocomplete.userInput = filteredOptions[activeOption];
+        updatedAutocomplete.userInput = filteredOptions[activeOption].name;
       } else if (
         props.allowCustomText === true &&
         props.allowMultiselect === true
