@@ -111,7 +111,6 @@ const PersonalDetailsForm = ({countriesList}) => (
           placeholder="Country"
           label="Country"
           name="country"
-          
           options={countriesList}
           validate={validationMap.country}
         />

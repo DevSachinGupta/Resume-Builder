@@ -22,35 +22,26 @@ function PersonalDetails() {
   };
   const [personal, setPersonal] = useState({ ...blankPersonalFields });
 
-  console.log("1countries: ", countries)
-  console.log("1states: ", states)
+  const countriesList = [];
+  countries.map((item, index) => (countriesList[index] = { name: item.name }));
 
-  let countriesList=[]
-  countries.map((item,index) => (
-    countriesList[index] = item.name
-  ));
+  const statesList = [];
+  states.map((item, index) => (statesList[index] = item.name));
 
-  let statesList=[]
-  states.map((item,index) => (
-    statesList[index] = item.name
-  ));
-
-  const updateState = (e) => {
-    let statesList=[]
-    states.map((item,index) => (
-      statesList[index] = item.name
-    ));
-  }
-
-  console.log("countries: ", countriesList)
-  console.log("states: ", statesList)
+  const updateState = e => {
+    const statesList = [];
+    states.map((item, index) => (statesList[index] = item.name));
+  };
 
   return (
     <div>
       <Formik initialValues={{ personal }}>
         {({ handleSubmit, isSubmitting }) => (
           <React.Fragment>
-            <PersonalDetailsForms countriesList={countriesList} statesList={statesList}/>
+            <PersonalDetailsForms
+              countriesList={countriesList}
+              statesList={statesList}
+            />
           </React.Fragment>
         )}
       </Formik>
