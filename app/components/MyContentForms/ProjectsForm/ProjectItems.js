@@ -7,7 +7,7 @@ import TextArea from '../../FormComponents/TextArea';
 
 //  *****  Project Form Component *****
 
-const ProjectInputs = ({ idx }) => (
+const ProjectInputs = ({ idx, values, setFieldValue }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -15,7 +15,7 @@ const ProjectInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Title"
           label="Title"
-          name={`title-${idx}`}
+          name={`project.${idx}.title`}
           validate={validationMap.title}
         />
       </Column>
@@ -24,7 +24,7 @@ const ProjectInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Summary"
           label="Summary"
-          name={`summary-${idx}`}
+          name={`project.${idx}.summary`}
           validate={validationMap.summary}
         />
       </Column>
@@ -35,7 +35,7 @@ const ProjectInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Technology Used"
           label="Technology Used"
-          name={`keywords-${idx}`}
+          name={`project.${idx}.keywords`}
           validate={validationMap.keywords}
         />
       </Column>
@@ -44,7 +44,7 @@ const ProjectInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Reference Link"
           label="Reference Link"
-          name={`url-${idx}`}
+          name={`project.${idx}.url`}
           validate={validationMap.url}
         />
       </Column>
@@ -56,7 +56,7 @@ const ProjectInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Start Date"
           label="Start Date"
-          name={`start-${idx}`}
+          name={`project.${idx}.start`}
           validate={validationMap.start}
         />
       </Column>
@@ -66,18 +66,26 @@ const ProjectInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="End Date"
           label="End Date"
-          name={`end-${idx}`}
+          disabled={values.tillDate}
+          name={`project.${idx}.end`}
           validate={validationMap.end}
         />
       </Column>
       <Column width="1/5" className="px-1">
-        {/* TODO: Change this textfield with checkbox */}
         <Input
           type="checkbox"
           data-idx={idx}
           placeholder="Till date"
           label="Till date"
-          name={`tillDate-${idx}`}
+          onChange={() => {
+            if (values.tillDate) {
+              setFieldValue(`project.${idx}.tillDate`, false);
+            } else {
+              setFieldValue(`project.${idx}.tillDate`, true);
+              setFieldValue(`project.${idx}.end`, '');
+            }
+          }}
+          name={`project.${idx}.tillDate`}
           validate={validationMap.tillDate}
         />
       </Column>
@@ -88,7 +96,7 @@ const ProjectInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Description"
           label="Description"
-          name={`description-${idx}`}
+          name={`project.${idx}.description`}
           validate={validationMap.description}
         />
       </Column>
@@ -98,6 +106,8 @@ const ProjectInputs = ({ idx }) => (
 
 ProjectInputs.propTypes = {
   idx: PropTypes.number,
+  values: PropTypes.object,
+  setFieldValue: PropTypes.func,
 };
 
 export default ProjectInputs;

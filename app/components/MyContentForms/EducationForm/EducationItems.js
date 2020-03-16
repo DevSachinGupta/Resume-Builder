@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Row, Column } from '../../Layout';
 import Input from '../../FormComponents/Input';
 import { validationMap } from './validation';
-import TextArea from '../../FormComponents/TextArea'
+import TextArea from '../../FormComponents/TextArea';
 
 //  *****  Education Form Component *****
 
-const EducationInputs = ({ idx, values,  setFieldValue }) => (
+const EducationInputs = ({ idx, values, setFieldValue }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -88,7 +88,6 @@ const EducationInputs = ({ idx, values,  setFieldValue }) => (
           placeholder="Till date"
           label="Till date"
           onChange={() => {
-            console.log(values.tillDate);
             if (values.tillDate) {
               setFieldValue(`education.${idx}.tillDate`, false);
             } else {
@@ -117,6 +116,8 @@ const EducationInputs = ({ idx, values,  setFieldValue }) => (
 
 EducationInputs.propTypes = {
   idx: PropTypes.number,
+  values: PropTypes.object,
+  setFieldValue: PropTypes.func,
 };
 
 export default EducationInputs;

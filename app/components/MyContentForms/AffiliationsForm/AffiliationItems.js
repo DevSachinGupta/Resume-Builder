@@ -7,7 +7,7 @@ import TextArea from '../../FormComponents/TextArea';
 
 //  *****  Affiliation Form Component *****
 
-const AffiliationInputs = ({ idx }) => (
+const AffiliationInputs = ({ idx, values, setFieldValue }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -15,7 +15,7 @@ const AffiliationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Organisation"
           label="Organisation"
-          name={`organization-${idx}`}
+          name={`affiliation.${idx}.organization`}
           validate={validationMap.organization}
         />
       </Column>
@@ -24,7 +24,7 @@ const AffiliationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Role"
           label="Role"
-          name={`role-${idx}`}
+          name={`affiliation.${idx}.role`}
           validate={validationMap.role}
         />
       </Column>
@@ -36,7 +36,7 @@ const AffiliationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Start Date"
           label="Start Date"
-          name={`start-${idx}`}
+          name={`affiliation.${idx}.start`}
           validate={validationMap.start}
         />
       </Column>
@@ -46,18 +46,26 @@ const AffiliationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="End Date"
           label="End Date"
-          name={`end-${idx}`}
+          disabled={values.tillDate}
+          name={`affiliation.${idx}.end`}
           validate={validationMap.end}
         />
       </Column>
       <Column width="1/5" className="px-1">
-        {/* TODO: Change this textfield with checkbox */}
         <Input
           type="checkbox"
           data-idx={idx}
           placeholder="Till date"
           label="Till date"
-          name={`tillDate-${idx}`}
+          onChange={() => {
+            if (values.tillDate) {
+              setFieldValue(`affiliation.${idx}.tillDate`, false);
+            } else {
+              setFieldValue(`affiliation.${idx}.tillDate`, true);
+              setFieldValue(`affiliation.${idx}.end`, '');
+            }
+          }}
+          name={`affiliation.${idx}.tillDate`}
           validate={validationMap.tillDate}
         />
       </Column>
@@ -68,7 +76,7 @@ const AffiliationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Summary"
           label="Summary"
-          name={`summary-${idx}`}
+          name={`affiliation.${idx}.summary`}
           validate={validationMap.summary}
         />
       </Column>
@@ -78,6 +86,8 @@ const AffiliationInputs = ({ idx }) => (
 
 AffiliationInputs.propTypes = {
   idx: PropTypes.number,
+  values: PropTypes.object,
+  setFieldValue: PropTypes.func,
 };
 
 export default AffiliationInputs;

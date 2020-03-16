@@ -26,7 +26,7 @@ import EducationInputs from './EducationItems';
 import Accordian from '../../Accordion';
 import Button from '../../Button';
 
-function EducationForm(props) {
+function EducationForm() {
   const blankEduFields = {
     title: '',
     institution: '',
@@ -74,7 +74,6 @@ function EducationForm(props) {
               name="education"
               render={arrayHelpers => (
                 <React.Fragment>
-                  {/* {console.log(arrayHelpers, ' value: ', values)} */}
                   {values.education.map((item, idx) => (
                     <Accordian
                       id={idx}

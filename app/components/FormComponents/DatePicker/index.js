@@ -50,7 +50,7 @@ function DatePicker({ type, onChange, ...rest }) {
       {isPickerActive && (
         <Calendar
           date={new Date()}
-          className="shadow rounded z-10 absolute floating-calender"
+          className="shadow rounded z-10 fixed floating-calender"
           onChange={handleSelect}
           dateDisplayFormat="MM/DD/YYYY"
         />
