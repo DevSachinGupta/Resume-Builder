@@ -6,6 +6,7 @@
 
 import React, { memo, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
+import cx from 'classnames';
 import PropTypes from 'prop-types';
 import Button from '../Button';
 import './style.scss';
@@ -21,7 +22,7 @@ function Accordion(props) {
     }
   };
   return (
-    <div className="tab hover:shadow py-1 px-2 rounded mb-2 w-full overflow-hidden">
+    <div className="tab hover:shadow py-1 px-2 rounded mb-2 w-full">
       <input
         type="radio"
         onClick={onClickRadio}
@@ -45,7 +46,11 @@ function Accordion(props) {
           <FaTimes />
         </Button>
       </div>
-      <div className="tab-content overflow-hidden leading-normal">
+      <div
+        className={cx('tab-content leading-normal', {
+          'overflow-hidden': !checkbox,
+        })}
+      >
         {props.children}
       </div>
     </div>
