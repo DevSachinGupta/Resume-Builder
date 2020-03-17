@@ -6,12 +6,11 @@
 
 import React, { memo, useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useField } from 'formik';
+import { useField, useFormikContext } from 'formik';
 import cx from 'classnames';
 import { Calendar } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { useField, useFormikContext } from 'formik';
 import Text from '../Text';
 import './style.scss';
 
@@ -57,13 +56,8 @@ function DatePicker({ type, onChange, ...rest }) {
       />
       {isPickerActive && (
         <Calendar
-<<<<<<< HEAD
-          date={new Date()}
-          className="shadow rounded z-10 fixed floating-calender"
-=======
           date={selectedDate}
           className="shadow rounded z-10 absolute floating-calender"
->>>>>>> Changes
           onChange={handleSelect}
           dateDisplayFormat="MM/DD/YYYY"
         />
