@@ -59,7 +59,7 @@ function PersonalDetails() {
   }, []);
 
   const countriesList = [];
-  countries.map((item, index) => (countriesList[index] = item.name));
+  countries.map((item, index) => (countriesList[index] = { name: item.name }));
 
   const statesList = [];
   states.map((item, index) => (statesList[index] = item.name));
