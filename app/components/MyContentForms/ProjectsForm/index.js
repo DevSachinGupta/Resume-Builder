@@ -18,7 +18,7 @@ import Accordian from '../../Accordion';
 import ProjectInputs from './ProjectItems';
 import Button from '../../Button';
 
-function ProjectForm() {
+function ProjectForm({ editorState, resumeJSONState, dispatch }) {
   const blankProFields = {
     title: '',
     summary: '',
@@ -31,12 +31,36 @@ function ProjectForm() {
   };
   const [projects, setProjects] = useState([{ ...blankProFields }]);
 
+  // const handleSave = values => {
+  //   const updatedEdu = [...values.project];
+  //   const history = { history: updatedEdu };
+  //   const JSONString = JSON.stringify(history);
+  //   const HTMLString = editorState.getHtml();
+  //   const TemplateCss = editorState.getCss();
+  //   const ConvertedHTML = InjectJSONUsingCheerioEducation(
+  //     HTMLString,
+  //     JSONString,
+  //   );
+
+  //   const DemoPage = {
+  //     html: ConvertedHTML,
+  //     css: TemplateCss,
+  //     components: null,
+  //     style: null,
+  //   };
+
+  //   dispatch(updateEditorState(ComponentEditor(DemoPage)));
+  //   // dispatch(updateDemoPageState(DemoPage))
+  //   dispatch(updateResumeJSONState(history, 'Project'));
+  // };
+
   return (
     <div>
       <Formik
         initialValues={{ project: projects }}
         onSubmit={(values, actions) => {
           console.log(values);
+          // handleSave(values);
         }}
       >
         {({ values, setFieldValue }) => (
@@ -79,8 +103,8 @@ function ProjectForm() {
 }
 
 const mapStateToProps = createStructuredSelector({
-  editor_state: makeUpdateEditorState(),
-  resume_json_state: makeUpdateResumeJSONState(),
+  editorState: makeUpdateEditorState(),
+  resumeJSONState: makeUpdateResumeJSONState(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(

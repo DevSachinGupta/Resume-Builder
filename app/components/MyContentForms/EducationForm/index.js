@@ -26,7 +26,7 @@ import EducationInputs from './EducationItems';
 import Accordian from '../../Accordion';
 import Button from '../../Button';
 
-function EducationForm() {
+function EducationForm({ editorState, resumeJSONState, dispatch }) {
   const blankEduFields = {
     title: '',
     institution: '',
@@ -38,34 +38,46 @@ function EducationForm() {
     tillDate: false,
     summary: '',
   };
-  const [educations, setEducations] = useState([{ ...blankEduFields }]);
+  let storeEducation = null;
 
-  // const handleSave = () => {
-  //   const updatedEdu = [...educations];
-  //   const history = { history: updatedEdu };
-  //   const JSONString = JSON.stringify(history);
-  //   const HTMLString = editor_state.getHtml();
-  //   const TemplateCSS = editor_state.getCss();
-  //   const ConvertedHTML = InjectJSONUsingCheerioEducation(
-  //     HTMLString,
-  //     JSONString,
-  //   );
-  //   const DemoPage = {
-  //     html: ConvertedHTML,
-  //     css: TemplateCSS,
-  //     components: null,
-  //     style: null,
-  //   };
+  if (resumeJSONState.Education) {
+    storeEducation = resumeJSONState.Education.history;
+  }
 
-  //   dispatch(updateEditorState(ComponentEditor(DemoPage)));
-  //   dispatch(updateResumeJSONState(history, 'Education'));
-  // };
+  const [educations, setEducations] = useState(
+    storeEducation || [{ ...blankEduFields }],
+  );
+
+  const handleSave = values => {
+    const updatedEdu = [...values.education];
+    const history = { history: updatedEdu };
+    const JSONString = JSON.stringify(history);
+    const HTMLString = editorState.getHtml();
+    const TemplateCss = editorState.getCss();
+    const ConvertedHTML = InjectJSONUsingCheerioEducation(
+      HTMLString,
+      JSONString,
+    );
+
+    const DemoPage = {
+      html: ConvertedHTML,
+      css: TemplateCss,
+      components: null,
+      style: null,
+    };
+
+    dispatch(updateEditorState(ComponentEditor(DemoPage)));
+    // dispatch(updateDemoPageState(DemoPage))
+    dispatch(updateResumeJSONState(history, 'Education'));
+  };
+
   return (
     <div>
       <Formik
         initialValues={{ education: educations }}
         onSubmit={(values, actions) => {
           console.log(values);
+          handleSave(values);
         }}
       >
         {({ values, setFieldValue }) => (
@@ -80,7 +92,11 @@ function EducationForm() {
                       label={item.title ? item.title : `Education ${idx + 1}`}
                       onClickRemove={() => arrayHelpers.remove(idx)}
                     >
-                      <EducationInputs idx={idx} values={item} setFieldValue={setFieldValue} />
+                      <EducationInputs
+                        idx={idx}
+                        values={item}
+                        setFieldValue={setFieldValue}
+                      />
                     </Accordian>
                   ))}
 
@@ -109,9 +125,10 @@ function EducationForm() {
 EducationForm.propTypes = {};
 
 const mapStateToProps = createStructuredSelector({
-  editor_state: makeUpdateEditorState(),
-  resume_json_state: makeUpdateResumeJSONState(),
+  editorState: makeUpdateEditorState(),
+  resumeJSONState: makeUpdateResumeJSONState(),
 });
+
 const mapDispatchToProps = null;
 const withConnect = connect(
   mapStateToProps,

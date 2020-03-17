@@ -31,7 +31,7 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
     tillDate: false,
     summary: '',
   };
-  const empStoreState = null;
+  let empStoreState = null;
   // const empStoreState = [
   //   {
   //     position: 'Senior Analyst',
@@ -52,6 +52,11 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
   //     summary: 'My employment summary',
   //   },
   // ];
+
+  if (resumeJSONState.Employment) {
+    empStoreState = resumeJSONState.Employment.history;
+  }
+
   const [employments, setEmployments] = useState(
     empStoreState || [{ ...blankEmpFields }],
   );
@@ -61,28 +66,28 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
   //   dispatch(setModalContent('education'));
   // };
 
-  // const handleSave = () => {
-  //   const updatedEmp = [...employments];
-  //   const history = { history: updatedEmp };
-  //   const JSONString = JSON.stringify(history);
-  //   const HTMLString = editorState.getHtml();
-  //   const TemplateCSS = editorState.getCss();
-  //   const ConvertedHTML = InjectJSONUsingCheerioEmployement(
-  //     HTMLString,
-  //     JSONString,
-  //   );
+  const handleSave = values => {
+    const updatedEdu = [...values.employment];
+    const history = { history: updatedEdu };
+    const JSONString = JSON.stringify(history);
+    const HTMLString = editorState.getHtml();
+    const TemplateCss = editorState.getCss();
+    const ConvertedHTML = InjectJSONUsingCheerioEmployement(
+      HTMLString,
+      JSONString,
+    );
 
-  //   const DemoPage = {
-  //     html: ConvertedHTML,
-  //     css: TemplateCSS,
-  //     components: null,
-  //     style: null,
-  //   };
+    const DemoPage = {
+      html: ConvertedHTML,
+      css: TemplateCss,
+      components: null,
+      style: null,
+    };
 
-  //   dispatch(updateEditorState(ComponentEditor(DemoPage)));
-  //   dispatch(updateResumeJSONState(history, 'Employement'));
-  // };
-
+    dispatch(updateEditorState(ComponentEditor(DemoPage)));
+    // dispatch(updateDemoPageState(DemoPage))
+    dispatch(updateResumeJSONState(history, 'Employment'));
+  };
   // const handleSaveAndNext = () => {
   //   handleSave();
   //   dispatch(toggleModal());
@@ -95,6 +100,7 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
         initialValues={{ employment: employments }}
         onSubmit={(values, actions) => {
           console.log(values);
+          handleSave(values);
         }}
       >
         {({ values, setFieldValue }) => (
