@@ -48,7 +48,7 @@ function PersonalDetails() {
       const response = await axios.get('https://resumebuilder.s3.ap-south-1.amazonaws.com/List/countryList.json')
       try {
         setCountry({
-          countryList: response.data,
+          countriesList: response.data,
           isLoading: false,
         });
       } catch (error) {
@@ -58,8 +58,8 @@ function PersonalDetails() {
     getPosts();
   }, []);
 
-  const countriesList = [];
-  countries.map((item, index) => (countriesList[index] = { name: item.name }));
+  // const countriesList = [];
+  // countries.map((item, index) => (countriesList[index] = { name: item.name }));
 
   const statesList = [];
   states.map((item, index) => (statesList[index] = item.name));
@@ -70,6 +70,8 @@ function PersonalDetails() {
   };
 
   console.log('axios state: ', country);
+
+  const { isLoading, countriesList } = country;
 
   return (
     <div>

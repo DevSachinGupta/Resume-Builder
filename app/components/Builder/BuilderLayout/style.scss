@@ -11,7 +11,11 @@
     }
     .editorContainer {
       display: flex;
-      max-width: 82%;
+      width: 100%;
+      max-width: 100%;
+      .builder-workspace{
+        width: 100%;
+      }
     }
   }
 }

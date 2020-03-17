@@ -4,6 +4,13 @@
   padding: 24px;
   position: relative;
   z-index: 3;
+  .deviceContainer{
+    position: relative;
+    display: flex;
+    background: white;
+    color: black;
+    align-items: center;
+  }
   .actionContainer {
     display: flex;
     justify-content: flex-end;
