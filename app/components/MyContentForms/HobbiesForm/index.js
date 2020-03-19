@@ -1,70 +1,79 @@
-import React,{ useState } from 'react';
-import Textfield from "../../FormComponents/TextField";
+import React, { useState } from 'react';
+import { Formik } from 'formik';
+import { FaTimes, FaMusic } from 'react-icons/fa';
+import Input from '../../FormComponents/Input';
+import Textfield from '../../FormComponents/TextField';
+import Icons from '../../Icons';
+import MultiselectAutocomplete from '../../FormComponents/MultiselectAutocomplete';
 
-function EmploymentForm() {
-  var counter = 0;
-  var checkboxState = false;
+function HobbiesForm() {
+  const hobbyData = [
+    { name: 'Music', icon: <Icons icon="music" /> },
+    { name: 'Singing', icon: <Icons icon="singing" /> },
+    { name: 'Reading', icon: <Icons icon="reading" /> },
+    { name: 'Writing', icon: <Icons icon="writing" /> },
+    { name: 'Blogging', icon: <Icons icon="blogging" /> },
+    { name: 'Poetry', icon: <Icons icon="poetry" /> },
+    { name: 'Sketching', icon: <Icons icon="sketching" /> },
+    { name: 'Photography', icon: <Icons icon="photography" /> },
+    { name: 'Designing', icon: <Icons icon="designing" /> },
+    { name: 'Painting', icon: <Icons icon="painting" /> },
+    { name: 'Volunteering', icon: <Icons icon="volunteering" /> },
+    { name: 'Socializing', icon: <Icons icon="socializing" /> },
+    { name: 'Gaming', icon: <Icons icon="gaming" /> },
+    { name: 'Sport', icon: <Icons icon="sport" /> },
+    { name: 'Cycling', icon: <Icons icon="cycling" /> },
+    { name: 'Swimming', icon: <Icons icon="swimming" /> },
+    { name: 'Hiking', icon: <Icons icon="hiking" /> },
+    { name: 'Camping', icon: <Icons icon="camping" /> },
+    { name: 'Traveling', icon: <Icons icon="traveling" /> },
+    { name: 'Cricket', icon: <Icons icon="cricket" /> },
+    { name: 'Dancing', icon: <Icons icon="dancing" /> },
+    { name: 'Theatre', icon: <Icons icon="theatre" /> },
+    { name: 'Acting', icon: <Icons icon="acting" /> },
+    { name: 'Youtuber', icon: <Icons icon="youtuber" /> },
+    { name: 'Coding', icon: <Icons icon="coding" /> },
+    { name: 'Cooking', icon: <Icons icon="cooking" /> },
+    { name: 'Art & Craft', icon: <Icons icon="artandcraft" /> },
+    { name: 'Gardening', icon: <Icons icon="gardening" /> },
+  ];
+  const blankHobbiesField = {
+    type: '',
+  };
   const [hobbies, setHobbies] = useState([
     {
       lable: 'Qualification',
-      qualificationId : "qualification[0]",
-      checkboxState : checkboxState
     },
   ]);
-  const addMore = () => {
-    counter = counter + 1;
-    hobbies.push({
-      lable: 'Employeer',
-      qualificationId: "employer[" + counter+"]",
-      checkboxState : checkboxState
-      });
-    setHobbies([...hobbies]);
-  };
-  const checkboxStateChange = () => {
-    console.log("Checkbox state changed");
-    checkboxState = "disabled"};
-  return (<div>
-    {hobbies.map(item => (
-      <div>
-        <label>Type</label>
-        <select>
-          <option value="">Select</option> 
-          <option value="Music">Music</option> 
-          <option value="Singing">Singing</option> 
-          <option value="Reading">Reading</option> 
-          <option value="Writing">Writing</option> 
-          <option value="Bloging">Bloging</option> 
-          <option value="Poetry">Poetry</option> 
-          <option value="Sketching">Sketching</option> 
-          <option value="Photography">Photography</option> 
-          <option value="Designing">Designing</option> 
-          <option value="Painting">Painting</option> 
-          <option value="Volunteering">Volunteering</option> 
-          <option value="Socializing">Socializing</option> 
-          <option value="Gaming">Gaming</option> 
-          <option value="Sport">Sport</option> 
-          <option value="Cycling">Cycling</option> 
-          <option value="Swimming">Swimming</option> 
-          <option value="Hiking">Hiking</option> 
-          <option value="Camping">Camping</option> 
-          <option value="Traveling">Traveling</option> 
-          <option value="Cricket">Cricket</option> 
-          <option value="Dancing">Dancing</option> 
-          <option value="Theater">Theater</option> 
-          <option value="Acting">Acting</option> 
-          <option value="Youtuber">Youtuber</option> 
-          <option value="Coding">Coding</option> 
-          <option value="Cooking">Cooking</option> 
-          <option value="Craftandart">Craftandart</option> 
-          <option value="Gardening">Gardening</option> 
-        </select>
-        <Textfield labeltxt="Description" type="text"></Textfield>
-      </div>
-    ))}
-    <button type="button" onClick={addMore}>
-      Add More
-    </button>
-  </div>);
+
+  return (
+    <Formik initialValues={{ blankHobbiesField }}>
+      {({ handleSubmit, isSubmitting }) => (
+        // <MultiselectAutocomplete options={hobbyData} showDefaultOptions />
+        <Input
+          type="autocomplete"
+          placeholder="Select Your Hobbies"
+          label="Hobbies"
+          name="Hobbies"
+          options={hobbyData}
+          allowCustomText={false}
+          manageRangeVal={false}
+          allowMultiselect
+          showFilterTagIcon
+          filterIconClassList="rounded-full p-1 float-left h-full"
+          filterNameClassList="ml-3"
+          filterTagClassList="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1"
+          showDataTagIcon
+          dataIconClassList="rounded-full p-1 float-left h-full"
+          dataNameClassList="ml-3"
+          dataTagClassList="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1"
+          showMultisectInTop
+          showMultisectInBottom={false}
+          // validate={validationMap.country}
+        />
+      )}
+    </Formik>
+  );
 }
 
-export default EmploymentForm;
+export default HobbiesForm;

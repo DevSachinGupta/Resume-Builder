@@ -39,6 +39,7 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen }) {
       >
         <GoThreeBars size={22} />
       </Button>
+      <div className={cx('deviceContainer')} />
       <div className={cx('actionContainer')}>
         <div className={cx('publishButton')}>
           <Button>Preview</Button>

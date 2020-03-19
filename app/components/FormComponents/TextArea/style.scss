@@ -19,6 +19,12 @@
         outline: none;
       }
     }
+    .inputIcon {
+      padding-left: 12px;
+    }
+    .input-right-Icon {
+      padding-right: 6px;
+    }
   }
   .error {
     border: 1px solid red;
@@ -28,5 +34,11 @@
   }
   .error_hint {
     color: red;
+  }
+  .fullWidth {
+    width: 100%;
+    input {
+      width: 100%;
+    }
   }
 }

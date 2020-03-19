@@ -15,7 +15,7 @@ const PublicationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Title"
           label="Title"
-          name={`title-${idx}`}
+          name={`publication.${idx}.title`}
           validate={validationMap.title}
         />
       </Column>
@@ -24,7 +24,7 @@ const PublicationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Summary"
           label="Summary"
-          name={`summary-${idx}`}
+          name={`publication.${idx}.summary`}
           validate={validationMap.summary}
         />
       </Column>
@@ -35,7 +35,7 @@ const PublicationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Reference Link"
           label="Reference Link"
-          name={`url-${idx}`}
+          name={`publication.${idx}.url`}
           validate={validationMap.url}
         />
       </Column>
@@ -45,7 +45,7 @@ const PublicationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Date"
           label="Date"
-          name={`date-${idx}`}
+          name={`publication.${idx}.date`}
           validate={validationMap.date}
         />
       </Column>
@@ -56,7 +56,7 @@ const PublicationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Description"
           label="Description"
-          name={`description-${idx}`}
+          name={`publication.${idx}.description`}
           validate={validationMap.description}
         />
       </Column>

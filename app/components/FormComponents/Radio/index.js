@@ -28,7 +28,7 @@ function Radio(props) {
 
         {props.values.map((item, idx) => {
           return (
-            <label className="radio-group">
+            <label className="radio">
               <input
                 type="radio"
                 {...field}
@@ -36,7 +36,7 @@ function Radio(props) {
                 value={item}
                 onChange={props.onChange}
               />
-              <span>{item}</span>
+              <span className="radio-label">{item}</span>
             </label>
           );
         })}

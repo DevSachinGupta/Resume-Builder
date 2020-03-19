@@ -7,7 +7,7 @@ import TextArea from '../../FormComponents/TextArea';
 import Radio from '../../FormComponents/Radio';
 
 //  *****  Personal Form Component *****
-const PersonalDetailsForm = () => (
+const PersonalDetailsForm = ({countriesList}) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -108,6 +108,25 @@ const PersonalDetailsForm = () => (
       <Column width="1/4" className="px-1">
         <Input
           type="autocomplete"
+          placeholder="Country"
+          label="Country"
+          name="country"
+          options={countriesList}
+          validate={validationMap.country}
+        />
+      </Column>
+      <Column width="1/4" className="px-1">
+        <Input
+          type="autocomplete"
+          placeholder="State"
+          label="State"
+          name="state"
+          validate={validationMap.state}
+        />
+      </Column>
+      <Column width="1/4" className="px-1">
+        <Input
+          type="autocomplete"
           placeholder="City"
           label="City"
           name="city"
@@ -125,28 +144,10 @@ const PersonalDetailsForm = () => (
       </Column>
       <Column width="1/4" className="px-1">
         <Input
-          type="autocomplete"
-          placeholder="State"
-          label="State"
-          name="state"
-          validate={validationMap.state}
-        />
-      </Column>
-      <Column width="1/4" className="px-1">
-        <Input
           placeholder="Pincode"
           label="Pincode"
           name="pincode"
           validate={validationMap.pincode}
-        />
-      </Column>
-      <Column width="1/4" className="px-1">
-        <Input
-          type="autocomplete"
-          placeholder="Country"
-          label="Country"
-          name="country"
-          validate={validationMap.country}
         />
       </Column>
     </Row>

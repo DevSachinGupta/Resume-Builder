@@ -15,7 +15,7 @@ const AccomplishmentInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Title"
           label="Title"
-          name={`title-${idx}`}
+          name={`accomplishment.${idx}.title`}
           validate={validationMap.title}
         />
       </Column>
@@ -25,10 +25,9 @@ const AccomplishmentInputs = ({ idx }) => (
         <Input
           type="date"
           data-idx={idx}
-          type="date"
           placeholder="Date"
           label="Date"
-          name={`date-${idx}`}
+          name={`accomplishment.${idx}.date`}
           validate={validationMap.date}
         />
       </Column>
@@ -37,7 +36,7 @@ const AccomplishmentInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Rank"
           label="Rank"
-          name={`rank-${idx}`}
+          name={`accomplishment.${idx}.rank`}
           validate={validationMap.rank}
         />
       </Column>
@@ -48,7 +47,7 @@ const AccomplishmentInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Summary"
           label="Summary"
-          name={`summary-${idx}`}
+          name={`accomplishment.${idx}.summary`}
           validate={validationMap.summary}
         />
       </Column>

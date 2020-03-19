@@ -2,7 +2,8 @@ import React, { memo, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { Formik } from 'formik';
+import cx from 'classnames';
+import { Formik, Form, FieldArray } from 'formik';
 import {
   makeUpdateResumeJSONState,
   makeUpdateEditorState,
@@ -27,48 +28,50 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
     country: '',
     start: '',
     end: '',
+    tillDate: false,
     summary: '',
   };
-  // const empStoreState = null;
-  const empStoreState = [
-    {
-      position: 'Senior Analyst',
-      employer: 'HCL',
-      state: 'Delhi',
-      country: 'India',
-      start: '10-10-2020',
-      end: '10-10-2020',
-      summary: 'My employment summary',
-    },
-    {
-      position: 'GTE',
-      employer: 'HCL',
-      state: 'Delhi',
-      country: 'India',
-      start: '10-10-2020',
-      end: '10-10-2020',
-      summary: 'My employment summary',
-    },
-  ];
+  let empStoreState = null;
+  // const empStoreState = [
+  //   {
+  //     position: 'Senior Analyst',
+  //     employer: 'HCL',
+  //     state: 'Delhi',
+  //     country: 'India',
+  //     start: '10-10-2020',
+  //     end: '10-10-2020',
+  //     summary: 'My employment summary',
+  //   },
+  //   {
+  //     position: 'GTE',
+  //     employer: 'HCL',
+  //     state: 'Delhi',
+  //     country: 'India',
+  //     start: '10-10-2020',
+  //     end: '10-10-2020',
+  //     summary: 'My employment summary',
+  //   },
+  // ];
+
+  if (resumeJSONState.Employment) {
+    empStoreState = resumeJSONState.Employment.history;
+  }
+
   const [employments, setEmployments] = useState(
     empStoreState || [{ ...blankEmpFields }],
   );
 
-  const handlePrevious = () => {
-    dispatch(toggleModal());
-    dispatch(setModalContent('education'));
-  };
+  // const handlePrevious = () => {
+  //   dispatch(toggleModal());
+  //   dispatch(setModalContent('education'));
+  // };
 
-  const addMore = () => {
-    setEmployments([...employments, { ...blankEmpFields }]);
-  };
-
-  const handleSave = () => {
-    const updatedEmp = [...employments];
-    const history = { history: updatedEmp };
+  const handleSave = values => {
+    const updatedEdu = [...values.employment];
+    const history = { history: updatedEdu };
     const JSONString = JSON.stringify(history);
     const HTMLString = editorState.getHtml();
-    const TemplateCSS = editorState.getCss();
+    const TemplateCss = editorState.getCss();
     const ConvertedHTML = InjectJSONUsingCheerioEmployement(
       HTMLString,
       JSONString,
@@ -76,46 +79,65 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
 
     const DemoPage = {
       html: ConvertedHTML,
-      css: TemplateCSS,
+      css: TemplateCss,
       components: null,
       style: null,
     };
 
     dispatch(updateEditorState(ComponentEditor(DemoPage)));
-    dispatch(updateResumeJSONState(history, 'Employement'));
+    // dispatch(updateDemoPageState(DemoPage))
+    dispatch(updateResumeJSONState(history, 'Employment'));
   };
-
-  const handleSaveAndNext = () => {
-    handleSave();
-    dispatch(toggleModal());
-    dispatch(setModalContent('education'));
-  };
-  const handleRemove = e => {
-    const { idx } = e.target.dataset;
-    const updatedEmp = [...employments];
-    setEmployments(updatedEmp.filter((_s, sidx) => idx != sidx));
-  };
+  // const handleSaveAndNext = () => {
+  //   handleSave();
+  //   dispatch(toggleModal());
+  //   dispatch(setModalContent('education'));
+  // };
 
   return (
     <div>
-      <Formik initialValues={{ ...employments }}>
-        {({ handleSubmit, isSubmitting }) => (
-          <React.Fragment>
-            {employments.map((item, idx) => (
-              <Accordian
-                id={idx}
-                label={item.title ? item.title : `Employment ${idx + 1}`}
-                handleRemove={handleRemove}
-              >
-                <EmploymentInputs idx={idx} />
-              </Accordian>
-            ))}
-          </React.Fragment>
+      <Formik
+        initialValues={{ employment: employments }}
+        onSubmit={(values, actions) => {
+          console.log(values);
+          handleSave(values);
+        }}
+      >
+        {({ values, setFieldValue }) => (
+          <Form>
+            <FieldArray
+              name="employment"
+              render={arrayHelpers => (
+                <React.Fragment>
+                  {values.employment.map((item, idx) => (
+                    <Accordian
+                      id={idx}
+                      label={item.employer ? item.employer : `Employment ${idx + 1}`}
+                      onClickRemove={() => arrayHelpers.remove(idx)}
+                    >
+                      <EmploymentInputs idx={idx} values={item} setFieldValue={setFieldValue} />
+                    </Accordian>
+                  ))}
+
+                  <Button
+                    onClick={() => arrayHelpers.push(blankEmpFields)}
+                    fullWidth
+                    type="flat"
+                  >
+                    Add Another
+                  </Button>
+                  {console.log(' value: ', values)}
+                  <div className={cx('footerContainer')}>
+                    <Button as="submit" fullWidth type="primary">
+                      Save Details
+                    </Button>
+                  </div>
+                </React.Fragment>
+              )}
+            />
+          </Form>
         )}
       </Formik>
-      <Button onClick={addMore} fullWidth type="flat">
-        Add Another
-      </Button>
     </div>
   );
 }

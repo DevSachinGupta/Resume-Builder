@@ -1,2 +1,196 @@
 .addMoreBtn {
 }
+
+
+// Multiselect Skills
+@import "../../../styles/app.scss";
+.search-box {
+  width: 100%;
+  padding: 5px;
+  transition: width 0.3s;
+  }
+  .search-box:focus {
+  width: 100%;
+  outline: none;
+  }
+ul.options {
+  display: block;
+  list-style: none;
+  transition: width 0.3s;
+  margin: auto;
+  position: relative;
+  height: 150px;
+  overflow-y: auto;
+}
+
+ul.options li {
+  @include font($size: 12px);
+  display: block;
+  background: white;
+  // margin: 10px auto;
+  padding: 5px;
+  width: 100%;
+  //border-radius: 2px;
+}
+ul.options li:hover {
+  // font-weight: bold;
+  color: #00b4cc;
+  cursor: pointer;
+  transition: 0.3s all;
+}
+
+ul.options li.option-active {
+  background: whitesmoke;
+  // font-size: 1.5rem;
+  color: #00b4cc;
+}
+.no-options {
+  color: white;
+}
+
+
+.multiselectDiv{
+    border: 1px solid #c1c1c1;
+    // background: white;
+    font-size: 14px;
+    // padding: 5px;
+    // margin-top: 10px;
+    // margin-bottom: 10px;
+    // width: calc(100% - 15px);
+}
+.multiselectDiv div.tags{
+    display: inline-flex!important;
+    // font-weight: bold;
+}
+.multiselectDiv input{
+    width: 100%;
+    // margin: 2px;
+    // padding: 5px;
+}
+.tags{
+    display: inline-block;
+    // color: white;
+    // background: green;
+    border: 1px solid #e8e8e8;
+    border-radius: 2px;
+    box-sizing: content-box;
+    display: flex;
+    align-items: center;
+    height: 24px;
+    line-height: 22px;
+    background-color: #fafafa;
+    outline: 0;
+    overflow: hidden;
+    margin: 3px;
+    padding: 5px;
+    min-width: 50px;
+}
+
+.tags span{
+    margin-left: 4px;
+    // margin-top: 3px;
+}
+
+.tag-name{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.line-height-username1 {
+	line-height: 1.75rem;
+}
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  
+  .slider:hover {
+    opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25spx;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+  }
+
+  $primary: #5755d9;
+ // $primary: #807fe2;
+  
+  div {
+    #output {
+      background: $primary;
+      color: #fff;
+      border-radius: 2px;
+      padding: 3px 7px;
+      margin: 0px 10px;
+      text-align: center;
+      position: relative;
+      &::before {
+        content: '';
+        position: absolute;
+        left: -12px;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 0;
+        width: 0;
+        border: solid 6px $primary;
+        z-index: -1;
+        border-top-color: white;
+        border-bottom-color: white;
+        border-left-color: white;
+      }
+    }
+  }
+  
+  /* CHROME */
+  #range {
+    -webkit-appearance: none;
+    outline: none;
+    background: $primary;
+    height: 3px;
+    width: 150px;
+    border-radius: 5px;
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: $primary;
+    }
+  }
+  
+  /* FIREFOX */
+  #range::-moz-range-thumb {
+    border: none;
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    background: $primary;
+    cursor: pointer;
+  }
+  
+  #range::-moz-range-track {
+    width: 100%;
+    height: 3px;
+    cursor: pointer;
+    background: $primary;
+    border-radius: 5px;
+  }
