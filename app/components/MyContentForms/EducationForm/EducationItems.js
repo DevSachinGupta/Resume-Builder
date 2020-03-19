@@ -7,7 +7,7 @@ import TextArea from '../../FormComponents/TextArea';
 
 //  *****  Education Form Component *****
 
-const EducationInputs = ({ idx }) => (
+const EducationInputs = ({ idx, values, setFieldValue }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -16,7 +16,7 @@ const EducationInputs = ({ idx }) => (
           placeholder="Degree"
           label="Degree"
           validate={validationMap.title}
-          name={`${idx}[title]`}
+          name={`education.${idx}.title`}
         />
       </Column>
       <Column width="1/2" className="px-1">
@@ -25,7 +25,7 @@ const EducationInputs = ({ idx }) => (
           placeholder="Institute Name"
           label="Institute Name"
           validate={validationMap.title}
-          name={`${idx}[institution]`}
+          name={`education.${idx}.institution`}
         />
       </Column>
     </Row>
@@ -35,7 +35,7 @@ const EducationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Field of Study"
           label="Field of Study"
-          name={`fieldOfStudy-${idx}`}
+          name={`education.${idx}.fieldOfStudy`}
           validate={validationMap.fieldOfStudy}
         />
       </Column>
@@ -44,7 +44,7 @@ const EducationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="State"
           label="State"
-          name={`${idx}[state]`}
+          name={`education.${idx}.state`}
           validate={validationMap.state}
         />
       </Column>
@@ -53,7 +53,7 @@ const EducationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Country"
           label="Country"
-          name={`${idx}[country]`}
+          name={`education.${idx}.country`}
           validate={validationMap.country}
         />
       </Column>
@@ -65,7 +65,7 @@ const EducationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Start Date"
           label="Start Date"
-          name={`${idx}[start]`}
+          name={`education.${idx}.start`}
           validate={validationMap.start}
         />
       </Column>
@@ -75,7 +75,9 @@ const EducationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="End Date"
           label="End Date"
-          name={`${idx}[end]`}
+          // hidden={values.tillDate}
+          disabled={values.tillDate}
+          name={`education.${idx}.end`}
           validate={validationMap.end}
         />
       </Column>
@@ -85,7 +87,15 @@ const EducationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Till date"
           label="Till date"
-          name={`${idx}[tillDate]`}
+          onChange={() => {
+            if (values.tillDate) {
+              setFieldValue(`education.${idx}.tillDate`, false);
+            } else {
+              setFieldValue(`education.${idx}.tillDate`, true);
+              setFieldValue(`education.${idx}.end`, '');
+            }
+          }}
+          name={`education.${idx}.tillDate`}
           validate={validationMap.tillDate}
         />
       </Column>
@@ -96,7 +106,7 @@ const EducationInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Summary"
           label="Summary"
-          name={`${idx}[summary]`}
+          name={`education.${idx}.summary`}
           validate={validationMap.summary}
         />
       </Column>
@@ -106,6 +116,8 @@ const EducationInputs = ({ idx }) => (
 
 EducationInputs.propTypes = {
   idx: PropTypes.number,
+  values: PropTypes.object,
+  setFieldValue: PropTypes.func,
 };
 
 export default EducationInputs;

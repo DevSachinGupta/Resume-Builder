@@ -31,7 +31,6 @@ function MultiselectSkill(props) {
     const updatedAutocomplete = { ...multiselect };
     updatedAutocomplete.userRangeVal[e.target.dataset.idx] = e.target.value;
     setMultiselect(updatedAutocomplete);
-    // console.log('mult1: ', updatedAutocomplete);
   };
 
   const onTextboxClick = () => {
@@ -75,26 +74,23 @@ function MultiselectSkill(props) {
   const onChange = e => {
     const { options } = props;
     const userInput = e.currentTarget.value;
-    let filteredOptions = options.filter(optionName =>
-      typeof optionName === 'string'
-        ? optionName.toLowerCase().indexOf(userInput.toLowerCase()) > -1
-        : optionName.label.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
+    let filteredOptions = options.filter(
+      optionName =>
+        optionName.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
     );
     const updatedAutocomplete = { ...multiselect };
     updatedAutocomplete.activeOption = -1;
-
     updatedAutocomplete.userData.map((optionName, index) => {
       filteredOptions = filteredOptions.filter(_value => _value !== optionName);
     });
-
     updatedAutocomplete.filteredOptions = filteredOptions;
     updatedAutocomplete.showOptions = true;
-    if (e.keyCode === 188) {
-      updatedAutocomplete.userInput = '';
-      e.target.value = '';
-    } else {
-      updatedAutocomplete.userInput = e.currentTarget.value;
-    }
+    // if (e.keyCode === 188) {
+    //   updatedAutocomplete.userInput = '';
+    //   e.target.value = '';
+    // } else {
+    updatedAutocomplete.userInput = e.currentTarget.value;
+    // }
     setMultiselect(updatedAutocomplete);
   };
 
@@ -109,18 +105,21 @@ function MultiselectSkill(props) {
           updatedAutocomplete.activeOption = -1;
           updatedAutocomplete.showOptions = false;
           updatedAutocomplete.userInput = '';
+          updatedAutocomplete.filteredOptions = [];
           updatedAutocomplete.userData = [
             ...userData,
             filteredOptions[activeOption],
           ];
           updatedAutocomplete.userRangeVal = [...userRangeVal, 10];
           setMultiselect(updatedAutocomplete);
-        } else {
+          props.updateData(filteredOptions[activeOption]);
+        } else if (e.target.value != '') {
           e.preventDefault();
           const updatedAutocomplete = { ...multiselect };
           updatedAutocomplete.activeOption = -1;
           updatedAutocomplete.showOptions = false;
           updatedAutocomplete.userInput = '';
+          updatedAutocomplete.filteredOptions = [];
           updatedAutocomplete.userData = [...userData, e.target.value];
           updatedAutocomplete.userRangeVal = [...userRangeVal, 10];
           setMultiselect(updatedAutocomplete);
@@ -131,9 +130,13 @@ function MultiselectSkill(props) {
         updatedAutocomplete.activeOption = -1;
         updatedAutocomplete.showOptions = false;
         updatedAutocomplete.userInput = '';
+        updatedAutocomplete.filteredOptions = [];
         updatedAutocomplete.userData = [...userData];
         setMultiselect(updatedAutocomplete);
       }
+      // const updatedAutocomplete = { ...multiselect };
+      // updatedAutocomplete.filteredOptions = [];
+      // setMultiselect(updatedAutocomplete);
     } else if (e.keyCode === 38) {
       if (activeOption === -1) {
         return;
@@ -143,9 +146,9 @@ function MultiselectSkill(props) {
       setMultiselect(updatedAutocomplete);
     } else if (e.keyCode === 40) {
       if (activeOption === filteredOptions.length - 1) {
-        const updatedAutocomplete = { ...multiselect };
-        updatedAutocomplete.activeOption = filteredOptions.length - 1;
-        setMultiselect(updatedAutocomplete);
+        // const updatedAutocomplete = { ...multiselect };
+        // updatedAutocomplete.activeOption = filteredOptions.length - 1;
+        // setMultiselect(updatedAutocomplete);
         return;
       }
       const updatedAutocomplete = { ...multiselect };
@@ -166,7 +169,8 @@ function MultiselectSkill(props) {
     ...multiselect,
   };
 
-  if (showOptions) { //} && userInput) {
+  if (showOptions) {
+    // } && userInput) {
     if (filteredOptions.length) {
       optionList = (
         <ul className="options">
@@ -194,6 +198,7 @@ function MultiselectSkill(props) {
       <div className="tags">
         <div className="">
           <span className="tag-name ml-3">{item}</span>
+
           <span className="w-20">
             <input
               id="range"
@@ -207,6 +212,7 @@ function MultiselectSkill(props) {
             />
             <span id="output">{userRangeVal[index]}</span>
           </span>
+
           <span
             className="inline-block align-middle"
             onClick={e => {
@@ -233,30 +239,28 @@ function MultiselectSkill(props) {
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}
-        <div className="multiselectDiv">
-          {/* {showUserData} */}
 
-          <input
-            {...field}
-            {...props}
-            className="search-box"
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-            value={userInput}
-            onClick={onTextboxClick}
-          />
-
-          {props.clearable && props.value.length > 0 && (
-            <span className="input-right-Icon cursor-pointer">
-              {<MdCancel />}
-            </span>
-          )}
-        </div>
+        <input
+          {...field}
+          {...props}
+          className="search-box"
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          value={userInput}
+          onClick={onTextboxClick}
+        />
+        {props.clearable && props.value.length > 0 && (
+          <span className="input-right-Icon cursor-pointer">
+            {<MdCancel />}
+          </span>
+        )}
       </div>
       <div id={`autocomplete-data-${props.name}`} className="absolute">
         {optionList}
       </div>
+
       <div className="multiselectDiv"> {showUserData}</div>
+      
       {meta.error && meta.touched && (
         <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
           {/* {meta.error && meta.error} */}

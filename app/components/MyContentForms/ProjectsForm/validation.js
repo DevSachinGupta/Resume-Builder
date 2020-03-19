@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 const validationHandler = validation =>
   new Promise((resolve, reject) => {
-    validation.then(valid => resolve(valid)).catch(err => reject(err));
+    validation.then(() => resolve(false)).catch(err => reject(err));
   });
 const validationMap = {
   title: value =>

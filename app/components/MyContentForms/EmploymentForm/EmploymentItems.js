@@ -6,7 +6,7 @@ import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
 
 //  *****  Employment Form Component *****
-const EmploymentInputs = ({ idx }) => (
+const EmploymentInputs = ({ idx, values, setFieldValue }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -14,7 +14,7 @@ const EmploymentInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Position"
           label="Position"
-          name={`position-${idx}`}
+          name={`employment.${idx}.position`}
           validate={validationMap.position}
         />
       </Column>
@@ -23,7 +23,7 @@ const EmploymentInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Employer"
           label="Employer"
-          name={`employer-${idx}`}
+          name={`employment.${idx}.employer`}
           validate={validationMap.employer}
         />
       </Column>
@@ -35,7 +35,7 @@ const EmploymentInputs = ({ idx }) => (
           data-name="state"
           placeholder="State"
           label="State"
-          name={`state-${idx}`}
+          name={`employment.${idx}.state`}
           validate={validationMap.state}
         />
       </Column>
@@ -45,7 +45,7 @@ const EmploymentInputs = ({ idx }) => (
           data-name="country"
           placeholder="Country"
           label="Country"
-          name={`country-${idx}`}
+          name={`employment.${idx}.country`}
           validate={validationMap.country}
         />
       </Column>
@@ -57,7 +57,7 @@ const EmploymentInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Start Date"
           label="Start Date"
-          name={`start-${idx}`}
+          name={`employment.${idx}.start`}
           validate={validationMap.start}
         />
       </Column>
@@ -67,7 +67,8 @@ const EmploymentInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="End Date"
           label="End Date"
-          name={`end-${idx}`}
+          disabled={values.tillDate}
+          name={`employment.${idx}.end`}
           validate={validationMap.end}
         />
       </Column>
@@ -77,7 +78,15 @@ const EmploymentInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Till date"
           label="Till date"
-          name={`tillDate-${idx}`}
+          onChange={() => {
+            if (values.tillDate) {
+              setFieldValue(`employment.${idx}.tillDate`, false);
+            } else {
+              setFieldValue(`employment.${idx}.tillDate`, true);
+              setFieldValue(`employment.${idx}.end`, '');
+            }
+          }}
+          name={`employment.${idx}.tillDate`}
           validate={validationMap.tillDate}
         />
       </Column>
@@ -88,7 +97,7 @@ const EmploymentInputs = ({ idx }) => (
           data-idx={idx}
           placeholder="Summary"
           label="Summary"
-          name={`summary-${idx}`}
+          name={`employment.${idx}.summary`}
           validate={validationMap.summary}
         />
       </Column>
@@ -98,6 +107,8 @@ const EmploymentInputs = ({ idx }) => (
 
 EmploymentInputs.propTypes = {
   idx: PropTypes.number,
+  values: PropTypes.object,
+  setFieldValue: PropTypes.func,
 };
 
 export default EmploymentInputs;

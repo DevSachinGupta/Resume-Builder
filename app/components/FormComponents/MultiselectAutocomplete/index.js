@@ -1,6 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /**
  *
  * MultiselectAutocomplete
@@ -22,12 +19,25 @@ function MultiselectAutocomplete(props) {
   });
 
   const [multiselect, setMultiselect] = useState({
-    activeOption: 0,
+    activeOption: -1,
     filteredOptions: [],
     showOptions: false,
     userInput: '',
     userData: [],
   });
+
+  const onTextboxClick = () => {
+    const updatedAutocomplete = { ...multiselect };
+    updatedAutocomplete.showOptions = true;
+    let filteredOptions = props.options;
+    updatedAutocomplete.activeOption = -1;
+    updatedAutocomplete.userData.map((optionName, index) => {
+      filteredOptions = filteredOptions.filter(_value => _value !== optionName);
+    });
+
+    updatedAutocomplete.filteredOptions = filteredOptions;
+    setMultiselect(updatedAutocomplete);
+  };
 
   const removeTag = (e, item) => {
     const updatedAutocomplete = { ...multiselect };
@@ -38,131 +48,106 @@ function MultiselectAutocomplete(props) {
     setMultiselect(updatedAutocomplete);
   };
 
-  console.log(multiselect);
-
-  const onTextboxClick = () => {
+  const onClick = e => {
     const updatedAutocomplete = { ...multiselect };
-    updatedAutocomplete.showOptions = true;
-    let filteredOptions = props.options;
+    updatedAutocomplete.showOptions = false;
+    const { filteredOptions } = updatedAutocomplete;
     updatedAutocomplete.activeOption = -1;
-    // console.log("1")
-    updatedAutocomplete.userData.map((optionName, index) => {
-      filteredOptions = filteredOptions.filter(_value => _value !== optionName);
+    filteredOptions.map((optionName, index) => {
+      // filteredOptions = filteredOptions.filter(_value => _value !== optionName);
+      if (optionName.name == e.currentTarget.innerText) {
+        updatedAutocomplete.userData = [...userData, optionName];
+      }
     });
-    
-    updatedAutocomplete.filteredOptions = filteredOptions;
-    // console.log("2",updatedAutocomplete)
+    updatedAutocomplete.filteredOptions = [];
+    updatedAutocomplete.userInput = '';
     setMultiselect(updatedAutocomplete);
   };
 
   const onChange = e => {
     const { options } = props;
     const userInput = e.currentTarget.value;
-    let filteredOptions = options.filter(optionName =>
-        optionName.name.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+    let filteredOptions = options.filter(
+      optionName =>
+        optionName.name.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
     );
-    // let filteredOptions = options.filter(optionName =>
-    //   typeof optionName === 'string'
-    //     ? optionName.toLowerCase().indexOf(userInput.toLowerCase()) > -1
-    //     : optionName.label.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
-    // );
     const updatedAutocomplete = { ...multiselect };
     updatedAutocomplete.activeOption = -1;
-
     updatedAutocomplete.userData.map((optionName, index) => {
       filteredOptions = filteredOptions.filter(_value => _value !== optionName);
     });
-
     updatedAutocomplete.filteredOptions = filteredOptions;
     updatedAutocomplete.showOptions = true;
-    if (e.keyCode === 188) {
-      updatedAutocomplete.userInput = '';
-      e.target.value = '';
-    } else {
-      updatedAutocomplete.userInput = e.currentTarget.value;
-    }
+    // if (e.keyCode === 188) {
+    //   updatedAutocomplete.userInput = '';
+    //   e.target.value = '';
+    // } else {
+    updatedAutocomplete.userInput = e.currentTarget.value;
+    // }
     setMultiselect(updatedAutocomplete);
-  };
-
-  const onClick = e => {
-    const updatedAutocomplete = { ...multiselect };
-    updatedAutocomplete.showOptions = false;
-    // let filteredOptions = props.options;
-    let filteredOptions = updatedAutocomplete.filteredOptions;
-    updatedAutocomplete.activeOption = 0;
-    console.log("1")
-    filteredOptions.map((optionName, index) => {
-      // filteredOptions = filteredOptions.filter(_value => _value !== optionName);
-      if(optionName.name == e.currentTarget.innerText){
-        console.log("inside if", optionName)
-        updatedAutocomplete.userData = [...userData, optionName];
-      }
-    });    
-    updatedAutocomplete.filteredOptions = [];
-    updatedAutocomplete.userInput = '';
-    console.log("2",updatedAutocomplete)
-    setMultiselect(updatedAutocomplete);
-
-    // setMultiselect({
-    //   activeOption: 0,
-    //   filteredOptions: [],
-    //   showOptions: false,
-    //   userInput: '', // e.currentTarget.innerText,
-    //   userData: [...userData, e.currentTarget.innerText],
-    // });
   };
 
   const onKeyDown = e => {
     const { activeOption, filteredOptions, userData } = { ...multiselect };
+    console.log('activeoption: ', activeOption);
     if (e.keyCode === 13 || e.keyCode === 188) {
       const userFilterLower = filteredOptions.map(a => a.name.toLowerCase());
       if (userFilterLower.indexOf(e.target.value.toLowerCase()) >= 0) {
+        console.log('case 0');
         if (activeOption != -1) {
           e.preventDefault();
+          console.log('case 1');
           const updatedAutocomplete = { ...multiselect };
           updatedAutocomplete.activeOption = -1;
           updatedAutocomplete.showOptions = false;
           updatedAutocomplete.userInput = '';
+          updatedAutocomplete.filteredOptions = [];
           updatedAutocomplete.userData = [
             ...userData,
             filteredOptions[activeOption],
           ];
-          // updatedAutocomplete.userRangeVal = [...userRangeVal, 10];
+
           setMultiselect(updatedAutocomplete);
         } else {
           e.preventDefault();
+          console.log('case 2');
           const updatedAutocomplete = { ...multiselect };
           updatedAutocomplete.activeOption = -1;
           updatedAutocomplete.showOptions = false;
           updatedAutocomplete.userInput = '';
+          updatedAutocomplete.filteredOptions = [];
           updatedAutocomplete.userData = [
             ...userData,
             filteredOptions[
               userFilterLower.indexOf(e.target.value.toLowerCase())
             ],
           ];
-          // updatedAutocomplete.userRangeVal = [...userRangeVal, 10];
           setMultiselect(updatedAutocomplete);
         }
       } else if (activeOption != -1) {
+        console.log('case 3');
         e.preventDefault();
         const updatedAutocomplete = { ...multiselect };
         updatedAutocomplete.activeOption = -1;
         updatedAutocomplete.showOptions = false;
         updatedAutocomplete.userInput = '';
+        updatedAutocomplete.filteredOptions = [];
         updatedAutocomplete.userData = [
           ...userData,
           filteredOptions[activeOption],
         ];
         setMultiselect(updatedAutocomplete);
       } else if (activeOption == -1) {
+        console.log('case 4');
         const userDataLower = userData.map(a => a.name.toLowerCase());
         if (userDataLower.indexOf(e.target.value.toLowerCase()) >= 0) {
           e.preventDefault();
+          console.log('case 5');
           const updatedAutocomplete = { ...multiselect };
           updatedAutocomplete.activeOption = -1;
           updatedAutocomplete.showOptions = false;
           updatedAutocomplete.userInput = '';
+          updatedAutocomplete.filteredOptions = [];
           updatedAutocomplete.userData = [...userData];
           setMultiselect(updatedAutocomplete);
         }
@@ -176,9 +161,9 @@ function MultiselectAutocomplete(props) {
       setMultiselect(updatedAutocomplete);
     } else if (e.keyCode === 40) {
       if (activeOption === filteredOptions.length - 1) {
-        const updatedAutocomplete = { ...multiselect };
-        updatedAutocomplete.activeOption = filteredOptions.length - 1;
-        setMultiselect(updatedAutocomplete);
+        // const updatedAutocomplete = { ...multiselect };
+        // updatedAutocomplete.activeOption = filteredOptions.length - 1;
+        // setMultiselect(updatedAutocomplete);
         return;
       }
       const updatedAutocomplete = { ...multiselect };
@@ -231,12 +216,10 @@ function MultiselectAutocomplete(props) {
             return (
               <li className={className} key={optionName.name} onClick={onClick}>
                 <div className="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1">
-                  <span className="rounded-full p-1 float-left h-full" >{optionName.icon}</span>
-                  {/* <img
-                    className="rounded-full float-left h-full"
-                    src="https://rrandomuser.me/api/portraits/women/34.jpg"
-                  /> */}
-                   {/* {<{optionName.icon} />} */}
+                  <span className="rounded-full p-1 float-left h-full">
+                    {optionName.icon}
+                  </span>
+
                   <span className="ml-3">{optionName.name}</span>
                 </div>
               </li>
@@ -252,11 +235,9 @@ function MultiselectAutocomplete(props) {
     showUserData = userData.map((item, index) => (
       <label className="tags">
         <div className="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1">
-          <span className="rounded-full p-1 float-left h-full" >{item.icon}</span>
-          {/* <img
-            className="rounded-full float-left h-full"
-            src="https://randomuser.me/api/portraits/women/34.jpg"
-          /> */}
+          <span className="rounded-full p-1 float-left h-full">
+            {item.icon}
+          </span>
           <span className="ml-3">{item.name}</span>
           <span
             className="inline-block align-middle"
@@ -284,27 +265,28 @@ function MultiselectAutocomplete(props) {
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}
-        <div className="multiselectDiv">
-          {showUserData}
 
-          <input
-            {...field}
-            {...props}
-            className="search-box"
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-            value={userInput}
-            onClick={onTextboxClick}
-          />
+        <div className="multiselectDiv">{showUserData}</div>
 
-          {props.clearable && props.value.length > 0 && (
-            <span className="input-right-Icon cursor-pointer">
-              {<MdCancel />}
-            </span>
-          )}
-        </div>
+        <input
+          {...field}
+          {...props}
+          className="search-box"
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          value={userInput}
+          onClick={onTextboxClick}
+        />
+        {props.clearable && props.value.length > 0 && (
+          <span className="input-right-Icon cursor-pointer">
+            {<MdCancel />}
+          </span>
+        )}
       </div>
-      <div id={`autocomplete-data-${props.name}`}>{optionList}</div>
+      <div id={`autocomplete-data-${props.name}`} className="absolute">
+        {optionList}
+      </div>
+
       {meta.error && meta.touched && (
         <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
           {/* {meta.error && meta.error} */}

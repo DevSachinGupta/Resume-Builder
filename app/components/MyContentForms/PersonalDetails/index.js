@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
+import axios from 'axios';
 import PersonalDetailsForms from './PersonalDetailsForms';
 import states from '../../DropdownList/stateList';
 import countries from '../../DropdownList/countryList';
@@ -22,28 +23,65 @@ function PersonalDetails() {
   };
   const [personal, setPersonal] = useState({ ...blankPersonalFields });
 
-  console.log("1countries: ", countries)
-  console.log("1states: ", states)
+  const [country, setCountry] = useState({
+    countryList: [],
+    isLoading: true,
+    errors: null,
+  });
 
-  let countriesList=[]
-  countries.map((item,index) => (
-    countriesList[index] = item.name
-  ));
+  // useEffect(() => {
+  //   axios
+  //     .get('https://resumebuilder.s3.ap-south-1.amazonaws.com/List/countryList.json')
+  //     .then(response => {
+  //       setCountry({
+  //         countryList: response.data,
+  //         isLoading: false,
+  //       });
+  //     })
+  //     .catch(error => {
+  //       setCountry({ error, isLoading: false });
+  //     });
+  // }, []);
 
-  let statesList=[]
-  states.map((item,index) => (
-    statesList[index] = item.name
-  ));
+  useEffect(() => {
+    async function getPosts() {
+      const response = await axios.get('https://resumebuilder.s3.ap-south-1.amazonaws.com/List/countryList.json')
+      try {
+        setCountry({
+          countriesList: response.data,
+          isLoading: false,
+        });
+      } catch (error) {
+        setCountry({ error, isLoading: false });
+      }
+    }
+    getPosts();
+  }, []);
 
-  console.log("countries: ", countriesList)
-  console.log("states: ", statesList)
+  // const countriesList = [];
+  // countries.map((item, index) => (countriesList[index] = { name: item.name }));
+
+  const statesList = [];
+  states.map((item, index) => (statesList[index] = item.name));
+
+  const updateState = e => {
+    const statesList = [];
+    states.map((item, index) => (statesList[index] = item.name));
+  };
+
+  console.log('axios state: ', country);
+
+  const { isLoading, countriesList } = country;
 
   return (
     <div>
       <Formik initialValues={{ personal }}>
         {({ handleSubmit, isSubmitting }) => (
           <React.Fragment>
-            <PersonalDetailsForms countriesList={countriesList} statesList={statesList}/>
+            <PersonalDetailsForms
+              countriesList={countriesList}
+              statesList={statesList}
+            />
           </React.Fragment>
         )}
       </Formik>

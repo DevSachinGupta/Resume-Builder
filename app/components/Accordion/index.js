@@ -40,7 +40,7 @@ function Accordion(props) {
           circular
           type="button"
           data-idx={props.id}
-          onClick={props.handleRemove}
+          onClick={props.onClickRemove}
         >
           <FaTimes />
         </Button>
