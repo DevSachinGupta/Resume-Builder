@@ -48,7 +48,7 @@ function AutocompleteInput(props) {
     userRangeVal: [],
   });
 
-  console.log(autocomplete);
+  // console.log(autocomplete);
 
   const updateRange = e => {
     const updatedAutocomplete = { ...autocomplete };
