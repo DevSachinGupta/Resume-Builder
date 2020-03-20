@@ -1,6 +1,7 @@
 import React, { useState, memo, useEffect, useCallback } from 'react';
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
+import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -9,6 +10,7 @@ import { getCountryList } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
 import states from '../../DropdownList/stateList';
 import countries from '../../DropdownList/countryList';
+import Button from '../../Button';
 import './style.scss';
 
 function PersonalDetails({ dispatch, allCountries }) {
@@ -17,13 +19,14 @@ function PersonalDetails({ dispatch, allCountries }) {
     lastName: '',
     email: '',
     phone: '',
-    dateOfBirth: '',
+    dateOfBirth: new Date(),
     gender: '',
+    gender1: '',
     address: '',
     city: '',
     state: '',
     pincode: '',
-    country: '',
+    country: 'test',
     brief: '',
   };
   const [personal, setPersonal] = useState({ ...blankPersonalFields });
@@ -74,14 +77,28 @@ function PersonalDetails({ dispatch, allCountries }) {
 
   return (
     <div>
-      <Formik initialValues={{ personal }}>
+      <Formik
+        initialValues={personal}
+        onSubmit={(values, actions) => {
+          console.log(values);
+          // handleSave(values);
+        }}
+      >
         {({ handleSubmit, isSubmitting }) => (
-          <React.Fragment>
-            <PersonalDetailsForms
-              countriesList={countriesList}
-              statesList={statesList}
-            />
-          </React.Fragment>
+          <Form>
+            <React.Fragment>
+              <PersonalDetailsForms
+                countriesList={allCountries}
+                statesList={statesList}
+              />
+
+              <div className={cx('footerContainer')}>
+                <Button as="submit" fullWidth type="primary">
+                  Save Details
+                </Button>
+              </div>
+            </React.Fragment>
+          </Form>
         )}
       </Formik>
     </div>

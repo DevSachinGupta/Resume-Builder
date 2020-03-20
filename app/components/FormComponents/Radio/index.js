@@ -7,52 +7,76 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { useField } from 'formik';
+import { useField, Field } from 'formik';
 import { MdCancel } from 'react-icons/md';
 import './style.scss';
 
 function Radio(props) {
-  const [field, meta, helpers] = useField(props.name);
+  let validateField = true;
+  if (props.hidden != undefined && props.hidden == true) {
+    validateField = false;
+  }
+  const [field, meta, helpers] = useField({
+    name: props.name,
+    validate: async value => {
+      const val = await props.validate(value).catch(err => err);
+      return validateField ? val : null;
+    },
+  });
+  const handleUpdateValue = e => {
+    helpers.setValue(e.target.value);
+    // props.afterReset(null);
+  };
+  console.log('hidden: ', props.name, meta);
+
   return (
-    <div className={cx('inputWrapper')}>
-      <div className="label">{props.label}</div>
-      <div
-        className={cx('inputContainer', {
-          fullWidth: props.fullWidth,
-          error: props.error,
-        })}
-      >
-        {props.inputIcon && (
-          <span className="inputIcon">{props.inputIcon}</span>
-        )}
+    <Field
+      name={props.name}
+      render={() => (
+        <div className={cx('inputWrapper')}>
+          <div className="label">{props.label}</div>
+          <div
+            className={cx('inputContainer', {
+              fullWidth: props.fullWidth,
+              error: meta.error && meta.touched,
+            })}
+          >
+            {props.inputIcon && (
+              <span className="inputIcon">{props.inputIcon}</span>
+            )}
 
-        {props.values.map((item, idx) => {
-          return (
-            <label className="radio">
-              <input
-                type="radio"
-                {...field}
-                name={props.name}
-                value={item}
-                onChange={props.onChange}
-              />
-              <span className="radio-label">{item}</span>
-            </label>
-          );
-        })}
+            <>
+              {props.values.map((item, idx) => (
+                <label className="radio">
+                  <input
+                    type="radio"
+                    // {...field}
+                    name={`radio-${props.name}`}
+                    value={item}
+                    checked={field.value === item}
+                    onChange={handleUpdateValue}
+                  />
+                  <span className="radio-label">{item}</span>
+                </label>
+              ))}
+            </>
 
-        {props.clearable && props.value.length > 0 && (
-          <span className="input-right-Icon cursor-pointer">
-            {<MdCancel />}
-          </span>
-        )}
-      </div>
-      {meta.error && meta.touched && (
-        <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
-          {props.error && props.error}
+            {props.clearable && props.value.length > 0 && (
+              <span className="input-right-Icon cursor-pointer">
+                {<MdCancel />}
+              </span>
+            )}
+          </div>
+          {meta.error && meta.touched && (
+            <div
+              className={cx('hint', { error_hint: meta.error && meta.touched })}
+            >
+               {meta.error && meta.error.message}
+            </div>
+          )}
         </div>
       )}
-    </div>
+    />
   );
 }
 

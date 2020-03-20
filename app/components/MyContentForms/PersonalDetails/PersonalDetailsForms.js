@@ -115,7 +115,7 @@ const PersonalDetailsForm = ({countriesList}) => (
           validate={validationMap.country}
         />
       </Column>
-      <Column width="1/4" className="px-1">
+      {/* <Column width="1/4" className="px-1">
         <Input
           type="autocomplete"
           placeholder="State"
@@ -123,22 +123,12 @@ const PersonalDetailsForm = ({countriesList}) => (
           name="state"
           validate={validationMap.state}
         />
-      </Column>
+      </Column> */}
       <Column width="1/4" className="px-1">
         <Input
-          type="autocomplete"
           placeholder="City"
           label="City"
           name="city"
-          options={[
-            'Papaya',
-            'Persimmon',
-            'Paw Paw',
-            'Prickly Pear',
-            'Peach',
-            'Pomegranate',
-            'Pineapple',
-          ]}
           validate={validationMap.city}
         />
       </Column>
