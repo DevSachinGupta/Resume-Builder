@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
+import cx from 'classnames';
 import { FaTimes, FaMusic } from 'react-icons/fa';
 import Input from '../../FormComponents/Input';
 import Textfield from '../../FormComponents/TextField';
+import Button from '../../Button';
 import Icons from '../../Icons';
 import MultiselectAutocomplete from '../../FormComponents/MultiselectAutocomplete';
 
@@ -48,29 +50,34 @@ function HobbiesForm() {
 
   return (
     <Formik initialValues={{ blankHobbiesField }}>
-      {({ handleSubmit, isSubmitting }) => (
-        // <MultiselectAutocomplete options={hobbyData} showDefaultOptions />
-        <Input
-          type="autocomplete"
-          placeholder="Select Your Hobbies"
-          label="Hobbies"
-          name="Hobbies"
-          options={hobbyData}
-          allowCustomText={false}
-          manageRangeVal={false}
-          allowMultiselect
-          showFilterTagIcon
-          filterIconClassList="rounded-full p-1 float-left h-full"
-          filterNameClassList="ml-3"
-          filterTagClassList="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1"
-          showDataTagIcon
-          dataIconClassList="rounded-full p-1 float-left h-full"
-          dataNameClassList="ml-3"
-          dataTagClassList="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1"
-          showMultisectInTop
-          showMultisectInBottom={false}
-          // validate={validationMap.country}
-        />
+      {({ values, setFieldValue }) => (
+        <Form>
+          <Input
+            type="autocomplete"
+            placeholder="Select Your Hobbies"
+            label="Choose From List"
+            name="Hobbies"
+            options={hobbyData}
+            allowCustomText={false}
+            manageRangeVal={false}
+            allowMultiselect
+            showFilterTagIcon
+            filterIconClassList="rounded-full p-1 float-left h-full"
+            filterNameClassList="ml-3"
+            filterTagClassList="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1"
+            showDataTagIcon
+            dataIconClassList="rounded-full p-1 float-left h-full"
+            dataNameClassList="ml-3"
+            dataTagClassList="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1"
+            showMultisectInTop
+            showMultisectInBottom={false}
+          />
+          <div className={cx('footerContainer')}>
+            <Button as="submit" fullWidth type="primary">
+              Save Details
+            </Button>
+          </div>
+        </Form>
       )}
     </Formik>
   );

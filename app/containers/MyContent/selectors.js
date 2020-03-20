@@ -25,5 +25,14 @@ const makeSelectActiveModalType = () =>
     selectMyContentDomain,
     substate => substate.activeModalType,
   );
+const makeSelectAllCountiesOptions = () =>
+  createSelector(
+    selectMyContentDomain,
+    substate => substate.allCountries,
+  );
 export default makeSelectMyContent;
-export { selectMyContentDomain, makeSelectActiveModalType };
+export {
+  selectMyContentDomain,
+  makeSelectActiveModalType,
+  makeSelectAllCountiesOptions,
+};

@@ -15,22 +15,27 @@ function SocialForm() {
   const [allInputs, setAllInputs] = useState([
     {
       icon: FaFacebook,
+      name: 'facebook',
       placeholder: 'https://facebook.com',
     },
     {
       icon: FaTwitter,
+      name: 'twitter',
       placeholder: 'https://twitter.com',
     },
     {
       icon: FaDribbble,
+      name: 'dribble',
       placeholder: 'https://dribbe.com',
     },
     {
       icon: FaLinkedin,
+      name: 'linkedIn',
       placeholder: 'https://linkedIn.com',
     },
     {
       icon: FaGlobeAsia,
+      name: 'website',
       placeholder: 'your website url',
     },
   ]);
@@ -49,7 +54,9 @@ function SocialForm() {
             <Input
               inputIcon={<input.icon />}
               placeholder={input.placeholder}
-              name="abcabcabc"
+              label={input.placeholder}
+              validate={() => {}}
+              name={`social[0].${input.name}`}
             />
           ))}
           <div className={cx('footerContainer')}>
