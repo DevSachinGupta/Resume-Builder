@@ -107,7 +107,6 @@ function EducationForm({ editorState, resumeJSONState, dispatch }) {
                   >
                     Add Another
                   </Button>
-                  {console.log(' value: ', values)}
                   <div className={cx('footerContainer')}>
                     <Button as="submit" fullWidth type="primary">
                       Save Details

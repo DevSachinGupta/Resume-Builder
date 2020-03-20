@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, memo, useEffect, useCallback } from 'react';
 import { Formik } from 'formik';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 import PersonalDetailsForms from './PersonalDetailsForms';
+import { getCountryList } from '../../../containers/MyContent/actions';
+import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
 import states from '../../DropdownList/stateList';
 import countries from '../../DropdownList/countryList';
 import './style.scss';
 
-function PersonalDetails() {
+function PersonalDetails({ dispatch, allCountries }) {
   const blankPersonalFields = {
     firstName: '',
     lastName: '',
@@ -22,7 +27,12 @@ function PersonalDetails() {
     brief: '',
   };
   const [personal, setPersonal] = useState({ ...blankPersonalFields });
-
+  const getCountires = useCallback(() => {
+    dispatch(getCountryList());
+  });
+  useEffect(() => {
+    console.log('here are all Counties', allCountries);
+  }, [allCountries]);
   const [country, setCountry] = useState({
     countryList: [],
     isLoading: true,
@@ -44,18 +54,7 @@ function PersonalDetails() {
   // }, []);
 
   useEffect(() => {
-    async function getPosts() {
-      const response = await axios.get('https://resumebuilder.s3.ap-south-1.amazonaws.com/List/countryList.json')
-      try {
-        setCountry({
-          countriesList: response.data,
-          isLoading: false,
-        });
-      } catch (error) {
-        setCountry({ error, isLoading: false });
-      }
-    }
-    getPosts();
+    getCountires();
   }, []);
 
   // const countriesList = [];
@@ -88,4 +87,22 @@ function PersonalDetails() {
     </div>
   );
 }
-export default PersonalDetails;
+PersonalDetails.propTypes = {
+  allCountries: PropTypes.array.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
+const mapStateToProps = () =>
+  createStructuredSelector({
+    allCountries: makeSelectAllCountiesOptions(),
+  });
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+});
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+export default compose(
+  withConnect,
+  memo,
+)(PersonalDetails);
