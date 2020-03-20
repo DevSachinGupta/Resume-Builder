@@ -33,8 +33,8 @@ function EducationForm({ editorState, resumeJSONState, dispatch }) {
     fieldOfStudy: '',
     state: '',
     country: '',
-    start: '',
-    end: '',
+    start: new Date(),
+    end: new Date(),
     tillDate: false,
     summary: '',
   };
@@ -77,7 +77,7 @@ function EducationForm({ editorState, resumeJSONState, dispatch }) {
         initialValues={{ education: educations }}
         onSubmit={(values, actions) => {
           console.log(values);
-          handleSave(values);
+          // handleSave(values);
         }}
       >
         {({ values, setFieldValue }) => (
@@ -107,7 +107,6 @@ function EducationForm({ editorState, resumeJSONState, dispatch }) {
                   >
                     Add Another
                   </Button>
-                  {console.log(' value: ', values)}
                   <div className={cx('footerContainer')}>
                     <Button as="submit" fullWidth type="primary">
                       Save Details

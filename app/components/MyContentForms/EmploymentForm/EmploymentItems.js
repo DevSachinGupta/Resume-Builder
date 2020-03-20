@@ -11,7 +11,6 @@ const EmploymentInputs = ({ idx, values, setFieldValue }) => (
     <Row>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Position"
           label="Position"
           name={`employment.${idx}.position`}
@@ -20,7 +19,6 @@ const EmploymentInputs = ({ idx, values, setFieldValue }) => (
       </Column>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Employer"
           label="Employer"
           name={`employment.${idx}.employer`}
@@ -31,7 +29,6 @@ const EmploymentInputs = ({ idx, values, setFieldValue }) => (
     <Row>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           data-name="state"
           placeholder="State"
           label="State"
@@ -41,7 +38,6 @@ const EmploymentInputs = ({ idx, values, setFieldValue }) => (
       </Column>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           data-name="country"
           placeholder="Country"
           label="Country"
@@ -54,7 +50,6 @@ const EmploymentInputs = ({ idx, values, setFieldValue }) => (
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
           placeholder="Start Date"
           label="Start Date"
           name={`employment.${idx}.start`}
@@ -64,7 +59,6 @@ const EmploymentInputs = ({ idx, values, setFieldValue }) => (
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
           placeholder="End Date"
           label="End Date"
           disabled={values.tillDate}
@@ -75,7 +69,6 @@ const EmploymentInputs = ({ idx, values, setFieldValue }) => (
       <Column width="1/5" className="px-1">
         <Input
           type="checkbox"
-          data-idx={idx}
           placeholder="Till date"
           label="Till date"
           onChange={() => {
@@ -83,7 +76,7 @@ const EmploymentInputs = ({ idx, values, setFieldValue }) => (
               setFieldValue(`employment.${idx}.tillDate`, false);
             } else {
               setFieldValue(`employment.${idx}.tillDate`, true);
-              setFieldValue(`employment.${idx}.end`, '');
+              setFieldValue(`employment.${idx}.end`, new Date());
             }
           }}
           name={`employment.${idx}.tillDate`}
@@ -94,7 +87,6 @@ const EmploymentInputs = ({ idx, values, setFieldValue }) => (
     <Row>
       <Column width="full" className="px-1">
         <TextArea
-          data-idx={idx}
           placeholder="Summary"
           label="Summary"
           name={`employment.${idx}.summary`}

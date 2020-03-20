@@ -7,6 +7,7 @@ import {
   FaGlobeAsia,
 } from 'react-icons/fa';
 import { Formik } from 'formik';
+import cx from 'classnames';
 import Button from '../../Button';
 import Input from '../../FormComponents/Input';
 
@@ -51,6 +52,11 @@ function SocialForm() {
               name="abcabcabc"
             />
           ))}
+          <div className={cx('footerContainer')}>
+                    <Button as="submit" fullWidth type="primary">
+                      Save Details
+                    </Button>
+                  </div>
         </React.Fragment>
       </Formik>
       <Button onClick={addAnother} fullWidth type="flat">

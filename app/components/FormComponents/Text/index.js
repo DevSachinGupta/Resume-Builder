@@ -6,22 +6,27 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 function Text(props) {
+  let validateField = true;
+  if (props.hidden != undefined && props.hidden == true) {
+    validateField = false;
+  }
   const [field, meta, helpers] = useField({
     name: props.name,
     validate: async value => {
       const val = await props.validate(value).catch(err => err);
-      return val;
+      return validateField ? val : null;
     },
   });
   const handleClearField = () => {
-    helpers.setValue(null);
-    props.afterReset(null);
+    helpers.setValue('');
+    // props.afterReset(null);
   };
-  useEffect(() => {
-    helpers.setValue(props.value);
-  }, [props.value]);
+  // useEffect(() => {
+  //   helpers.setValue(props.value);
+  // }, [props.value]);
+  // console.log('hidden: ', props.name, props.hidden,  meta);
   return (
-    <div className={cx('inputWrapper')}>
+    <div className={cx('inputWrapper')} hidden={props.hidden}>
       <div className="label">{props.label}</div>
       <div
         className={cx('inputContainer', {

@@ -12,7 +12,6 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
     <Row>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Degree"
           label="Degree"
           validate={validationMap.title}
@@ -21,7 +20,6 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
       </Column>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Institute Name"
           label="Institute Name"
           validate={validationMap.title}
@@ -32,7 +30,6 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
     <Row>
       <Column width="1/3" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Field of Study"
           label="Field of Study"
           name={`education.${idx}.fieldOfStudy`}
@@ -41,7 +38,6 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
       </Column>
       <Column width="1/3" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="State"
           label="State"
           name={`education.${idx}.state`}
@@ -50,7 +46,6 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
       </Column>
       <Column width="1/3" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Country"
           label="Country"
           name={`education.${idx}.country`}
@@ -62,7 +57,6 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
           placeholder="Start Date"
           label="Start Date"
           name={`education.${idx}.start`}
@@ -72,11 +66,10 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
           placeholder="End Date"
           label="End Date"
-          // hidden={values.tillDate}
-          disabled={values.tillDate}
+          hidden={values.tillDate}
+          // disabled={values.tillDate}
           name={`education.${idx}.end`}
           validate={validationMap.end}
         />
@@ -84,7 +77,6 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
       <Column width="1/5" className="px-1">
         <Input
           type="checkbox"
-          data-idx={idx}
           placeholder="Till date"
           label="Till date"
           onChange={() => {
@@ -92,7 +84,7 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
               setFieldValue(`education.${idx}.tillDate`, false);
             } else {
               setFieldValue(`education.${idx}.tillDate`, true);
-              setFieldValue(`education.${idx}.end`, '');
+              setFieldValue(`education.${idx}.end`, new Date());
             }
           }}
           name={`education.${idx}.tillDate`}
@@ -103,7 +95,6 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
     <Row>
       <Column width="full" className="px-1">
         <TextArea
-          data-idx={idx}
           placeholder="Summary"
           label="Summary"
           name={`education.${idx}.summary`}
