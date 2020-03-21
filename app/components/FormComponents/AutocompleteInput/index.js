@@ -13,10 +13,23 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 function AutocompleteInput(props) {
-  const [field, meta] = useField({
+  let validateField = true;
+  if (props.hidden != undefined && props.hidden == true) {
+    validateField = false;
+  }
+  const [field, meta, helpers] = useField({
     name: props.name,
-    validate: async value => await props.validate(value),
+    validate: async value => {
+      const val = await props.validate(value).catch(err => err);
+      return validateField ? val : null;
+    },
   });
+
+    // console.log('hidden: ', props.name,  meta);
+
+  const handleUpdateValue = value => {
+    helpers.setValue(value);
+  };
 
   // props.allowCustomText = true;
   // props.allowMultiselect = false;
@@ -97,6 +110,7 @@ function AutocompleteInput(props) {
       updatedAutocomplete.userInput = '';
     } else {
       updatedAutocomplete.userInput = e.currentTarget.innerText;
+      handleUpdateValue(e.currentTarget.innerText);
     }
     if (props.allowMultiselect === true) {
       if (props.allowCustomText === true) {
@@ -142,7 +156,7 @@ function AutocompleteInput(props) {
     updatedAutocomplete.activeOption = activeOptionDefault;
     updatedAutocomplete.showOptions = true;
     updatedAutocomplete.userInput = e.currentTarget.value;
-
+    // handleUpdateValue(e.currentTarget.innerText);
     if (props.allowMultiselect === true) {
       updatedAutocomplete.userData.map(optionName => {
         filteredOptions = filteredOptions.filter(
@@ -152,6 +166,7 @@ function AutocompleteInput(props) {
       updatedAutocomplete.filteredOptions = filteredOptions;
     } else {
       updatedAutocomplete.filteredOptions = filteredOptions;
+      handleUpdateValue(e.currentTarget.value);
     }
     setAutocomplete(updatedAutocomplete);
   };
@@ -167,6 +182,7 @@ function AutocompleteInput(props) {
       if (props.allowCustomText === true && props.allowMultiselect === false) {
         // Deafault Autocomplete
         updatedAutocomplete.userInput = filteredOptions[activeOption].name;
+        handleUpdateValue(filteredOptions[activeOption].name);
       } else if (
         props.allowCustomText === true &&
         props.allowMultiselect === true
@@ -423,8 +439,23 @@ function AutocompleteInput(props) {
           </div>
         )}
       </div>
+<<<<<<< HEAD
       <div className="twoCols">{muiltiSelectBottomUI}</div>
     </React.Fragment>
+=======
+      <div id={`autocomplete-data-${props.name}`} className="absolute">
+        {optionList}
+      </div>
+
+      {muiltiSelectBottomUI}
+
+      {meta.error && meta.touched && (
+        <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
+          {meta.error && meta.error.message}
+        </div>
+      )}
+    </div>
+>>>>>>> 3c6dcbdb1252a6494706112a31a56084d2e49d39
   );
 }
 

@@ -25,9 +25,7 @@ function Radio(props) {
   });
   const handleUpdateValue = e => {
     helpers.setValue(e.target.value);
-    // props.afterReset(null);
   };
-  console.log('hidden: ', props.name, meta);
 
   return (
     <Field
@@ -46,7 +44,7 @@ function Radio(props) {
             )}
 
             <>
-              {props.values.map((item, idx) => (
+              {props.values.map(item => (
                 <label className="radio">
                   <input
                     type="radio"
@@ -71,7 +69,7 @@ function Radio(props) {
             <div
               className={cx('hint', { error_hint: meta.error && meta.touched })}
             >
-               {meta.error && meta.error.message}
+              {meta.error && meta.error.message}
             </div>
           )}
         </div>
