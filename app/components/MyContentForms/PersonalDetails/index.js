@@ -31,18 +31,18 @@ function PersonalDetails({ dispatch, allCountries, fiterStates }) {
   };
   const [personal, setPersonal] = useState({ ...blankPersonalFields });
 
-  const countryID = 101;
+  // const countryName = 101;
 
   const getCountires = useCallback(() => {
     dispatch(getCountryList());
   });
-  const getStates = useCallback(() => {
-    dispatch(getStateList(countryID));
+  const getStates = useCallback(countryName => {
+    dispatch(getStateList(countryName));
   });
 
-  useEffect(() => {
-    console.log('here are all Counties', allCountries);
-  }, [allCountries]);
+  // useEffect(() => {
+  //   console.log('here are all Counties', allCountries);
+  // }, [allCountries]);
   useEffect(() => {
     console.log('here are all states', fiterStates);
   }, [fiterStates]);
@@ -53,13 +53,19 @@ function PersonalDetails({ dispatch, allCountries, fiterStates }) {
     errors: null,
   });
 
+  const updateState = e => {
+    console.log(e.currentTarget.value);
+    getStates(e.currentTarget.value);
+  };
+
   useEffect(() => {
     getCountires();
-    getStates();
+    // getStates();
   }, []);
 
   const { isLoading, countriesList } = country;
 
+  console.log("personal:", personal)
   return (
     <div>
       <Formik
@@ -69,12 +75,15 @@ function PersonalDetails({ dispatch, allCountries, fiterStates }) {
           // handleSave(values);
         }}
       >
-        {({ handleSubmit, isSubmitting }) => (
+        {({ values, setFieldValue }) => (
           <Form>
             <React.Fragment>
+              {console.log("values", values)}
               <PersonalDetailsForms
                 countriesList={allCountries}
                 statesList={fiterStates}
+                updateState={updateState}
+                setFieldValue={setFieldValue}
               />
 
               <div className={cx('footerContainer')}>

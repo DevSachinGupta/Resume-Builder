@@ -154,7 +154,7 @@ function AutocompleteInput(props) {
     updatedAutocomplete.activeOption = activeOptionDefault;
     updatedAutocomplete.showOptions = true;
     updatedAutocomplete.userInput = e.currentTarget.value;
-    handleUpdateValue(e.currentTarget.innerText);
+    // handleUpdateValue(e.currentTarget.innerText);
     if (props.allowMultiselect === true) {
       updatedAutocomplete.userData.map(optionName => {
         filteredOptions = filteredOptions.filter(
@@ -164,6 +164,7 @@ function AutocompleteInput(props) {
       updatedAutocomplete.filteredOptions = filteredOptions;
     } else {
       updatedAutocomplete.filteredOptions = filteredOptions;
+      handleUpdateValue(e.currentTarget.value);
     }
     setAutocomplete(updatedAutocomplete);
   };

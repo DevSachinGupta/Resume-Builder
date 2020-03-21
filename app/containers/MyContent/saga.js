@@ -25,13 +25,17 @@ function* getStateList(params) {
     console.log('country id: ', params.countryID);
     const response = yield call(
       axios.get,
-      `https://resumebuilder.s3.ap-south-1.amazonaws.com/List/sub_state/stateList-${
+      `https://resumebuilder.s3.ap-south-1.amazonaws.com/List/sub_state_name/stateList-${
         params.countryID
       }.json`,
     );
     yield put({ type: `${GET_STATE_LIST}_SUCCESS`, data: response.data });
     console.log(response);
+    if (response.status !== 200) {
+      yield put({ type: `${GET_STATE_LIST}_SUCCESS`, data: [] });
+    }
   } catch (e) {
     console.log(e);
+    yield put({ type: `${GET_STATE_LIST}_SUCCESS`, data: [] });
   }
 }
