@@ -1,3 +1,9 @@
+/**
+ *
+ * Select
+ *
+ */
+
 import React, { memo, useEffect } from 'react';
 import cx from 'classnames';
 import { useField } from 'formik';
@@ -5,7 +11,7 @@ import { MdCancel } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import './style.scss';
 
-function Text(props) {
+function Select(props) {
   let validateField = true;
   if (props.hidden != undefined && props.hidden == true) {
     validateField = false;
@@ -19,12 +25,15 @@ function Text(props) {
   });
   const handleClearField = () => {
     helpers.setValue('');
-    // props.afterReset(null);
   };
-  // useEffect(() => {
-  //   helpers.setValue(props.value);
-  // }, [props.value]);
-  // console.log('hidden: ', props.name, props.hidden,  meta);
+
+  const optionList = props.options.map(optionName => {
+    if (props.allowIdAsValue) {
+      return <option value={optionName.id}>{optionName.name}</option>;
+    }
+    return <option value={optionName.name}>{optionName.name}</option>;
+  });
+
   return (
     <div className={cx('inputWrapper')} hidden={props.hidden}>
       <div className="label">{props.label}</div>
@@ -37,7 +46,11 @@ function Text(props) {
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}
-        <input {...field} {...props} />
+        {/* <input {...field} {...props} /> */}
+        <select {...field} {...props} onChange={(e) => {helpers.setValue(e.target.value) ; props.onStateUpdate(); props.onChange(e);}} > 
+          <option value="">Select</option>
+          {optionList}
+        </select>
         {props.clearable && (
           <span className="input-right-Icon cursor-pointer">
             {<MdCancel onClick={handleClearField} />}
@@ -52,8 +65,15 @@ function Text(props) {
     </div>
   );
 }
-Text.propTypes = {
-  clearable: PropTypes.bool.isRequired,
+
+Select.defaultProps = {
+  allowIdAsValue: false,
+};
+
+Select.propTypes = {
+  clearable: PropTypes.bool,
+  allowIdAsValue: PropTypes.bool,
+  options: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   fullWidth: PropTypes.bool.isRequired,
   inputIcon: PropTypes.node.isRequired,
@@ -63,4 +83,5 @@ Text.propTypes = {
   name: PropTypes.string,
   validate: PropTypes.func.isRequired,
 };
-export default memo(Text);
+
+export default memo(Select);

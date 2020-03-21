@@ -1,24 +1,27 @@
 import React, { useState, memo, useEffect, useCallback } from 'react';
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
+import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import PersonalDetailsForms from './PersonalDetailsForms';
-import { getCountryList } from '../../../containers/MyContent/actions';
-import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
+import { getCountryList, getStateList } from '../../../containers/MyContent/actions';
+import { makeSelectAllCountiesOptions, makeSelectFilterStatesOptions } from '../../../containers/MyContent/selectors';
 import states from '../../DropdownList/stateList';
 import countries from '../../DropdownList/countryList';
+import Button from '../../Button';
 import './style.scss';
 
-function PersonalDetails({ dispatch, allCountries }) {
+function PersonalDetails({ dispatch, allCountries, fiterStates }) {
   const blankPersonalFields = {
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
-    dateOfBirth: '',
+    dateOfBirth: new Date(),
     gender: '',
+    gender1: '',
     address: '',
     city: '',
     state: '',
@@ -27,61 +30,69 @@ function PersonalDetails({ dispatch, allCountries }) {
     brief: '',
   };
   const [personal, setPersonal] = useState({ ...blankPersonalFields });
+
+  // const countryName = 101;
+
   const getCountires = useCallback(() => {
     dispatch(getCountryList());
   });
+  const getStates = useCallback(countryName => {
+    dispatch(getStateList(countryName));
+  });
+
+  // useEffect(() => {
+  //   console.log('here are all Counties', allCountries);
+  // }, [allCountries]);
   useEffect(() => {
-    console.log('here are all Counties', allCountries);
-  }, [allCountries]);
+    console.log('here are all states', fiterStates);
+  }, [fiterStates]);
+
   const [country, setCountry] = useState({
     countryList: [],
     isLoading: true,
     errors: null,
   });
 
-  // useEffect(() => {
-  //   axios
-  //     .get('https://resumebuilder.s3.ap-south-1.amazonaws.com/List/countryList.json')
-  //     .then(response => {
-  //       setCountry({
-  //         countryList: response.data,
-  //         isLoading: false,
-  //       });
-  //     })
-  //     .catch(error => {
-  //       setCountry({ error, isLoading: false });
-  //     });
-  // }, []);
+  const updateState = e => {
+    console.log(e.currentTarget.value);
+    getStates(e.currentTarget.value);
+  };
 
   useEffect(() => {
     getCountires();
+    // getStates();
   }, []);
-
-  // const countriesList = [];
-  // countries.map((item, index) => (countriesList[index] = { name: item.name }));
-
-  const statesList = [];
-  states.map((item, index) => (statesList[index] = item.name));
-
-  const updateState = e => {
-    const statesList = [];
-    states.map((item, index) => (statesList[index] = item.name));
-  };
-
-  console.log('axios state: ', country);
 
   const { isLoading, countriesList } = country;
 
+  console.log("personal:", personal)
   return (
     <div>
-      <Formik initialValues={{ personal }}>
-        {({ handleSubmit, isSubmitting }) => (
-          <React.Fragment>
-            <PersonalDetailsForms
-              countriesList={countriesList}
-              statesList={statesList}
-            />
-          </React.Fragment>
+      <Formik
+        initialValues={personal}
+        onSubmit={(values, actions) => {
+          console.log(values);
+          // handleSave(values);
+        }}
+      >
+        {({ values, setFieldValue }) => (
+          <Form>
+            <React.Fragment>
+              {console.log("values", values)}
+              <PersonalDetailsForms
+                countriesList={allCountries}
+                statesList={fiterStates}
+                updateState={updateState}
+                setFieldValue={setFieldValue}
+              />
+
+              <div className={cx('footerContainer')}>
+                <Button as="submit" fullWidth type="primary">
+                  Save Details
+                </Button>
+              </div>
+            </React.Fragment>
+          </Form>
         )}
       </Formik>
     </div>
@@ -89,11 +100,13 @@ function PersonalDetails({ dispatch, allCountries }) {
 }
 PersonalDetails.propTypes = {
   allCountries: PropTypes.array.isRequired,
+  fiterStates: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 const mapStateToProps = () =>
   createStructuredSelector({
     allCountries: makeSelectAllCountiesOptions(),
+    fiterStates: makeSelectFilterStatesOptions(),
   });
 const mapDispatchToProps = dispatch => ({
   dispatch,

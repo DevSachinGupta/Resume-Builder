@@ -13,10 +13,23 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 function AutocompleteInput(props) {
-  const [field, meta] = useField({
+  let validateField = true;
+  if (props.hidden != undefined && props.hidden == true) {
+    validateField = false;
+  }
+  const [field, meta, helpers] = useField({
     name: props.name,
-    validate: async value => await props.validate(value),
+    validate: async value => {
+      const val = await props.validate(value).catch(err => err);
+      return validateField ? val : null;
+    },
   });
+
+    // console.log('hidden: ', props.name,  meta);
+
+  const handleUpdateValue = value => {
+    helpers.setValue(value);
+  };
 
   // props.allowCustomText = true;
   // props.manageRangeVal = false;
@@ -48,7 +61,7 @@ function AutocompleteInput(props) {
     userRangeVal: [],
   });
 
-  console.log(autocomplete);
+  // console.log(autocomplete);
 
   const updateRange = e => {
     const updatedAutocomplete = { ...autocomplete };
@@ -62,7 +75,9 @@ function AutocompleteInput(props) {
     let filteredOptions = props.options;
     updatedAutocomplete.activeOption = activeOptionDefault;
     updatedAutocomplete.userData.map(optionName => {
-      filteredOptions = filteredOptions.filter(_value => _value.name !== optionName.name);
+      filteredOptions = filteredOptions.filter(
+        _value => _value.name !== optionName.name,
+      );
     });
     updatedAutocomplete.filteredOptions = filteredOptions;
     setAutocomplete(updatedAutocomplete);
@@ -93,6 +108,7 @@ function AutocompleteInput(props) {
       updatedAutocomplete.userInput = '';
     } else {
       updatedAutocomplete.userInput = e.currentTarget.innerText;
+      handleUpdateValue(e.currentTarget.innerText);
     }
     if (props.allowMultiselect === true) {
       if (props.allowCustomText === true) {
@@ -138,7 +154,7 @@ function AutocompleteInput(props) {
     updatedAutocomplete.activeOption = activeOptionDefault;
     updatedAutocomplete.showOptions = true;
     updatedAutocomplete.userInput = e.currentTarget.value;
-
+    // handleUpdateValue(e.currentTarget.innerText);
     if (props.allowMultiselect === true) {
       updatedAutocomplete.userData.map(optionName => {
         filteredOptions = filteredOptions.filter(
@@ -148,6 +164,7 @@ function AutocompleteInput(props) {
       updatedAutocomplete.filteredOptions = filteredOptions;
     } else {
       updatedAutocomplete.filteredOptions = filteredOptions;
+      handleUpdateValue(e.currentTarget.value);
     }
     setAutocomplete(updatedAutocomplete);
   };
@@ -163,6 +180,7 @@ function AutocompleteInput(props) {
       if (props.allowCustomText === true && props.allowMultiselect === false) {
         // Deafault Autocomplete
         updatedAutocomplete.userInput = filteredOptions[activeOption].name;
+        handleUpdateValue(filteredOptions[activeOption].name);
       } else if (
         props.allowCustomText === true &&
         props.allowMultiselect === true
@@ -409,7 +427,7 @@ function AutocompleteInput(props) {
 
       {meta.error && meta.touched && (
         <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
-          {meta.error && meta.error}
+          {meta.error && meta.error.message}
         </div>
       )}
     </div>

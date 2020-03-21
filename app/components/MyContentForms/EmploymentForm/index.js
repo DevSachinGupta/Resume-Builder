@@ -26,8 +26,8 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
     employer: '',
     state: '',
     country: '',
-    start: '',
-    end: '',
+    start: new Date(),
+    end: new Date(),
     tillDate: false,
     summary: '',
   };

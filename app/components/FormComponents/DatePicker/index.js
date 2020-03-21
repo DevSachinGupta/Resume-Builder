@@ -49,15 +49,15 @@ function DatePicker({ type, onChange, ...rest }) {
     >
       <Text
         onClick={handleDatePicker}
-        value={selectedDate}
+        // value={selectedDate}
         clearable
-        afterReset={setSelectedDate}
+        // afterReset={setSelectedDate}
         {...rest}
       />
       {isPickerActive && (
         <Calendar
-          date={selectedDate}
-          className="shadow rounded z-10 absolute floating-calender"
+          date={new Date()}
+          className="shadow rounded z-10 fixed floating-calender"
           onChange={handleSelect}
           dateDisplayFormat="MM/DD/YYYY"
         />
