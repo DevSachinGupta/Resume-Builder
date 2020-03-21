@@ -439,23 +439,8 @@ function AutocompleteInput(props) {
           </div>
         )}
       </div>
-<<<<<<< HEAD
       <div className="twoCols">{muiltiSelectBottomUI}</div>
     </React.Fragment>
-=======
-      <div id={`autocomplete-data-${props.name}`} className="absolute">
-        {optionList}
-      </div>
-
-      {muiltiSelectBottomUI}
-
-      {meta.error && meta.touched && (
-        <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
-          {meta.error && meta.error.message}
-        </div>
-      )}
-    </div>
->>>>>>> 3c6dcbdb1252a6494706112a31a56084d2e49d39
   );
 }
 
