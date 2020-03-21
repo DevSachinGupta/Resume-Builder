@@ -7,7 +7,7 @@ import TextArea from '../../FormComponents/TextArea';
 import Radio from '../../FormComponents/Radio';
 
 //  *****  Personal Form Component *****
-const PersonalDetailsForm = ({countriesList}) => (
+const PersonalDetailsForm = ({countriesList, statesList}) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -115,15 +115,16 @@ const PersonalDetailsForm = ({countriesList}) => (
           validate={validationMap.country}
         />
       </Column>
-      {/* <Column width="1/4" className="px-1">
+      <Column width="1/4" className="px-1">
         <Input
           type="autocomplete"
           placeholder="State"
           label="State"
           name="state"
+          options={statesList}
           validate={validationMap.state}
         />
-      </Column> */}
+      </Column>
       <Column width="1/4" className="px-1">
         <Input
           placeholder="City"
