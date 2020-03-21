@@ -40,4 +40,11 @@ ul.options {
   .no-options {
     color: white;
   }
-  
+.twoCols .multiselectDiv {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(min-content, 1fr));
+}
+.fourCols .multiselectDiv {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(50%, 1fr));
+}

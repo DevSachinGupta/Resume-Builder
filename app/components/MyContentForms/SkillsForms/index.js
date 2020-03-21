@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
+import cx from 'classnames';
 import Input from '../../FormComponents/Input';
-import Textfield from '../../FormComponents/TextField';
-import MultiselectSkill from '../../FormComponents/MultiselectSkill';
+import Button from '../../Button';
+// import Textfield from '../../FormComponents/TextField';
+// import MultiselectSkill from '../../FormComponents/MultiselectSkill';
 import './style.scss';
-import Dropdown from '../../FormComponents/Dropdown';
+// import Dropdown from '../../FormComponents/Dropdown';
 
 function SkillsForm() {
   const skillData = [
@@ -29,7 +31,7 @@ function SkillsForm() {
   const [data, setData] = useState({
     datValues: [],
   });
-  const updateData = (value) => {
+  const updateData = value => {
     setData({
       datValues: [...data.datValues, value],
     });
@@ -39,27 +41,34 @@ function SkillsForm() {
     <Formik initialValues={{ blankSkillsField }}>
       {({ handleSubmit, isSubmitting }) => (
         // <MultiselectSkill options={skillData} showDefaultOptions updateData={updateData} />
-        <Input
-          type="autocomplete"
-          placeholder="Select Your Skills"
-          label="Skills"
-          name="skills"
-          options={skillData}
-          allowCustomText={true}
-          manageRangeVal={true}
-          allowMultiselect={true}
-          showFilterTagIcon={false}
-          filterIconClassList = ''
-          filterNameClassList = 'ml-2'
-          filterTagClassList = ''
-          showDataTagIcon={false}
-          dataIconClassList = ''
-          dataNameClassList = 'tag-name ml-3'
-          dataTagClassList = ''
-          showMultisectInTop={false}
-          showMultisectInBottom={true}
-          // validate={validationMap.country}
-        />
+        <Form>
+          <Input
+            type="autocomplete"
+            placeholder="Select Your Skills"
+            label="Skills"
+            name="skills"
+            options={skillData}
+            allowCustomText
+            manageRangeVal
+            allowMultiselect
+            showFilterTagIcon={false}
+            filterIconClassList=""
+            filterNameClassList="ml-2"
+            filterTagClassList=""
+            showDataTagIcon={false}
+            dataIconClassList=""
+            dataNameClassList="tag-name ml-3"
+            dataTagClassList=""
+            showMultisectInTop={false}
+            showMultisectInBottom
+            // validate={validationMap.country}
+          />
+          <div className={cx('footerContainer')}>
+            <Button as="submit" fullWidth type="primary">
+              Save Details
+            </Button>
+          </div>
+        </Form>
       )}
     </Formik>
     // <React.Fragment>

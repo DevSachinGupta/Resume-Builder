@@ -7,6 +7,7 @@ import Textfield from '../../FormComponents/TextField';
 import Button from '../../Button';
 import Icons from '../../Icons';
 import MultiselectAutocomplete from '../../FormComponents/MultiselectAutocomplete';
+import './style.scss';
 
 function HobbiesForm() {
   const hobbyData = [
@@ -68,7 +69,7 @@ function HobbiesForm() {
             showDataTagIcon
             dataIconClassList="rounded-full p-1 float-left h-full"
             dataNameClassList="ml-3"
-            dataTagClassList="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1"
+            dataTagClassList="inline-block mb-1 mr-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1"
             showMultisectInTop
             showMultisectInBottom={false}
           />

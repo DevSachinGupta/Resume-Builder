@@ -47,7 +47,8 @@ ul.options li.option-active {
 
 
 
-.multiselectDiv{
+.multiselectDivTop {
+    max-width: 60vw;
     border: 1px solid #c1c1c1;
     // background: white;
     font-size: 14px;
@@ -56,25 +57,15 @@ ul.options li.option-active {
     // margin-bottom: 10px;
     // width: calc(100% - 15px);
 }
-.multiselectDiv div.tags{
-    display: inline-flex!important;
-    font-weight: bold;
-}
-.multiselectDiv input{
-    width: 100%;
-    // margin: 2px;
-    // padding: 5px;
-}
-.tags{
+.multiselectDivTop .tag{
     display: inline-block;
-    // color: white;
-    // background: green;
+    font-weight: bold;
     margin: 2px;
     padding: 5px;
     min-width: 50px;
 }
 
-.tags span{
+.multiselectDivTop .tag span{
     margin-left: 4px;
     // margin-top: 3px;
 }

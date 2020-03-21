@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, createElement, useState } from 'react';
+import React, { memo, useState } from 'react';
 import cx from 'classnames';
 import { useField } from 'formik';
 import { FaTimes } from 'react-icons/fa';
@@ -19,18 +19,20 @@ function AutocompleteInput(props) {
   });
 
   // props.allowCustomText = true;
-  // props.manageRangeVal = false;
   // props.allowMultiselect = false;
   // props.showFilterTagIcon = false;
   // props.filterIconClassList = '';
   // props.filterNameClassList = '';
   // props.filterTagClassList = '';
+
+  // props.manageRangeVal = false;
   // props.showDataTagIcon = false;
   // props.dataIconClassList = '';
   // props.dataNameClassList = '';
   // props.dataTagClassList = '';
   // props.showMultisectInTop = true;
   // props.showMultisectInBottom = false;
+
   // props.allowCustomText  props.allowMultiselect  props.manageRangeVal
   // props.showLabelIcon props.FilterIconClassList props.FilterNameClassList props.FilterTagClassList
   // props.showDataTagIcon props.dataIconClassList props.dataNameClassList props.dataTagClassList
@@ -62,7 +64,9 @@ function AutocompleteInput(props) {
     let filteredOptions = props.options;
     updatedAutocomplete.activeOption = activeOptionDefault;
     updatedAutocomplete.userData.map(optionName => {
-      filteredOptions = filteredOptions.filter(_value => _value.name !== optionName.name);
+      filteredOptions = filteredOptions.filter(
+        _value => _value.name !== optionName.name,
+      );
     });
     updatedAutocomplete.filteredOptions = filteredOptions;
     setAutocomplete(updatedAutocomplete);
@@ -337,8 +341,14 @@ function AutocompleteInput(props) {
             </span>
           );
         }
+        let classFortags = '';
+        if (props.showMultisectInBottom === true) {
+          classFortags = 'tags';
+        } else {
+          classFortags = 'tag';
+        }
         return (
-          <label className="tags">
+          <label className={classFortags}>
             <div className={props.dataTagClassList}>
               {dataIconUI}
               <span className={props.dataNameClassList}>{item.name}</span>
@@ -363,7 +373,9 @@ function AutocompleteInput(props) {
   // props.showMultisectInBottom props.showMultisectInTop
   if (props.allowMultiselect === true) {
     if (props.showMultisectInTop === true) {
-      muiltiSelectTopUI = <div className="multiselectDiv"> {showUserData}</div>;
+      muiltiSelectTopUI = (
+        <div className="multiselectDivTop"> {showUserData}</div>
+      );
     } else if (props.showMultisectInBottom === true) {
       muiltiSelectBottomUI = (
         <div className="multiselectDiv"> {showUserData}</div>
@@ -372,47 +384,47 @@ function AutocompleteInput(props) {
   }
 
   return (
-    <div className={cx('inputWrapper')}>
-      <div className="label">{props.label}</div>
-      <div
-        className={cx('inputContainer', {
-          fullWidth: props.fullWidth,
-          error: meta.error && meta.touched,
-        })}
-      >
-        {props.inputIcon && (
-          <span className="inputIcon">{props.inputIcon}</span>
-        )}
+    <React.Fragment>
+      <div className="fourCols">{muiltiSelectTopUI}</div>
+      <div className={cx('inputWrapper')}>
+        <div className="label">{props.label}</div>
+        <div
+          className={cx('inputContainer', {
+            fullWidth: props.fullWidth,
+            error: meta.error && meta.touched,
+          })}
+        >
+          {props.inputIcon && (
+            <span className="inputIcon">{props.inputIcon}</span>
+          )}
 
-        {muiltiSelectTopUI}
-
-        <input
-          {...field}
-          {...props}
-          className="search-box"
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-          value={userInput}
-          onClick={onTextboxClick}
-        />
-        {props.clearable && props.value.length > 0 && (
-          <span className="input-right-Icon cursor-pointer">
-            {<MdCancel />}
-          </span>
-        )}
-      </div>
-      <div id={`autocomplete-data-${props.name}`} className="absolute">
-        {optionList}
-      </div>
-
-      {muiltiSelectBottomUI}
-
-      {meta.error && meta.touched && (
-        <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
-          {meta.error && meta.error}
+          <input
+            {...field}
+            {...props}
+            className="search-box"
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+            value={userInput}
+            onClick={onTextboxClick}
+          />
+          {props.clearable && props.value.length > 0 && (
+            <span className="input-right-Icon cursor-pointer">
+              {<MdCancel />}
+            </span>
+          )}
         </div>
-      )}
-    </div>
+        <div id={`autocomplete-data-${props.name}`} className="absolute">
+          {optionList}
+        </div>
+
+        {meta.error && meta.touched && (
+          <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
+            {meta.error && meta.error}
+          </div>
+        )}
+      </div>
+      <div className="twoCols">{muiltiSelectBottomUI}</div>
+    </React.Fragment>
   );
 }
 
