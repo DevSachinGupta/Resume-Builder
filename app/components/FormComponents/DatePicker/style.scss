@@ -1,9 +1,40 @@
+@import '../../../styles/app.scss';
 .floating-picker {
   position: absolute;
   border-radius: 4px;
 }
 .calenderWrapper {
+  margin-bottom: 12px;
+  .label {
+    padding: 4px 0px;
+    @include font();
+  }
+  .customDatePickerInput {
+    padding: 6px 12px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #a0aec0;
+    @include font();
+    &:focus {
+      outline: none;
+    }
+  }
   .floating-calender {
     top: 64px;
+  }
+  .error {
+    border: 1px solid red;
+  }
+  .hint {
+    @include font();
+  }
+  .error_hint {
+    color: red;
+  }
+  .fullWidth {
+    width: 100%;
+    input {
+      width: 100%;
+    }
   }
 }

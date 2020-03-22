@@ -17,9 +17,6 @@ function Text(props) {
     helpers.setValue(null);
     props.afterReset(null);
   };
-  useEffect(() => {
-    helpers.setValue(props.value);
-  }, [props.value]);
   return (
     <div className={cx('inputWrapper')}>
       <div className="label">{props.label}</div>
