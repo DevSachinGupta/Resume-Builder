@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import cx from 'classnames';
-// import { FaTimes, FaMusic } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 import Input from '../../FormComponents/Input';
 // import Textfield from '../../FormComponents/TextField';
 import Button from '../../Button';
@@ -48,26 +48,46 @@ function HobbiesForm() {
     // console.log("value recieved:- ", data);
     setHobbies([...hobbies, data]);
   };
+  const removeValue = () => {};
+  let hobbiesUI;
+  if (hobbies) {
+    hobbiesUI = hobbies.map(data => (
+      <div className="hobby">
+        <span className="">{data.icon}</span>
+        <span className="">{data.name}</span>
+        <button type="button" onClick={removeValue}>
+          <FaTimes />
+        </button>
+      </div>
+    ));
+  }
   return (
     <Formik initialValues={{ blankHobbiesField }}>
       {() => (
         <Form>
-          <Input
-            type="autocomplete"
-            placeholder="Select Your Hobbies"
-            label="Choose From List"
-            name="Hobbies"
-            options={hobbyData}
-            allowCustomText={false}
-            manageRangeVal={false}
-            allowMultiselect
-            allowIconsInOptionList
-            updateValues={getValues}
-          />
-          <div className={cx('footerContainer')}>
-            <Button as="submit" fullWidth type="primary">
-              Save Details
-            </Button>
+          <div>
+            {hobbies.length ? (
+              <div className="selectedHobbies">{hobbiesUI}</div>
+            ) : (
+              ''
+            )}
+            <Input
+              type="autocomplete"
+              placeholder="Select Your Hobbies"
+              label="Choose From List"
+              name="Hobbies"
+              options={hobbyData}
+              allowCustomText={false}
+              manageRangeVal={false}
+              allowMultiselect
+              allowIconsInOptionList
+              updateValues={getValues}
+            />
+            <div className={cx('footerContainer')}>
+              <Button as="submit" fullWidth type="primary">
+                Save Details
+              </Button>
+            </div>
           </div>
         </Form>
       )}
