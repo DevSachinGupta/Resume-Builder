@@ -72,26 +72,16 @@ function SocialForm() {
               name="social"
               render={arrayHelpers => (
                 <React.Fragment>
-                  {/* {console.log('social values: ', values)} */}
                   {values.social.map((item, idx) => (
-                    <div className="flex justify-between social-links">
-                      <Input
-                        inputIcon={<item.icon />}
-                        placeholder={item.placeholder}
-                        label={item.placeholder}
-                        clearable
-                        validate={validationMap.url}
-                        // name={`social[0].${input.name}`}
-                        name={`social.${idx}.${item.name}`}
-                      />
-                      <Button
-                        circular
-                        type="button"
-                        onClick={() => arrayHelpers.remove(idx)}
-                      >
-                        <FaTimes />
-                      </Button>
-                    </div>
+                    <Input
+                      inputIcon={<item.icon />}
+                      placeholder={item.placeholder}
+                      label={item.placeholder}
+                      clearable
+                      validate={validationMap.url}
+                      // name={`social[0].${input.name}`}
+                      name={`social.${idx}.${item.name}`}
+                    />
                   ))}
 
                   <Button
