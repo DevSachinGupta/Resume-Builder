@@ -9,84 +9,85 @@ const validationMap = {
     validationHandler(
       yup
         .string()
-        .required('Required')
+        .required('Required1')
         .validate(value),
     ),
   lastName: value =>
     validationHandler(
       yup
         .string()
-        .required('Required')
+        .required('Required2')
         .validate(value),
     ),
   email: value =>
     validationHandler(
       yup
         .string()
-        .required('Required')
+        .required('Required3')
         .validate(value),
     ),
   phone: value =>
     validationHandler(
       yup
         .string()
-        .required('Required')
+        .required('Required4')
         .validate(value),
     ),
   dateOfBirth: value =>
     validationHandler(
       yup
         .date()
-        .required('Required')
+        .typeError("start Please Enter Valid Date")
+        .required('Required5')
         .validate(value),
     ),
   gender: value =>
     validationHandler(
       yup
         .string()
-        .required('Required')
+        .required('Required6')
         .validate(value),
     ),
   address: value =>
     validationHandler(
       yup
         .string()
-        .required('Required')
+        .required('Required7')
         .validate(value),
     ),
   city: value =>
     validationHandler(
       yup
         .string()
-        .required('Required')
+        .required('Required8')
         .validate(value),
     ),
   state: value =>
     validationHandler(
       yup
         .string()
-        .required('Required')
+        .required('Required9')
         .validate(value),
     ),
   pincode: value =>
     validationHandler(
       yup
         .string()
-        .required('Required')
+        .required('Required10')
         .validate(value),
     ),
   country: value =>
     validationHandler(
       yup
         .string()
-        .required('Required')
+        .required('Required11')
         .validate(value),
     ),
   brief: value =>
     validationHandler(
       yup
         .string()
-        .required('Required')
+        .required('Required12')
         .validate(value),
     ),
 };

@@ -22,7 +22,7 @@ function Accordion(props) {
     }
   };
   return (
-    <div className="tab hover:shadow py-1 px-2 rounded mb-2 w-full">
+    <div className="tab hover:shadow py-1 px-2 rounded mb-2 w-full overflow-hidden">
       <input
         type="radio"
         onClick={onClickRadio}

@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useState, useEffect, useRef } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';

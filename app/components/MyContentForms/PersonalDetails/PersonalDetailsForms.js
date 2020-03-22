@@ -5,9 +5,10 @@ import { Row, Column } from '../../Layout';
 import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
 import Radio from '../../FormComponents/Radio';
+import Select from '../../FormComponents/Select';
 
 //  *****  Personal Form Component *****
-const PersonalDetailsForm = ({countriesList}) => (
+const PersonalDetailsForm = ({ countriesList, statesList, updateState, setFieldValue }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -106,13 +107,17 @@ const PersonalDetailsForm = ({countriesList}) => (
 
     <Row>
       <Column width="1/4" className="px-1">
-        <Input
-          type="autocomplete"
+        <Select
           placeholder="Country"
           label="Country"
           name="country"
+          clearable
+          onChange={updateState}
           options={countriesList}
           validate={validationMap.country}
+          onStateUpdate={() => {
+            setFieldValue('state', '');
+          }}
         />
       </Column>
       <Column width="1/4" className="px-1">
@@ -121,24 +126,15 @@ const PersonalDetailsForm = ({countriesList}) => (
           placeholder="State"
           label="State"
           name="state"
+          options={statesList}
           validate={validationMap.state}
         />
       </Column>
       <Column width="1/4" className="px-1">
         <Input
-          type="autocomplete"
           placeholder="City"
           label="City"
           name="city"
-          options={[
-            'Papaya',
-            'Persimmon',
-            'Paw Paw',
-            'Prickly Pear',
-            'Peach',
-            'Pomegranate',
-            'Pineapple',
-          ]}
           validate={validationMap.city}
         />
       </Column>

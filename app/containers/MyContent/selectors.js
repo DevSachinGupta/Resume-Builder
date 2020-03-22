@@ -30,9 +30,15 @@ const makeSelectAllCountiesOptions = () =>
     selectMyContentDomain,
     substate => substate.allCountries,
   );
+const makeSelectFilterStatesOptions = () =>
+  createSelector(
+    selectMyContentDomain,
+    substate => substate.filterStates,
+  );
 export default makeSelectMyContent;
 export {
   selectMyContentDomain,
   makeSelectActiveModalType,
   makeSelectAllCountiesOptions,
+  makeSelectFilterStatesOptions,
 };
