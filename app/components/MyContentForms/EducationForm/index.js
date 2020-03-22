@@ -90,7 +90,9 @@ function EducationForm({ editorState, resumeJSONState, dispatch }) {
                     <Accordian
                       id={idx}
                       label={item.title ? item.title : `Education ${idx + 1}`}
-                      onClickRemove={() => arrayHelpers.remove(idx)}
+                      onClickRemove={() =>
+                        idx > 0 ? arrayHelpers.remove(idx) : null
+                      }
                     >
                       <EducationInputs
                         idx={idx}
