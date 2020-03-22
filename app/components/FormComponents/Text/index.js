@@ -21,10 +21,6 @@ function Text(props) {
     helpers.setValue('');
     // props.afterReset(null);
   };
-  // useEffect(() => {
-  //   helpers.setValue(props.value);
-  // }, [props.value]);
-  // console.log('hidden: ', props.name, props.hidden,  meta);
   return (
     <div className={cx('inputWrapper')} hidden={props.hidden}>
       <div className="label">{props.label}</div>

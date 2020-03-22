@@ -33,8 +33,8 @@ function EducationForm({ editorState, resumeJSONState, dispatch }) {
     fieldOfStudy: '',
     state: '',
     country: '',
-    start: new Date(),
-    end: new Date(),
+    start: null,
+    end: null,
     tillDate: false,
     summary: '',
   };

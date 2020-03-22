@@ -13,7 +13,6 @@ $color2: #3197EE;
         + .radio-label {
         &:before {
             content: '';
-            font-family: Georgia,Times,'Times New Roman',serif;
             @include font($size: 14px);
             padding-left: 2px;
             display: inline-block;

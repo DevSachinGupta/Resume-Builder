@@ -44,16 +44,18 @@ const validationMap = {
     validationHandler(
       yup
         .date()
-        .typeError("start Please Enter Valid Date")
-        .required('Required0')
+        .required('Required')
+        .nullable()
+        .typeError('Invalid Date Format it should be dd/mm/yyyy')
         .validate(value),
     ),
   end: value =>
     validationHandler(
       yup
         .date()
-        .typeError("end Please Enter Valid Date")
-        .required('Required1')
+        .required('Required')
+        .nullable()
+        .typeError('Invalid Date Format it should be dd/mm/yyyy')
         .validate(value),
     ),
   tillDate: value =>
