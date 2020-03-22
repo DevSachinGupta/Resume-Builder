@@ -48,7 +48,7 @@ function Accordion(props) {
       </div>
       <div
         className={cx('tab-content leading-normal', {
-          'overflow-hidden': !checkbox,
+          'overflow-hidden': checkbox,
         })}
       >
         {props.children}

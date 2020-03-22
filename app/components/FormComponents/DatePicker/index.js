@@ -31,6 +31,8 @@ function DatePicker({ type, name, label, clearable, validate, ...rest }) {
         wrapperClassName="w-full"
         className="customDatePickerInput"
         isClearable={clearable}
+        showMonthDropdown
+        showYearDropdown
         {...rest}
       />
       {meta.error && meta.touched && (
