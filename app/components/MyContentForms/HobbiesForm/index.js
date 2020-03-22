@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import cx from 'classnames';
-import { FaTimes, FaMusic } from 'react-icons/fa';
+// import { FaTimes, FaMusic } from 'react-icons/fa';
 import Input from '../../FormComponents/Input';
-import Textfield from '../../FormComponents/TextField';
+// import Textfield from '../../FormComponents/TextField';
 import Button from '../../Button';
 import Icons from '../../Icons';
-import MultiselectAutocomplete from '../../FormComponents/MultiselectAutocomplete';
+// import MultiselectAutocomplete from '../../FormComponents/MultiselectAutocomplete';
 import './style.scss';
 
 function HobbiesForm() {
@@ -41,17 +41,16 @@ function HobbiesForm() {
     { name: 'Gardening', icon: <Icons icon="gardening" /> },
   ];
   const blankHobbiesField = {
-    type: '',
+    name: '',
   };
-  const [hobbies, setHobbies] = useState([
-    {
-      lable: 'Qualification',
-    },
-  ]);
-
+  const [hobbies, setHobbies] = useState([]);
+  const getValues = data => {
+    // console.log("value recieved:- ", data);
+    setHobbies([...hobbies, data]);
+  };
   return (
     <Formik initialValues={{ blankHobbiesField }}>
-      {({ values, setFieldValue }) => (
+      {() => (
         <Form>
           <Input
             type="autocomplete"
@@ -62,16 +61,8 @@ function HobbiesForm() {
             allowCustomText={false}
             manageRangeVal={false}
             allowMultiselect
-            showFilterTagIcon
-            filterIconClassList="rounded-full p-1 float-left h-full"
-            filterNameClassList="ml-3"
-            filterTagClassList="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1"
-            showDataTagIcon
-            dataIconClassList="rounded-full p-1 float-left h-full"
-            dataNameClassList="ml-3"
-            dataTagClassList="inline-block mb-1 mr-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1"
-            showMultisectInTop
-            showMultisectInBottom={false}
+            allowIconsInOptionList
+            updateValues={getValues}
           />
           <div className={cx('footerContainer')}>
             <Button as="submit" fullWidth type="primary">
