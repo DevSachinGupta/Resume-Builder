@@ -5,7 +5,6 @@ import {
   FaDribbble,
   FaLinkedin,
   FaGlobeAsia,
-  FaTimes,
 } from 'react-icons/fa';
 import { Formik, Form, FieldArray } from 'formik';
 import cx from 'classnames';
@@ -84,13 +83,6 @@ function SocialForm() {
                         // name={`social[0].${input.name}`}
                         name={`social.${idx}.${item.name}`}
                       />
-                      <Button
-                        circular
-                        type="button"
-                        onClick={() => arrayHelpers.remove(idx)}
-                      >
-                        <FaTimes />
-                      </Button>
                     </div>
                   ))}
 
