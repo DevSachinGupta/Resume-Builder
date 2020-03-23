@@ -6,8 +6,14 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import PersonalDetailsForms from './PersonalDetailsForms';
-import { getCountryList, getStateList } from '../../../containers/MyContent/actions';
-import { makeSelectAllCountiesOptions, makeSelectFilterStatesOptions } from '../../../containers/MyContent/selectors';
+import {
+  getCountryList,
+  getStateList,
+} from '../../../containers/MyContent/actions';
+import {
+  makeSelectAllCountiesOptions,
+  makeSelectFilterStatesOptions,
+} from '../../../containers/MyContent/selectors';
 import states from '../../DropdownList/stateList';
 import countries from '../../DropdownList/countryList';
 import Button from '../../Button';
@@ -21,8 +27,8 @@ function PersonalDetails({ dispatch, allCountries, fiterStates }) {
     phone: '',
     dateOfBirth: new Date(),
     gender: '',
-    gender1: '',
-    address: '',
+    address1: '',
+    address2: '',
     city: '',
     state: '',
     pincode: '',
@@ -36,16 +42,9 @@ function PersonalDetails({ dispatch, allCountries, fiterStates }) {
   const getCountires = useCallback(() => {
     dispatch(getCountryList());
   });
-  const getStates = useCallback(countryName => {
-    dispatch(getStateList(countryName));
-  });
-
-  // useEffect(() => {
-  //   console.log('here are all Counties', allCountries);
-  // }, [allCountries]);
-  useEffect(() => {
-    console.log('here are all states', fiterStates);
-  }, [fiterStates]);
+  // const getStates = useCallback(countryName => {
+  //   dispatch(getStateList(countryName));
+  // });
 
   const [country, setCountry] = useState({
     countryList: [],
@@ -53,10 +52,10 @@ function PersonalDetails({ dispatch, allCountries, fiterStates }) {
     errors: null,
   });
 
-  const updateState = e => {
-    console.log(e.currentTarget.value);
-    getStates(e.currentTarget.value);
-  };
+  // const updateState = e => {
+  //   console.log(e.currentTarget.value);
+  //   getStates(e.currentTarget.value);
+  // };
 
   useEffect(() => {
     getCountires();
@@ -65,7 +64,6 @@ function PersonalDetails({ dispatch, allCountries, fiterStates }) {
 
   const { isLoading, countriesList } = country;
 
-  console.log("personal:", personal)
   return (
     <div>
       <Formik
@@ -78,13 +76,7 @@ function PersonalDetails({ dispatch, allCountries, fiterStates }) {
         {({ values, setFieldValue }) => (
           <Form>
             <React.Fragment>
-              {console.log("values", values)}
-              <PersonalDetailsForms
-                countriesList={allCountries}
-                statesList={fiterStates}
-                updateState={updateState}
-                setFieldValue={setFieldValue}
-              />
+              <PersonalDetailsForms countriesList={allCountries} />
 
               <div className={cx('footerContainer')}>
                 <Button as="submit" fullWidth type="primary">

@@ -48,13 +48,14 @@ const validationMap = {
         .required('Required6')
         .validate(value),
     ),
-  address: value =>
+  address1: value =>
     validationHandler(
       yup
         .string()
         .required('Required7')
         .validate(value),
     ),
+  address2: value => validationHandler(yup.string().validate(value)),
   city: value =>
     validationHandler(
       yup

@@ -60,6 +60,7 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
           data-idx={idx}
           placeholderText="Start Date"
           label="Start Date"
+          clearable
           name={`education.${idx}.start`}
           validate={validationMap.start}
         />
@@ -70,8 +71,9 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
           data-idx={idx}
           placeholderText="End Date"
           label="End Date"
-          hidden={values.tillDate}
-          // disabled={values.tillDate}
+          clearable
+          // hidden={values.tillDate}
+          disabled={values.tillDate}
           name={`education.${idx}.end`}
           validate={validationMap.end}
         />

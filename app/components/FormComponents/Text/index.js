@@ -19,7 +19,6 @@ function Text(props) {
   });
   const handleClearField = () => {
     helpers.setValue('');
-    // props.afterReset(null);
   };
   return (
     <div className={cx('inputWrapper')} hidden={props.hidden}>
