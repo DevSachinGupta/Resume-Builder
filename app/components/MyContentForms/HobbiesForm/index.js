@@ -43,19 +43,34 @@ function HobbiesForm() {
   const blankHobbiesField = {
     name: '',
   };
+  const [hobbiesData, setHobbiesData] = useState(hobbyData);
   const [hobbies, setHobbies] = useState([]);
   const getValues = data => {
     // console.log("value recieved:- ", data);
     setHobbies([...hobbies, data]);
+    const hobbyDataTemp = hobbiesData.filter(
+      hData => hData.name.toLowerCase() !== data.name.toLowerCase(),
+    );
+    setHobbiesData(hobbyDataTemp);
   };
-  const removeValue = () => {};
+  const removeValue = e => {
+    const removeData = hobbies.find(
+      data => data.name.toLowerCase() === e.currentTarget.value.toLowerCase(),
+    );
+    const hobbyDataTemp = [...hobbiesData, removeData];
+    const hobby = hobbies.filter(
+      data => data.name.toLowerCase() !== e.currentTarget.value.toLowerCase(),
+    );
+    setHobbiesData(hobbyDataTemp);
+    setHobbies(hobby);
+  };
   let hobbiesUI;
   if (hobbies) {
     hobbiesUI = hobbies.map(data => (
       <div className="hobby">
         <span className="">{data.icon}</span>
         <span className="">{data.name}</span>
-        <button type="button" onClick={removeValue}>
+        <button type="button" onClick={removeValue} value={data.name}>
           <FaTimes />
         </button>
       </div>
@@ -76,9 +91,8 @@ function HobbiesForm() {
               placeholder="Select Your Hobbies"
               label="Choose From List"
               name="Hobbies"
-              options={hobbyData}
+              options={hobbiesData}
               allowCustomText={false}
-              manageRangeVal={false}
               allowMultiselect
               allowIconsInOptionList
               updateValues={getValues}

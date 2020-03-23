@@ -150,7 +150,7 @@ function AutocompleteInput(props) {
             }
             let IconUI;
             if (props.allowIconsInOptionList) {
-              IconUI = <span className="mr-3">{optionName.icon}</span>;
+              IconUI = <span className="mx-3">{optionName.icon}</span>;
             }
             return (
               <li

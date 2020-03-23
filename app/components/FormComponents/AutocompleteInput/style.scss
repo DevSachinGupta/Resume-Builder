@@ -1,9 +1,11 @@
 @import "../../../styles/app.scss";
 .autocomplete {
+  min-height: 10rem;
+  min-width: 30rem;
   .optionsList {
     position: relative;
     .options {
-        height: 7.9rem;
+        height: 12.5rem;
         overflow: auto;
         // min-width: 13%;
         position: absolute;
@@ -11,9 +13,16 @@
         top: 100%;
         left: 0;
         right: 0;
+        background-color: #ffffff;
         li {
             list-style: none;
             // width: max-content;
+            :first-child {
+              margin-top: 0.1rem;
+            }
+            :last-child {
+              margin-bottom: 0.1rem;
+            }
             button {
                 background: none!important;
                 border: none;
