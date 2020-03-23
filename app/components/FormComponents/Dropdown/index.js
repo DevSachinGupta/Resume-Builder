@@ -74,7 +74,12 @@ function Dropdown({ options, onSelect, validate, name, multiSelect }) {
   };
   return (
     <div className={cx('dropdownContainer')} ref={ref}>
-      <div className={cx('inputContainer')}>
+      <div
+        className={cx('inputContainer', {
+          'border-l border-r border-t enabledRadius': isDropdownVisible,
+          'border disabledRadius': !isDropdownVisible,
+        })}
+      >
         <input
           onClick={toggleDropdown}
           type="text"
@@ -88,7 +93,7 @@ function Dropdown({ options, onSelect, validate, name, multiSelect }) {
         </div>
       )}
       {isDropdownVisible && (
-        <div className="options">
+        <div className={cx('options', 'border-l border-r border-b')}>
           {filteredOptions &&
             filteredOptions.map(item => (
               <li
