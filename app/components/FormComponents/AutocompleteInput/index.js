@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useRef, useEffect } from 'react';
 import cx from 'classnames';
 import { useField } from 'formik';
 // import { FaTimes } from 'react-icons/fa';
@@ -38,8 +38,29 @@ function AutocompleteInput(props) {
     userData: [],
     userRangeVal: [],
   });
+  const ref = useRef(null);
+  const handleGlobalClickForAutoComplete = e => {
+    if (ref.current && !ref.current.contains(e.target)) {
+      const autocompleteUpdates = autoComplete;
+      autocompleteUpdates.showOptions = false;
+      setAutoComplete(autocompleteUpdates);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener(
+      'mousedown',
+      handleGlobalClickForAutoComplete,
+      true,
+    );
+    return function cleanup() {
+      document.removeEventListener(
+        'mousedown',
+        handleGlobalClickForAutoComplete,
+        false,
+      );
+    };
+  }, []);
   const onTextBoxClick = () => {
-    // console.log(`textbox clicked${e}`);
     setAutoComplete({
       activeOptions: 0,
       filteredOptions: props.options,
@@ -90,7 +111,7 @@ function AutocompleteInput(props) {
   const onTextBoxKeydown = e => {
     // code on different key events...
     const updateAutocompleteData = autoComplete;
-    console.log(updateAutocompleteData);
+    // console.log(updateAutocompleteData);
     if (e.keyCode === 38) {
       // key down event
       if (autoComplete.activeOptions === 0) {
@@ -175,7 +196,7 @@ function AutocompleteInput(props) {
 
   return (
     <React.Fragment>
-      <div className={cx('inputWrapper', 'autocomplete')}>
+      <div className={cx('inputWrapper', 'autocomplete')} ref={ref}>
         <div className="label">{props.label}</div>
         <div
           className={cx('inputContainer', {
@@ -191,6 +212,7 @@ function AutocompleteInput(props) {
             {...field}
             {...props}
             type="text"
+            value={autoComplete.userInput}
             onChange={onTextBoxChange}
             onKeyDown={onTextBoxKeydown}
             onClick={onTextBoxClick}
