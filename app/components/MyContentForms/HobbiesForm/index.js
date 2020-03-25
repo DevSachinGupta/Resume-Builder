@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import cx from 'classnames';
-import { FaTimes, FaMusic } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 import Input from '../../FormComponents/Input';
-import Textfield from '../../FormComponents/TextField';
+// import Textfield from '../../FormComponents/TextField';
 import Button from '../../Button';
 import Icons from '../../Icons';
-import MultiselectAutocomplete from '../../FormComponents/MultiselectAutocomplete';
+// import MultiselectAutocomplete from '../../FormComponents/MultiselectAutocomplete';
+import './style.scss';
 
 function HobbiesForm() {
   const hobbyData = [
@@ -40,42 +41,67 @@ function HobbiesForm() {
     { name: 'Gardening', icon: <Icons icon="gardening" /> },
   ];
   const blankHobbiesField = {
-    type: '',
+    name: '',
   };
-  const [hobbies, setHobbies] = useState([
-    {
-      lable: 'Qualification',
-    },
-  ]);
-
+  const [hobbiesData, setHobbiesData] = useState(hobbyData);
+  const [hobbies, setHobbies] = useState([]);
+  const getValues = data => {
+    // console.log("value recieved:- ", data);
+    setHobbies([...hobbies, data]);
+    const hobbyDataTemp = hobbiesData.filter(
+      hData => hData.name.toLowerCase() !== data.name.toLowerCase(),
+    );
+    setHobbiesData(hobbyDataTemp);
+  };
+  const removeValue = e => {
+    const removeData = hobbies.find(
+      data => data.name.toLowerCase() === e.currentTarget.value.toLowerCase(),
+    );
+    const hobbyDataTemp = [...hobbiesData, removeData];
+    const hobby = hobbies.filter(
+      data => data.name.toLowerCase() !== e.currentTarget.value.toLowerCase(),
+    );
+    setHobbiesData(hobbyDataTemp);
+    setHobbies(hobby);
+  };
+  let hobbiesUI;
+  if (hobbies) {
+    hobbiesUI = hobbies.map(data => (
+      <div className="hobby">
+        <span className="">{data.icon}</span>
+        <span className="">{data.name}</span>
+        <button type="button" onClick={removeValue} value={data.name}>
+          <FaTimes />
+        </button>
+      </div>
+    ));
+  }
   return (
     <Formik initialValues={{ blankHobbiesField }}>
-      {({ values, setFieldValue }) => (
+      {() => (
         <Form>
-          <Input
-            type="autocomplete"
-            placeholder="Select Your Hobbies"
-            label="Choose From List"
-            name="Hobbies"
-            options={hobbyData}
-            allowCustomText={false}
-            manageRangeVal={false}
-            allowMultiselect
-            showFilterTagIcon
-            filterIconClassList="rounded-full p-1 float-left h-full"
-            filterNameClassList="ml-3"
-            filterTagClassList="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1"
-            showDataTagIcon
-            dataIconClassList="rounded-full p-1 float-left h-full"
-            dataNameClassList="ml-3"
-            dataTagClassList="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1"
-            showMultisectInTop
-            showMultisectInBottom={false}
-          />
-          <div className={cx('footerContainer')}>
-            <Button as="submit" fullWidth type="primary">
-              Save Details
-            </Button>
+          <div>
+            {hobbies.length ? (
+              <div className="selectedHobbies">{hobbiesUI}</div>
+            ) : (
+              ''
+            )}
+            <Input
+              type="autocomplete"
+              placeholder="Select Your Hobbies"
+              label="Choose From List"
+              name="Hobbies"
+              options={hobbiesData}
+              allowCustomText={false}
+              allowMultiselect
+              allowIconsInOptionList
+              updateValues={getValues}
+            />
+            <div className={cx('footerContainer')}>
+              <Button as="submit" fullWidth type="primary">
+                Save Details
+              </Button>
+            </div>
           </div>
         </Form>
       )}
