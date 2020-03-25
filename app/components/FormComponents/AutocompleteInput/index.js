@@ -62,7 +62,7 @@ function AutocompleteInput(props) {
   }, []);
   const onTextBoxClick = () => {
     setAutoComplete({
-      activeOptions: 0,
+      activeOptions: activeOptionDefault,
       filteredOptions: props.options,
       userInput: '',
       showOptions: true,
@@ -99,7 +99,7 @@ function AutocompleteInput(props) {
         0,
     );
     setAutoComplete({
-      activeOptions: 0,
+      activeOptions: activeOptionDefault,
       filteredOptions: filteredData,
       userInput: e.currentTarget.value,
       showOptions: true,
@@ -110,7 +110,7 @@ function AutocompleteInput(props) {
   };
   const onTextBoxKeydown = e => {
     // code on different key events...
-    const updateAutocompleteData = autoComplete;
+    const updateAutocompleteData = { ...autoComplete };
     // console.log(updateAutocompleteData);
     if (e.keyCode === 38) {
       // key down event
@@ -131,32 +131,47 @@ function AutocompleteInput(props) {
       setAutoComplete(updateAutocompleteData);
     } else if (e.keyCode === 13) {
       e.preventDefault();
+      let selectedValue = props.options.find(
+        option =>
+          option.name.toLowerCase() === e.currentTarget.value.toLowerCase(),
+      );
       if (props.allowCustomText) {
+        if (!selectedValue) {
+          selectedValue = { name: e.currentTarget.value };
+        }
         if (props.allowMultiselect) {
-          props.updateValues(e.currentTarget.value);
+          props.updateValues(selectedValue);
           updateAutocompleteData.userInput = '';
         } else {
-          helpers.setValue(e.currentTarget.value);
+          helpers.setValue(selectedValue);
         }
       } else if (props.allowMultiselect) {
-        const selectedValue = props.options.find(
-          option =>
-            option.name.toLowerCase() === e.currentTarget.value.toLowerCase(),
-        );
-        if (selectedValue) props.updateValues(selectedValue);
+        if (selectedValue) {
+          props.updateValues(selectedValue);
+        } else if (
+          updateAutocompleteData.activeOptions !== activeOptionDefault
+        ) {
+          props.updateValues(
+            updateAutocompleteData.filteredOptions[
+              updateAutocompleteData.activeOptions
+            ],
+          );
+        }
         updateAutocompleteData.userInput = '';
-      } else {
-        const selectedValue = props.options.find(
-          option =>
-            option.name.toLowerCase() === e.currentTarget.value.toLowerCase(),
+      } else if (selectedValue) {
+        props.updateValues(selectedValue);
+      } else if (updateAutocompleteData.activeOptions !== activeOptionDefault) {
+        props.updateValues(
+          updateAutocompleteData.filteredOptions[
+            updateAutocompleteData.activeOptions
+          ],
         );
-        if (selectedValue) helpers.setValue(selectedValue);
       }
       updateAutocompleteData.showOptions = false;
       updateAutocompleteData.filteredOptions = [];
       setAutoComplete(updateAutocompleteData);
     }
-    setAutoComplete(updateAutocompleteData);
+    // setAutoComplete(updateAutocompleteData);
   };
 
   let optionsList;
