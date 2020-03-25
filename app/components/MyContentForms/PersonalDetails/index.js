@@ -6,14 +6,14 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import PersonalDetailsForms from './PersonalDetailsForms';
-import { getCountryList } from '../../../containers/MyContent/actions';
-import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
+import { getCountryList, getStateList } from '../../../containers/MyContent/actions';
+import { makeSelectAllCountiesOptions, makeSelectFilterStatesOptions } from '../../../containers/MyContent/selectors';
 import states from '../../DropdownList/stateList';
 import countries from '../../DropdownList/countryList';
 import Button from '../../Button';
 import './style.scss';
 
-function PersonalDetails({ dispatch, allCountries }) {
+function PersonalDetails({ dispatch, allCountries, fiterStates }) {
   const blankPersonalFields = {
     firstName: '',
     lastName: '',
@@ -26,55 +26,46 @@ function PersonalDetails({ dispatch, allCountries }) {
     city: '',
     state: '',
     pincode: '',
-    country: 'test',
+    country: '',
     brief: '',
   };
   const [personal, setPersonal] = useState({ ...blankPersonalFields });
+
+  // const countryName = 101;
+
   const getCountires = useCallback(() => {
     dispatch(getCountryList());
   });
+  const getStates = useCallback(countryName => {
+    dispatch(getStateList(countryName));
+  });
+
+  // useEffect(() => {
+  //   console.log('here are all Counties', allCountries);
+  // }, [allCountries]);
   useEffect(() => {
-    console.log('here are all Counties', allCountries);
-  }, [allCountries]);
+    console.log('here are all states', fiterStates);
+  }, [fiterStates]);
+
   const [country, setCountry] = useState({
     countryList: [],
     isLoading: true,
     errors: null,
   });
 
-  // useEffect(() => {
-  //   axios
-  //     .get('https://resumebuilder.s3.ap-south-1.amazonaws.com/List/countryList.json')
-  //     .then(response => {
-  //       setCountry({
-  //         countryList: response.data,
-  //         isLoading: false,
-  //       });
-  //     })
-  //     .catch(error => {
-  //       setCountry({ error, isLoading: false });
-  //     });
-  // }, []);
+  const updateState = e => {
+    console.log(e.currentTarget.value);
+    getStates(e.currentTarget.value);
+  };
 
   useEffect(() => {
     getCountires();
+    // getStates();
   }, []);
-
-  // const countriesList = [];
-  // countries.map((item, index) => (countriesList[index] = { name: item.name }));
-
-  const statesList = [];
-  states.map((item, index) => (statesList[index] = item.name));
-
-  const updateState = e => {
-    const statesList = [];
-    states.map((item, index) => (statesList[index] = item.name));
-  };
-
-  console.log('axios state: ', country);
 
   const { isLoading, countriesList } = country;
 
+  console.log("personal:", personal)
   return (
     <div>
       <Formik
@@ -84,12 +75,15 @@ function PersonalDetails({ dispatch, allCountries }) {
           // handleSave(values);
         }}
       >
-        {({ handleSubmit, isSubmitting }) => (
+        {({ values, setFieldValue }) => (
           <Form>
             <React.Fragment>
+              {console.log("values", values)}
               <PersonalDetailsForms
                 countriesList={allCountries}
-                statesList={statesList}
+                statesList={fiterStates}
+                updateState={updateState}
+                setFieldValue={setFieldValue}
               />
 
               <div className={cx('footerContainer')}>
@@ -106,11 +100,13 @@ function PersonalDetails({ dispatch, allCountries }) {
 }
 PersonalDetails.propTypes = {
   allCountries: PropTypes.array.isRequired,
+  fiterStates: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 const mapStateToProps = () =>
   createStructuredSelector({
     allCountries: makeSelectAllCountiesOptions(),
+    fiterStates: makeSelectFilterStatesOptions(),
   });
 const mapDispatchToProps = dispatch => ({
   dispatch,
