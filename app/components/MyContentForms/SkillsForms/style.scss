@@ -1,7 +1,10 @@
 .socialFormContainer {
   min-width: 25em;
 }
-
+.tagContainer {
+  display: inline-flex;
+  padding-bottom: 18px;
+}
 // Multiselect Skills
 @import '../../../styles/app.scss';
 .search-box {
