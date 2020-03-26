@@ -7,13 +7,21 @@
  */
 
 import React, { memo, useState, useEffect, useRef } from 'react';
+import { useField } from 'formik';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import './style.scss';
-function Dropdown({ options, onSelect }) {
+function Dropdown({ options, onSelect, validate, name, multiSelect }) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [selectedValues, setSelectedValues] = useState([]);
+  const [field, meta, helpers] = useField({
+    name,
+    validate: async value => {
+      const val = validate && (await validate(value).catch(err => err));
+      return val;
+    },
+  });
   const toggleDropdown = flag => {
     setIsDropdownVisible(flag);
   };
@@ -38,7 +46,8 @@ function Dropdown({ options, onSelect }) {
     if (query.length > 0) {
       setFilteredOptions(
         options.filter(
-          option => option.toLowerCase().indexOf(query.toLowerCase()) > -1,
+          option =>
+            option && option.toLowerCase().indexOf(query.toLowerCase()) > -1,
         ),
       );
     } else {
@@ -52,11 +61,25 @@ function Dropdown({ options, onSelect }) {
       filteredOptions.filter(option => option.key !== value.key),
     );
     setSelectedValues([...selectedValues]);
+    if (multiSelect) {
+      if (field.value) {
+        helpers.setValue([...field.value, value]);
+      } else {
+        helpers.setValue([value]);
+      }
+    } else {
+      helpers.setValue(value);
+    }
     onSelect(value);
   };
   return (
     <div className={cx('dropdownContainer')} ref={ref}>
-      <div className={cx('inputContainer')}>
+      <div
+        className={cx('inputContainer', {
+          'border-l border-r border-t enabledRadius': isDropdownVisible,
+          'border disabledRadius': !isDropdownVisible,
+        })}
+      >
         <input
           onClick={toggleDropdown}
           type="text"
@@ -64,8 +87,13 @@ function Dropdown({ options, onSelect }) {
           placeholder="Search Anything"
         />
       </div>
+      {meta.error && meta.touched && (
+        <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
+          {meta.error && meta.error.message}
+        </div>
+      )}
       {isDropdownVisible && (
-        <div className="options">
+        <div className={cx('options', 'border-l border-r border-b')}>
           {filteredOptions &&
             filteredOptions.map(item => (
               <li
@@ -84,10 +112,14 @@ function Dropdown({ options, onSelect }) {
 }
 Dropdown.defaultProps = {
   onSelect: () => {},
+  multiSelect: false,
 };
 Dropdown.propTypes = {
   options: PropTypes.array.isRequired,
   onSelect: PropTypes.func,
+  validate: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  multiSelect: PropTypes.bool,
 };
 
 export default memo(Dropdown);

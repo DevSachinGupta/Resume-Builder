@@ -22,14 +22,7 @@ function Modal(props) {
   return (
     isModalOpen && (
       <div className={cx('modalWrapper')}>
-        <div
-          className={cx(
-            'modalContainer',
-            'shadow-lg',
-            'rounded',
-            'overflow-y-scroll',
-          )}
-        >
+        <div className={cx('modalContainer', 'shadow-lg', 'rounded')}>
           <div className={cx('modalHeader')}>
             <div className={cx('modalHeading')}>{heading && heading}</div>
             <div className={cx('actionContainer')}>

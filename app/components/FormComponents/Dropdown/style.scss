@@ -1,14 +1,29 @@
+@import '../../../styles/app.scss';
 .dropdownContainer {
   position: relative;
-  border-radius: 2px;
+  align-items: center;
   input {
-    width: 100%;
     padding: 6px 12px;
+    width: 100%;
     border-radius: 4px;
-    border: 1px solid #edf2f7;
+    @include font();
     &:focus {
-      border-bottom: none;
-      border-radius: 4px 4px 0px 0px;
+      outline: none;
+    }
+  }
+  .error {
+    border: 1px solid red;
+  }
+  .hint {
+    @include font();
+  }
+  .error_hint {
+    color: red;
+  }
+  .fullWidth {
+    width: 100%;
+    input {
+      width: 100%;
     }
   }
   .searchItem {
@@ -17,16 +32,23 @@
     border-radius: 4px;
     max-width: fit-content;
   }
+  .enabledRadius {
+    border-radius: 4px 4px 0px 0px;
+  }
+  .disabledRadius {
+    border-radius: 4px;
+  }
   .inputContainer {
+    border-color: #a0aec0;
+    border-style: solid;
     .tagsContainer {
     }
   }
   .options {
     position: absolute;
     background: white;
-    border-bottom: 1px solid #edf2f7;
-    border-left: 1px solid #edf2f7;
-    border-right: 1px solid #edf2f7;
+    border-color: #a0aec0;
+    border-style: solid;
     border-radius: 0px 0px 4px 4px;
     max-height: 200px;
     overflow-y: scroll;
