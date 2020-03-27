@@ -4,7 +4,7 @@
   min-width: 30rem;
   .optionsList {
     position: relative;
-    .options {
+    .optionsListItems {
         height: 12.5rem;
         overflow: auto;
         // min-width: 13%;
@@ -32,6 +32,8 @@
                 width: 100%;
                 text-align: initial;
                 display: inline-flex;
+                align-items: center;
+                @include font();
             }
             &:hover,
             &:focus {

@@ -178,7 +178,7 @@ function AutocompleteInput(props) {
   if (autoComplete.showOptions) {
     if (autoComplete.filteredOptions.length) {
       optionsList = (
-        <ul className="options">
+        <ul className="optionsListItems">
           {autoComplete.filteredOptions.map((optionName, index) => {
             let className1;
             if (index === autoComplete.activeOptions) {
