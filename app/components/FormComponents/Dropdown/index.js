@@ -7,35 +7,23 @@
  */
 
 import React, { memo, useState, useEffect, useRef } from 'react';
+import { useField } from 'formik';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { useField } from 'formik';
 import { MdCancel } from 'react-icons/md';
 import './style.scss';
-function Dropdown(props) {
-  let validateField = true;
-  if (props.hidden != undefined && props.hidden == true) {
-    validateField = false;
-  }
-  const [field, meta, helpers] = useField({
-    name: props.name,
-    validate: async value => {
-      const val = await props.validate(value).catch(err => err);
-      return validateField ? val : null;
-    },
-  });
-  const handleClearField = () => {
-    helpers.setValue('');
-    setSelectedValues('');
-  };
-
-  const onSelect = value => {
-    helpers.setValue(value);
-  };
-
+function Dropdown({ options, onSelect, validate, name, multiSelect }) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [filteredOptions, setFilteredOptions] = useState([]);
-  const [selectedValues, setSelectedValues] = useState('');
+  const [selectedValues, setSelectedValues] = useState([]);
+  const [field, meta, helpers] = useField({
+    name,
+    validate: async value => {
+      const val = validate && (await validate(value).catch(err => err));
+      return val;
+    },
+  });
   const toggleDropdown = flag => {
     setIsDropdownVisible(flag);
   };
@@ -59,8 +47,9 @@ function Dropdown(props) {
     const query = e.target.value;
     if (query.length > 0) {
       setFilteredOptions(
-        props.options.filter(
-          option => option.name.toLowerCase().indexOf(query.toLowerCase()) > -1,
+        options.filter(
+          option =>
+            option && option.toLowerCase().indexOf(query.toLowerCase()) > -1,
         ),
       );
     } else {
@@ -74,29 +63,27 @@ function Dropdown(props) {
     setFilteredOptions(
       filteredOptions.filter(option => option.id !== value.id),
     );
-    setSelectedValues(value.name);
-    onSelect(value.name);
-    toggleDropdown(false);
+    setSelectedValues([...selectedValues]);
+    if (multiSelect) {
+      if (field.value) {
+        helpers.setValue([...field.value, value]);
+      } else {
+        helpers.setValue([value]);
+      }
+    } else {
+      helpers.setValue(value);
+    }
+    onSelect(value);
   };
 
   return (
-    <div className={cx('inputWrapper')} hidden={props.hidden} ref={ref}>
-      <div className="label">{props.label}</div>
+    <div className={cx('dropdownContainer')} ref={ref}>
       <div
         className={cx('inputContainer', {
-          fullWidth: props.fullWidth,
-          error: meta.error && meta.touched,
+          'border-l border-r border-t enabledRadius': isDropdownVisible,
+          'border disabledRadius': !isDropdownVisible,
         })}
       >
-        {props.inputIcon && (
-          <span className="inputIcon">{props.inputIcon}</span>
-        )}
-        {/* <input {...field} {...props} /> */}
-        {/* <select {...field} {...props} onChange={(e) => {helpers.setValue(e.target.value) ; props.onChange();}} > 
-          <option value="">Select</option>
-          {optionList}
-        </select> */}
-
         <input
           onClick={toggleDropdown}
           type="text"
@@ -111,8 +98,13 @@ function Dropdown(props) {
           </span>
         )}
       </div>
+      {meta.error && meta.touched && (
+        <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
+          {meta.error && meta.error.message}
+        </div>
+      )}
       {isDropdownVisible && (
-        <div className="options">
+        <div className={cx('options', 'border-l border-r border-b')}>
           {filteredOptions &&
             filteredOptions.map(item => (
               <li
@@ -164,10 +156,14 @@ function Dropdown(props) {
 }
 Dropdown.defaultProps = {
   onSelect: () => {},
+  multiSelect: false,
 };
 Dropdown.propTypes = {
   options: PropTypes.array.isRequired,
   onSelect: PropTypes.func,
+  validate: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  multiSelect: PropTypes.bool,
 };
 
 export default memo(Dropdown);
