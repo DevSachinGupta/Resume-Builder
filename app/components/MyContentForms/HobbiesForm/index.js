@@ -11,34 +11,34 @@ import './style.scss';
 
 function HobbiesForm() {
   const hobbyData = [
-    { name: 'Music', icon: <Icons icon="music" /> },
-    { name: 'Singing', icon: <Icons icon="singing" /> },
-    { name: 'Reading', icon: <Icons icon="reading" /> },
-    { name: 'Writing', icon: <Icons icon="writing" /> },
-    { name: 'Blogging', icon: <Icons icon="blogging" /> },
-    { name: 'Poetry', icon: <Icons icon="poetry" /> },
-    { name: 'Sketching', icon: <Icons icon="sketching" /> },
-    { name: 'Photography', icon: <Icons icon="photography" /> },
-    { name: 'Designing', icon: <Icons icon="designing" /> },
-    { name: 'Painting', icon: <Icons icon="painting" /> },
-    { name: 'Volunteering', icon: <Icons icon="volunteering" /> },
-    { name: 'Socializing', icon: <Icons icon="socializing" /> },
-    { name: 'Gaming', icon: <Icons icon="gaming" /> },
-    { name: 'Sport', icon: <Icons icon="sport" /> },
-    { name: 'Cycling', icon: <Icons icon="cycling" /> },
-    { name: 'Swimming', icon: <Icons icon="swimming" /> },
-    { name: 'Hiking', icon: <Icons icon="hiking" /> },
-    { name: 'Camping', icon: <Icons icon="camping" /> },
-    { name: 'Traveling', icon: <Icons icon="traveling" /> },
-    { name: 'Cricket', icon: <Icons icon="cricket" /> },
-    { name: 'Dancing', icon: <Icons icon="dancing" /> },
-    { name: 'Theatre', icon: <Icons icon="theatre" /> },
-    { name: 'Acting', icon: <Icons icon="acting" /> },
-    { name: 'Youtuber', icon: <Icons icon="youtuber" /> },
-    { name: 'Coding', icon: <Icons icon="coding" /> },
-    { name: 'Cooking', icon: <Icons icon="cooking" /> },
-    { name: 'Art & Craft', icon: <Icons icon="artandcraft" /> },
-    { name: 'Gardening', icon: <Icons icon="gardening" /> },
+    { value: 'Music', icon: <Icons icon="music" /> },
+    { value: 'Singing', icon: <Icons icon="singing" /> },
+    { value: 'Reading', icon: <Icons icon="reading" /> },
+    { value: 'Writing', icon: <Icons icon="writing" /> },
+    { value: 'Blogging', icon: <Icons icon="blogging" /> },
+    { value: 'Poetry', icon: <Icons icon="poetry" /> },
+    { value: 'Sketching', icon: <Icons icon="sketching" /> },
+    { value: 'Photography', icon: <Icons icon="photography" /> },
+    { value: 'Designing', icon: <Icons icon="designing" /> },
+    { value: 'Painting', icon: <Icons icon="painting" /> },
+    { value: 'Volunteering', icon: <Icons icon="volunteering" /> },
+    { value: 'Socializing', icon: <Icons icon="socializing" /> },
+    { value: 'Gaming', icon: <Icons icon="gaming" /> },
+    { value: 'Sport', icon: <Icons icon="sport" /> },
+    { value: 'Cycling', icon: <Icons icon="cycling" /> },
+    { value: 'Swimming', icon: <Icons icon="swimming" /> },
+    { value: 'Hiking', icon: <Icons icon="hiking" /> },
+    { value: 'Camping', icon: <Icons icon="camping" /> },
+    { value: 'Traveling', icon: <Icons icon="traveling" /> },
+    { value: 'Cricket', icon: <Icons icon="cricket" /> },
+    { value: 'Dancing', icon: <Icons icon="dancing" /> },
+    { value: 'Theatre', icon: <Icons icon="theatre" /> },
+    { value: 'Acting', icon: <Icons icon="acting" /> },
+    { value: 'Youtuber', icon: <Icons icon="youtuber" /> },
+    { value: 'Coding', icon: <Icons icon="coding" /> },
+    { value: 'Cooking', icon: <Icons icon="cooking" /> },
+    { value: 'Art & Craft', icon: <Icons icon="artandcraft" /> },
+    { value: 'Gardening', icon: <Icons icon="gardening" /> },
   ];
   const blankHobbiesField = {
     name: '',
@@ -49,17 +49,17 @@ function HobbiesForm() {
     // console.log("value recieved:- ", data);
     setHobbies([...hobbies, data]);
     const hobbyDataTemp = hobbiesData.filter(
-      hData => hData.name.toLowerCase() !== data.name.toLowerCase(),
+      hData => hData.value.toLowerCase() !== data.value.toLowerCase(),
     );
     setHobbiesData(hobbyDataTemp);
   };
   const removeValue = e => {
     const removeData = hobbies.find(
-      data => data.name.toLowerCase() === e.currentTarget.value.toLowerCase(),
+      data => data.value.toLowerCase() === e.currentTarget.value.toLowerCase(),
     );
     const hobbyDataTemp = [...hobbiesData, removeData];
     const hobby = hobbies.filter(
-      data => data.name.toLowerCase() !== e.currentTarget.value.toLowerCase(),
+      data => data.value.toLowerCase() !== e.currentTarget.value.toLowerCase(),
     );
     setHobbiesData(hobbyDataTemp);
     setHobbies(hobby);
@@ -69,8 +69,8 @@ function HobbiesForm() {
     hobbiesUI = hobbies.map(data => (
       <div className="hobby">
         <span className="">{data.icon}</span>
-        <span className="">{data.name}</span>
-        <button type="button" onClick={removeValue} value={data.name}>
+        <span className="">{data.value}</span>
+        <button type="button" onClick={removeValue} value={data.value}>
           <FaTimes />
         </button>
       </div>
@@ -80,7 +80,7 @@ function HobbiesForm() {
     <Formik initialValues={{ blankHobbiesField }}>
       {() => (
         <Form>
-          <div>
+          <div className="hobbbiesSections">
             {hobbies.length ? (
               <div className="selectedHobbies">{hobbiesUI}</div>
             ) : (
