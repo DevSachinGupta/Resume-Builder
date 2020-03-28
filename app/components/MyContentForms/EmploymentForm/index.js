@@ -125,6 +125,7 @@ function EmploymentForm({
                 <React.Fragment>
                   {values.employment.map((item, idx) => (
                     <Accordian
+                      key={idx}
                       id={idx}
                       label={
                         item.employer ? item.employer : `Employment ${idx + 1}`

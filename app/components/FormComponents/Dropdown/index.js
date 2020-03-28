@@ -7,10 +7,9 @@
  */
 
 import React, { memo, useState, useEffect, useRef } from 'react';
+import { useField } from 'formik';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { useField } from 'formik';
-import { MdCancel } from 'react-icons/md';
 import './style.scss';
 function Dropdown({ options, onSelect, validate, name, multiSelect }) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -36,7 +35,7 @@ function Dropdown({ options, onSelect, validate, name, multiSelect }) {
     /**
      * create a Map of Original Values
      */
-    setFilteredOptions(props.options);
+    setFilteredOptions(options);
     document.addEventListener('mousedown', handleGlobalClick, true);
     return function cleanup() {
       document.removeEventListener('mousedown', handleGlobalClick, false);
@@ -52,15 +51,14 @@ function Dropdown({ options, onSelect, validate, name, multiSelect }) {
         ),
       );
     } else {
-      setFilteredOptions(props.options);
+      setFilteredOptions(options);
     }
   };
   const handleSelect = e => {
     const value = JSON.parse(e.target.getAttribute('data'));
-    // selectedValues.push(value.name);
-    // selectedValues = value.name;
+    selectedValues.push(value);
     setFilteredOptions(
-      filteredOptions.filter(option => option.id !== value.id),
+      filteredOptions.filter(option => option.key !== value.key),
     );
     setSelectedValues([...selectedValues]);
     if (multiSelect) {
@@ -74,7 +72,6 @@ function Dropdown({ options, onSelect, validate, name, multiSelect }) {
     }
     onSelect(value);
   };
-
   return (
     <div className={cx('dropdownContainer')} ref={ref}>
       <div
@@ -86,16 +83,9 @@ function Dropdown({ options, onSelect, validate, name, multiSelect }) {
         <input
           onClick={toggleDropdown}
           type="text"
-          value={selectedValues}
           onChange={handleInputChange}
           placeholder="Search Anything"
         />
-
-        {props.clearable && (
-          <span className="input-right-Icon cursor-pointer">
-            {<MdCancel onClick={handleClearField} />}
-          </span>
-        )}
       </div>
       {meta.error && meta.touched && (
         <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
@@ -108,50 +98,17 @@ function Dropdown({ options, onSelect, validate, name, multiSelect }) {
             filteredOptions.map(item => (
               <li
                 className="option"
-                key={item.id}
+                key={item.key}
                 data={JSON.stringify(item)}
                 onClick={handleSelect}
               >
-                {item.name}
+                {item.value}
               </li>
             ))}
         </div>
       )}
-      {meta.error && meta.touched && (
-        <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
-          {meta.error && meta.error.message}
-        </div>
-      )}
     </div>
   );
-
-  // return (
-  //   <div className={cx('dropdownContainer')} ref={ref}>
-  //     <div className={cx('inputContainer')}>
-  //       <input
-  //         onClick={toggleDropdown}
-  //         type="text"
-  //         onChange={handleInputChange}
-  //         placeholder="Search Anything"
-  //       />
-  //     </div>
-  //     {isDropdownVisible && (
-  //       <div className="options">
-  //         {filteredOptions &&
-  //           filteredOptions.map(item => (
-  //             <li
-  //               className="option"
-  //               key={item.key}
-  //               data={JSON.stringify(item)}
-  //               onClick={handleSelect}
-  //             >
-  //               {item.value}
-  //             </li>
-  //           ))}
-  //       </div>
-  //     )}
-  //   </div>
-  // );
 }
 Dropdown.defaultProps = {
   onSelect: () => {},

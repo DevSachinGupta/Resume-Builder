@@ -52,9 +52,7 @@ function Checkbox(props) {
     </div>
   );
 }
-Checkbox.defaultProps = {
-  value: '',
-};
+Checkbox.defaultProps = {};
 Checkbox.propTypes = {
   type: PropTypes.string.isRequired,
   onChange: PropTypes.func,

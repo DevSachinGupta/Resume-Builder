@@ -52,6 +52,7 @@ function AffiliationForm({ editorState, resumeJSONState, dispatch }) {
                 <React.Fragment>
                   {values.affiliation.map((item, idx) => (
                     <Accordian
+                      key={idx}
                       id={idx}
                       label={
                         item.organization

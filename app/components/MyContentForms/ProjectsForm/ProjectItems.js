@@ -4,10 +4,11 @@ import Input from '../../FormComponents/Input';
 import { Row, Column } from '../../Layout';
 import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
+import AutocompleteInput from '../../FormComponents/MultiselectAutocomplete'
 
 //  *****  Project Form Component *****
 
-const ProjectInputs = ({ idx, values, setFieldValue }) => (
+const ProjectInputs = ({ idx, values, setFieldValue, skillData }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -29,12 +30,22 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
     </Row>
     <Row>
       <Column width="1/2" className="px-1">
-        <Input
+        <AutocompleteInput
+          type="autocomplete"
+          placeholder="Select Your Skills"
+          label="Choose From List"
+          name="Skills"
+          options={skillData}
+          allowCustomText={false}
+          allowMultiselect
+          allowIconsInOptionList
+        />
+        {/* <Input
           placeholder="Technology Used"
           label="Technology Used"
           name={`project.${idx}.keywords`}
           validate={validationMap.keywords}
-        />
+        /> */}
       </Column>
       <Column width="1/2" className="px-1">
         <Input
@@ -100,6 +111,7 @@ ProjectInputs.propTypes = {
   idx: PropTypes.number,
   values: PropTypes.object,
   setFieldValue: PropTypes.func,
+  skillData: PropTypes.array,
 };
 
 export default ProjectInputs;

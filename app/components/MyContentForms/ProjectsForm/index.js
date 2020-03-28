@@ -20,6 +20,14 @@ import ProjectInputs from './ProjectItems';
 import Button from '../../Button';
 
 function ProjectForm({ editorState, resumeJSONState, dispatch }) {
+  const skillData = [
+    { name: 'Music' },
+    { name: 'Singing' },
+    { name: 'Reading' },
+    { name: 'Writing' },
+    { name: 'Blogginging' },
+    { name: 'Poetry' },
+  ];
   const blankProFields = {
     title: '',
     summary: '',
@@ -80,6 +88,7 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
                 <React.Fragment>
                   {values.project.map((item, idx) => (
                     <Accordian
+                      key={idx}
                       id={idx}
                       label={item.title ? item.title : `Project ${idx + 1}`}
                       onClickRemove={() => arrayHelpers.remove(idx)}
@@ -88,6 +97,7 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
                         idx={idx}
                         values={item}
                         setFieldValue={setFieldValue}
+                        skillData={skillData}
                       />
                     </Accordian>
                   ))}

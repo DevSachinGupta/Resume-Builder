@@ -50,6 +50,7 @@ function AccomplishmentForm({ editorState, resumeJSONState, dispatch }) {
                 <React.Fragment>
                   {values.accomplishment.map((item, idx) => (
                     <Accordian
+                      key={idx}
                       id={idx}
                       label={
                         item.title ? item.title : `Accomplishment ${idx + 1}`

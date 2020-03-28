@@ -14,7 +14,16 @@ import Wrapper from './Wrapper';
 import { ButtonTypes } from './constants';
 import './style.scss';
 
-function Button({ className, as, circular, type, fullWidth, ...rest }) {
+function Button({
+  className,
+  as,
+  circular,
+  type,
+  fullWidth,
+  handleRoute,
+  iconButton,
+  ...rest
+}) {
   return (
     <Wrapper>
       {
@@ -43,7 +52,7 @@ Button.defaultProps = {
   as: 'button',
 };
 Button.propTypes = {
-  handleRoute: PropTypes.func,
+  handleRoute: PropTypes.bool,
   iconButton: PropTypes.bool,
   as: PropTypes.string,
   icon: PropTypes.node,

@@ -16,10 +16,7 @@ import './style.scss';
 // function DatePicker({ type, name, label, clearable, validate, ...rest }) {
 function DatePicker(props) {
   let validateField = true;
-  if (
-    (props.hidden !== undefined && props.hidden === true) ||
-    (props.disabled !== undefined && props.disabled === true)
-  ) {
+  if (props.disabled === true) {
     validateField = false;
   }
   const [field, meta, helpers] = useField({

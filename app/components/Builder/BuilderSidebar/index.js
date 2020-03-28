@@ -23,8 +23,9 @@ import './style.scss';
 function BuilderSidebar({ isSecondarySidebarOpen, dispatch }) {
   return (
     <div className="builder-sidebar-container">
-      {primarySidebar.map(item => (
+      {primarySidebar.map((item, index) => (
         <SidebarItem
+          key={`sideBar-${index}`}
           icon={item.icon}
           onClick={
             item.hasSecondary ? () => dispatch(toggleSecondarySidebar()) : null
@@ -45,6 +46,7 @@ function BuilderSidebar({ isSecondarySidebarOpen, dispatch }) {
           </div>
           {secondarySidebar.map(item => (
             <SidebarItem
+              key={item.id}
               onClick={() => dispatch(setModalContent(item.id))}
               title={item.title}
               {...item}

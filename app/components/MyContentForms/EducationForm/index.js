@@ -99,9 +99,10 @@ function EducationForm({
             <FieldArray
               name="education"
               render={arrayHelpers => (
-                <React.Fragment >
+                <React.Fragment>
                   {values.education.map((item, idx) => (
                     <Accordian
+                      key={idx}
                       id={idx}
                       label={item.title ? item.title : `Education ${idx + 1}`}
                       onClickRemove={() =>
