@@ -82,7 +82,7 @@ function AutocompleteInput(props) {
       });
 
       if (props.allowCustomText) {
-        props.updateValues(e.currentTarget.value);
+        props.updateValues({ value: e.currentTarget.value });
       } else {
         const selectedValue = props.options.find(
           option =>

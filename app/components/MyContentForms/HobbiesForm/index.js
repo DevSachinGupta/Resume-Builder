@@ -40,9 +40,9 @@ function HobbiesForm() {
     { value: 'Art & Craft', icon: <Icons icon="artandcraft" /> },
     { value: 'Gardening', icon: <Icons icon="gardening" /> },
   ];
-  const blankHobbiesField = {
-    name: '',
-  };
+  // const blankHobbiesField = {
+  //   name: '',
+  // };
   const [hobbiesData, setHobbiesData] = useState(hobbyData);
   const [hobbies, setHobbies] = useState([]);
   const getValues = data => {
@@ -78,7 +78,14 @@ function HobbiesForm() {
     ));
   }
   return (
-    <Formik initialValues={{ blankHobbiesField }}>
+    <Formik
+      initialValues={{ ...hobbies }}
+      onSubmit={values => {
+        // eslint-disable-next-line no-console
+        console.log(values);
+      }}
+      enableReinitialize
+    >
       {() => (
         <Form>
           <div className="hobbbiesSections">
