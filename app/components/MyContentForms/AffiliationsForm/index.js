@@ -1,4 +1,5 @@
 import React, { memo, useState } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import cx from 'classnames';
@@ -8,27 +9,32 @@ import {
   makeUpdateResumeJSONState,
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
-import {
-  updateEditorState,
-  updateResumeJSONState,
-} from 'containers/Builder/actions';
-import { InjectJSONUsingCheerioEducation } from 'components/CheerioComponent/templates/template_1';
-import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
+// import {
+//   updateEditorState,
+//   updateResumeJSONState,
+// } from 'containers/Builder/actions';
 import Accordian from '../../Accordion';
 import AffiliationInputs from './AffiliationItems';
 import Button from '../../Button';
 
-function AffiliationForm() {
+function AffiliationForm({ editorState, resumeJSONState, dispatch }) {
   const blankAffFields = {
     organization: '',
     role: '',
-    start: '',
-    end: '',
+    start: null,
+    end: null,
     tillDate: false,
     summary: '',
   };
+  let storeAffiliation = null;
 
-  const [affiliations, setAffiliations] = useState([{ ...blankAffFields }]);
+  if (resumeJSONState.Affiliation) {
+    storeAffiliation = resumeJSONState.Affiliation.history;
+  }
+
+  const [affiliations, setAffiliations] = useState(
+    storeAffiliation || [{ ...blankAffFields }],
+  );
 
   return (
     <div>
@@ -47,10 +53,18 @@ function AffiliationForm() {
                   {values.affiliation.map((item, idx) => (
                     <Accordian
                       id={idx}
-                      label={item.organization ? item.organization : `Affiliation ${idx + 1}`}
+                      label={
+                        item.organization
+                          ? item.organization
+                          : `Affiliation ${idx + 1}`
+                      }
                       onClickRemove={() => arrayHelpers.remove(idx)}
                     >
-                      <AffiliationInputs idx={idx} values={item} setFieldValue={setFieldValue} />
+                      <AffiliationInputs
+                        idx={idx}
+                        values={item}
+                        setFieldValue={setFieldValue}
+                      />
                     </Accordian>
                   ))}
 
@@ -61,7 +75,6 @@ function AffiliationForm() {
                   >
                     Add Another
                   </Button>
-                  {console.log(' value: ', values)}
                   <div className={cx('footerContainer')}>
                     <Button as="submit" fullWidth type="primary">
                       Save Details
@@ -77,9 +90,15 @@ function AffiliationForm() {
   );
 }
 
+AffiliationForm.propTypes = {
+  editorState: PropTypes.object,
+  resumeJSONState: PropTypes.object,
+  dispatch: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = createStructuredSelector({
-  editor_state: makeUpdateEditorState(),
-  resume_json_state: makeUpdateResumeJSONState(),
+  editorState: makeUpdateEditorState(),
+  resumeJSONState: makeUpdateResumeJSONState(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(

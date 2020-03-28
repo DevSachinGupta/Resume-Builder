@@ -6,52 +6,66 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 function Checkbox(props) {
+  let validateField = true;
+  if (
+    (props.hidden !== undefined && props.hidden === true) ||
+    (props.disabled !== undefined && props.disabled === true)
+  ) {
+    validateField = false;
+  }
   const [field, meta, helpers] = useField({
     name: props.name,
     validate: async value => {
       const val = await props.validate(value).catch(err => err);
-      return val;
+      return validateField ? val : null;
     },
   });
-  // console.log("field: ", field , " meta: ", meta)
+
+  const handleClearField = () => {
+    helpers.setValue('');
+  };
+  const { clearable, validate, ...rest } = props;
   return (
     <div className={cx('inputWrapper')}>
       <div className="label">{props.label}</div>
       <div
         className={cx({
           fullWidth: props.fullWidth,
-          error: props.error,
+          error: validateField && meta.error && meta.touched,
         })}
       >
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}
-        <input {...field} {...props} onChange={props.onChange} />
-        {props.clearable && props.value.length > 0 && (
+        <input {...field} {...rest} />
+        {props.clearable && (
           <span className="input-right-Icon cursor-pointer">
-            {<MdCancel />}
+            {<MdCancel onClick={handleClearField} />}
           </span>
         )}
       </div>
-      {
-        meta.error && meta.touched && <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
-          {props.error && props.error}
+      {validateField && meta.error && meta.touched && (
+        <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
+          {meta.error && meta.error.message}
         </div>
-      }
+      )}
     </div>
   );
 }
 Checkbox.defaultProps = {
-  value: ""
-}
+  value: '',
+};
 Checkbox.propTypes = {
-  clearable: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
-  fullWidth: PropTypes.bool.isRequired,
-  inputIcon: PropTypes.node.isRequired,
-  value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-  error: PropTypes.string,
-  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
+  fullWidth: PropTypes.bool,
+  inputIcon: PropTypes.node,
   label: PropTypes.string,
+  name: PropTypes.string,
+  hidden: PropTypes.bool,
+  disabled: PropTypes.bool,
+  clearable: PropTypes.bool,
+  validate: PropTypes.func.isRequired,
+  value: PropTypes.string,
 };
 export default memo(Checkbox);

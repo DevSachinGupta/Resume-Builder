@@ -9,50 +9,50 @@ const validationMap = {
     validationHandler(
       yup
         .string()
-        .required('Required1')
+        .required('Required')
         .validate(value),
     ),
   lastName: value =>
     validationHandler(
       yup
         .string()
-        .required('Required2')
+        .required('Required')
         .validate(value),
     ),
   email: value =>
     validationHandler(
       yup
         .string()
-        .required('Required3')
+        .required('Required')
         .validate(value),
     ),
   phone: value =>
     validationHandler(
       yup
         .string()
-        .required('Required4')
+        .required('Required')
         .validate(value),
     ),
   dateOfBirth: value =>
     validationHandler(
       yup
         .date()
-        .typeError("start Please Enter Valid Date")
-        .required('Required5')
+        .typeError("Please Enter Valid Date")
+        .required('Required')
         .validate(value),
     ),
   gender: value =>
     validationHandler(
       yup
         .string()
-        .required('Required6')
+        .required('Required')
         .validate(value),
     ),
   address1: value =>
     validationHandler(
       yup
         .string()
-        .required('Required7')
+        .required('Required')
         .validate(value),
     ),
   address2: value => validationHandler(yup.string().validate(value)),
@@ -60,35 +60,35 @@ const validationMap = {
     validationHandler(
       yup
         .string()
-        .required('Required8')
+        .required('Required')
         .validate(value),
     ),
   state: value =>
     validationHandler(
       yup
         .string()
-        .required('Required9')
+        .required('Required')
         .validate(value),
     ),
   pincode: value =>
     validationHandler(
       yup
         .string()
-        .required('Required10')
+        .required('Required')
         .validate(value),
     ),
   country: value =>
     validationHandler(
       yup
         .string()
-        .required('Required11')
+        .required('Required')
         .validate(value),
     ),
   brief: value =>
     validationHandler(
       yup
         .string()
-        .required('Required12')
+        .required('Required')
         .validate(value),
     ),
 };

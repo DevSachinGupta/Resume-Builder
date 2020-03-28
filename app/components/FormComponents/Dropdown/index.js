@@ -7,7 +7,6 @@
  */
 
 import React, { memo, useState, useEffect, useRef } from 'react';
-import { useField } from 'formik';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { useField } from 'formik';

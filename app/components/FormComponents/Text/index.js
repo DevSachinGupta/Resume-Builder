@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import cx from 'classnames';
 import { useField } from 'formik';
 import { MdCancel } from 'react-icons/md';
@@ -7,7 +7,10 @@ import './style.scss';
 
 function Text(props) {
   let validateField = true;
-  if (props.hidden != undefined && props.hidden == true) {
+  if (
+    (props.hidden !== undefined && props.hidden === true) ||
+    (props.disabled !== undefined && props.disabled === true)
+  ) {
     validateField = false;
   }
   const [field, meta, helpers] = useField({
@@ -17,29 +20,32 @@ function Text(props) {
       return validateField ? val : null;
     },
   });
+
   const handleClearField = () => {
     helpers.setValue('');
   };
+
+  const { clearable, validate, ...rest } = props;
   return (
     <div className={cx('inputWrapper')} hidden={props.hidden}>
       <div className="label">{props.label}</div>
       <div
         className={cx('inputContainer', {
           fullWidth: props.fullWidth,
-          error: meta.error && meta.touched,
+          error: validateField && meta.error && meta.touched,
         })}
       >
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}
-        <input {...field} {...props} />
+        <input {...field} {...rest} />
         {props.clearable && (
           <span className="input-right-Icon cursor-pointer">
             {<MdCancel onClick={handleClearField} />}
           </span>
         )}
       </div>
-      {meta.error && meta.touched && (
+      {validateField && meta.error && meta.touched && (
         <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
           {meta.error && meta.error.message}
         </div>
@@ -48,14 +54,14 @@ function Text(props) {
   );
 }
 Text.propTypes = {
-  clearable: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
-  fullWidth: PropTypes.bool.isRequired,
-  inputIcon: PropTypes.node.isRequired,
-  value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-  afterReset: PropTypes.func,
+  onChange: PropTypes.func,
+  fullWidth: PropTypes.bool,
+  inputIcon: PropTypes.node,
   label: PropTypes.string,
   name: PropTypes.string,
+  hidden: PropTypes.bool,
+  disabled: PropTypes.bool,
+  clearable: PropTypes.bool,
   validate: PropTypes.func.isRequired,
 };
 export default memo(Text);

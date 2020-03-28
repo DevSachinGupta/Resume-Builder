@@ -17,8 +17,8 @@ import './style.scss';
 function DatePicker(props) {
   let validateField = true;
   if (
-    (props.hidden != undefined && props.hidden == true) ||
-    (props.disabled != undefined && props.disabled == true)
+    (props.hidden !== undefined && props.hidden === true) ||
+    (props.disabled !== undefined && props.disabled === true)
   ) {
     validateField = false;
   }
@@ -31,7 +31,7 @@ function DatePicker(props) {
   });
 
   const handleClearField = () => {
-    helpers.setValue('');
+    helpers.setValue(null);
   };
 
   return (
@@ -40,7 +40,7 @@ function DatePicker(props) {
       <div
         className={cx('inputContainer', {
           fullWidth: props.fullWidth,
-          error: meta.error && meta.touched,
+          error: validateField && meta.error && meta.touched,
         })}
       >
         {props.inputIcon && (
@@ -54,18 +54,17 @@ function DatePicker(props) {
           }}
           wrapperClassName="w-full"
           className="customDatePickerInput"
-          isClearable={props.clearable}
           showMonthDropdown
           showYearDropdown
           {...props}
         />
-        {/* {props.clearable && (
+        {props.clearable && (
           <span className="input-right-Icon cursor-pointer">
             {<MdCancel onClick={handleClearField} />}
           </span>
-        )} */}
+        )}
       </div>
-      {meta.error && meta.touched && (
+      {validateField && meta.error && meta.touched && (
         <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
           {meta.error && meta.error.message}
         </div>
@@ -77,10 +76,14 @@ DatePicker.defaultProps = {};
 DatePicker.propTypes = {
   type: PropTypes.string.isRequired,
   onChange: PropTypes.func,
-  name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  validate: PropTypes.func.isRequired,
+  fullWidth: PropTypes.bool,
+  inputIcon: PropTypes.node,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  hidden: PropTypes.bool,
+  disabled: PropTypes.bool,
   clearable: PropTypes.bool,
+  validate: PropTypes.func.isRequired,
 };
 
 export default memo(DatePicker);

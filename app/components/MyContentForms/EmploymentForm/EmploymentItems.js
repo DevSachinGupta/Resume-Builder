@@ -4,9 +4,10 @@ import Input from '../../FormComponents/Input';
 import { Row, Column } from '../../Layout';
 import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
+import Select from '../../FormComponents/Select';
 
 //  *****  Employment Form Component *****
-const EmploymentInputs = ({ idx, values, setFieldValue }) => (
+const EmploymentInputs = ({ idx, values, setFieldValue, countriesList }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -28,21 +29,22 @@ const EmploymentInputs = ({ idx, values, setFieldValue }) => (
     </Row>
     <Row>
       <Column width="1/2" className="px-1">
+        <Select
+          placeholder="Country"
+          label="Country"
+          name="country"
+          clearable
+          options={countriesList}
+          validate={validationMap.country}
+        />
+      </Column>
+      <Column width="1/2" className="px-1">
         <Input
           data-name="state"
           placeholder="State"
           label="State"
           name={`employment.${idx}.state`}
           validate={validationMap.state}
-        />
-      </Column>
-      <Column width="1/2" className="px-1">
-        <Input
-          data-name="country"
-          placeholder="Country"
-          label="Country"
-          name={`employment.${idx}.country`}
-          validate={validationMap.country}
         />
       </Column>
     </Row>
@@ -101,6 +103,7 @@ EmploymentInputs.propTypes = {
   idx: PropTypes.number,
   values: PropTypes.object,
   setFieldValue: PropTypes.func,
+  countriesList: PropTypes.array.isRequired,
 };
 
 export default EmploymentInputs;

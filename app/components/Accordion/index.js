@@ -37,12 +37,7 @@ function Accordion(props) {
         >
           {props.label}
         </label>
-        <Button
-          circular
-          type="button"
-          data-idx={props.id}
-          onClick={props.onClickRemove}
-        >
+        <Button circular type="button" onClick={props.onClickRemove}>
           <FaTimes />
         </Button>
       </div>
@@ -60,7 +55,7 @@ function Accordion(props) {
 Accordion.propTypes = {
   id: PropTypes.number,
   label: PropTypes.string,
-  handleRemove: PropTypes.func.isRequired,
+  onClickRemove: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
 

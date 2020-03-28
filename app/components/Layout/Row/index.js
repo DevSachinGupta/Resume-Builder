@@ -5,7 +5,7 @@ function Row({ children, className }) {
 }
 Row.propTypes = {
   children: Proptypes.node.isRequired,
-  className: Proptypes.string.isRequired,
+  className: Proptypes.string,
 };
 
 export default Row;

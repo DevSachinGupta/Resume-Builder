@@ -48,7 +48,7 @@ Button.propTypes = {
   as: PropTypes.string,
   icon: PropTypes.node,
   className: PropTypes.string,
-  fullWidth: PropTypes.string.isRequired,
+  fullWidth: PropTypes.bool,
   onClick: PropTypes.func,
   circular: PropTypes.bool,
   type: PropTypes.string,

@@ -1,12 +1,11 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import Input from '../../FormComponents/Input';
 import { Row, Column } from '../../Layout';
 import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
 import Radio from '../../FormComponents/Radio';
 import Select from '../../FormComponents/Select';
-import Dropdown from '../../FormComponents/Dropdown';
 
 //  *****  Personal Form Component *****
 const PersonalDetailsForm = ({ countriesList }) => (
@@ -56,6 +55,7 @@ const PersonalDetailsForm = ({ countriesList }) => (
           placeholder="Date of Birth"
           label="Date of Birth"
           name="dateOfBirth"
+          clearable
           validate={validationMap.dateOfBirth}
         />
       </Column>
@@ -67,31 +67,6 @@ const PersonalDetailsForm = ({ countriesList }) => (
           validate={validationMap.gender}
           values={['Male', 'Female', 'Others']}
         />
-        {/* TODO: Gender variable Mapping */}
-        {/* <Input
-          type="radio"
-          name="genderMale"
-          value={values.genderMale}
-          onChange={handleChange}
-          error={errors.genderMale}
-          text="Male"
-        />
-        <Input
-          type="radio"
-          name="genderFemale"
-          value={values.genderFemale}
-          onChange={handleChange}
-          error={errors.genderFemale}
-          text="Female"
-        />
-        <Input
-          type="radio"
-          name="genderOther"
-          value={values.genderOther}
-          onChange={handleChange}
-          error={errors.genderOther}
-          text="Other"
-        /> */}
       </Column>
     </Row>
 
@@ -116,7 +91,7 @@ const PersonalDetailsForm = ({ countriesList }) => (
 
     <Row>
       <Column width="1/4" className="px-1">
-        <Dropdown
+        <Select
           placeholder="Country"
           label="Country"
           name="country"
@@ -164,7 +139,9 @@ const PersonalDetailsForm = ({ countriesList }) => (
   </div>
 );
 
-PersonalDetailsForm.propTypes = {};
+PersonalDetailsForm.propTypes = {
+  countriesList: PropTypes.array.isRequired,
+};
 
 export default PersonalDetailsForm;
 

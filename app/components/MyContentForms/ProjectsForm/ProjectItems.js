@@ -12,7 +12,6 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
     <Row>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Title"
           label="Title"
           name={`project.${idx}.title`}
@@ -21,7 +20,6 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
       </Column>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Summary"
           label="Summary"
           name={`project.${idx}.summary`}
@@ -32,7 +30,6 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
     <Row>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Technology Used"
           label="Technology Used"
           name={`project.${idx}.keywords`}
@@ -41,7 +38,6 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
       </Column>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Reference Link"
           label="Reference Link"
           name={`project.${idx}.url`}
@@ -53,7 +49,6 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
           placeholder="Start Date"
           label="Start Date"
           name={`project.${idx}.start`}
@@ -63,7 +58,6 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
           placeholder="End Date"
           label="End Date"
           disabled={values.tillDate}
@@ -74,7 +68,6 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
       <Column width="1/5" className="px-1">
         <Input
           type="checkbox"
-          data-idx={idx}
           placeholder="Till date"
           label="Till date"
           onChange={() => {
@@ -82,7 +75,7 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
               setFieldValue(`project.${idx}.tillDate`, false);
             } else {
               setFieldValue(`project.${idx}.tillDate`, true);
-              setFieldValue(`project.${idx}.end`, '');
+              setFieldValue(`project.${idx}.end`, null);
             }
           }}
           name={`project.${idx}.tillDate`}
@@ -93,7 +86,6 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
     <Row>
       <Column width="full" className="px-1">
         <TextArea
-          data-idx={idx}
           placeholder="Description"
           label="Description"
           name={`project.${idx}.description`}
