@@ -80,7 +80,7 @@ function HobbiesForm() {
     <Formik initialValues={{ blankHobbiesField }}>
       {() => (
         <Form>
-          <div>
+          <div className="hobbbiesSections">
             {hobbies.length ? (
               <div className="selectedHobbies">{hobbiesUI}</div>
             ) : (
