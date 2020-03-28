@@ -66,8 +66,9 @@ function HobbiesForm() {
   };
   let hobbiesUI;
   if (hobbies) {
-    hobbiesUI = hobbies.map(data => (
-      <div className="hobby">
+    hobbiesUI = hobbies.map((data, index) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <div className="hobby" key={`hobby-${index}`}>
         <span className="">{data.icon}</span>
         <span className="">{data.value}</span>
         <button type="button" onClick={removeValue} value={data.value}>
@@ -96,6 +97,7 @@ function HobbiesForm() {
               allowMultiselect
               allowIconsInOptionList
               updateValues={getValues}
+              allowValidation={false}
             />
             <div className={cx('footerContainer')}>
               <Button as="submit" fullWidth type="primary">
