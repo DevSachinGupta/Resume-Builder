@@ -83,7 +83,7 @@ function AutocompleteInput(props) {
       } else {
         const selectedValue = props.options.find(
           option =>
-            option.name.toLowerCase() === e.currentTarget.value.toLowerCase(),
+            option.value.toLowerCase() === e.currentTarget.value.toLowerCase(),
         );
         // console.log('Item clicked :- ', selectedValue);
         if (selectedValue) props.updateValues(selectedValue);
@@ -95,7 +95,7 @@ function AutocompleteInput(props) {
   const onTextBoxChange = e => {
     const filteredData = props.options.filter(
       word =>
-        word.name.toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) >=
+        word.value.toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) >=
         0,
     );
     setAutoComplete({
@@ -133,11 +133,11 @@ function AutocompleteInput(props) {
       e.preventDefault();
       let selectedValue = props.options.find(
         option =>
-          option.name.toLowerCase() === e.currentTarget.value.toLowerCase(),
+          option.value.toLowerCase() === e.currentTarget.value.toLowerCase(),
       );
       if (props.allowCustomText) {
         if (!selectedValue) {
-          selectedValue = { name: e.currentTarget.value };
+          selectedValue = { value: e.currentTarget.value };
         }
         if (props.allowMultiselect) {
           props.updateValues(selectedValue);
@@ -191,15 +191,15 @@ function AutocompleteInput(props) {
             return (
               <li
                 className={className1}
-                key={`${props.name}_list_${optionName.name}`}
+                key={`${props.name}_list_${optionName.value}`}
               >
                 <button
                   type="button"
                   onClick={onListItemClick}
-                  value={optionName.name}
+                  value={optionName.value}
                 >
                   {IconUI}
-                  {optionName.name}
+                  {optionName.value}
                 </button>
               </li>
             );
@@ -208,7 +208,15 @@ function AutocompleteInput(props) {
       );
     }
   }
-
+  const {
+    options,
+    showDefaultOptions,
+    allowMultiselect,
+    allowCustomText,
+    updateValues,
+    allowIconsInOptionList,
+    ...rest
+  } = props;
   return (
     <React.Fragment>
       <div className={cx('inputWrapper', 'autocomplete')} ref={ref}>
@@ -225,7 +233,7 @@ function AutocompleteInput(props) {
 
           <input
             {...field}
-            {...props}
+            {...rest}
             type="text"
             value={autoComplete.userInput}
             onChange={onTextBoxChange}
@@ -260,7 +268,7 @@ AutocompleteInput.defaultProps = {
   showDefaultOptions: false,
 };
 AutocompleteInput.propTypes = {
-  clearable: PropTypes.bool.isRequired,
+  clearable: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   fullWidth: PropTypes.bool.isRequired,
   inputIcon: PropTypes.node.isRequired,
@@ -275,7 +283,6 @@ AutocompleteInput.propTypes = {
   showDefaultOptions: PropTypes.bool,
   allowMultiselect: PropTypes.bool,
   allowCustomText: PropTypes.bool,
-  allowIconsOnOptionList: PropTypes.bool,
   updateValues: PropTypes.func,
   hidden: PropTypes.bool,
   allowIconsInOptionList: PropTypes.bool,
