@@ -13,15 +13,18 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 function AutocompleteInput(props) {
-  let validateField = true;
+  let validateField = props.allowValidation;
   if (props.hidden) {
     validateField = false;
   }
   const [field, meta, helpers] = useField({
     name: props.name,
     validate: async value => {
-      const val = await props.validate(value).catch(err => err);
-      return validateField ? val : null;
+      // const val = await props.validate(value).catch(err => err);
+      const val = validateField
+        ? await props.validate(value).catch(err => err)
+        : null;
+      return val;
     },
   });
 
@@ -215,6 +218,7 @@ function AutocompleteInput(props) {
     allowCustomText,
     updateValues,
     allowIconsInOptionList,
+    allowValidation,
     ...rest
   } = props;
   return (
@@ -224,7 +228,7 @@ function AutocompleteInput(props) {
         <div
           className={cx('inputContainer', {
             fullWidth: props.fullWidth,
-            error: meta.error && meta.touched,
+            error: validateField && meta.error && meta.touched,
           })}
         >
           {props.inputIcon && (
@@ -240,7 +244,7 @@ function AutocompleteInput(props) {
             onKeyDown={onTextBoxKeydown}
             onClick={onTextBoxClick}
           />
-          {props.clearable && props.value.length > 0 && (
+          {props.clearable && (
             <span className="input-right-Icon cursor-pointer">
               {<MdCancel />}
             </span>
@@ -248,7 +252,7 @@ function AutocompleteInput(props) {
         </div>
         <div className="optionsList">{optionsList}</div>
 
-        {meta.error && meta.touched && (
+        {validateField && meta.error && meta.touched && (
           <div
             className={cx('hint', { error_hint: meta.error && meta.touched })}
           >
@@ -266,26 +270,26 @@ AutocompleteInput.defaultProps = {
   hidden: false,
   allowIconsInOptionList: false,
   showDefaultOptions: false,
+  allowValidation: true,
 };
 AutocompleteInput.propTypes = {
   clearable: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
-  fullWidth: PropTypes.bool.isRequired,
-  inputIcon: PropTypes.node.isRequired,
+  onChange: PropTypes.func,
+  fullWidth: PropTypes.bool,
+  inputIcon: PropTypes.node,
   value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
   error: PropTypes.string,
   name: PropTypes.string,
   label: PropTypes.string,
   validate: PropTypes.object,
-  options: PropTypes.arrayOf(
-    PropTypes.oneOf([PropTypes.string, PropTypes.object]),
-  ).isRequired,
+  options: PropTypes.array.isRequired,
   showDefaultOptions: PropTypes.bool,
   allowMultiselect: PropTypes.bool,
   allowCustomText: PropTypes.bool,
   updateValues: PropTypes.func,
   hidden: PropTypes.bool,
   allowIconsInOptionList: PropTypes.bool,
+  allowValidation: PropTypes.bool,
 };
 
 export default memo(AutocompleteInput);
