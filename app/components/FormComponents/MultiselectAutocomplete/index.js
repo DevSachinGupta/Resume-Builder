@@ -17,11 +17,10 @@ function MultiselectSkill(props) {
     name: props.name,
     // validate: async value => await props.validate(value),
   });
-  let checkboxState=[];
+  const checkboxState = [];
   props.options.forEach(element => {
-    checkboxState.push(false)
+    checkboxState.push(false);
   });
-  console.log(checkboxState);
 
   const [multiselect, setMultiselect] = useState({
     activeOption: -1,
@@ -29,13 +28,14 @@ function MultiselectSkill(props) {
     showOptions: false,
     userInput: '',
     userData: props.options,
+    customOptions: [],
     userRangeVal: checkboxState,
   });
 
   const updateRange = (e, item) => {
     const updatedAutocomplete = { ...multiselect };
     const { userRangeVal } = updatedAutocomplete;
-    userRangeVal[item] = !userRangeVal[item]
+    userRangeVal[item] = !userRangeVal[item];
     updatedAutocomplete.userRangeVal = userRangeVal;
     setMultiselect(updatedAutocomplete);
   };
@@ -44,14 +44,15 @@ function MultiselectSkill(props) {
     const updatedAutocomplete = { ...multiselect };
     updatedAutocomplete.showOptions = !updatedAutocomplete.showOptions;
     updatedAutocomplete.activeOption = -1;
-    updatedAutocomplete.filteredOptions = props.options;
+    updatedAutocomplete.filteredOptions = [...multiselect.customOptions, ...props.options];
     setMultiselect(updatedAutocomplete);
   };
 
   const onChange = e => {
-    const { options } = props;
+    let { options } = props;
     const userInput = e.currentTarget.value;
-    let filteredOptions = options.filter(
+    options = [...multiselect.customOptions, ...options];
+    const filteredOptions = options.filter(
       optionName =>
         optionName.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
     );
@@ -61,6 +62,74 @@ function MultiselectSkill(props) {
     updatedAutocomplete.showOptions = true;
     updatedAutocomplete.userInput = e.currentTarget.value;
     setMultiselect(updatedAutocomplete);
+  };
+
+  const onKeyDown = e => {
+    const { activeOption, filteredOptions, userData, customOptions } = {
+      ...multiselect,
+    };
+    if (e.keyCode === 13 || e.keyCode === 188) {
+      const userDataLower = userData
+        .filter((optionName, index) => userRangeVal[index] && optionName)
+        .map(a => a.toLowerCase());
+      if (!(userDataLower.indexOf(e.target.value.toLowerCase()) >= 0)) {
+        // if (!(userDataLower.indexOf(e.target.value.toLowerCase()) >= 0)) {
+        if (activeOption != -1) {
+          e.preventDefault();
+          const updatedAutocomplete = { ...multiselect };
+          // updatedAutocomplete.activeOption = -1;
+          // updatedAutocomplete.showOptions = false;
+          updatedAutocomplete.userInput = '';
+          // updatedAutocomplete.userData = [
+          //   ...userData,
+          //   filteredOptions[activeOption],
+          // ];
+          updatedAutocomplete.userRangeVal[activeOption] = !updatedAutocomplete
+            .userRangeVal[activeOption];
+          // updatedAutocomplete.userRangeVal = [...userRangeVal, 10];
+          setMultiselect(updatedAutocomplete);
+        } else {
+          e.preventDefault();
+          const updatedAutocomplete = { ...multiselect };
+          // updatedAutocomplete.activeOption = -1;
+          // updatedAutocomplete.showOptions = false;
+          updatedAutocomplete.userInput = '';
+          updatedAutocomplete.userData = [e.target.value, ...userData];
+          updatedAutocomplete.customOptions = [
+            e.target.value,
+            ...customOptions,
+          ];
+          updatedAutocomplete.filteredOptions = [e.target.value, ...filteredOptions]
+          updatedAutocomplete.userRangeVal = [true, ...userRangeVal];
+          setMultiselect(updatedAutocomplete);
+        }
+      } else {
+        e.preventDefault();
+        const updatedAutocomplete = { ...multiselect };
+        // updatedAutocomplete.activeOption = -1;
+        // updatedAutocomplete.showOptions = false;
+        updatedAutocomplete.userInput = '';
+        updatedAutocomplete.userData = [...userData];
+        setMultiselect(updatedAutocomplete);
+      }
+    } else if (e.keyCode === 38) {
+      if (activeOption === -1) {
+        return;
+      }
+      const updatedAutocomplete = { ...multiselect };
+      updatedAutocomplete.activeOption = activeOption - 1;
+      setMultiselect(updatedAutocomplete);
+    } else if (e.keyCode === 40) {
+      if (activeOption === filteredOptions.length - 1) {
+        const updatedAutocomplete = { ...multiselect };
+        updatedAutocomplete.activeOption = filteredOptions.length - 1;
+        setMultiselect(updatedAutocomplete);
+        return;
+      }
+      const updatedAutocomplete = { ...multiselect };
+      updatedAutocomplete.activeOption = activeOption + 1;
+      setMultiselect(updatedAutocomplete);
+    }
   };
 
   console.log(multiselect);
@@ -76,38 +145,44 @@ function MultiselectSkill(props) {
     ...multiselect,
   };
 
+  console.log(
+    userData.filter((optionName, index) => userRangeVal[index] && optionName),
+  );
+
   if (showOptions) {
     // } && userInput) {
     if (filteredOptions.length) {
       optionList = (
-        <ul className="options">
-          {filteredOptions.map((optionName, index) => {
-            let className;
-            if (index === activeOption) {
-              className = 'option-active';
-            }
-            return (
-              <li className={className} key={optionName} >
-                <div className="">
-                  <span className="ml-2">
-                    <input
-                      type="checkbox"
-                      id={`checkbox-${index}`}
-                      checked={userRangeVal[userData.indexOf(optionName)]}
-                      // value="green" isChecked={currentValues.indexOf('green') > -1}
-                      onChange={e => {
-                        // e.preventDefault();
-                        updateRange(e, userData.indexOf(optionName));
-                      }}
-                      value={optionName}
-                    />
-                    <label htmlFor={`checkbox-${index}`}>{optionName}</label>
-                  </span>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        <div>
+          <ul className="optionsListItems">
+            {filteredOptions.map((optionName, index) => {
+              let className;
+              if (index === activeOption) {
+                className = 'option-active';
+              }
+              return (
+                <li className={className} key={optionName}>
+                  <div className="">
+                    <span className="ml-2">
+                      <input
+                        type="checkbox"
+                        id={`checkbox-${index}`}
+                        checked={userRangeVal[userData.indexOf(optionName)]}
+                        // value="green" isChecked={currentValues.indexOf('green') > -1}
+                        onChange={e => {
+                          // e.preventDefault();
+                          updateRange(e, userData.indexOf(optionName));
+                        }}
+                        value={optionName}
+                      />
+                      <label htmlFor={`checkbox-${index}`}>{optionName}</label>
+                    </span>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       );
     }
   }
@@ -125,22 +200,33 @@ function MultiselectSkill(props) {
           <span className="inputIcon">{props.inputIcon}</span>
         )}
 
-        <input
-          {...field}
-          {...props}
-          className="search-box"
-          onChange={onChange}
-          // onKeyDown={onKeyDown}
-          value={userInput}
-          onClick={onTextboxClick}
-        />
-        {props.clearable && props.value.length > 0 && (
-          <span className="input-right-Icon cursor-pointer">
-            {<MdCancel />}
-          </span>
-        )}
+        {/* <input type="button" onClick={onTextboxClick}/> */}
+        <button type="button" onClick={onTextboxClick}>
+          {userRangeVal.indexOf(true) > -1
+            ? userData
+              .filter(
+                (optionName, index) => userRangeVal[index] && optionName,
+              )
+              .join(', ')
+            : 'Select some value'}
+          {/* {(userRangeVal.indexOf(true) > -1 )? userData.map((optionName, index) => {
+            if (userRangeVal[index] === true) {
+              return optionName;
+            }
+          }):'Select some value'} */}
+        </button>
       </div>
-      <div id={`autocomplete-data-${props.name}`} className="absolute">
+      <div id={`autocomplete-data-${props.name}`} className="optionsList">
+        {showOptions && (
+          <input
+            {...field}
+            {...props}
+            className="search-box"
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+            value={userInput}
+          />
+        )}
         {optionList}
       </div>
 
