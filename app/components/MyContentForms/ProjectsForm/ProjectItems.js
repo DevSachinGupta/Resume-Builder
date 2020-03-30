@@ -4,11 +4,11 @@ import Input from '../../FormComponents/Input';
 import { Row, Column } from '../../Layout';
 import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
-import AutocompleteInput from '../../FormComponents/MultiselectAutocomplete'
+import MultiselectSkill  from '../../FormComponents/MultiselectAutocomplete'
 
 //  *****  Project Form Component *****
 
-const ProjectInputs = ({ idx, values, setFieldValue, skillData }) => (
+const ProjectInputs = ({ idx, values, setFieldValue, skillData, getValues }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -30,7 +30,7 @@ const ProjectInputs = ({ idx, values, setFieldValue, skillData }) => (
     </Row>
     <Row>
       <Column width="1/2" className="px-1">
-        <AutocompleteInput
+        {/* <AutocompleteInput
           type="autocomplete"
           placeholder="Select Your Skills"
           label="Choose From List"
@@ -39,7 +39,9 @@ const ProjectInputs = ({ idx, values, setFieldValue, skillData }) => (
           allowCustomText={false}
           allowMultiselect
           allowIconsInOptionList
-        />
+          updateValues={getValues}
+        /> */}
+         <MultiselectSkill options={skillData} showDefaultOptions />
         {/* <Input
           placeholder="Technology Used"
           label="Technology Used"

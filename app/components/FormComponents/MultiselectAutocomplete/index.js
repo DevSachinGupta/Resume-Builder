@@ -1,208 +1,109 @@
 /**
  *
- * AutocompleteInput
+ * MultiselectSkill
  *
  */
 
-import React, { memo, useState, useRef, useEffect } from 'react';
+import React, { memo, useState } from 'react';
 import cx from 'classnames';
 import { useField } from 'formik';
-// import { FaTimes } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 import { MdCancel } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import './style.scss';
 
-function AutocompleteInput(props) {
-  let validateField = true;
-  if (props.hidden) {
-    validateField = false;
-  }
-  const [field, meta, helpers] = useField({
+function MultiselectSkill(props) {
+  const [field, meta] = useField({
     name: props.name,
-    validate: async value => {
-      const val = await props.validate(value).catch(err => err);
-      return validateField ? val : null;
-    },
+    // validate: async value => await props.validate(value),
   });
+  let checkboxState=[];
+  props.options.forEach(element => {
+    checkboxState.push(false)
+  });
+  console.log(checkboxState);
 
-  let activeOptionDefault = 0;
-  if (props.allowMultiselect === true) {
-    activeOptionDefault = -1;
-  }
-
-  const [autoComplete, setAutoComplete] = useState({
-    activeOption: activeOptionDefault,
+  const [multiselect, setMultiselect] = useState({
+    activeOption: -1,
     filteredOptions: [],
-    showOptions: props.showDefaultOptions,
+    showOptions: false,
     userInput: '',
-    userData: [],
-    userRangeVal: [],
+    userData: props.options,
+    userRangeVal: checkboxState,
   });
-  const ref = useRef(null);
-  const handleGlobalClickForAutoComplete = e => {
-    if (ref.current && !ref.current.contains(e.target)) {
-      const autocompleteUpdates = autoComplete;
-      autocompleteUpdates.showOptions = false;
-      setAutoComplete(autocompleteUpdates);
-    }
-  };
-  useEffect(() => {
-    document.addEventListener(
-      'mousedown',
-      handleGlobalClickForAutoComplete,
-      true,
-    );
-    return function cleanup() {
-      document.removeEventListener(
-        'mousedown',
-        handleGlobalClickForAutoComplete,
-        false,
-      );
-    };
-  }, []);
-  const onTextBoxClick = () => {
-    setAutoComplete({
-      activeOptions: activeOptionDefault,
-      filteredOptions: props.options,
-      userInput: '',
-      showOptions: true,
-    });
-  };
-  const onListItemClick = e => {
-    if (props.allowMultiselect) {
-      // console.log("Multiselect allowed", e.currentTarget.value);
-      setAutoComplete({
-        activeOptions: activeOptionDefault,
-        filteredOptions: [],
-        userInput: '',
-        showOptions: false,
-      });
 
-      if (props.allowCustomText) {
-        props.updateValues(e.currentTarget.value);
-      } else {
-        const selectedValue = props.options.find(
-          option =>
-            option.name.toLowerCase() === e.currentTarget.value.toLowerCase(),
-        );
-        // console.log('Item clicked :- ', selectedValue);
-        if (selectedValue) props.updateValues(selectedValue);
-      }
-    } else {
-      helpers.setValue(e.currentTarget.value);
-    }
-  };
-  const onTextBoxChange = e => {
-    const filteredData = props.options.filter(
-      word =>
-        word.name.toLowerCase().indexOf(e.currentTarget.value.toLowerCase()) >=
-        0,
-    );
-    setAutoComplete({
-      activeOptions: activeOptionDefault,
-      filteredOptions: filteredData,
-      userInput: e.currentTarget.value,
-      showOptions: true,
-    });
-    if (!props.allowMultiselect) {
-      helpers.setValue(e.currentTarget.value);
-    }
-  };
-  const onTextBoxKeydown = e => {
-    // code on different key events...
-    const updateAutocompleteData = { ...autoComplete };
-    // console.log(updateAutocompleteData);
-    if (e.keyCode === 38) {
-      // key down event
-      if (autoComplete.activeOptions === 0) {
-        return;
-      }
-      updateAutocompleteData.activeOptions = autoComplete.activeOptions - 1;
-      setAutoComplete(updateAutocompleteData);
-    } else if (e.keyCode === 40) {
-      // key up event
-      if (
-        autoComplete.activeOptions ===
-        autoComplete.filteredOptions.length - 1
-      ) {
-        return;
-      }
-      updateAutocompleteData.activeOptions = autoComplete.activeOptions + 1;
-      setAutoComplete(updateAutocompleteData);
-    } else if (e.keyCode === 13) {
-      e.preventDefault();
-      let selectedValue = props.options.find(
-        option =>
-          option.name.toLowerCase() === e.currentTarget.value.toLowerCase(),
-      );
-      if (props.allowCustomText) {
-        if (!selectedValue) {
-          selectedValue = { name: e.currentTarget.value };
-        }
-        if (props.allowMultiselect) {
-          props.updateValues(selectedValue);
-          updateAutocompleteData.userInput = '';
-        } else {
-          helpers.setValue(selectedValue);
-        }
-      } else if (props.allowMultiselect) {
-        if (selectedValue) {
-          props.updateValues(selectedValue);
-        } else if (
-          updateAutocompleteData.activeOptions !== activeOptionDefault
-        ) {
-          props.updateValues(
-            updateAutocompleteData.filteredOptions[
-              updateAutocompleteData.activeOptions
-            ],
-          );
-        }
-        updateAutocompleteData.userInput = '';
-      } else if (selectedValue) {
-        props.updateValues(selectedValue);
-      } else if (updateAutocompleteData.activeOptions !== activeOptionDefault) {
-        props.updateValues(
-          updateAutocompleteData.filteredOptions[
-            updateAutocompleteData.activeOptions
-          ],
-        );
-      }
-      updateAutocompleteData.showOptions = false;
-      updateAutocompleteData.filteredOptions = [];
-      setAutoComplete(updateAutocompleteData);
-    }
-    // setAutoComplete(updateAutocompleteData);
+  const updateRange = (e, item) => {
+    const updatedAutocomplete = { ...multiselect };
+    const { userRangeVal } = updatedAutocomplete;
+    userRangeVal[item] = !userRangeVal[item]
+    updatedAutocomplete.userRangeVal = userRangeVal;
+    setMultiselect(updatedAutocomplete);
   };
 
-  let optionsList;
-  if (autoComplete.showOptions) {
-    if (autoComplete.filteredOptions.length) {
-      optionsList = (
-        <ul className="optionsListItems">
-          {autoComplete.filteredOptions.map((optionName, index) => {
-            let className1;
-            if (index === autoComplete.activeOptions) {
-              className1 = 'option-active';
-            }
-            let IconUI;
-            if (props.allowIconsInOptionList) {
-              IconUI = <span className="mx-3">{optionName.icon}</span>;
+  const onTextboxClick = () => {
+    const updatedAutocomplete = { ...multiselect };
+    updatedAutocomplete.showOptions = !updatedAutocomplete.showOptions;
+    updatedAutocomplete.activeOption = -1;
+    updatedAutocomplete.filteredOptions = props.options;
+    setMultiselect(updatedAutocomplete);
+  };
+
+  const onChange = e => {
+    const { options } = props;
+    const userInput = e.currentTarget.value;
+    let filteredOptions = options.filter(
+      optionName =>
+        optionName.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
+    );
+    const updatedAutocomplete = { ...multiselect };
+    updatedAutocomplete.activeOption = -1;
+    updatedAutocomplete.filteredOptions = filteredOptions;
+    updatedAutocomplete.showOptions = true;
+    updatedAutocomplete.userInput = e.currentTarget.value;
+    setMultiselect(updatedAutocomplete);
+  };
+
+  console.log(multiselect);
+  let optionList;
+  const {
+    activeOption,
+    filteredOptions,
+    showOptions,
+    userInput,
+    userData,
+    userRangeVal,
+  } = {
+    ...multiselect,
+  };
+
+  if (showOptions) {
+    // } && userInput) {
+    if (filteredOptions.length) {
+      optionList = (
+        <ul className="options">
+          {filteredOptions.map((optionName, index) => {
+            let className;
+            if (index === activeOption) {
+              className = 'option-active';
             }
             return (
-              <li
-                className={className1}
-                key={`${props.name}_list_${optionName.name}`}
-              >
-                <input
-                  id={`ckeckboxLabel-${index}`}
-                  type="checkbox"
-                  onClick={onListItemClick}
-                  value={optionName.name}
-                />
-                <label htmlFor={`ckeckboxLabel-${index}`}>
-                  {/* {IconUI} */}
-                  {optionName.name}
-                </label>
+              <li className={className} key={optionName} >
+                <div className="">
+                  <span className="ml-2">
+                    <input
+                      type="checkbox"
+                      id={`checkbox-${index}`}
+                      checked={userRangeVal[userData.indexOf(optionName)]}
+                      // value="green" isChecked={currentValues.indexOf('green') > -1}
+                      onChange={e => {
+                        // e.preventDefault();
+                        updateRange(e, userData.indexOf(optionName));
+                      }}
+                      value={optionName}
+                    />
+                    <label htmlFor={`checkbox-${index}`}>{optionName}</label>
+                  </span>
+                </div>
               </li>
             );
           })}
@@ -212,56 +113,54 @@ function AutocompleteInput(props) {
   }
 
   return (
-    <React.Fragment>
-      <div className={cx('inputWrapper', 'autocomplete')} ref={ref}>
-        <div className="label">{props.label}</div>
-        <div
-          className={cx('inputContainer', {
-            fullWidth: props.fullWidth,
-            error: meta.error && meta.touched,
-          })}
-        >
-          {props.inputIcon && (
-            <span className="inputIcon">{props.inputIcon}</span>
-          )}
+    <div className={cx('inputWrapper', 'multiselectskill')}>
+      <div className="label">{props.label}</div>
+      <div
+        className={cx('inputContainer', {
+          fullWidth: props.fullWidth,
+          error: meta.error && meta.touched,
+        })}
+      >
+        {props.inputIcon && (
+          <span className="inputIcon">{props.inputIcon}</span>
+        )}
 
-          <input
-            {...field}
-            {...props}
-            type="text"
-            value={autoComplete.userInput}
-            onChange={onTextBoxChange}
-            onKeyDown={onTextBoxKeydown}
-            onClick={onTextBoxClick}
-          />
-          {props.clearable && props.value.length > 0 && (
-            <span className="input-right-Icon cursor-pointer">
-              {<MdCancel />}
-            </span>
-          )}
-        </div>
-        <div className="optionsList">{optionsList}</div>
-
-        {meta.error && meta.touched && (
-          <div
-            className={cx('hint', { error_hint: meta.error && meta.touched })}
-          >
-            {meta.error && meta.error.message}
-          </div>
+        <input
+          {...field}
+          {...props}
+          className="search-box"
+          onChange={onChange}
+          // onKeyDown={onKeyDown}
+          value={userInput}
+          onClick={onTextboxClick}
+        />
+        {props.clearable && props.value.length > 0 && (
+          <span className="input-right-Icon cursor-pointer">
+            {<MdCancel />}
+          </span>
         )}
       </div>
-    </React.Fragment>
+      <div id={`autocomplete-data-${props.name}`} className="absolute">
+        {optionList}
+      </div>
+
+      {meta.error && meta.touched && (
+        <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
+          {/* {meta.error && meta.error} */}
+        </div>
+      )}
+    </div>
   );
 }
 
-AutocompleteInput.defaultProps = {
-  allowCustomText: true,
-  allowMultiselect: false,
-  hidden: false,
-  allowIconsInOptionList: false,
+MultiselectSkill.defaultProps = {
+  value: '',
+  name: '',
+  options: [],
   showDefaultOptions: false,
 };
-AutocompleteInput.propTypes = {
+
+MultiselectSkill.propTypes = {
   clearable: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
   fullWidth: PropTypes.bool.isRequired,
@@ -271,16 +170,8 @@ AutocompleteInput.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
   validate: PropTypes.object,
-  options: PropTypes.arrayOf(
-    PropTypes.oneOf([PropTypes.string, PropTypes.object]),
-  ).isRequired,
+  options: PropTypes.array,
   showDefaultOptions: PropTypes.bool,
-  allowMultiselect: PropTypes.bool,
-  allowCustomText: PropTypes.bool,
-  allowIconsOnOptionList: PropTypes.bool,
-  updateValues: PropTypes.func,
-  hidden: PropTypes.bool,
-  allowIconsInOptionList: PropTypes.bool,
 };
 
-export default memo(AutocompleteInput);
+export default memo(MultiselectSkill);

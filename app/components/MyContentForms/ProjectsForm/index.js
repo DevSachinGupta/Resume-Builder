@@ -20,14 +20,31 @@ import ProjectInputs from './ProjectItems';
 import Button from '../../Button';
 
 function ProjectForm({ editorState, resumeJSONState, dispatch }) {
+  // const skillData = [
+  //   { name: 'Music' },
+  //   { name: 'Singing' },
+  //   { name: 'Reading' },
+  //   { name: 'Writing' },
+  //   { name: 'Blogginging' },
+  //   { name: 'Poetry' },
+  // ];
   const skillData = [
-    { name: 'Music' },
-    { name: 'Singing' },
-    { name: 'Reading' },
-    { name: 'Writing' },
-    { name: 'Blogginging' },
-    { name: 'Poetry' },
+    'Music',
+    'Singing',
+    'Reading',
+    'Writing',
+    'Bloging',
+    'Poetry',
+    'Sketching',
+    'Photography',
+    'Designing',
+    'Painting',
+    'Volunteering',
+    'Socializing',
+    'Gaming',
+    'Sport',
   ];
+
   const blankProFields = {
     title: '',
     summary: '',
@@ -71,6 +88,15 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
     dispatch(updateResumeJSONState(history, 'Project'));
   };
 
+  const getValues = data => {
+    // console.log("value recieved:- ", data);
+    setHobbies([...hobbies, data]);
+    const hobbyDataTemp = hobbiesData.filter(
+      hData => hData.value.toLowerCase() !== data.value.toLowerCase(),
+    );
+    setHobbiesData(hobbyDataTemp);
+  };
+
   return (
     <div>
       <Formik
@@ -98,6 +124,8 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
                         values={item}
                         setFieldValue={setFieldValue}
                         skillData={skillData}
+                        getValues={getValues}
+                        
                       />
                     </Accordian>
                   ))}
