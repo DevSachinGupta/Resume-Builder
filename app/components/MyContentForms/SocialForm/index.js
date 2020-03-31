@@ -5,7 +5,6 @@ import {
   FaDribbble,
   FaLinkedin,
   FaGlobeAsia,
-  FaTimes,
 } from 'react-icons/fa';
 import { Formik, Form, FieldArray } from 'formik';
 import cx from 'classnames';
@@ -51,6 +50,66 @@ function SocialForm() {
     },
   ];
 
+  const socailDataURLMap = {
+    'facebook.com': {
+      icon: FaFacebook,
+      name: 'facebook',
+      placeholder: 'https://facebook.com',
+    },
+    'twitter.com': {
+      icon: FaTwitter,
+      name: 'twitter',
+      placeholder: 'https://twitter.com',
+    },
+    'dribble.com': {
+      icon: FaDribbble,
+      name: 'dribble',
+      placeholder: 'https://dribbe.com',
+    },
+    'linkedIn.com': {
+      icon: FaLinkedin,
+      name: 'linkedIn',
+      placeholder: 'https://linkedIn.com',
+    },
+  };
+
+  const updateSocialValue = (e, setFieldValue, value, name, idx) => {
+    let data = {};
+    const baseURL = e.target.value
+      .replace(/^(www.|http[s]*:\/\/[www\.]*)/gim, '')
+      .split('/')[0];
+    data = socailDataURLMap[baseURL];
+    console.log('name : ', e.target.name);
+    if (!data) {
+      data = value;
+    }
+
+    // const prefix = 'https://';
+    // if (baseURL.substr(0, prefix.length) !== prefix) {
+    //   baseURL = prefix + baseURL;
+    // }
+    // data = { ...data, url: baseURL };
+    // e.target.value = baseURL;
+    // console.log('data : ', data);
+    setFieldValue(`social.${idx}`, data);
+  };
+
+  const httpsValidation = (e, setFieldValue, idx) => {
+    let baseURL = e.target.value;
+
+    const prefixHttp = 'http://';
+    if (baseURL.substr(0, prefixHttp.length) === prefixHttp) {
+      baseURL = baseURL.replace(prefixHttp, '');
+    }
+    const prefixHttps = 'https://';
+    if (baseURL.substr(0, prefixHttps.length) !== prefixHttps) {
+      baseURL = prefixHttps + baseURL;
+    }
+
+    e.target.value = baseURL;
+    setFieldValue(`social.${idx}.url`, baseURL);
+  };
+
   // if (resumeJSONState.Social) {
   //   storeSocial = resumeJSONState.Social.history;
   // }
@@ -79,8 +138,24 @@ function SocialForm() {
                       label={item.placeholder}
                       clearable
                       validate={validationMap.url}
-                      // name={`social[0].${input.name}`}
-                      name={`social.${idx}.${item.name}`}
+                      name={`social.${idx}.url`}
+                      // name={`social.${idx}.${item.name}`}
+                      onInput={e => {
+                        updateSocialValue(
+                          e,
+                          setFieldValue,
+                          values.social[idx],
+                          item.name,
+                          idx,
+                        );
+                      }}
+                      onBlur={e => {
+                        httpsValidation(e, setFieldValue, idx);
+                      }}
+                      onKeyDown={e => {
+                        if (e.keyCode === 13)
+                          httpsValidation(e, setFieldValue, idx);
+                      }}
                     />
                   ))}
 

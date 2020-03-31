@@ -12,17 +12,24 @@ import { MdCancel } from 'react-icons/md';
 import './style.scss';
 
 function Radio(props) {
-  let validateField = true;
-  if (props.hidden != undefined && props.hidden == true) {
+  let validateField = props.allowValidation;
+  if (props.disabled) {
     validateField = false;
   }
   const [field, meta, helpers] = useField({
     name: props.name,
     validate: async value => {
-      const val = await props.validate(value).catch(err => err);
-      return validateField ? val : null;
+      const val = validateField
+        ? await props.validate(value).catch(err => err)
+        : null;
+      return val;
     },
   });
+
+  const handleClearField = () => {
+    helpers.setValue('');
+  };
+
   const handleUpdateValue = e => {
     helpers.setValue(e.target.value);
   };
@@ -36,7 +43,7 @@ function Radio(props) {
           <div
             className={cx('inputContainer', {
               fullWidth: props.fullWidth,
-              error: meta.error && meta.touched,
+              error: validateField && meta.error && meta.touched,
             })}
           >
             {props.inputIcon && (
@@ -45,7 +52,7 @@ function Radio(props) {
 
             <>
               {props.values.map(item => (
-                <label className="radio">
+                <label key={`radio-${item}`} className="radio">
                   <input
                     type="radio"
                     // {...field}
@@ -59,13 +66,13 @@ function Radio(props) {
               ))}
             </>
 
-            {props.clearable && props.value.length > 0 && (
+            {props.clearable && props.values.length > 0 && (
               <span className="input-right-Icon cursor-pointer">
-                {<MdCancel />}
+                {<MdCancel onClick={handleClearField} />}
               </span>
             )}
           </div>
-          {meta.error && meta.touched && (
+          {validateField && meta.error && meta.touched && (
             <div
               className={cx('hint', { error_hint: meta.error && meta.touched })}
             >
@@ -77,17 +84,23 @@ function Radio(props) {
     />
   );
 }
+Radio.defaultProps = {
+  allowValidation: true,
+};
 
 Radio.propTypes = {
-  clearable: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
-  fullWidth: PropTypes.bool.isRequired,
-  inputIcon: PropTypes.node.isRequired,
-  value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-  error: PropTypes.string,
-  name: PropTypes.string.isRequired,
+  // type: PropTypes.string,
+  // onChange: PropTypes.func,
+  fullWidth: PropTypes.bool,
+  inputIcon: PropTypes.node,
   label: PropTypes.string,
-  values: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  name: PropTypes.string,
+  hidden: PropTypes.bool,
+  disabled: PropTypes.bool,
+  clearable: PropTypes.bool,
+  validate: PropTypes.func.isRequired,
+  values: PropTypes.array,
+  allowValidation: PropTypes.bool,
 };
 
 export default memo(Radio);

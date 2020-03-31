@@ -1,4 +1,5 @@
 import React, { memo, useState } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import cx from 'classnames';
@@ -8,26 +9,31 @@ import {
   makeUpdateResumeJSONState,
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
-import {
-  updateEditorState,
-  updateResumeJSONState,
-} from 'containers/Builder/actions';
-import { InjectJSONUsingCheerioEducation } from 'components/CheerioComponent/templates/template_1';
-import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
+// import {
+//   updateEditorState,
+//   updateResumeJSONState,
+// } from 'containers/Builder/actions';
 import Accordian from '../../Accordion';
 import PublicationInputs from './PublicationItems';
 import Button from '../../Button';
 
-function PublicationForm() {
+function PublicationForm({ editorState, resumeJSONState, dispatch }) {
   const blankPubFields = {
     title: '',
     summary: '',
     url: '',
-    date: '',
+    date: null,
     description: '',
   };
+  let storePublication = null;
 
-  const [publications, setPublications] = useState([{ ...blankPubFields }]);
+  if (resumeJSONState.Publication) {
+    storePublication = resumeJSONState.Publication.history;
+  }
+
+  const [publications, setPublications] = useState(
+    storePublication || [{ ...blankPubFields }],
+  );
 
   return (
     <div>
@@ -37,7 +43,7 @@ function PublicationForm() {
           console.log(values);
         }}
       >
-        {({ values, setFieldValue }) => (
+        {({ values }) => (
           <Form>
             <FieldArray
               name="publication"
@@ -45,6 +51,7 @@ function PublicationForm() {
                 <React.Fragment>
                   {values.publication.map((item, idx) => (
                     <Accordian
+                      key={`Accordian-${idx}`}
                       id={idx}
                       label={item.title ? item.title : `Publication ${idx + 1}`}
                       onClickRemove={() => arrayHelpers.remove(idx)}
@@ -60,7 +67,6 @@ function PublicationForm() {
                   >
                     Add Another
                   </Button>
-                  {console.log(' value: ', values)}
                   <div className={cx('footerContainer')}>
                     <Button as="submit" fullWidth type="primary">
                       Save Details
@@ -76,9 +82,15 @@ function PublicationForm() {
   );
 }
 
+PublicationForm.propTypes = {
+  editorState: PropTypes.object,
+  resumeJSONState: PropTypes.object,
+  dispatch: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = createStructuredSelector({
-  editor_state: makeUpdateEditorState(),
-  resume_json_state: makeUpdateResumeJSONState(),
+  editorState: makeUpdateEditorState(),
+  resumeJSONState: makeUpdateResumeJSONState(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(

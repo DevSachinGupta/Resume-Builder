@@ -1,71 +1,86 @@
 import React, { useState, memo, useEffect, useCallback } from 'react';
 import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
+import {
+  makeUpdateResumeJSONState,
+  makeUpdateEditorState,
+} from 'containers/Builder/selectors';
+// import {
+//   updateEditorState,
+//   updateResumeJSONState,
+// } from 'containers/Builder/actions';
+import { getCountryList } from '../../../containers/MyContent/actions';
+import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
 import PersonalDetailsForms from './PersonalDetailsForms';
-import { getCountryList, getStateList } from '../../../containers/MyContent/actions';
-import { makeSelectAllCountiesOptions, makeSelectFilterStatesOptions } from '../../../containers/MyContent/selectors';
-import states from '../../DropdownList/stateList';
-import countries from '../../DropdownList/countryList';
 import Button from '../../Button';
 import './style.scss';
 
-function PersonalDetails({ dispatch, allCountries, fiterStates }) {
+function PersonalDetails({
+  allCountries,
+  editorState,
+  resumeJSONState,
+  dispatch,
+}) {
   const blankPersonalFields = {
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
-    dateOfBirth: new Date(),
+    dateOfBirth: null,
     gender: '',
-    gender1: '',
-    address: '',
+    address1: '',
+    address2: '',
     city: '',
     state: '',
     pincode: '',
     country: '',
     brief: '',
   };
-  const [personal, setPersonal] = useState({ ...blankPersonalFields });
+  let storePersonal = null;
 
-  // const countryName = 101;
+  if (resumeJSONState.Personal) {
+    storePersonal = resumeJSONState.Personal.history;
+  }
+
+  const [personal, setPersonal] = useState(
+    storePersonal || { ...blankPersonalFields },
+  );
 
   const getCountires = useCallback(() => {
     dispatch(getCountryList());
   });
-  const getStates = useCallback(countryName => {
-    dispatch(getStateList(countryName));
-  });
-
-  // useEffect(() => {
-  //   console.log('here are all Counties', allCountries);
-  // }, [allCountries]);
-  useEffect(() => {
-    console.log('here are all states', fiterStates);
-  }, [fiterStates]);
-
-  const [country, setCountry] = useState({
-    countryList: [],
-    isLoading: true,
-    errors: null,
-  });
-
-  const updateState = e => {
-    console.log(e.currentTarget.value);
-    getStates(e.currentTarget.value);
-  };
 
   useEffect(() => {
     getCountires();
-    // getStates();
   }, []);
 
-  const { isLoading, countriesList } = country;
+  // const handleSave = values => {
+  //   const updatedEdu = [...values.education];
+  //   const history = { history: updatedEdu };
+  //   const JSONString = JSON.stringify(history);
+  //   const HTMLString = editorState.getHtml();
+  //   const TemplateCss = editorState.getCss();
+  //   const ConvertedHTML = InjectJSONUsingCheerioEducation(
+  //     HTMLString,
+  //     JSONString,
+  //   );
 
-  console.log("personal:", personal)
+  //   const DemoPage = {
+  //     html: ConvertedHTML,
+  //     css: TemplateCss,
+  //     components: null,
+  //     style: null,
+  //   };
+
+  //   dispatch(updateEditorState(ComponentEditor(DemoPage)));
+  //   // dispatch(updateDemoPageState(DemoPage))
+  //   dispatch(updateResumeJSONState(history, 'Personal'));
+  // };
+
   return (
     <div>
       <Formik
@@ -75,16 +90,10 @@ function PersonalDetails({ dispatch, allCountries, fiterStates }) {
           // handleSave(values);
         }}
       >
-        {({ values, setFieldValue }) => (
+        {() => (
           <Form>
             <React.Fragment>
-              {console.log("values", values)}
-              <PersonalDetailsForms
-                countriesList={allCountries}
-                statesList={fiterStates}
-                updateState={updateState}
-                setFieldValue={setFieldValue}
-              />
+              <PersonalDetailsForms countriesList={allCountries} />
 
               <div className={cx('footerContainer')}>
                 <Button as="submit" fullWidth type="primary">
@@ -100,13 +109,16 @@ function PersonalDetails({ dispatch, allCountries, fiterStates }) {
 }
 PersonalDetails.propTypes = {
   allCountries: PropTypes.array.isRequired,
-  fiterStates: PropTypes.array.isRequired,
+  editorState: PropTypes.object,
+  resumeJSONState: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
+
 const mapStateToProps = () =>
   createStructuredSelector({
     allCountries: makeSelectAllCountiesOptions(),
-    fiterStates: makeSelectFilterStatesOptions(),
+    editorState: makeUpdateEditorState(),
+    resumeJSONState: makeUpdateResumeJSONState(),
   });
 const mapDispatchToProps = dispatch => ({
   dispatch,

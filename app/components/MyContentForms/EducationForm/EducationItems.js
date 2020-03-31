@@ -4,10 +4,11 @@ import { Row, Column } from '../../Layout';
 import Input from '../../FormComponents/Input';
 import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
+import Select from '../../FormComponents/Select';
 
 //  *****  Education Form Component *****
 
-const EducationInputs = ({ idx, values, setFieldValue }) => (
+const EducationInputs = ({ idx, values, setFieldValue, countriesList }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -37,6 +38,16 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
         />
       </Column>
       <Column width="1/3" className="px-1">
+        <Select
+          placeholder="Country"
+          label="Country"
+          name={`education.${idx}.country`}
+          clearable
+          options={countriesList}
+          validate={validationMap.country}
+        />
+      </Column>
+      <Column width="1/3" className="px-1">
         <Input
           placeholder="State"
           label="State"
@@ -44,22 +55,14 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
           validate={validationMap.state}
         />
       </Column>
-      <Column width="1/3" className="px-1">
-        <Input
-          placeholder="Country"
-          label="Country"
-          name={`education.${idx}.country`}
-          validate={validationMap.country}
-        />
-      </Column>
     </Row>
     <Row>
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
-          placeholderText="Start Date"
+          placeholder="Start Date"
           label="Start Date"
+          clearable
           name={`education.${idx}.start`}
           validate={validationMap.start}
         />
@@ -67,11 +70,11 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
-          placeholderText="End Date"
+          placeholder="End Date"
           label="End Date"
-          hidden={values.tillDate}
-          // disabled={values.tillDate}
+          clearable
+          // hidden={values.tillDate}
+          disabled={values.tillDate}
           name={`education.${idx}.end`}
           validate={validationMap.end}
         />
@@ -111,6 +114,7 @@ EducationInputs.propTypes = {
   idx: PropTypes.number,
   values: PropTypes.object,
   setFieldValue: PropTypes.func,
+  countriesList: PropTypes.array.isRequired,
 };
 
 export default EducationInputs;

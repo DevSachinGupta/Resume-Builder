@@ -40,7 +40,6 @@ function BuilderEditor({ editor_state, demopage_state, dispatch }) {
   // DemoPage=demopage_state || DemoPage
   // var DemoPage = demopage_state
   useEffect(() => {
-    console.log('calling editor dispatch : inside effect');
     const editor = grapesjs.init({
       container: '#gjs',
       // width: '82vw',
@@ -65,11 +64,32 @@ function BuilderEditor({ editor_state, demopage_state, dispatch }) {
     // console.log("pannel: ", editor.Panels.getPanels())
     // editor.getConfig().showDevices = 0;
 
-    editor.Panels.addPanel({ id: "devices-c", el: '.deviceContainer', }).get("buttons").add([
-        { id: "set-device-desktop", command: function(e) { return e.setDevice("Desktop") }, className: "fa fa-desktop", active: 1 },
-        { id: "set-device-tablet", command: function(e) { return e.setDevice("Tablet") }, className: "fa fa-tablet" },
-        { id: "set-device-mobile", command: function(e) { return e.setDevice("Mobile portrait") }, className: "fa fa-mobile" },
-    ]);
+    editor.Panels.addPanel({ id: 'devices-c', el: '.deviceContainer' })
+      .get('buttons')
+      .add([
+        {
+          id: 'set-device-desktop',
+          command(e) {
+            return e.setDevice('Desktop');
+          },
+          className: 'fa fa-desktop',
+          active: 1,
+        },
+        {
+          id: 'set-device-tablet',
+          command(e) {
+            return e.setDevice('Tablet');
+          },
+          className: 'fa fa-tablet',
+        },
+        {
+          id: 'set-device-mobile',
+          command(e) {
+            return e.setDevice('Mobile portrait');
+          },
+          className: 'fa fa-mobile',
+        },
+      ]);
     editor.Panels.render();
 
     dispatch(updateEditorState(editor));

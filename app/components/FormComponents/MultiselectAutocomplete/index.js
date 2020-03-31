@@ -1,6 +1,6 @@
 /**
  *
- * MultiselectAutocomplete
+ * MultiselectSkill
  *
  */
 
@@ -12,10 +12,14 @@ import { MdCancel } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import './style.scss';
 
-function MultiselectAutocomplete(props) {
+function MultiselectSkill(props) {
   const [field, meta] = useField({
     name: props.name,
     // validate: async value => await props.validate(value),
+  });
+  const checkboxState = [];
+  props.options.forEach(element => {
+    checkboxState.push(false);
   });
 
   const [multiselect, setMultiselect] = useState({
@@ -23,134 +27,90 @@ function MultiselectAutocomplete(props) {
     filteredOptions: [],
     showOptions: false,
     userInput: '',
-    userData: [],
+    userData: props.options,
+    customOptions: [],
+    userRangeVal: checkboxState,
   });
+
+  const updateRange = (e, item) => {
+    const updatedAutocomplete = { ...multiselect };
+    const { userRangeVal } = updatedAutocomplete;
+    userRangeVal[item] = !userRangeVal[item];
+    updatedAutocomplete.userRangeVal = userRangeVal;
+    setMultiselect(updatedAutocomplete);
+  };
 
   const onTextboxClick = () => {
     const updatedAutocomplete = { ...multiselect };
-    updatedAutocomplete.showOptions = true;
-    let filteredOptions = props.options;
+    updatedAutocomplete.showOptions = !updatedAutocomplete.showOptions;
     updatedAutocomplete.activeOption = -1;
-    updatedAutocomplete.userData.map((optionName, index) => {
-      filteredOptions = filteredOptions.filter(_value => _value !== optionName);
-    });
-
-    updatedAutocomplete.filteredOptions = filteredOptions;
-    setMultiselect(updatedAutocomplete);
-  };
-
-  const removeTag = (e, item) => {
-    const updatedAutocomplete = { ...multiselect };
-    const { userData } = updatedAutocomplete;
-    updatedAutocomplete.userData = userData.filter(
-      (_value, index) => index !== item,
-    );
-    setMultiselect(updatedAutocomplete);
-  };
-
-  const onClick = e => {
-    const updatedAutocomplete = { ...multiselect };
-    updatedAutocomplete.showOptions = false;
-    const { filteredOptions } = updatedAutocomplete;
-    updatedAutocomplete.activeOption = -1;
-    filteredOptions.map((optionName, index) => {
-      // filteredOptions = filteredOptions.filter(_value => _value !== optionName);
-      if (optionName.name == e.currentTarget.innerText) {
-        updatedAutocomplete.userData = [...userData, optionName];
-      }
-    });
-    updatedAutocomplete.filteredOptions = [];
-    updatedAutocomplete.userInput = '';
+    updatedAutocomplete.filteredOptions = [...multiselect.customOptions, ...props.options];
     setMultiselect(updatedAutocomplete);
   };
 
   const onChange = e => {
-    const { options } = props;
+    let { options } = props;
     const userInput = e.currentTarget.value;
-    let filteredOptions = options.filter(
+    options = [...multiselect.customOptions, ...options];
+    const filteredOptions = options.filter(
       optionName =>
-        optionName.name.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
+        optionName.toLowerCase().indexOf(userInput.toLowerCase()) > -1,
     );
     const updatedAutocomplete = { ...multiselect };
     updatedAutocomplete.activeOption = -1;
-    updatedAutocomplete.userData.map((optionName, index) => {
-      filteredOptions = filteredOptions.filter(_value => _value !== optionName);
-    });
     updatedAutocomplete.filteredOptions = filteredOptions;
     updatedAutocomplete.showOptions = true;
-    // if (e.keyCode === 188) {
-    //   updatedAutocomplete.userInput = '';
-    //   e.target.value = '';
-    // } else {
     updatedAutocomplete.userInput = e.currentTarget.value;
-    // }
     setMultiselect(updatedAutocomplete);
   };
 
   const onKeyDown = e => {
-    const { activeOption, filteredOptions, userData } = { ...multiselect };
-    console.log('activeoption: ', activeOption);
+    const { activeOption, filteredOptions, userData, customOptions } = {
+      ...multiselect,
+    };
     if (e.keyCode === 13 || e.keyCode === 188) {
-      const userFilterLower = filteredOptions.map(a => a.name.toLowerCase());
-      if (userFilterLower.indexOf(e.target.value.toLowerCase()) >= 0) {
-        console.log('case 0');
+      const userDataLower = userData
+        .filter((optionName, index) => userRangeVal[index] && optionName)
+        .map(a => a.toLowerCase());
+      if (!(userDataLower.indexOf(e.target.value.toLowerCase()) >= 0)) {
+        // if (!(userDataLower.indexOf(e.target.value.toLowerCase()) >= 0)) {
         if (activeOption != -1) {
           e.preventDefault();
-          console.log('case 1');
           const updatedAutocomplete = { ...multiselect };
-          updatedAutocomplete.activeOption = -1;
-          updatedAutocomplete.showOptions = false;
+          // updatedAutocomplete.activeOption = -1;
+          // updatedAutocomplete.showOptions = false;
           updatedAutocomplete.userInput = '';
-          updatedAutocomplete.filteredOptions = [];
-          updatedAutocomplete.userData = [
-            ...userData,
-            filteredOptions[activeOption],
-          ];
-
+          // updatedAutocomplete.userData = [
+          //   ...userData,
+          //   filteredOptions[activeOption],
+          // ];
+          updatedAutocomplete.userRangeVal[activeOption] = !updatedAutocomplete
+            .userRangeVal[activeOption];
+          // updatedAutocomplete.userRangeVal = [...userRangeVal, 10];
           setMultiselect(updatedAutocomplete);
         } else {
           e.preventDefault();
-          console.log('case 2');
           const updatedAutocomplete = { ...multiselect };
-          updatedAutocomplete.activeOption = -1;
-          updatedAutocomplete.showOptions = false;
+          // updatedAutocomplete.activeOption = -1;
+          // updatedAutocomplete.showOptions = false;
           updatedAutocomplete.userInput = '';
-          updatedAutocomplete.filteredOptions = [];
-          updatedAutocomplete.userData = [
-            ...userData,
-            filteredOptions[
-              userFilterLower.indexOf(e.target.value.toLowerCase())
-            ],
+          updatedAutocomplete.userData = [e.target.value, ...userData];
+          updatedAutocomplete.customOptions = [
+            e.target.value,
+            ...customOptions,
           ];
+          updatedAutocomplete.filteredOptions = [e.target.value, ...filteredOptions]
+          updatedAutocomplete.userRangeVal = [true, ...userRangeVal];
           setMultiselect(updatedAutocomplete);
         }
-      } else if (activeOption != -1) {
-        console.log('case 3');
+      } else {
         e.preventDefault();
         const updatedAutocomplete = { ...multiselect };
-        updatedAutocomplete.activeOption = -1;
-        updatedAutocomplete.showOptions = false;
+        // updatedAutocomplete.activeOption = -1;
+        // updatedAutocomplete.showOptions = false;
         updatedAutocomplete.userInput = '';
-        updatedAutocomplete.filteredOptions = [];
-        updatedAutocomplete.userData = [
-          ...userData,
-          filteredOptions[activeOption],
-        ];
+        updatedAutocomplete.userData = [...userData];
         setMultiselect(updatedAutocomplete);
-      } else if (activeOption == -1) {
-        console.log('case 4');
-        const userDataLower = userData.map(a => a.name.toLowerCase());
-        if (userDataLower.indexOf(e.target.value.toLowerCase()) >= 0) {
-          e.preventDefault();
-          console.log('case 5');
-          const updatedAutocomplete = { ...multiselect };
-          updatedAutocomplete.activeOption = -1;
-          updatedAutocomplete.showOptions = false;
-          updatedAutocomplete.userInput = '';
-          updatedAutocomplete.filteredOptions = [];
-          updatedAutocomplete.userData = [...userData];
-          setMultiselect(updatedAutocomplete);
-        }
       }
     } else if (e.keyCode === 38) {
       if (activeOption === -1) {
@@ -161,9 +121,9 @@ function MultiselectAutocomplete(props) {
       setMultiselect(updatedAutocomplete);
     } else if (e.keyCode === 40) {
       if (activeOption === filteredOptions.length - 1) {
-        // const updatedAutocomplete = { ...multiselect };
-        // updatedAutocomplete.activeOption = filteredOptions.length - 1;
-        // setMultiselect(updatedAutocomplete);
+        const updatedAutocomplete = { ...multiselect };
+        updatedAutocomplete.activeOption = filteredOptions.length - 1;
+        setMultiselect(updatedAutocomplete);
         return;
       }
       const updatedAutocomplete = { ...multiselect };
@@ -172,89 +132,63 @@ function MultiselectAutocomplete(props) {
     }
   };
 
+  console.log(multiselect);
   let optionList;
-  const { activeOption, filteredOptions, showOptions, userInput, userData } = {
+  const {
+    activeOption,
+    filteredOptions,
+    showOptions,
+    userInput,
+    userData,
+    userRangeVal,
+  } = {
     ...multiselect,
   };
-  // console.log("prop:", props);
-  // if (props.showDefaultOptions === true) {
-  //   optionList = (
-  //     <ul className="options">
-  //       {props.options.map((optionName, index) => {
-  //         let className;
-  //         if (index === activeOption) {
-  //           className = 'option-active';
-  //         }
-  //         return (
-  //           <li className={className} key={optionName} onClick={onClick}>
-  //             <div className="inline-block mb-1 rounded-full bg-gray-300 pr-5 h-8 line-height-username1">
-  //               <img
-  //                 className="rounded-full float-left h-full"
-  //                 src="https://randomuser.me/api/portraits/women/34.jpg"
-  //               />
-  //               <span className="ml-3">{optionName}</span>
-  //             </div>
-  //             {/* {typeof optionName === 'string'
-  //               ? optionName
-  //               : optionName.icon + optionName.label} */}
-  //           </li>
-  //         );
-  //       })}
-  //     </ul>
-  //   );
-  // }
+
+  console.log(
+    userData.filter((optionName, index) => userRangeVal[index] && optionName),
+  );
+
   if (showOptions) {
     // } && userInput) {
     if (filteredOptions.length) {
       optionList = (
-        <ul className="options">
-          {filteredOptions.map((optionName, index) => {
-            let className;
-            if (index === activeOption) {
-              className = 'option-active';
-            }
-            return (
-              <li className={className} key={optionName.name} onClick={onClick}>
-                <div className="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1">
-                  <span className="rounded-full p-1 float-left h-full">
-                    {optionName.icon}
-                  </span>
-
-                  <span className="ml-3">{optionName.name}</span>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        <div>
+          <ul className="optionsListItems">
+            {filteredOptions.map((optionName, index) => {
+              let className;
+              if (index === activeOption) {
+                className = 'option-active';
+              }
+              return (
+                <li className={className} key={optionName}>
+                  <div className="">
+                    <span className="ml-2">
+                      <input
+                        type="checkbox"
+                        id={`checkbox-${index}`}
+                        checked={userRangeVal[userData.indexOf(optionName)]}
+                        // value="green" isChecked={currentValues.indexOf('green') > -1}
+                        onChange={e => {
+                          // e.preventDefault();
+                          updateRange(e, userData.indexOf(optionName));
+                        }}
+                        value={optionName}
+                      />
+                      <label htmlFor={`checkbox-${index}`}>{optionName}</label>
+                    </span>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       );
     }
   }
 
-  let showUserData;
-  if (userData) {
-    showUserData = userData.map((item, index) => (
-      <label className="tags">
-        <div className="inline-block mb-1 rounded-full bg-gray-200 pr-5 h-8 line-height-username1">
-          <span className="rounded-full p-1 float-left h-full">
-            {item.icon}
-          </span>
-          <span className="ml-3">{item.name}</span>
-          <span
-            className="inline-block align-middle"
-            onClick={e => {
-              e.preventDefault();
-              removeTag(e, index);
-            }}
-          >
-            {<FaTimes />}
-          </span>
-        </div>
-      </label>
-    ));
-  }
-
   return (
-    <div className={cx('inputWrapper')}>
+    <div className={cx('inputWrapper', 'multiselectskill')}>
       <div className="label">{props.label}</div>
       <div
         className={cx('inputContainer', {
@@ -266,24 +200,33 @@ function MultiselectAutocomplete(props) {
           <span className="inputIcon">{props.inputIcon}</span>
         )}
 
-        <div className="multiselectDiv">{showUserData}</div>
-
-        <input
-          {...field}
-          {...props}
-          className="search-box"
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-          value={userInput}
-          onClick={onTextboxClick}
-        />
-        {props.clearable && props.value.length > 0 && (
-          <span className="input-right-Icon cursor-pointer">
-            {<MdCancel />}
-          </span>
-        )}
+        {/* <input type="button" onClick={onTextboxClick}/> */}
+        <button type="button" onClick={onTextboxClick}>
+          {userRangeVal.indexOf(true) > -1
+            ? userData
+              .filter(
+                (optionName, index) => userRangeVal[index] && optionName,
+              )
+              .join(', ')
+            : 'Select some value'}
+          {/* {(userRangeVal.indexOf(true) > -1 )? userData.map((optionName, index) => {
+            if (userRangeVal[index] === true) {
+              return optionName;
+            }
+          }):'Select some value'} */}
+        </button>
       </div>
-      <div id={`autocomplete-data-${props.name}`} className="absolute">
+      <div id={`autocomplete-data-${props.name}`} className="optionsList">
+        {showOptions && (
+          <input
+            {...field}
+            {...props}
+            className="search-box"
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+            value={userInput}
+          />
+        )}
         {optionList}
       </div>
 
@@ -296,14 +239,14 @@ function MultiselectAutocomplete(props) {
   );
 }
 
-MultiselectAutocomplete.defaultProps = {
+MultiselectSkill.defaultProps = {
   value: '',
   name: '',
   options: [],
   showDefaultOptions: false,
 };
 
-MultiselectAutocomplete.propTypes = {
+MultiselectSkill.propTypes = {
   clearable: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
   fullWidth: PropTypes.bool.isRequired,
@@ -317,4 +260,4 @@ MultiselectAutocomplete.propTypes = {
   showDefaultOptions: PropTypes.bool,
 };
 
-export default memo(MultiselectAutocomplete);
+export default memo(MultiselectSkill);

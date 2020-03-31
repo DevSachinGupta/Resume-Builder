@@ -4,7 +4,8 @@
  *
  */
 
-import React, { memo, useState } from 'react';
+import React, { useState, memo, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import cx from 'classnames';
@@ -20,13 +21,18 @@ import {
 } from 'containers/Builder/actions';
 import { InjectJSONUsingCheerioEducation } from 'components/CheerioComponent/templates/template_1';
 import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
-// import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import { getCountryList } from '../../../containers/MyContent/actions';
+import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
 import EducationInputs from './EducationItems';
 import Accordian from '../../Accordion';
 import Button from '../../Button';
 
-function EducationForm({ editorState, resumeJSONState, dispatch }) {
+function EducationForm({
+  allCountries,
+  editorState,
+  resumeJSONState,
+  dispatch,
+}) {
   const blankEduFields = {
     title: '',
     institution: '',
@@ -47,6 +53,14 @@ function EducationForm({ editorState, resumeJSONState, dispatch }) {
   const [educations, setEducations] = useState(
     storeEducation || [{ ...blankEduFields }],
   );
+
+  const getCountires = useCallback(() => {
+    dispatch(getCountryList());
+  });
+
+  useEffect(() => {
+    getCountires();
+  }, []);
 
   const handleSave = values => {
     const updatedEdu = [...values.education];
@@ -88,16 +102,16 @@ function EducationForm({ editorState, resumeJSONState, dispatch }) {
                 <React.Fragment>
                   {values.education.map((item, idx) => (
                     <Accordian
+                      key={`Accordian-${idx}`}
                       id={idx}
                       label={item.title ? item.title : `Education ${idx + 1}`}
-                      onClickRemove={() =>
-                        idx > 0 ? arrayHelpers.remove(idx) : null
-                      }
+                      onClickRemove={() => arrayHelpers.remove(idx)}
                     >
                       <EducationInputs
                         idx={idx}
                         values={item}
                         setFieldValue={setFieldValue}
+                        countriesList={allCountries}
                       />
                     </Accordian>
                   ))}
@@ -123,12 +137,19 @@ function EducationForm({ editorState, resumeJSONState, dispatch }) {
     </div>
   );
 }
-EducationForm.propTypes = {};
+EducationForm.propTypes = {
+  allCountries: PropTypes.array.isRequired,
+  editorState: PropTypes.object,
+  resumeJSONState: PropTypes.object,
+  dispatch: PropTypes.func.isRequired,
+};
 
-const mapStateToProps = createStructuredSelector({
-  editorState: makeUpdateEditorState(),
-  resumeJSONState: makeUpdateResumeJSONState(),
-});
+const mapStateToProps = () =>
+  createStructuredSelector({
+    allCountries: makeSelectAllCountiesOptions(),
+    editorState: makeUpdateEditorState(),
+    resumeJSONState: makeUpdateResumeJSONState(),
+  });
 
 const mapDispatchToProps = null;
 const withConnect = connect(

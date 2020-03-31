@@ -9,18 +9,33 @@
     padding: 4px 0px;
     @include font();
   }
-  .customDatePickerInput {
-    padding: 6px 12px;
-    width: 100%;
-    border-radius: 4px;
-    border: 1px solid #a0aec0;
-    @include font();
-    &:focus {
-      outline: none;
-    }
-  }
+  
   .floating-calender {
     top: 64px;
+  }
+  .inputContainer {
+    border-radius: 4px;
+    border: 1px solid #a0aec0;
+    display: flex;
+    align-items: center;
+    input {
+      padding: 6px 12px;
+      width: 100%;
+      border-radius: 4px;
+      @include font();
+      &:focus {
+        outline: none;
+      }
+    }
+    .react-datepicker-popper {
+      position: fixed;
+    }
+    .inputIcon {
+      padding-left: 12px;
+    }
+    .input-right-Icon {
+      padding-right: 6px;
+    }
   }
   .error {
     border: 1px solid red;

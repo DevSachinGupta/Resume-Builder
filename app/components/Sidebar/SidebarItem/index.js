@@ -7,7 +7,7 @@ import cx from 'classnames';
 import { makeSelectActiveModalType } from '../../../containers/MyContent/selectors';
 import './style.scss';
 
-function SidebarItem({ title, id, icon, selectedModal, ...rest }) {
+function SidebarItem({ title, id, icon, selectedModal, dispatch, ...rest }) {
   return (
     <div
       className={cx('sidebarItem', { active: id === selectedModal })}
@@ -23,7 +23,8 @@ SidebarItem.propTypes = {
   title: PropTypes.string.isRequired,
   icon: PropTypes.node,
   selectedModal: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  dispatch: PropTypes.func,
 };
 const mapStateToProps = createStructuredSelector({
   selectedModal: makeSelectActiveModalType(),

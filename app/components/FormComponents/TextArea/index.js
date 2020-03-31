@@ -6,33 +6,45 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 function TextArea(props) {
-  const [field, meta] = useField({
+  let validateField = props.allowValidation;
+  if (props.disabled) {
+    validateField = false;
+  }
+  const [field, meta, helpers] = useField({
     name: props.name,
     validate: async value => {
-      const val = await props.validate(value).catch(err => err);
+      const val = validateField
+        ? await props.validate(value).catch(err => err)
+        : null;
       return val;
     },
   });
+
+  const handleClearField = () => {
+    helpers.setValue('');
+  };
+
+  const { clearable, validate, ...rest } = props;
   return (
     <div className={cx('textAreaWrapper')}>
       <div className="label">{props.label}</div>
       <div
         className={cx('textAreaContainer', {
           fullWidth: props.fullWidth,
-          error: meta.error && meta.touched,
+          error: validateField && meta.error && meta.touched,
         })}
       >
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}
-        <textarea {...field} {...props} />
+        <textarea {...field} {...rest} />
         {props.clearable && (
           <span className="input-right-Icon cursor-pointer">
-            {<MdCancel />}
+            {<MdCancel onClick={handleClearField} />}
           </span>
         )}
       </div>
-      {meta.error && meta.touched && (
+      {validateField && meta.error && meta.touched && (
         <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
           {meta.error && meta.error.message}
         </div>
@@ -40,7 +52,22 @@ function TextArea(props) {
     </div>
   );
 }
+
+TextArea.defaultProps = {
+  allowValidation: true,
+};
+
 TextArea.propTypes = {
-  error: PropTypes.bool.isRequired,
+  type: PropTypes.string,
+  onChange: PropTypes.func,
+  fullWidth: PropTypes.bool,
+  inputIcon: PropTypes.node,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  hidden: PropTypes.bool,
+  disabled: PropTypes.bool,
+  clearable: PropTypes.bool,
+  validate: PropTypes.func.isRequired,
+  allowValidation: PropTypes.bool,
 };
 export default memo(TextArea);
