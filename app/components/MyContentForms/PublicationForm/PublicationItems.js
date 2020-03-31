@@ -41,6 +41,7 @@ const PublicationInputs = ({ idx }) => (
           type="date"
           placeholder="Date"
           label="Date"
+          clearable
           name={`publication.${idx}.date`}
           validate={validationMap.date}
         />

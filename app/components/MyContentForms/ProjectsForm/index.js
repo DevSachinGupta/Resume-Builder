@@ -125,7 +125,6 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
                         setFieldValue={setFieldValue}
                         skillData={skillData}
                         getValues={getValues}
-                        
                       />
                     </Accordian>
                   ))}

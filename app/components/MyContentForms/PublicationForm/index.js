@@ -51,7 +51,7 @@ function PublicationForm({ editorState, resumeJSONState, dispatch }) {
                 <React.Fragment>
                   {values.publication.map((item, idx) => (
                     <Accordian
-                      key={idx}
+                      key={`Accordian-${idx}`}
                       id={idx}
                       label={item.title ? item.title : `Publication ${idx + 1}`}
                       onClickRemove={() => arrayHelpers.remove(idx)}

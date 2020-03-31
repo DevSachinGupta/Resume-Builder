@@ -32,8 +32,8 @@ function EmploymentForm({
     employer: '',
     state: '',
     country: '',
-    start: new Date(),
-    end: new Date(),
+    start: null,
+    end: null,
     tillDate: false,
     summary: '',
   };
@@ -125,7 +125,7 @@ function EmploymentForm({
                 <React.Fragment>
                   {values.employment.map((item, idx) => (
                     <Accordian
-                      key={idx}
+                      key={`Accordian-${idx}`}
                       id={idx}
                       label={
                         item.employer ? item.employer : `Employment ${idx + 1}`

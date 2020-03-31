@@ -33,6 +33,7 @@ const AffiliationInputs = ({ idx, values, setFieldValue }) => (
           type="date"
           placeholder="Start Date"
           label="Start Date"
+          clearable
           name={`affiliation.${idx}.start`}
           validate={validationMap.start}
         />
@@ -42,6 +43,7 @@ const AffiliationInputs = ({ idx, values, setFieldValue }) => (
           type="date"
           placeholder="End Date"
           label="End Date"
+          clearable
           disabled={values.tillDate}
           name={`affiliation.${idx}.end`}
           validate={validationMap.end}

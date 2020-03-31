@@ -20,7 +20,6 @@ function AutocompleteInput(props) {
   const [field, meta, helpers] = useField({
     name: props.name,
     validate: async value => {
-      // const val = await props.validate(value).catch(err => err);
       const val = validateField
         ? await props.validate(value).catch(err => err)
         : null;

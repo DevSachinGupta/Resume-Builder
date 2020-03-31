@@ -37,8 +37,9 @@ const validationMap = {
     validationHandler(
       yup
         .date()
-        .typeError("Please Enter Valid Date")
         .required('Required')
+        .nullable()
+        .typeError('Invalid Date Format it should be dd/mm/yyyy')
         .validate(value),
     ),
   gender: value =>

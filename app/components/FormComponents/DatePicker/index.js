@@ -15,15 +15,17 @@ import './style.scss';
 
 // function DatePicker({ type, name, label, clearable, validate, ...rest }) {
 function DatePicker(props) {
-  let validateField = true;
-  if (props.disabled === true) {
+  let validateField = props.allowValidation;
+  if (props.disabled) {
     validateField = false;
   }
   const [field, meta, helpers] = useField({
     name: props.name,
     validate: async value => {
-      const val = await props.validate(value).catch(err => err);
-      return validateField ? val : null;
+      const val = validateField
+        ? await props.validate(value).catch(err => err)
+        : null;
+      return val;
     },
   });
 
@@ -32,7 +34,7 @@ function DatePicker(props) {
   };
 
   return (
-    <div className={cx('relative', 'calenderWrapper')} hidden={props.hidden}>
+    <div className={cx('calenderWrapper')} hidden={props.hidden}>
       <div className="label">{props.label}</div>
       <div
         className={cx('inputContainer', {
@@ -49,6 +51,8 @@ function DatePicker(props) {
           onChange={date => {
             helpers.setValue(date);
           }}
+          dateFormat="dd/MM/yyyy"
+          placeholderText="DD/MM/YYYY"
           wrapperClassName="w-full"
           className="customDatePickerInput"
           showMonthDropdown
@@ -69,7 +73,9 @@ function DatePicker(props) {
     </div>
   );
 }
-DatePicker.defaultProps = {};
+DatePicker.defaultProps = {
+  allowValidation: true,
+};
 DatePicker.propTypes = {
   type: PropTypes.string.isRequired,
   onChange: PropTypes.func,
@@ -81,6 +87,7 @@ DatePicker.propTypes = {
   disabled: PropTypes.bool,
   clearable: PropTypes.bool,
   validate: PropTypes.func.isRequired,
+  allowValidation: PropTypes.bool,
 };
 
 export default memo(DatePicker);

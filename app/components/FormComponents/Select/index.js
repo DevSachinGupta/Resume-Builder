@@ -12,18 +12,17 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 function Select(props) {
-  let validateField = true;
-  if (
-    (props.hidden !== undefined && props.hidden === true) ||
-    (props.disabled !== undefined && props.disabled === true)
-  ) {
+  let validateField = props.allowValidation;
+  if (props.disabled) {
     validateField = false;
   }
   const [field, meta, helpers] = useField({
     name: props.name,
     validate: async value => {
-      const val = await props.validate(value).catch(err => err);
-      return validateField ? val : null;
+      const val = validateField
+        ? await props.validate(value).catch(err => err)
+        : null;
+      return val;
     },
   });
 
@@ -87,6 +86,7 @@ function Select(props) {
 
 Select.defaultProps = {
   allowIdAsValue: false,
+  allowValidation: true,
 };
 
 Select.propTypes = {
@@ -102,6 +102,7 @@ Select.propTypes = {
   disabled: PropTypes.bool,
   clearable: PropTypes.bool,
   validate: PropTypes.func.isRequired,
+  allowValidation: PropTypes.bool,
 };
 
 export default memo(Select);

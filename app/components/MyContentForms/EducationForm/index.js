@@ -102,12 +102,10 @@ function EducationForm({
                 <React.Fragment>
                   {values.education.map((item, idx) => (
                     <Accordian
-                      key={idx}
+                      key={`Accordian-${idx}`}
                       id={idx}
                       label={item.title ? item.title : `Education ${idx + 1}`}
-                      onClickRemove={() =>
-                        idx > 0 ? arrayHelpers.remove(idx) : null
-                      }
+                      onClickRemove={() => arrayHelpers.remove(idx)}
                     >
                       <EducationInputs
                         idx={idx}

@@ -41,7 +41,7 @@ const EducationInputs = ({ idx, values, setFieldValue, countriesList }) => (
         <Select
           placeholder="Country"
           label="Country"
-          name="country"
+          name={`education.${idx}.country`}
           clearable
           options={countriesList}
           validate={validationMap.country}
@@ -60,7 +60,7 @@ const EducationInputs = ({ idx, values, setFieldValue, countriesList }) => (
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          placeholderText="Start Date"
+          placeholder="Start Date"
           label="Start Date"
           clearable
           name={`education.${idx}.start`}
@@ -70,7 +70,7 @@ const EducationInputs = ({ idx, values, setFieldValue, countriesList }) => (
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          placeholderText="End Date"
+          placeholder="End Date"
           label="End Date"
           clearable
           // hidden={values.tillDate}

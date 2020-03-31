@@ -12,18 +12,17 @@ import { MdCancel } from 'react-icons/md';
 import './style.scss';
 
 function Radio(props) {
-  let validateField = true;
-  if (
-    (props.hidden !== undefined && props.hidden === true) ||
-    (props.disabled !== undefined && props.disabled === true)
-  ) {
+  let validateField = props.allowValidation;
+  if (props.disabled) {
     validateField = false;
   }
   const [field, meta, helpers] = useField({
     name: props.name,
     validate: async value => {
-      const val = await props.validate(value).catch(err => err);
-      return validateField ? val : null;
+      const val = validateField
+        ? await props.validate(value).catch(err => err)
+        : null;
+      return val;
     },
   });
 
@@ -85,7 +84,9 @@ function Radio(props) {
     />
   );
 }
-Radio.defaultProps = {};
+Radio.defaultProps = {
+  allowValidation: true,
+};
 
 Radio.propTypes = {
   // type: PropTypes.string,
@@ -99,6 +100,7 @@ Radio.propTypes = {
   clearable: PropTypes.bool,
   validate: PropTypes.func.isRequired,
   values: PropTypes.array,
+  allowValidation: PropTypes.bool,
 };
 
 export default memo(Radio);

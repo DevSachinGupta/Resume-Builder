@@ -32,7 +32,7 @@ const EmploymentInputs = ({ idx, values, setFieldValue, countriesList }) => (
         <Select
           placeholder="Country"
           label="Country"
-          name="country"
+          name={`employment.${idx}.country`}
           clearable
           options={countriesList}
           validate={validationMap.country}
@@ -54,6 +54,7 @@ const EmploymentInputs = ({ idx, values, setFieldValue, countriesList }) => (
           type="date"
           placeholder="Start Date"
           label="Start Date"
+          clearable
           name={`employment.${idx}.start`}
           validate={validationMap.start}
         />
@@ -63,6 +64,7 @@ const EmploymentInputs = ({ idx, values, setFieldValue, countriesList }) => (
           type="date"
           placeholder="End Date"
           label="End Date"
+          clearable
           disabled={values.tillDate}
           name={`employment.${idx}.end`}
           validate={validationMap.end}
@@ -78,7 +80,7 @@ const EmploymentInputs = ({ idx, values, setFieldValue, countriesList }) => (
               setFieldValue(`employment.${idx}.tillDate`, false);
             } else {
               setFieldValue(`employment.${idx}.tillDate`, true);
-              setFieldValue(`employment.${idx}.end`, new Date());
+              setFieldValue(`employment.${idx}.end`, null);
             }
           }}
           name={`employment.${idx}.tillDate`}

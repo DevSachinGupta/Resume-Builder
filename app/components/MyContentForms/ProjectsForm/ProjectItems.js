@@ -64,6 +64,7 @@ const ProjectInputs = ({ idx, values, setFieldValue, skillData, getValues }) => 
           type="date"
           placeholder="Start Date"
           label="Start Date"
+          clearable
           name={`project.${idx}.start`}
           validate={validationMap.start}
         />
@@ -73,6 +74,7 @@ const ProjectInputs = ({ idx, values, setFieldValue, skillData, getValues }) => 
           type="date"
           placeholder="End Date"
           label="End Date"
+          clearable
           disabled={values.tillDate}
           name={`project.${idx}.end`}
           validate={validationMap.end}
