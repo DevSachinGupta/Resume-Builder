@@ -27,26 +27,31 @@ function SocialForm() {
       icon: FaFacebook,
       name: 'facebook',
       placeholder: 'https://facebook.com',
+      url: '',
     },
     {
       icon: FaTwitter,
       name: 'twitter',
       placeholder: 'https://twitter.com',
+      url: '',
     },
     {
       icon: FaDribbble,
       name: 'dribble',
       placeholder: 'https://dribbe.com',
+      url: '',
     },
     {
       icon: FaLinkedin,
       name: 'linkedIn',
       placeholder: 'https://linkedIn.com',
+      url: '',
     },
     {
       icon: FaGlobeAsia,
       name: 'website',
       placeholder: 'your website url',
+      url: '',
     },
   ];
 
@@ -79,35 +84,27 @@ function SocialForm() {
       .replace(/^(www.|http[s]*:\/\/[www\.]*)/gim, '')
       .split('/')[0];
     data = socailDataURLMap[baseURL];
-    console.log('name : ', e.target.name);
     if (!data) {
       data = value;
     }
-
-    // const prefix = 'https://';
-    // if (baseURL.substr(0, prefix.length) !== prefix) {
-    //   baseURL = prefix + baseURL;
-    // }
-    // data = { ...data, url: baseURL };
-    // e.target.value = baseURL;
-    // console.log('data : ', data);
     setFieldValue(`social.${idx}`, data);
   };
 
   const httpsValidation = (e, setFieldValue, idx) => {
     let baseURL = e.target.value;
+    if (baseURL !== '') {
+      const prefixHttp = 'http://';
+      if (baseURL.substr(0, prefixHttp.length) === prefixHttp) {
+        baseURL = baseURL.replace(prefixHttp, '');
+      }
+      const prefixHttps = 'https://';
+      if (baseURL.substr(0, prefixHttps.length) !== prefixHttps) {
+        baseURL = prefixHttps + baseURL;
+      }
 
-    const prefixHttp = 'http://';
-    if (baseURL.substr(0, prefixHttp.length) === prefixHttp) {
-      baseURL = baseURL.replace(prefixHttp, '');
+      e.target.value = baseURL;
+      setFieldValue(`social.${idx}.url`, baseURL);
     }
-    const prefixHttps = 'https://';
-    if (baseURL.substr(0, prefixHttps.length) !== prefixHttps) {
-      baseURL = prefixHttps + baseURL;
-    }
-
-    e.target.value = baseURL;
-    setFieldValue(`social.${idx}.url`, baseURL);
   };
 
   // if (resumeJSONState.Social) {
@@ -139,7 +136,7 @@ function SocialForm() {
                       clearable
                       validate={validationMap.url}
                       name={`social.${idx}.url`}
-                      // name={`social.${idx}.${item.name}`}
+                      key={`social.${idx}`}
                       onInput={e => {
                         updateSocialValue(
                           e,

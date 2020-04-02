@@ -25,6 +25,7 @@ const AccomplishmentInputs = ({ idx }) => (
           type="date"
           placeholder="Date"
           label="Date"
+          clearable
           name={`accomplishment.${idx}.date`}
           validate={validationMap.date}
         />

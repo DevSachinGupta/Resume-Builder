@@ -218,6 +218,7 @@ function AutocompleteInput(props) {
     updateValues,
     allowIconsInOptionList,
     allowValidation,
+    inputIcon,
     ...rest
   } = props;
   return (
