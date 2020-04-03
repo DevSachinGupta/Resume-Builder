@@ -21,8 +21,7 @@ function Accordion(props) {
       setCheckbox(null);
     }
   };
-  console.log(checkbox);
-  
+
   return (
     <div className="tab hover:shadow py-1 px-2 rounded mb-2 w-full overflow-hidden">
       <input
@@ -31,6 +30,7 @@ function Accordion(props) {
         className="absolute opacity-0"
         id={props.id}
         name="test"
+        // checked={true}
       />
       <div className="flex justify-between">
         <label
