@@ -35,9 +35,8 @@ function Radio(props) {
   };
 
   return (
-    <Field
-      name={props.name}
-      render={() => (
+    <Field name={props.name}>
+      {() => (
         <div className={cx('inputWrapper')}>
           <div className="label">{props.label}</div>
           <div
@@ -81,7 +80,7 @@ function Radio(props) {
           )}
         </div>
       )}
-    />
+    </Field>
   );
 }
 Radio.defaultProps = {

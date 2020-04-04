@@ -45,7 +45,15 @@ function Select(props) {
     );
   });
 
-  const { clearable, allowIdAsValue, validate, options, ...rest } = props;
+  const {
+    clearable,
+    allowIdAsValue,
+    validate,
+    options,
+    allowValidation,
+    inputIcon,
+    ...rest
+  } = props;
   return (
     <div className={cx('inputWrapper')} hidden={props.hidden}>
       <div className="label">{props.label}</div>
@@ -60,12 +68,6 @@ function Select(props) {
         )}
         {/* <input {...field} {...props} onChange={(e) => {helpers.setValue(e.target.value) ; props.onStateUpdate(); props.onChange(e);}} /> */}
         <select {...field} {...rest}>
-          {/* <select
-          {...field}
-          placeholder={props.placeholder}
-          name={props.name}
-          onChange={props.onChange}
-        > */}
           <option value="">Select</option>
           {optionList}
         </select>

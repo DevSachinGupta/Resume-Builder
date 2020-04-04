@@ -24,7 +24,7 @@ function TextArea(props) {
     helpers.setValue('');
   };
 
-  const { clearable, validate, ...rest } = props;
+  const { clearable, validate, allowValidation, inputIcon, ...rest } = props;
   return (
     <div className={cx('textAreaWrapper')}>
       <div className="label">{props.label}</div>

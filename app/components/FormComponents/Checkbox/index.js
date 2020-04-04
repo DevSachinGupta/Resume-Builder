@@ -23,12 +23,12 @@ function Checkbox(props) {
   const handleClearField = () => {
     helpers.setValue('');
   };
-  const { clearable, validate, ...rest } = props;
+  const { clearable, validate, allowValidation, inputIcon, ...rest } = props;
   return (
     <div className={cx('inputWrapper')}>
       <div className="label">{props.label}</div>
       <div
-        className={cx({
+        className={cx('inputField', {
           fullWidth: props.fullWidth,
           error: validateField && meta.error && meta.touched,
         })}
