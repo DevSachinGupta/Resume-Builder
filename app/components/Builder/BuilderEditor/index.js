@@ -4,17 +4,20 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import axios from 'axios';
 import {
   makeUpdateDemoPageState,
   makeUpdateEditorState,
+  makeSelectGetThemeContent,
 } from 'containers/Builder/selectors';
 import {
   updateTemplateNumberState,
   updateEditorState,
+  getBuilderThemeContent,
 } from 'containers/Builder/actions';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
@@ -22,23 +25,21 @@ import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
 import './style.scss';
 
-import TemplateHTML from '../../CheerioComponent/templates/template_1/html.js';
+// import TemplateHTML from '../../CheerioComponent/templates/template_1/html.js';
 
-const template_number = 1;
+// const template_number = 1;
 
-const DemoPage = {
-  html: TemplateHTML,
+let DemoPage = {
+  html: 'blank',
   css: '{..}',
   components: null,
   style: null,
 };
 
-function BuilderEditor({ editor_state, demopage_state, dispatch }) {
-  // console.log(editor_state, 'This is the editor_state:Editor');
-  // console.log(demopage_state, 'This is the editor_state:Editor');
-  // console.log(DemoPage, 'This is the editor_state:Editor');
-  // DemoPage=demopage_state || DemoPage
-  // var DemoPage = demopage_state
+function BuilderEditor({ editor_state, demopageState, dispatch }) {
+  console.log(demopageState, 'This is the editor_state:Editor');
+  DemoPage = demopageState || DemoPage;
+
   useEffect(() => {
     const editor = grapesjs.init({
       container: '#gjs',
@@ -56,44 +57,40 @@ function BuilderEditor({ editor_state, demopage_state, dispatch }) {
       canvas: {
         styles: [
           'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
-          // 'https://res.cloudinary.com/rb-app/raw/upload/v1577214082/commons/css/style_t9mzif.css',
           'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style.css',
         ],
       },
     });
-    // console.log("pannel: ", editor.Panels.getPanels())
-    // editor.getConfig().showDevices = 0;
 
-    editor.Panels.addPanel({ id: 'devices-c', el: '.deviceContainer' })
-      .get('buttons')
-      .add([
-        {
-          id: 'set-device-desktop',
-          command(e) {
-            return e.setDevice('Desktop');
-          },
-          className: 'fa fa-desktop',
-          active: 1,
-        },
-        {
-          id: 'set-device-tablet',
-          command(e) {
-            return e.setDevice('Tablet');
-          },
-          className: 'fa fa-tablet',
-        },
-        {
-          id: 'set-device-mobile',
-          command(e) {
-            return e.setDevice('Mobile portrait');
-          },
-          className: 'fa fa-mobile',
-        },
-      ]);
-    editor.Panels.render();
-
+    // editor.Panels.addPanel({ id: 'devices-c', el: '.deviceContainer' })
+    //   .get('buttons')
+    //   .add([
+    //     {
+    //       id: 'set-device-desktop',
+    //       command(e) {
+    //         return e.setDevice('Desktop');
+    //       },
+    //       className: 'fa fa-desktop',
+    //       active: 1,
+    //     },
+    //     {
+    //       id: 'set-device-tablet',
+    //       command(e) {
+    //         return e.setDevice('Tablet');
+    //       },
+    //       className: 'fa fa-tablet',
+    //     },
+    //     {
+    //       id: 'set-device-mobile',
+    //       command(e) {
+    //         return e.setDevice('Mobile portrait');
+    //       },
+    //       className: 'fa fa-mobile',
+    //     },
+    //   ]);
+    // editor.Panels.render();
     dispatch(updateEditorState(editor));
-  }, []);
+  }, [demopageState]);
 
   // dispatch(updateTemplateNumberState(template_number))
   return (
@@ -109,7 +106,7 @@ BuilderEditor.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   editor_state: makeUpdateEditorState(),
-  demopage_state: makeUpdateDemoPageState(),
+  demopageState: makeUpdateDemoPageState(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(

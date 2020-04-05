@@ -23,8 +23,9 @@ const EducationInputs = ({ idx, values, setFieldValue, countriesList }) => (
         <Input
           placeholder="Institute Name"
           label="Institute Name"
-          validate={validationMap.title}
+          validate={validationMap.institution}
           name={`education.${idx}.institution`}
+          allowValidation={false}
         />
       </Column>
     </Row>
@@ -35,6 +36,7 @@ const EducationInputs = ({ idx, values, setFieldValue, countriesList }) => (
           label="Field of Study"
           name={`education.${idx}.fieldOfStudy`}
           validate={validationMap.fieldOfStudy}
+          allowValidation={false}
         />
       </Column>
       <Column width="1/3" className="px-1">
@@ -45,6 +47,7 @@ const EducationInputs = ({ idx, values, setFieldValue, countriesList }) => (
           clearable
           options={countriesList}
           validate={validationMap.country}
+          allowValidation={false}
         />
       </Column>
       <Column width="1/3" className="px-1">
@@ -53,6 +56,7 @@ const EducationInputs = ({ idx, values, setFieldValue, countriesList }) => (
           label="State"
           name={`education.${idx}.state`}
           validate={validationMap.state}
+          allowValidation={false}
         />
       </Column>
     </Row>
@@ -65,6 +69,7 @@ const EducationInputs = ({ idx, values, setFieldValue, countriesList }) => (
           clearable
           name={`education.${idx}.start`}
           validate={validationMap.start}
+          allowValidation={false}
         />
       </Column>
       <Column width="2/5" className="px-1">
@@ -77,6 +82,7 @@ const EducationInputs = ({ idx, values, setFieldValue, countriesList }) => (
           disabled={values.tillDate}
           name={`education.${idx}.end`}
           validate={validationMap.end}
+          allowValidation={false}
         />
       </Column>
       <Column width="1/5" className="px-1">
@@ -104,6 +110,7 @@ const EducationInputs = ({ idx, values, setFieldValue, countriesList }) => (
           label="Summary"
           name={`education.${idx}.summary`}
           validate={validationMap.summary}
+          allowValidation={false}
         />
       </Column>
     </Row>

@@ -20,6 +20,16 @@ const makeSelectBuilder = () =>
     selectBuilderDomain,
     substate => substate,
   );
+const makeSelectGetDefaultTheme = () =>
+  createSelector(
+    selectBuilderDomain,
+    substate => substate.theme.isLoaded,
+  );
+const makeSelectGetThemeContent = () =>
+  createSelector(
+    selectBuilderDomain,
+    substate => substate.theme.data,
+  );
 const makeSelectIsSidebarOpen = () =>
   createSelector(
     selectBuilderDomain,
@@ -53,6 +63,8 @@ const makeUpdateTemplateNumberState = () =>
 export default makeSelectBuilder;
 export {
   selectBuilderDomain,
+  makeSelectGetDefaultTheme,
+  makeSelectGetThemeContent,
   makeSelectIsSidebarOpen,
   makeSelectIsSecondarySidebarOpen,
   makeUpdateEditorState,

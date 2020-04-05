@@ -9,11 +9,11 @@ import {
   HANDLE_SIDEBAR_STATE,
   HANDLE_SECONDARY_SIDEBAR_STATE,
   GET_DEFAULT_THEME,
+  GET_THEME_CONTENT,
   UPDATE_EDITOR_STATE,
   UPDATE_RESUMEJSON_STATE,
   UPDATE_DEMOPAGE_STATE,
   UPDATE_TEMPLATE_NUMBER_STATE,
-
 } from './constants';
 
 export function defaultAction() {
@@ -46,8 +46,17 @@ export function getBuilderTheme(theme) {
     theme,
   };
 }
- /** 
-  * @description function to update editor state
+/**
+ * @description function to be dispatched the fetched theme 
+ */
+export function getBuilderThemeContent(themeId) {
+  return {
+    type: GET_THEME_CONTENT,
+    themeId,
+  };
+}
+/**
+ * @description function to update editor state
  */
 export function updateEditorState(editor_state) {
   return {
@@ -58,7 +67,7 @@ export function updateEditorState(editor_state) {
 /**
  * @description function to update resume_json state
  */
-export function updateResumeJSONState(resume_json_state,section_key_state) {
+export function updateResumeJSONState(resume_json_state, section_key_state) {
   return {
     type: UPDATE_RESUMEJSON_STATE,
     resume_json_state,

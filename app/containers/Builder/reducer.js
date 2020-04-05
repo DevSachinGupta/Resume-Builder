@@ -9,6 +9,7 @@ import {
   HANDLE_SIDEBAR_STATE,
   HANDLE_SECONDARY_SIDEBAR_STATE,
   GET_DEFAULT_THEME,
+  GET_THEME_CONTENT,
   SET_DEFAULT_THEME,
   UPDATE_EDITOR_STATE,
   UPDATE_RESUMEJSON_STATE,
@@ -20,7 +21,7 @@ export const initialState = {
   isSidebarOpen: true,
   isSecondarySidebarOpen: false,
   theme: {
-    data: null,
+    data: 'Hello',
     isLoaded: false,
   },
   editor_state: null,
@@ -37,6 +38,9 @@ const builderReducer = (state = initialState, action) =>
         break;
       case GET_DEFAULT_THEME:
         draft.theme.isLoaded = false;
+        break;
+      case `${GET_THEME_CONTENT}_SUCCESS`:
+        draft.theme.data = action.data;
         break;
       case SET_DEFAULT_THEME:
         draft.theme.isLoaded = true;
