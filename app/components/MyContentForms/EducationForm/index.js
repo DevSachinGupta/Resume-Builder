@@ -20,7 +20,7 @@ import {
   updateResumeJSONState,
 } from 'containers/Builder/actions';
 import { InjectJSONUsingCheerioEducation } from 'components/CheerioComponent/templates/template_1';
-import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
+import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
 import { getCountryList } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
 import EducationInputs from './EducationItems';
@@ -72,16 +72,14 @@ function EducationForm({
       HTMLString,
       JSONString,
     );
-
+    console.log('In side handle save');
     const DemoPage = {
       html: ConvertedHTML,
       css: TemplateCss,
       components: null,
       style: null,
     };
-
-    dispatch(updateEditorState(ComponentEditor(DemoPage)));
-    // dispatch(updateDemoPageState(DemoPage))
+    updateCanvas('education', 'ADD', values.education, editorState);
     dispatch(updateResumeJSONState(history, 'Education'));
   };
 
@@ -91,7 +89,7 @@ function EducationForm({
         initialValues={{ education: educations }}
         onSubmit={(values, actions) => {
           console.log(values);
-          // handleSave(values);
+          handleSave(values);
         }}
       >
         {({ values, setFieldValue }) => (
