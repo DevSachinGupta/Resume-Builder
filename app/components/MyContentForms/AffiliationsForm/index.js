@@ -9,10 +9,8 @@ import {
   makeUpdateResumeJSONState,
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
-// import {
-//   updateEditorState,
-//   updateResumeJSONState,
-// } from 'containers/Builder/actions';
+import { updateResumeJSONState } from 'containers/Builder/actions';
+import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
 import Accordian from '../../Accordion';
 import AffiliationInputs from './AffiliationItems';
 import Button from '../../Button';
@@ -36,12 +34,20 @@ function AffiliationForm({ editorState, resumeJSONState, dispatch }) {
     storeAffiliation || [{ ...blankAffFields }],
   );
 
+  const handleSave = values => {
+    const updatedAff = [...values.affiliation];
+    const history = { history: updatedAff };
+    updateCanvas('affiliation', 'ADD', values.affiliation, editorState);
+    dispatch(updateResumeJSONState(history, 'Affiliation'));
+  };
+
   return (
     <div>
       <Formik
         initialValues={{ affiliation: affiliations }}
         onSubmit={(values, actions) => {
           console.log(values);
+          handleSave(values);
         }}
       >
         {({ values, setFieldValue }) => (

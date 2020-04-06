@@ -9,12 +9,8 @@ import {
   makeUpdateResumeJSONState,
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
-import {
-  updateEditorState,
-  updateResumeJSONState,
-} from 'containers/Builder/actions';
-import { InjectJSONUsingCheerioEducation } from 'components/CheerioComponent/templates/template_1';
-import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
+import { updateResumeJSONState } from 'containers/Builder/actions';
+import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
 import Accordian from '../../Accordion';
 import ProjectInputs from './ProjectItems';
 import Button from '../../Button';
@@ -66,30 +62,13 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
   );
 
   const handleSave = values => {
-    const updatedEdu = [...values.project];
-    const history = { history: updatedEdu };
-    const JSONString = JSON.stringify(history);
-    const HTMLString = editorState.getHtml();
-    const TemplateCss = editorState.getCss();
-    const ConvertedHTML = InjectJSONUsingCheerioEducation(
-      HTMLString,
-      JSONString,
-    );
-
-    const DemoPage = {
-      html: ConvertedHTML,
-      css: TemplateCss,
-      components: null,
-      style: null,
-    };
-
-    dispatch(updateEditorState(ComponentEditor(DemoPage)));
-    // dispatch(updateDemoPageState(DemoPage))
+    const updatedPro = [...values.project];
+    const history = { history: updatedPro };
+    updateCanvas('project', 'ADD', values.project, editorState);
     dispatch(updateResumeJSONState(history, 'Project'));
   };
 
   const getValues = data => {
-    // console.log("value recieved:- ", data);
     setHobbies([...hobbies, data]);
     const hobbyDataTemp = hobbiesData.filter(
       hData => hData.value.toLowerCase() !== data.value.toLowerCase(),
@@ -103,7 +82,7 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
         initialValues={{ project: projects }}
         onSubmit={(values, actions) => {
           console.log(values);
-          // handleSave(values);
+          handleSave(values);
         }}
       >
         {({ values, setFieldValue }) => (

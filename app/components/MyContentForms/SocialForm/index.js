@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 import {
   FaFacebook,
   FaTwitter,
@@ -8,12 +11,19 @@ import {
 } from 'react-icons/fa';
 import { Formik, Form, FieldArray } from 'formik';
 import cx from 'classnames';
+import { createStructuredSelector } from 'reselect';
+import {
+  makeUpdateResumeJSONState,
+  makeUpdateEditorState,
+} from 'containers/Builder/selectors';
+import { updateResumeJSONState } from 'containers/Builder/actions';
+import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
 import { validationMap } from './validation';
 import Button from '../../Button';
 import Input from '../../FormComponents/Input';
 import './style.scss';
 
-function SocialForm() {
+function SocialForm({ editorState, resumeJSONState, dispatch }) {
   const blankSocialFields = {
     icon: FaGlobeAsia,
     name: 'other',
@@ -107,11 +117,14 @@ function SocialForm() {
     }
   };
 
-  // if (resumeJSONState.Social) {
-  //   storeSocial = resumeJSONState.Social.history;
-  // }
-
   const [socials, setSocials] = useState(storeSocial || allInputs);
+
+  const handleSave = values => {
+    const updatedSoc = [...values.social];
+    const history = { history: updatedSoc };
+    updateCanvas('social', 'ADD', values.social, editorState);
+    dispatch(updateResumeJSONState(history, 'Social'));
+  };
 
   return (
     <div>
@@ -119,7 +132,7 @@ function SocialForm() {
         initialValues={{ social: socials }}
         onSubmit={(values, actions) => {
           console.log(values);
-          // handleSave(values);
+          handleSave(values);
         }}
       >
         {({ values, setFieldValue }) => (
@@ -178,4 +191,23 @@ function SocialForm() {
   );
 }
 
-export default SocialForm;
+SocialForm.propTypes = {
+  editorState: PropTypes.object,
+  resumeJSONState: PropTypes.object,
+  dispatch: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = createStructuredSelector({
+  editorState: makeUpdateEditorState(),
+  resumeJSONState: makeUpdateResumeJSONState(),
+});
+const mapDispatchToProps = null;
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+const withCompose = compose(
+  withConnect,
+  memo,
+);
+export default withCompose(SocialForm);

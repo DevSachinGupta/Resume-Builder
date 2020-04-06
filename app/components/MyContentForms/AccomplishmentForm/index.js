@@ -9,10 +9,8 @@ import {
   makeUpdateResumeJSONState,
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
-// import {
-//   updateEditorState,
-//   updateResumeJSONState,
-// } from 'containers/Builder/actions';
+import { updateResumeJSONState } from 'containers/Builder/actions';
+import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
 import Accordian from '../../Accordion';
 import AccomplishmentInputs from './AccomplishmentItems';
 import Button from '../../Button';
@@ -34,12 +32,20 @@ function AccomplishmentForm({ editorState, resumeJSONState, dispatch }) {
     storeAccomplishment || [{ ...blankAccompFields }],
   );
 
+  const handleSave = values => {
+    const updatedAccom = [...values.accomplishment];
+    const history = { history: updatedAccom };
+    updateCanvas('accomplishment', 'ADD', values.accomplishment, editorState);
+    dispatch(updateResumeJSONState(history, 'Accomplishment'));
+  };
+
   return (
     <div>
       <Formik
         initialValues={{ accomplishment: accomplishments }}
         onSubmit={(values, actions) => {
           console.log(values);
+          handleSave(values);
         }}
       >
         {({ values }) => (

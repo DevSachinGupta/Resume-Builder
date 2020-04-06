@@ -15,11 +15,7 @@ import {
   makeUpdateResumeJSONState,
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
-import {
-  updateEditorState,
-  updateResumeJSONState,
-} from 'containers/Builder/actions';
-import { InjectJSONUsingCheerioEducation } from 'components/CheerioComponent/templates/template_1';
+import { updateResumeJSONState } from 'containers/Builder/actions';
 import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
 import { getCountryList } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
@@ -65,20 +61,6 @@ function EducationForm({
   const handleSave = values => {
     const updatedEdu = [...values.education];
     const history = { history: updatedEdu };
-    const JSONString = JSON.stringify(history);
-    const HTMLString = editorState.getHtml();
-    const TemplateCss = editorState.getCss();
-    const ConvertedHTML = InjectJSONUsingCheerioEducation(
-      HTMLString,
-      JSONString,
-    );
-    console.log('In side handle save');
-    const DemoPage = {
-      html: ConvertedHTML,
-      css: TemplateCss,
-      components: null,
-      style: null,
-    };
     updateCanvas('education', 'ADD', values.education, editorState);
     dispatch(updateResumeJSONState(history, 'Education'));
   };

@@ -1,6 +1,16 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { Formik, Form } from 'formik';
 import cx from 'classnames';
+import { createStructuredSelector } from 'reselect';
+import {
+  makeUpdateResumeJSONState,
+  makeUpdateEditorState,
+} from 'containers/Builder/selectors';
+import { updateResumeJSONState } from 'containers/Builder/actions';
+import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
 import { FaTimes } from 'react-icons/fa';
 import Input from '../../FormComponents/Input';
 // import Textfield from '../../FormComponents/TextField';
@@ -9,7 +19,7 @@ import Icons from '../../Icons';
 // import MultiselectAutocomplete from '../../FormComponents/MultiselectAutocomplete';
 import './style.scss';
 
-function HobbiesForm() {
+function HobbiesForm({ editorState, resumeJSONState, dispatch }) {
   const hobbyData = [
     { value: 'Music', icon: <Icons icon="music" /> },
     { value: 'Singing', icon: <Icons icon="singing" /> },
@@ -77,12 +87,21 @@ function HobbiesForm() {
       </div>
     ));
   }
+
+  const handleSave = values => {
+    const updatedHob = [...values];
+    const history = { history: updatedHob };
+    updateCanvas('hobbies', 'ADD', values, editorState);
+    dispatch(updateResumeJSONState(history, 'Hobbies'));
+  };
+
   return (
     <Formik
       initialValues={{ ...hobbies }}
       onSubmit={values => {
         // eslint-disable-next-line no-console
         console.log(values);
+        handleSave(values);
       }}
       enableReinitialize
     >
@@ -98,7 +117,7 @@ function HobbiesForm() {
               type="autocomplete"
               placeholder="Select Your Hobbies"
               label="Choose From List"
-              name="Hobbies"
+              name="hobbies"
               options={hobbiesData}
               allowCustomText={false}
               allowMultiselect
@@ -117,5 +136,23 @@ function HobbiesForm() {
     </Formik>
   );
 }
+HobbiesForm.propTypes = {
+  editorState: PropTypes.object,
+  resumeJSONState: PropTypes.object,
+  dispatch: PropTypes.func.isRequired,
+};
 
-export default HobbiesForm;
+const mapStateToProps = createStructuredSelector({
+  editorState: makeUpdateEditorState(),
+  resumeJSONState: makeUpdateResumeJSONState(),
+});
+const mapDispatchToProps = null;
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+const withCompose = compose(
+  withConnect,
+  memo,
+);
+export default withCompose(HobbiesForm);

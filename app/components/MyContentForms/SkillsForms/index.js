@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { Formik, Form } from 'formik';
 import cx from 'classnames';
+import { createStructuredSelector } from 'reselect';
+import {
+  makeUpdateResumeJSONState,
+  makeUpdateEditorState,
+} from 'containers/Builder/selectors';
+import { updateResumeJSONState } from 'containers/Builder/actions';
+import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
 import Button from '../../Button';
 import Dropdown from '../../FormComponents/Dropdown';
 import Tag from '../../Tag';
 import './style.scss';
 
-function SkillsForm() {
+function SkillsForm({ editorState, resumeJSONState, dispatch }) {
   const skillData = [
     { key: 'Music', value: 'Music' },
     { key: 'B', value: 'B' },
@@ -22,12 +32,20 @@ function SkillsForm() {
   const updateData = value => {
     setData([...data, value]);
   };
+
+  const handleSave = values => {
+    const updatedSkills = [...values];
+    const history = { history: updatedSkills };
+    updateCanvas('skills', 'ADD', values, editorState);
+    dispatch(updateResumeJSONState(history, 'Skill'));
+  };
+
   return (
     <Formik
       initialValues={blankSkillsField}
       onSubmit={(values, actions) => {
         console.log(values);
-        // handleSave(values);
+        handleSave(values);
       }}
     >
       {({ handleSubmit, isSubmitting }) => (
@@ -40,7 +58,7 @@ function SkillsForm() {
           <Form className="socialFormContainer">
             <Dropdown
               onSelect={updateData}
-              name="skils"
+              name="skills"
               multiSelect
               options={skillData}
             />
@@ -56,4 +74,23 @@ function SkillsForm() {
   );
 }
 
-export default SkillsForm;
+SkillsForm.propTypes = {
+  editorState: PropTypes.object,
+  resumeJSONState: PropTypes.object,
+  dispatch: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = createStructuredSelector({
+  editorState: makeUpdateEditorState(),
+  resumeJSONState: makeUpdateResumeJSONState(),
+});
+const mapDispatchToProps = null;
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+const withCompose = compose(
+  withConnect,
+  memo,
+);
+export default withCompose(SkillsForm);

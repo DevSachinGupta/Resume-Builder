@@ -57,7 +57,9 @@ function BuilderEditor({ editor_state, demopageState, dispatch }) {
       canvas: {
         styles: [
           'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
-          'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style.css',
+          'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style.css', // template 2
+          // 'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style-9.css', // template 9
+          // 'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style-10.css', // template 10  
         ],
       },
     });

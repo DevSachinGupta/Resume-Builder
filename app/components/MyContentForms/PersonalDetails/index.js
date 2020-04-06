@@ -9,10 +9,8 @@ import {
   makeUpdateResumeJSONState,
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
-// import {
-//   updateEditorState,
-//   updateResumeJSONState,
-// } from 'containers/Builder/actions';
+import { updateResumeJSONState } from 'containers/Builder/actions';
+import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
 import { getCountryList } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
 import PersonalDetailsForms from './PersonalDetailsForms';
@@ -58,28 +56,12 @@ function PersonalDetails({
     getCountires();
   }, []);
 
-  // const handleSave = values => {
-  //   const updatedEdu = [...values.education];
-  //   const history = { history: updatedEdu };
-  //   const JSONString = JSON.stringify(history);
-  //   const HTMLString = editorState.getHtml();
-  //   const TemplateCss = editorState.getCss();
-  //   const ConvertedHTML = InjectJSONUsingCheerioEducation(
-  //     HTMLString,
-  //     JSONString,
-  //   );
-
-  //   const DemoPage = {
-  //     html: ConvertedHTML,
-  //     css: TemplateCss,
-  //     components: null,
-  //     style: null,
-  //   };
-
-  //   dispatch(updateEditorState(ComponentEditor(DemoPage)));
-  //   // dispatch(updateDemoPageState(DemoPage))
-  //   dispatch(updateResumeJSONState(history, 'Personal'));
-  // };
+  const handleSave = values => {
+    const updatedPer = [...values];
+    const history = { history: updatedPer };
+    updateCanvas('personal', 'ADD', values, editorState);
+    dispatch(updateResumeJSONState(history, 'Personal'));
+  };
 
   return (
     <div>
@@ -87,7 +69,7 @@ function PersonalDetails({
         initialValues={personal}
         onSubmit={(values, actions) => {
           console.log(values);
-          // handleSave(values);
+          handleSave(values);
         }}
       >
         {() => (

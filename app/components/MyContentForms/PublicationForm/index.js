@@ -9,10 +9,8 @@ import {
   makeUpdateResumeJSONState,
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
-// import {
-//   updateEditorState,
-//   updateResumeJSONState,
-// } from 'containers/Builder/actions';
+import { updateResumeJSONState } from 'containers/Builder/actions';
+import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
 import Accordian from '../../Accordion';
 import PublicationInputs from './PublicationItems';
 import Button from '../../Button';
@@ -35,12 +33,20 @@ function PublicationForm({ editorState, resumeJSONState, dispatch }) {
     storePublication || [{ ...blankPubFields }],
   );
 
+  const handleSave = values => {
+    const updatedPub = [...values.publication];
+    const history = { history: updatedPub };
+    updateCanvas('publication', 'ADD', values.publication, editorState);
+    dispatch(updateResumeJSONState(history, 'Publication'));
+  };
+
   return (
     <div>
       <Formik
         initialValues={{ publication: publications }}
         onSubmit={(values, actions) => {
           console.log(values);
+          handleSave(values);
         }}
       >
         {({ values }) => (

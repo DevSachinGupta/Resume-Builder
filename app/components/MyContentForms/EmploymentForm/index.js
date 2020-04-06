@@ -9,12 +9,8 @@ import {
   makeUpdateResumeJSONState,
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
-import {
-  updateEditorState,
-  updateResumeJSONState,
-} from 'containers/Builder/actions';
-import { InjectJSONUsingCheerioEmployement } from 'components/CheerioComponent/templates/template_1';
-import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
+import { updateResumeJSONState } from 'containers/Builder/actions';
+import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
 import { getCountryList } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
 import Accordian from '../../Accordion';
@@ -38,26 +34,6 @@ function EmploymentForm({
     summary: '',
   };
   let empStoreState = null;
-  // const empStoreState = [
-  //   {
-  //     position: 'Senior Analyst',
-  //     employer: 'HCL',
-  //     state: 'Delhi',
-  //     country: 'India',
-  //     start: '10-10-2020',
-  //     end: '10-10-2020',
-  //     summary: 'My employment summary',
-  //   },
-  //   {
-  //     position: 'GTE',
-  //     employer: 'HCL',
-  //     state: 'Delhi',
-  //     country: 'India',
-  //     start: '10-10-2020',
-  //     end: '10-10-2020',
-  //     summary: 'My employment summary',
-  //   },
-  // ];
 
   if (resumeJSONState.Employment) {
     empStoreState = resumeJSONState.Employment.history;
@@ -83,25 +59,10 @@ function EmploymentForm({
   const handleSave = values => {
     const updatedEdu = [...values.employment];
     const history = { history: updatedEdu };
-    const JSONString = JSON.stringify(history);
-    const HTMLString = editorState.getHtml();
-    const TemplateCss = editorState.getCss();
-    const ConvertedHTML = InjectJSONUsingCheerioEmployement(
-      HTMLString,
-      JSONString,
-    );
-
-    const DemoPage = {
-      html: ConvertedHTML,
-      css: TemplateCss,
-      components: null,
-      style: null,
-    };
-
-    dispatch(updateEditorState(ComponentEditor(DemoPage)));
-    // dispatch(updateDemoPageState(DemoPage))
+    updateCanvas('employment', 'ADD', values.employment, editorState);
     dispatch(updateResumeJSONState(history, 'Employment'));
   };
+
   // const handleSaveAndNext = () => {
   //   handleSave();
   //   dispatch(toggleModal());
