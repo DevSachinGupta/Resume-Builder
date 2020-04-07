@@ -57,7 +57,7 @@ function PersonalDetails({
   }, []);
 
   const handleSave = values => {
-    const updatedPer = [...values];
+    const updatedPer = values;
     const history = { history: updatedPer };
     updateCanvas('personal', 'ADD', values, editorState);
     dispatch(updateResumeJSONState(history, 'Personal'));

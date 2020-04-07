@@ -21,38 +21,52 @@ import './style.scss';
 
 function HobbiesForm({ editorState, resumeJSONState, dispatch }) {
   const hobbyData = [
-    { value: 'Music', icon: <Icons icon="music" /> },
-    { value: 'Singing', icon: <Icons icon="singing" /> },
-    { value: 'Reading', icon: <Icons icon="reading" /> },
-    { value: 'Writing', icon: <Icons icon="writing" /> },
-    { value: 'Blogging', icon: <Icons icon="blogging" /> },
-    { value: 'Poetry', icon: <Icons icon="poetry" /> },
-    { value: 'Sketching', icon: <Icons icon="sketching" /> },
-    { value: 'Photography', icon: <Icons icon="photography" /> },
-    { value: 'Designing', icon: <Icons icon="designing" /> },
-    { value: 'Painting', icon: <Icons icon="painting" /> },
-    { value: 'Volunteering', icon: <Icons icon="volunteering" /> },
-    { value: 'Socializing', icon: <Icons icon="socializing" /> },
-    { value: 'Gaming', icon: <Icons icon="gaming" /> },
-    { value: 'Sport', icon: <Icons icon="sport" /> },
-    { value: 'Cycling', icon: <Icons icon="cycling" /> },
-    { value: 'Swimming', icon: <Icons icon="swimming" /> },
-    { value: 'Hiking', icon: <Icons icon="hiking" /> },
-    { value: 'Camping', icon: <Icons icon="camping" /> },
-    { value: 'Traveling', icon: <Icons icon="traveling" /> },
-    { value: 'Cricket', icon: <Icons icon="cricket" /> },
-    { value: 'Dancing', icon: <Icons icon="dancing" /> },
-    { value: 'Theatre', icon: <Icons icon="theatre" /> },
-    { value: 'Acting', icon: <Icons icon="acting" /> },
-    { value: 'Youtuber', icon: <Icons icon="youtuber" /> },
-    { value: 'Coding', icon: <Icons icon="coding" /> },
-    { value: 'Cooking', icon: <Icons icon="cooking" /> },
-    { value: 'Art & Craft', icon: <Icons icon="artandcraft" /> },
-    { value: 'Gardening', icon: <Icons icon="gardening" /> },
+    { icon_temp: 'icon-twitter', value: 'Music', icon: <Icons icon="music" /> },
+    { icon_temp: 'icon-twitter', value: 'Singing', icon: <Icons icon="singing" /> },
+    { icon_temp: 'icon-twitter', value: 'Reading', icon: <Icons icon="reading" /> },
+    { icon_temp: 'icon-twitter', value: 'Writing', icon: <Icons icon="writing" /> },
+    { icon_temp: 'icon-twitter', value: 'Blogging', icon: <Icons icon="blogging" /> },
+    { icon_temp: 'icon-twitter', value: 'Poetry', icon: <Icons icon="poetry" /> },
+    { icon_temp: 'icon-twitter', value: 'Sketching', icon: <Icons icon="sketching" /> },
+    { icon_temp: 'icon-twitter', value: 'Photography', icon: <Icons icon="photography" /> },
+    { icon_temp: 'icon-twitter', value: 'Designing', icon: <Icons icon="designing" /> },
+    { icon_temp: 'icon-twitter', value: 'Painting', icon: <Icons icon="painting" /> },
+    { icon_temp: 'icon-twitter', value: 'Volunteering', icon: <Icons icon="volunteering" /> },
+    { icon_temp: 'icon-twitter', value: 'Socializing', icon: <Icons icon="socializing" /> },
+    { icon_temp: 'icon-twitter', value: 'Gaming', icon: <Icons icon="gaming" /> },
+    { icon_temp: 'icon-twitter', value: 'Sport', icon: <Icons icon="sport" /> },
+    { icon_temp: 'icon-twitter', value: 'Cycling', icon: <Icons icon="cycling" /> },
+    { icon_temp: 'icon-twitter', value: 'Swimming', icon: <Icons icon="swimming" /> },
+    { icon_temp: 'icon-twitter', value: 'Hiking', icon: <Icons icon="hiking" /> },
+    { icon_temp: 'icon-twitter', value: 'Camping', icon: <Icons icon="camping" /> },
+    { icon_temp: 'icon-twitter', value: 'Traveling', icon: <Icons icon="traveling" /> },
+    { icon_temp: 'icon-twitter', value: 'Cricket', icon: <Icons icon="cricket" /> },
+    { icon_temp: 'icon-twitter', value: 'Dancing', icon: <Icons icon="dancing" /> },
+    { icon_temp: 'icon-twitter', value: 'Theatre', icon: <Icons icon="theatre" /> },
+    { icon_temp: 'icon-twitter', value: 'Acting', icon: <Icons icon="acting" /> },
+    { icon_temp: 'icon-twitter', value: 'Youtuber', icon: <Icons icon="youtuber" /> },
+    { icon_temp: 'icon-twitter', value: 'Coding', icon: <Icons icon="coding" /> },
+    { icon_temp: 'icon-twitter', value: 'Cooking', icon: <Icons icon="cooking" /> },
+    { icon_temp: 'icon-twitter', value: 'Art & Craft', icon: <Icons icon="artandcraft" /> },
+    { icon_temp: 'icon-twitter', value: 'Gardening', icon: <Icons icon="gardening" /> },
   ];
   // const blankHobbiesField = {
   //   name: '',
   // };
+
+  const componentMap = {
+    url: {
+      key: ['href', 'title'],
+      valueMap: ['values', 'values'],
+      componetType: 'attribute',
+    },
+    icon: {
+      key: ['class'],
+      valueMap: ['icon_temp'],
+      componetType: 'attribute',
+    },
+  };
+
   const [hobbiesData, setHobbiesData] = useState(hobbyData);
   const [hobbies, setHobbies] = useState([]);
   const getValues = data => {
@@ -89,15 +103,16 @@ function HobbiesForm({ editorState, resumeJSONState, dispatch }) {
   }
 
   const handleSave = values => {
-    const updatedHob = [...values];
+    const updatedHob = values;
     const history = { history: updatedHob };
-    updateCanvas('hobbies', 'ADD', values, editorState);
+    updateCanvas('hobbies', 'ADD', values, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'Hobbies'));
   };
 
   return (
     <Formik
       initialValues={{ ...hobbies }}
+      // initialValues={{ ...hobbies }}
       onSubmit={values => {
         // eslint-disable-next-line no-console
         console.log(values);

@@ -40,6 +40,18 @@ function EducationForm({
     tillDate: false,
     summary: '',
   };
+
+  const componentMap = {
+    title: { valueMap: 'title', componetType: 'content' },
+    institution: { valueMap: 'institution', componetType: 'content' },
+    fieldOfStudy: { valueMap: 'fieldOfStudy', componetType: 'content' },
+    state: { valueMap: 'state', componetType: 'content' },
+    country: { valueMap: 'country', componetType: 'content' },
+    start: { valueMap: 'start', componetType: 'content' },
+    end: { valueMap: 'end', componetType: 'content' },
+    summary: { valueMap: 'summary', componetType: 'content' },
+  };
+
   let storeEducation = null;
 
   if (resumeJSONState.Education) {
@@ -61,7 +73,8 @@ function EducationForm({
   const handleSave = values => {
     const updatedEdu = [...values.education];
     const history = { history: updatedEdu };
-    updateCanvas('education', 'ADD', values.education, editorState);
+    updateCanvas('education', 'ADD', values.education, editorState, componentMap);
+    // updateCanvas('education', 'ADD', values.education, editorState);
     dispatch(updateResumeJSONState(history, 'Education'));
   };
 

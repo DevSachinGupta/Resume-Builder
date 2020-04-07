@@ -28,7 +28,18 @@ function SocialForm({ editorState, resumeJSONState, dispatch }) {
     icon: FaGlobeAsia,
     name: 'other',
     placeholder: 'Other',
+    url: '',
+    icon_temp: 'icon-twitter',
   };
+  const componentMap = {
+    url: { key: ['href'], valueMap: ['url'], componetType: 'attribute' },
+    icon: {
+      key: ['class'],
+      valueMap: ['icon_temp'],
+      componetType: 'attribute',
+    },
+  };
+
   const storeSocial = null;
 
   // const [allInputs, setAllInputs] = useState([
@@ -37,30 +48,35 @@ function SocialForm({ editorState, resumeJSONState, dispatch }) {
       icon: FaFacebook,
       name: 'facebook',
       placeholder: 'https://facebook.com',
+      icon_temp: 'icon-twitter',
       url: '',
     },
     {
       icon: FaTwitter,
       name: 'twitter',
       placeholder: 'https://twitter.com',
+      icon_temp: 'icon-twitter',
       url: '',
     },
     {
       icon: FaDribbble,
       name: 'dribble',
       placeholder: 'https://dribbe.com',
+      icon_temp: 'icon-twitter',
       url: '',
     },
     {
       icon: FaLinkedin,
       name: 'linkedIn',
       placeholder: 'https://linkedIn.com',
+      icon_temp: 'icon-twitter',
       url: '',
     },
     {
       icon: FaGlobeAsia,
       name: 'website',
       placeholder: 'your website url',
+      icon_temp: 'icon-twitter',
       url: '',
     },
   ];
@@ -70,21 +86,25 @@ function SocialForm({ editorState, resumeJSONState, dispatch }) {
       icon: FaFacebook,
       name: 'facebook',
       placeholder: 'https://facebook.com',
+      icon_temp: 'icon-twitter',
     },
     'twitter.com': {
       icon: FaTwitter,
       name: 'twitter',
       placeholder: 'https://twitter.com',
+      icon_temp: 'icon-twitter',
     },
     'dribble.com': {
       icon: FaDribbble,
       name: 'dribble',
       placeholder: 'https://dribbe.com',
+      icon_temp: 'icon-twitter',
     },
     'linkedIn.com': {
       icon: FaLinkedin,
       name: 'linkedIn',
       placeholder: 'https://linkedIn.com',
+      icon_temp: 'icon-twitter',
     },
   };
 
@@ -120,9 +140,9 @@ function SocialForm({ editorState, resumeJSONState, dispatch }) {
   const [socials, setSocials] = useState(storeSocial || allInputs);
 
   const handleSave = values => {
-    const updatedSoc = [...values.social];
+    const updatedSoc = values;
     const history = { history: updatedSoc };
-    updateCanvas('social', 'ADD', values.social, editorState);
+    updateCanvas('social', 'ADD', values.social, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'Social'));
   };
 

@@ -34,7 +34,7 @@ function SkillsForm({ editorState, resumeJSONState, dispatch }) {
   };
 
   const handleSave = values => {
-    const updatedSkills = [...values];
+    const updatedSkills = values;
     const history = { history: updatedSkills };
     updateCanvas('skills', 'ADD', values, editorState);
     dispatch(updateResumeJSONState(history, 'Skill'));
