@@ -41,7 +41,7 @@ const ProjectInputs = ({ idx, values, setFieldValue, skillData, getValues }) => 
           allowIconsInOptionList
           updateValues={getValues}
         /> */}
-         <MultiselectSkill options={skillData} showDefaultOptions />
+         <MultiselectSkill name={`project.${idx}.keywords`} options={skillData} showDefaultOptions />
         {/* <Input
           placeholder="Technology Used"
           label="Technology Used"

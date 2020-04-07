@@ -79,7 +79,7 @@ function HobbiesForm() {
   }
   return (
     <Formik
-      initialValues={{ ...hobbies }}
+      initialValues={[...hobbies]}
       onSubmit={values => {
         // eslint-disable-next-line no-console
         console.log(values);
