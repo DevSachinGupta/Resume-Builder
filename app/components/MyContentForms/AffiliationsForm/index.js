@@ -24,8 +24,15 @@ function AffiliationForm({ editorState, resumeJSONState, dispatch }) {
     tillDate: false,
     summary: '',
   };
-  let storeAffiliation = null;
+  const componentMap = {
+    organization: { valueMap: 'organization', componetType: 'content' },
+    role: { valueMap: 'role', componetType: 'content' },
+    start: { valueMap: 'start', componetType: 'content' },
+    end: { valueMap: 'end', componetType: 'content' },
+    summary: { valueMap: 'summary', componetType: 'content' },
+  };
 
+  let storeAffiliation = null;
   if (resumeJSONState.Affiliation) {
     storeAffiliation = resumeJSONState.Affiliation.history;
   }
@@ -37,7 +44,13 @@ function AffiliationForm({ editorState, resumeJSONState, dispatch }) {
   const handleSave = values => {
     const updatedAff = [...values.affiliation];
     const history = { history: updatedAff };
-    updateCanvas('affiliation', 'ADD', values.affiliation, editorState);
+    updateCanvas(
+      'affiliation',
+      'ADD',
+      values.affiliation,
+      editorState,
+      componentMap,
+    );
     dispatch(updateResumeJSONState(history, 'Affiliation'));
   };
 

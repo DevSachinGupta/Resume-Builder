@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import cx from 'classnames';
 import { useField } from 'formik';
 import { FaTimes } from 'react-icons/fa';
@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 function MultiselectSkill(props) {
-  const [field, meta] = useField({
+  const [field, meta, helpers] = useField({
     name: props.name,
     // validate: async value => await props.validate(value),
   });
@@ -44,7 +44,10 @@ function MultiselectSkill(props) {
     const updatedAutocomplete = { ...multiselect };
     updatedAutocomplete.showOptions = !updatedAutocomplete.showOptions;
     updatedAutocomplete.activeOption = -1;
-    updatedAutocomplete.filteredOptions = [...multiselect.customOptions, ...props.options];
+    updatedAutocomplete.filteredOptions = [
+      ...multiselect.customOptions,
+      ...props.options,
+    ];
     setMultiselect(updatedAutocomplete);
   };
 
@@ -99,7 +102,10 @@ function MultiselectSkill(props) {
             e.target.value,
             ...customOptions,
           ];
-          updatedAutocomplete.filteredOptions = [e.target.value, ...filteredOptions]
+          updatedAutocomplete.filteredOptions = [
+            e.target.value,
+            ...filteredOptions,
+          ];
           updatedAutocomplete.userRangeVal = [true, ...userRangeVal];
           setMultiselect(updatedAutocomplete);
         }
@@ -144,6 +150,15 @@ function MultiselectSkill(props) {
   } = {
     ...multiselect,
   };
+
+  useEffect(() => {
+    if (userRangeVal.indexOf(true) > -1) {
+      const fieldData = userData
+        .filter((optionName, index) => userRangeVal[index] && optionName)
+        .join(', ');
+      helpers.setValue(fieldData);
+    }
+  }, [multiselect]);
 
   console.log(
     userData.filter((optionName, index) => userRangeVal[index] && optionName),

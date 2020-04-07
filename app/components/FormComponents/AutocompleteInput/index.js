@@ -141,6 +141,12 @@ function AutocompleteInput(props) {
         if (!selectedValue) {
           selectedValue = { value: e.currentTarget.value };
         }
+        if (updateAutocompleteData.activeOptions !== activeOptionDefault) {
+          selectedValue =
+            updateAutocompleteData.filteredOptions[
+              updateAutocompleteData.activeOptions
+            ];
+        }
         if (props.allowMultiselect) {
           props.updateValues(selectedValue);
           updateAutocompleteData.userInput = '';

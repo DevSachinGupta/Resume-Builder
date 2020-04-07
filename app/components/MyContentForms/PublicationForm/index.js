@@ -23,8 +23,15 @@ function PublicationForm({ editorState, resumeJSONState, dispatch }) {
     date: null,
     description: '',
   };
-  let storePublication = null;
+  const componentMap = {
+    title: { valueMap: 'title', componetType: 'content' },
+    summary: { valueMap: 'summary', componetType: 'content' },
+    date: { valueMap: 'date', componetType: 'content' },
+    url: { valueMap: 'url', componetType: 'content' },
+    description: { valueMap: 'description', componetType: 'content' },
+  };
 
+  let storePublication = null;
   if (resumeJSONState.Publication) {
     storePublication = resumeJSONState.Publication.history;
   }
@@ -36,7 +43,13 @@ function PublicationForm({ editorState, resumeJSONState, dispatch }) {
   const handleSave = values => {
     const updatedPub = [...values.publication];
     const history = { history: updatedPub };
-    updateCanvas('publication', 'ADD', values.publication, editorState);
+    updateCanvas(
+      'publication',
+      'ADD',
+      values.publication,
+      editorState,
+      componentMap,
+    );
     dispatch(updateResumeJSONState(history, 'Publication'));
   };
 

@@ -51,8 +51,17 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
     tillDate: false,
     description: '',
   };
-  let storeProject = null;
+  const componentMap = {
+    title: { valueMap: 'title', componetType: 'content' },
+    summary: { valueMap: 'summary', componetType: 'content' },
+    keywords: { valueMap: 'keywords', componetType: 'content' },
+    url: { valueMap: 'url', componetType: 'content' },
+    start: { valueMap: 'start', componetType: 'content' },
+    end: { valueMap: 'end', componetType: 'content' },
+    description: { valueMap: 'description', componetType: 'content' },
+  };
 
+  let storeProject = null;
   if (resumeJSONState.Project) {
     storeProject = resumeJSONState.Project.history;
   }
@@ -64,7 +73,7 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
   const handleSave = values => {
     const updatedPro = [...values.project];
     const history = { history: updatedPro };
-    updateCanvas('project', 'ADD', values.project, editorState);
+    updateCanvas('project', 'ADD', values.project, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'Project'));
   };
 

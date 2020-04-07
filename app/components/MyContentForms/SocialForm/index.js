@@ -29,7 +29,7 @@ function SocialForm({ editorState, resumeJSONState, dispatch }) {
     name: 'other',
     placeholder: 'Other',
     url: '',
-    icon_temp: 'icon-twitter',
+    icon_temp: 'icon-github',
   };
   const componentMap = {
     url: { key: ['href'], valueMap: ['url'], componetType: 'attribute' },
@@ -40,15 +40,12 @@ function SocialForm({ editorState, resumeJSONState, dispatch }) {
     },
   };
 
-  const storeSocial = null;
-
-  // const [allInputs, setAllInputs] = useState([
   const allInputs = [
     {
       icon: FaFacebook,
       name: 'facebook',
       placeholder: 'https://facebook.com',
-      icon_temp: 'icon-twitter',
+      icon_temp: 'icon-facebook',
       url: '',
     },
     {
@@ -62,31 +59,37 @@ function SocialForm({ editorState, resumeJSONState, dispatch }) {
       icon: FaDribbble,
       name: 'dribble',
       placeholder: 'https://dribbe.com',
-      icon_temp: 'icon-twitter',
+      icon_temp: 'icon-dribble',
       url: '',
     },
     {
       icon: FaLinkedin,
       name: 'linkedIn',
       placeholder: 'https://linkedIn.com',
-      icon_temp: 'icon-twitter',
+      icon_temp: 'icon-linkedin',
       url: '',
     },
     {
       icon: FaGlobeAsia,
       name: 'website',
       placeholder: 'your website url',
-      icon_temp: 'icon-twitter',
+      icon_temp: 'icon-github',
       url: '',
     },
   ];
+
+  let storeSocial = null;
+  if (resumeJSONState.Social) {
+    storeSocial = resumeJSONState.Social.history;
+  }
+  const [socials, setSocials] = useState(storeSocial || allInputs);
 
   const socailDataURLMap = {
     'facebook.com': {
       icon: FaFacebook,
       name: 'facebook',
       placeholder: 'https://facebook.com',
-      icon_temp: 'icon-twitter',
+      icon_temp: 'icon-facebook',
     },
     'twitter.com': {
       icon: FaTwitter,
@@ -98,13 +101,13 @@ function SocialForm({ editorState, resumeJSONState, dispatch }) {
       icon: FaDribbble,
       name: 'dribble',
       placeholder: 'https://dribbe.com',
-      icon_temp: 'icon-twitter',
+      icon_temp: 'icon-dribble',
     },
     'linkedIn.com': {
       icon: FaLinkedin,
       name: 'linkedIn',
       placeholder: 'https://linkedIn.com',
-      icon_temp: 'icon-twitter',
+      icon_temp: 'icon-linkedin',
     },
   };
 
@@ -137,10 +140,8 @@ function SocialForm({ editorState, resumeJSONState, dispatch }) {
     }
   };
 
-  const [socials, setSocials] = useState(storeSocial || allInputs);
-
   const handleSave = values => {
-    const updatedSoc = values;
+    const updatedSoc = [...values.social];
     const history = { history: updatedSoc };
     updateCanvas('social', 'ADD', values.social, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'Social'));

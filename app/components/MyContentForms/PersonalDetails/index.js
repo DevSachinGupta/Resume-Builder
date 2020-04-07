@@ -38,8 +38,24 @@ function PersonalDetails({
     country: '',
     brief: '',
   };
-  let storePersonal = null;
+  const componentMap = {
+    firstName: { valueMap: 'firstName', componetType: 'content' },
+    lastName: { valueMap: 'lastName', componetType: 'content' },
+    fullName: { valueMap: 'fullName', componetType: 'content' },
+    email: { valueMap: 'email', componetType: 'content' },
+    phone: { valueMap: 'phone', componetType: 'content' },
+    dateOfBirth: { valueMap: 'dateOfBirth', componetType: 'content' },
+    gender: { valueMap: 'gender', componetType: 'content' },
+    address1: { valueMap: 'address1', componetType: 'content' },
+    address2: { valueMap: 'address2', componetType: 'content' },
+    city: { valueMap: 'city', componetType: 'content' },
+    state: { valueMap: 'state', componetType: 'content' },
+    country: { valueMap: 'country', componetType: 'content' },
+    pincode: { valueMap: 'pincode', componetType: 'content' },
+    brief: { valueMap: 'brief', componetType: 'content' },
+  };
 
+  let storePersonal = null;
   if (resumeJSONState.Personal) {
     storePersonal = resumeJSONState.Personal.history;
   }
@@ -56,10 +72,15 @@ function PersonalDetails({
     getCountires();
   }, []);
 
+  const formatValues = values => {
+    const tempValues = values;
+    tempValues['fullName'] = `${tempValues.firstName} ${tempValues.lastName}`;
+    return tempValues;
+  };
   const handleSave = values => {
-    const updatedPer = values;
+    const updatedPer = formatValues(values);
     const history = { history: updatedPer };
-    updateCanvas('personal', 'ADD', values, editorState);
+    updateCanvas('personal', 'ADD', updatedPer, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'Personal'));
   };
 

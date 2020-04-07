@@ -11,36 +11,54 @@ function updateCanvas(
   componentMap,
 ) {
   console.log('Inside Canvas');
-  switch (operation) {
-    case 'ADD':
-      // getJsonFromData(sectionId, payload, editorState);
-      // getJsonFromDataClassBased(sectionId, payload, editorState);
-      getJsonFromDataClassBasedAttribute(
-        sectionId,
-        payload,
-        editorState,
-        componentMap,
-      );
-      return '';
+  switch (sectionId) {
+    case 'personal':
+      getJsonFromDataClassBased(sectionId, payload, editorState, componentMap);
+      break;
     default:
-      return null;
+      getJsonFromDataIdBased(sectionId, payload, editorState, componentMap);
   }
 }
 
-async function getJsonFromDataClassBased(sectionId, payload, editor) {
+async function getJsonFromDataClassBased(
+  sectionId,
+  payload,
+  editor,
+  componentMap,
+) {
   Object.keys(payload).forEach(item => {
-    const filterComponent = editor.getWrapper().find(`.personal_${item}`);
+    const filterComponent = editor.getWrapper().find(`.${sectionId}_${item}`);
     filterComponent.forEach(component => {
       const parseComponent = JSON.parse(JSON.stringify(component));
       // console.log("fetched Component",parseComponent.classes , JSON.stringify(component))
-      parseComponent.content = payload[item];
+      const mapping = componentMap[item];
+      if (mapping) {
+        if (mapping.componetType === 'attribute') {
+          mapping.key.forEach((keyItem, idx) => {
+            if (keyItem === 'class') {
+              parseComponent.classes.push(payload[mapping.valueMap[idx]]);
+            } else if (keyItem === 'style') {
+              parseComponent.style[mapping.styleMap[idx]] =
+                payload[mapping.valueMap[idx]];
+            } else {
+              parseComponent.attributes[keyItem] =
+                payload[mapping.valueMap[idx]];
+            }
+          });
+        } else {
+          // componetType === 'content'
+          // objt.content = data[mapping.valueMap];
+          parseComponent.content = payload[mapping.valueMap];
+        }
+        // objt.attributes.id = objt.attributes.id.replace('0', index);
+      }
+      // parseComponent.content = payload[item];
       component.replaceWith(parseComponent);
     });
   });
 }
 
-// Social testing
-async function getJsonFromDataClassBasedAttribute(
+async function getJsonFromDataIdBased(
   sectionId,
   payload,
   editor,
@@ -48,7 +66,7 @@ async function getJsonFromDataClassBasedAttribute(
 ) {
   const id = `${sectionId}_0`;
   const component = editor.DomComponents.componentsById[id];
-  console.log("fetched component:", component, id)
+  // console.log("fetched component:", JSON.stringify(component), id)
   const parentComponent = editor.DomComponents.componentsById[id].parent();
   const parseParentComponent = JSON.parse(JSON.stringify(parentComponent));
   const tempComponent = [];
@@ -73,6 +91,8 @@ function setLeafAttribute(objt, sectionId, index, data, componentMap) {
         mapping.key.forEach((keyItem, idx) => {
           if (keyItem === 'class') {
             objt.classes.push(data[mapping.valueMap[idx]]);
+          } else if (keyItem === 'style') {
+            objt.style[mapping.styleMap[idx]] = data[mapping.valueMap[idx]];
           } else {
             objt.attributes[keyItem] = data[mapping.valueMap[idx]];
           }
@@ -80,7 +100,6 @@ function setLeafAttribute(objt, sectionId, index, data, componentMap) {
       } else {
         // componetType === 'content'
         objt.content = data[mapping.valueMap];
-        // objt.content = data[id];
       }
       objt.attributes.id = objt.attributes.id.replace('0', index);
     }

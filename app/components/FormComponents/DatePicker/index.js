@@ -33,6 +33,14 @@ function DatePicker(props) {
     helpers.setValue(null);
   };
 
+  const formatDateValue = date => {
+    const splitDate = date.toString().split(' ');
+    // const dateFormated = `${splitDate[2]} ${splitDate[1]} ${splitDate[3]}`;
+    // console.log(dateFormated);
+    // return dateFormated;
+    return date;
+  };
+
   return (
     <div className={cx('calenderWrapper')} hidden={props.hidden}>
       <div className="label">{props.label}</div>
@@ -49,9 +57,10 @@ function DatePicker(props) {
         <ReactDatePicker
           selected={field.value}
           onChange={date => {
-            helpers.setValue(date);
+            helpers.setValue(formatDateValue(date));
           }}
-          dateFormat="dd/MM/yyyy"
+          dateFormat="dd MMM yyyy"
+          // dateFormat="dd/MM/yyyy"
           placeholderText="DD/MM/YYYY"
           wrapperClassName="w-full"
           className="customDatePickerInput"

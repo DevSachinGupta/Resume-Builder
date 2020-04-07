@@ -22,8 +22,14 @@ function AccomplishmentForm({ editorState, resumeJSONState, dispatch }) {
     rank: '',
     summary: '',
   };
-  let storeAccomplishment = null;
+  const componentMap = {
+    title: { valueMap: 'title', componetType: 'content' },
+    date: { valueMap: 'date', componetType: 'content' },
+    rank: { valueMap: 'rank', componetType: 'content' },
+    summary: { valueMap: 'summary', componetType: 'content' },
+  };
 
+  let storeAccomplishment = null;
   if (resumeJSONState.Accomplishment) {
     storeAccomplishment = resumeJSONState.Accomplishment.history;
   }
@@ -35,7 +41,13 @@ function AccomplishmentForm({ editorState, resumeJSONState, dispatch }) {
   const handleSave = values => {
     const updatedAccom = [...values.accomplishment];
     const history = { history: updatedAccom };
-    updateCanvas('accomplishment', 'ADD', values.accomplishment, editorState);
+    updateCanvas(
+      'accomplishment',
+      'ADD',
+      values.accomplishment,
+      editorState,
+      componentMap,
+    );
     dispatch(updateResumeJSONState(history, 'Accomplishment'));
   };
 

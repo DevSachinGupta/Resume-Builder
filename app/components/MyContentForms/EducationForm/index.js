@@ -17,6 +17,7 @@ import {
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
 import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { formatDateValue } from '../../../utils/app/textFormating';
 import { getCountryList } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
 import EducationInputs from './EducationItems';
@@ -40,7 +41,6 @@ function EducationForm({
     tillDate: false,
     summary: '',
   };
-
   const componentMap = {
     title: { valueMap: 'title', componetType: 'content' },
     institution: { valueMap: 'institution', componetType: 'content' },
@@ -53,7 +53,6 @@ function EducationForm({
   };
 
   let storeEducation = null;
-
   if (resumeJSONState.Education) {
     storeEducation = resumeJSONState.Education.history;
   }
@@ -70,11 +69,23 @@ function EducationForm({
     getCountires();
   }, []);
 
+  const formatValues = values => {
+    const tempValues = values;
+    tempValues.forEach((value, index) => {
+      tempValues[index].start = formatDateValue(tempValues[index].start);
+      if (tempValues[index].tillDate === true) {
+        tempValues[index].end = 'Present';
+      } else {
+        tempValues[index].end = formatDateValue(tempValues[index].end);
+      }
+    });
+    return tempValues;
+  };
   const handleSave = values => {
+    // const updatedEdu = formatValues([...values.education]);
     const updatedEdu = [...values.education];
-    const history = { history: updatedEdu };
-    updateCanvas('education', 'ADD', values.education, editorState, componentMap);
-    // updateCanvas('education', 'ADD', values.education, editorState);
+    const history = { history: values.education };
+    updateCanvas('education', 'ADD', updatedEdu, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'Education'));
   };
 

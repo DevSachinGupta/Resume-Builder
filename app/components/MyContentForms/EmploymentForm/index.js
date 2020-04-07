@@ -33,8 +33,17 @@ function EmploymentForm({
     tillDate: false,
     summary: '',
   };
-  let empStoreState = null;
+  const componentMap = {
+    position: { valueMap: 'position', componetType: 'content' },
+    employer: { valueMap: 'employer', componetType: 'content' },
+    state: { valueMap: 'state', componetType: 'content' },
+    country: { valueMap: 'country', componetType: 'content' },
+    start: { valueMap: 'start', componetType: 'content' },
+    end: { valueMap: 'end', componetType: 'content' },
+    summary: { valueMap: 'summary', componetType: 'content' },
+  };
 
+  let empStoreState = null;
   if (resumeJSONState.Employment) {
     empStoreState = resumeJSONState.Employment.history;
   }
@@ -59,7 +68,13 @@ function EmploymentForm({
   const handleSave = values => {
     const updatedEdu = [...values.employment];
     const history = { history: updatedEdu };
-    updateCanvas('employment', 'ADD', values.employment, editorState);
+    updateCanvas(
+      'employment',
+      'ADD',
+      values.employment,
+      editorState,
+      componentMap,
+    );
     dispatch(updateResumeJSONState(history, 'Employment'));
   };
 
