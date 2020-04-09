@@ -82,8 +82,10 @@ function EducationForm({
     return tempValues;
   };
   const handleSave = values => {
-    // const updatedEdu = formatValues([...values.education]);
-    const updatedEdu = [...values.education];
+    const updatedEdu = formatValues(
+      JSON.parse(JSON.stringify(values.education)),
+    );
+    // const updatedEdu = [...values.education];
     const history = { history: values.education };
     updateCanvas('education', 'ADD', updatedEdu, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'Education'));

@@ -140,10 +140,23 @@ function SocialForm({ editorState, resumeJSONState, dispatch }) {
     }
   };
 
+  const formatValues = values => {
+    let tempValues = values;
+    // tempValues.forEach((value, index) => {
+    //   if (tempValues[index].url === '') {
+    //     console.log("blank",tempValues[index].name, index)
+    //     // tempValues.splice(index, 1);
+    //   }
+    // });
+    tempValues = tempValues.filter(data => data.url !== '');
+    return tempValues;
+  };
   const handleSave = values => {
-    const updatedSoc = [...values.social];
-    const history = { history: updatedSoc };
-    updateCanvas('social', 'ADD', values.social, editorState, componentMap);
+    const updatedSoc = formatValues(JSON.parse(JSON.stringify(values.social)));
+    console.log(updatedSoc);
+    // const updatedSoc = [...values.social];
+    const history = { history: values.social };
+    updateCanvas('social', 'ADD', updatedSoc, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'Social'));
   };
 

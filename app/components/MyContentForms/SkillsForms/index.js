@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -39,14 +39,16 @@ function SkillsForm({ editorState, resumeJSONState, dispatch }) {
       componetType: 'attribute',
     },
   };
+  const [skillsData, setSkillsData] = useState(skillData);
 
   let storeSkill = null;
   if (resumeJSONState.Skill) {
     storeSkill = resumeJSONState.Skill.history;
   }
+  // const skillDataTemp = skillsData.filter(value => !storeSkill.includes(value));
+  // setSkillsData(skillDataTemp);
 
   const [skills, setSkills] = useState(storeSkill || []);
-  const [skillsData, setSkillsData] = useState(skillData);
 
   const getValues = data => {
     data.rangeVal = 10;
@@ -77,8 +79,9 @@ function SkillsForm({ editorState, resumeJSONState, dispatch }) {
   };
 
   const handleSave = values => {
-    const updatedSkills = formatValues(values);
-    console.log(updatedSkills);
+    const updatedSkills = formatValues(JSON.parse(JSON.stringify(values)));
+    // const updatedSkills = [...values];
+    // console.log(updatedSkills);
     const history = { history: values };
     updateCanvas('skills', 'ADD', updatedSkills, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'Skill'));

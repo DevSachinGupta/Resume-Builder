@@ -11,6 +11,7 @@ import {
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
 import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { formatDateValue } from '../../../utils/app/textFormating';
 import Accordian from '../../Accordion';
 import AccomplishmentInputs from './AccomplishmentItems';
 import Button from '../../Button';
@@ -38,13 +39,23 @@ function AccomplishmentForm({ editorState, resumeJSONState, dispatch }) {
     storeAccomplishment || [{ ...blankAccompFields }],
   );
 
+  const formatValues = values => {
+    const tempValues = values;
+    tempValues.forEach((value, index) => {
+      tempValues[index].date = formatDateValue(tempValues[index].date);
+    });
+    return tempValues;
+  };
   const handleSave = values => {
-    const updatedAccom = [...values.accomplishment];
-    const history = { history: updatedAccom };
+    const updatedAccom = formatValues(
+      JSON.parse(JSON.stringify(values.accomplishment)),
+    );
+    // const updatedAccom = [...values.accomplishment];
+    const history = { history: values.accomplishment };
     updateCanvas(
       'accomplishment',
       'ADD',
-      values.accomplishment,
+      updatedAccom,
       editorState,
       componentMap,
     );

@@ -10,7 +10,6 @@ function updateCanvas(
   editorState,
   componentMap,
 ) {
-  console.log('Inside Canvas');
   switch (sectionId) {
     case 'personal':
       getJsonFromDataClassBased(sectionId, payload, editorState, componentMap);
@@ -30,7 +29,7 @@ async function getJsonFromDataClassBased(
     const filterComponent = editor.getWrapper().find(`.${sectionId}_${item}`);
     filterComponent.forEach(component => {
       const parseComponent = JSON.parse(JSON.stringify(component));
-      // console.log("fetched Component",parseComponent.classes , JSON.stringify(component))
+      // console.log("fetched Component",item , component , JSON.stringify(component))
       const mapping = componentMap[item];
       if (mapping) {
         if (mapping.componetType === 'attribute') {

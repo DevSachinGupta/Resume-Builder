@@ -11,6 +11,7 @@ import {
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
 import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { formatDateValue } from '../../../utils/app/textFormating';
 import Accordian from '../../Accordion';
 import PublicationInputs from './PublicationItems';
 import Button from '../../Button';
@@ -27,7 +28,7 @@ function PublicationForm({ editorState, resumeJSONState, dispatch }) {
     title: { valueMap: 'title', componetType: 'content' },
     summary: { valueMap: 'summary', componetType: 'content' },
     date: { valueMap: 'date', componetType: 'content' },
-    url: { valueMap: 'url', componetType: 'content' },
+    url: { key: ['href'], valueMap: ['url'], componetType: 'attribute' },
     description: { valueMap: 'description', componetType: 'content' },
   };
 
@@ -40,16 +41,20 @@ function PublicationForm({ editorState, resumeJSONState, dispatch }) {
     storePublication || [{ ...blankPubFields }],
   );
 
+  const formatValues = values => {
+    const tempValues = values;
+    tempValues.forEach((value, index) => {
+      tempValues[index].date = formatDateValue(tempValues[index].date);
+    });
+    return tempValues;
+  };
   const handleSave = values => {
-    const updatedPub = [...values.publication];
-    const history = { history: updatedPub };
-    updateCanvas(
-      'publication',
-      'ADD',
-      values.publication,
-      editorState,
-      componentMap,
+    const updatedPub = formatValues(
+      JSON.parse(JSON.stringify(values.publication)),
     );
+    // const updatedPub = [...values.publication];
+    const history = { history: values.publication };
+    updateCanvas('publication', 'ADD', updatedPub, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'Publication'));
   };
 

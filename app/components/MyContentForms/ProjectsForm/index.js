@@ -11,6 +11,7 @@ import {
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
 import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { formatDateValue } from '../../../utils/app/textFormating';
 import Accordian from '../../Accordion';
 import ProjectInputs from './ProjectItems';
 import Button from '../../Button';
@@ -55,7 +56,7 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
     title: { valueMap: 'title', componetType: 'content' },
     summary: { valueMap: 'summary', componetType: 'content' },
     keywords: { valueMap: 'keywords', componetType: 'content' },
-    url: { valueMap: 'url', componetType: 'content' },
+    url: { key: ['href'], valueMap: ['url'], componetType: 'attribute' },
     start: { valueMap: 'start', componetType: 'content' },
     end: { valueMap: 'end', componetType: 'content' },
     description: { valueMap: 'description', componetType: 'content' },
@@ -70,10 +71,23 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
     storeProject || [{ ...blankProFields }],
   );
 
+  const formatValues = values => {
+    const tempValues = values;
+    tempValues.forEach((value, index) => {
+      tempValues[index].start = formatDateValue(tempValues[index].start);
+      if (tempValues[index].tillDate === true) {
+        tempValues[index].end = 'Present';
+      } else {
+        tempValues[index].end = formatDateValue(tempValues[index].end);
+      }
+    });
+    return tempValues;
+  };
   const handleSave = values => {
-    const updatedPro = [...values.project];
-    const history = { history: updatedPro };
-    updateCanvas('project', 'ADD', values.project, editorState, componentMap);
+    const updatedPro = formatValues(JSON.parse(JSON.stringify(values.project)));
+    // const updatedPro = [...values.project];
+    const history = { history: values.project };
+    updateCanvas('project', 'ADD', updatedPro, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'Project'));
   };
 

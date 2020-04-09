@@ -11,6 +11,7 @@ import {
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
 import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { formatDateValue } from '../../../utils/app/textFormating';
 import { getCountryList } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
 import Accordian from '../../Accordion';
@@ -65,16 +66,25 @@ function EmploymentForm({
   //   dispatch(setModalContent('education'));
   // };
 
+  const formatValues = values => {
+    const tempValues = values;
+    tempValues.forEach((value, index) => {
+      tempValues[index].start = formatDateValue(tempValues[index].start);
+      if (tempValues[index].tillDate === true) {
+        tempValues[index].end = 'Present';
+      } else {
+        tempValues[index].end = formatDateValue(tempValues[index].end);
+      }
+    });
+    return tempValues;
+  };
   const handleSave = values => {
-    const updatedEdu = [...values.employment];
-    const history = { history: updatedEdu };
-    updateCanvas(
-      'employment',
-      'ADD',
-      values.employment,
-      editorState,
-      componentMap,
+    const updatedEmp = formatValues(
+      JSON.parse(JSON.stringify(values.employment)),
     );
+    // const updatedEmp = [...values.employment];
+    const history = { history: values.employment };
+    updateCanvas('employment', 'ADD', updatedEmp, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'Employment'));
   };
 

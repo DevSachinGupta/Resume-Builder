@@ -11,6 +11,7 @@ import {
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
 import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { formatDateValue } from '../../../utils/app/textFormating';
 import Accordian from '../../Accordion';
 import AffiliationInputs from './AffiliationItems';
 import Button from '../../Button';
@@ -41,16 +42,25 @@ function AffiliationForm({ editorState, resumeJSONState, dispatch }) {
     storeAffiliation || [{ ...blankAffFields }],
   );
 
+  const formatValues = values => {
+    const tempValues = values;
+    tempValues.forEach((value, index) => {
+      tempValues[index].start = formatDateValue(tempValues[index].start);
+      if (tempValues[index].tillDate === true) {
+        tempValues[index].end = 'Present';
+      } else {
+        tempValues[index].end = formatDateValue(tempValues[index].end);
+      }
+    });
+    return tempValues;
+  };
   const handleSave = values => {
-    const updatedAff = [...values.affiliation];
-    const history = { history: updatedAff };
-    updateCanvas(
-      'affiliation',
-      'ADD',
-      values.affiliation,
-      editorState,
-      componentMap,
+    const updatedAff = formatValues(
+      JSON.parse(JSON.stringify(values.affiliation)),
     );
+    // const updatedAff = [...values.affiliation];
+    const history = { history: values.affiliation };
+    updateCanvas('affiliation', 'ADD', updatedAff, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'Affiliation'));
   };
 

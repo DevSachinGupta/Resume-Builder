@@ -11,6 +11,7 @@ import {
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
 import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { formatDateValue } from '../../../utils/app/textFormating';
 import { getCountryList } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
 import PersonalDetailsForms from './PersonalDetailsForms';
@@ -75,11 +76,13 @@ function PersonalDetails({
   const formatValues = values => {
     const tempValues = values;
     tempValues['fullName'] = `${tempValues.firstName} ${tempValues.lastName}`;
+    tempValues.dateOfBirth = formatDateValue(tempValues.dateOfBirth);
     return tempValues;
   };
   const handleSave = values => {
-    const updatedPer = formatValues(values);
-    const history = { history: updatedPer };
+    const updatedPer = formatValues(JSON.parse(JSON.stringify(values)));
+    // const updatedPer = formatValues(values);
+    const history = { history: values };
     updateCanvas('personal', 'ADD', updatedPer, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'Personal'));
   };
