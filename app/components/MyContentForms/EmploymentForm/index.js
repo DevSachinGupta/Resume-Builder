@@ -10,7 +10,7 @@ import {
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
-import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
 import { formatDateValue } from '../../../utils/app/textFormating';
 import { getCountryList } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
@@ -45,8 +45,8 @@ function EmploymentForm({
   };
 
   let empStoreState = null;
-  if (resumeJSONState.Employment) {
-    empStoreState = resumeJSONState.Employment.history;
+  if (resumeJSONState.employment) {
+    empStoreState = resumeJSONState.employment.history;
   }
 
   const [employments, setEmployments] = useState(
@@ -85,7 +85,7 @@ function EmploymentForm({
     // const updatedEmp = [...values.employment];
     const history = { history: values.employment };
     updateCanvas('employment', 'ADD', updatedEmp, editorState, componentMap);
-    dispatch(updateResumeJSONState(history, 'Employment'));
+    dispatch(updateResumeJSONState(history, 'employment'));
   };
 
   // const handleSaveAndNext = () => {

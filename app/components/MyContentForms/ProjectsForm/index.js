@@ -10,7 +10,7 @@ import {
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
-import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
 import { formatDateValue } from '../../../utils/app/textFormating';
 import Accordian from '../../Accordion';
 import ProjectInputs from './ProjectItems';
@@ -56,15 +56,15 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
     title: { valueMap: 'title', componetType: 'content' },
     summary: { valueMap: 'summary', componetType: 'content' },
     keywords: { valueMap: 'keywords', componetType: 'content' },
-    url: { key: ['href'], valueMap: ['url'], componetType: 'attribute' },
+    url: { key: ['href'], valueMap: ['url'], componetType: 'attribute', RemoveHiddenClass: [] },
     start: { valueMap: 'start', componetType: 'content' },
     end: { valueMap: 'end', componetType: 'content' },
     description: { valueMap: 'description', componetType: 'content' },
   };
 
   let storeProject = null;
-  if (resumeJSONState.Project) {
-    storeProject = resumeJSONState.Project.history;
+  if (resumeJSONState.project) {
+    storeProject = resumeJSONState.project.history;
   }
 
   const [projects, setProjects] = useState(
@@ -80,6 +80,11 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
       } else {
         tempValues[index].end = formatDateValue(tempValues[index].end);
       }
+      if (tempValues[index].url === '') {
+        componentMap.url.RemoveHiddenClass.push(false);
+      } else {
+        componentMap.url.RemoveHiddenClass.push(true);
+      }
     });
     return tempValues;
   };
@@ -88,7 +93,7 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
     // const updatedPro = [...values.project];
     const history = { history: values.project };
     updateCanvas('project', 'ADD', updatedPro, editorState, componentMap);
-    dispatch(updateResumeJSONState(history, 'Project'));
+    dispatch(updateResumeJSONState(history, 'project'));
   };
 
   const getValues = data => {

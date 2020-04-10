@@ -16,9 +16,13 @@ import {
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
-import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
+import { toggleModal } from 'containers/App/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
-import { getCountryList } from '../../../containers/MyContent/actions';
+import {
+  getCountryList,
+  setModalContent,
+} from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
 import EducationInputs from './EducationItems';
 import Accordian from '../../Accordion';
@@ -53,10 +57,10 @@ function EducationForm({
   };
 
   let storeEducation = null;
-  if (resumeJSONState.Education) {
-    storeEducation = resumeJSONState.Education.history;
+  if (resumeJSONState.education) {
+    storeEducation = resumeJSONState.education.history;
   }
-
+  console.log(resumeJSONState)
   const [educations, setEducations] = useState(
     storeEducation || [{ ...blankEduFields }],
   );
@@ -88,7 +92,17 @@ function EducationForm({
     // const updatedEdu = [...values.education];
     const history = { history: values.education };
     updateCanvas('education', 'ADD', updatedEdu, editorState, componentMap);
-    dispatch(updateResumeJSONState(history, 'Education'));
+    dispatch(updateResumeJSONState(history, 'education'));
+    dispatch(toggleModal());
+  };
+  const handleSaveAndNext = values => {
+    handleSave(values);
+    // dispatch(toggleModal());
+    dispatch(setModalContent('employmentDetails'));
+  };
+  const handlePrevious = values => {
+    // dispatch(toggleModal());
+    dispatch(setModalContent('personalDetails'));
   };
 
   return (
@@ -96,11 +110,17 @@ function EducationForm({
       <Formik
         initialValues={{ education: educations }}
         onSubmit={(values, actions) => {
-          console.log(values);
-          handleSave(values);
+          console.log(values, actions);
+          if (values.publish === 0) {
+            handleSave(values);
+          } else if (values.publish === 1) {
+            handleSaveAndNext(values);
+          } else if (values.publish === 2) {
+            handlePrevious(values);
+          }
         }}
       >
-        {({ values, setFieldValue }) => (
+        {({ values, setFieldValue, handleSubmit }) => (
           <Form>
             <FieldArray
               name="education"
@@ -129,10 +149,43 @@ function EducationForm({
                   >
                     Add Another
                   </Button>
-                  <div className={cx('footerContainer')}>
-                    <Button as="submit" fullWidth type="primary">
+                  <div className={cx('footerContainer flex')}>
+                    <Button
+                      type="button"
+                      onClick={() => {
+                        setFieldValue('publish', 2, false);
+                        handleSubmit();
+                      }}
+                    >
+                      Previous
+                    </Button>
+
+                    <Button
+                      type="button"
+                      onClick={() => {
+                        setFieldValue('publish', 0, false);
+                        handleSubmit();
+                      }}
+                    >
+                      Save
+                    </Button>
+
+                    <Button
+                      type="button"
+                      onClick={() => {
+                        setFieldValue('publish', 1, false);
+                        handleSubmit();
+                      }}
+                    >
+                      Save and Next
+                    </Button>
+
+                    {/* <Button as="submit" type="primary">
                       Save Details
                     </Button>
+                    <Button as="submit" type="primary">
+                      Save and Next
+                    </Button> */}
                   </div>
                 </React.Fragment>
               )}

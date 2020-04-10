@@ -12,20 +12,24 @@ import axios from 'axios';
 import {
   makeUpdateDemoPageState,
   makeUpdateEditorState,
+  makeUpdateResumeJSONState,
   makeSelectGetThemeContent,
 } from 'containers/Builder/selectors';
 import {
   updateTemplateNumberState,
   updateEditorState,
+  updateResumeJSONState,
   getBuilderThemeContent,
 } from 'containers/Builder/actions';
+
+import { updateRseumeJSONState } from 'components/Builder/BuilderEditor/ComponentEditor';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
 import './style.scss';
 
-import { inspect } from 'util'
+import { inspect } from 'util';
 
 // import TemplateHTML from '../../CheerioComponent/templates/template_1/html.js';
 
@@ -38,7 +42,12 @@ let DemoPage = {
   style: null,
 };
 
-function BuilderEditor({ editor_state, demopageState, dispatch }) {
+function BuilderEditor({
+  editor_state,
+  demopageState,
+  resumeJSONState,
+  dispatch,
+}) {
   // console.log(demopageState, 'This is the editor_state:Editor');
   DemoPage = demopageState || DemoPage;
 
@@ -100,32 +109,41 @@ function BuilderEditor({ editor_state, demopageState, dispatch }) {
     //   }
     // });
 
-    // editor.on('change:changesCount', (editorModel, changes, changesArray) => {
-    //   // const editorModel = editor.getModel();
-    //   // const changes = editorModel.get('changesCount');
-    //   if (changes) {
-    //     const modelComponent = editor.getSelected();
-    //     // console.log("component:", modelComponent )
-    //     const attrs = modelComponent.getAttributes();
-    //     console.log("Attr:", attrs)
-    //     console.log("ChangeArray:",changesArray)
-    //     console.log("ChangeArrayJSON:",JSON.stringify(changesArray))
-
-    //     // console.log("Attr:", attrs.id)
-    //     // console.log("ChangeArray:",changesArray.add)
-    //     // console.log("ChangeArrayJSON:",JSON.parse(JSON.stringify(changesArray)).changes.added[0].content)
-    //   } else {
-    //     console.log("no changes")
-    //   }
-    // });
-
-    // editor.on('change:changesCount', (editorModel, changes, changesArray) => {
-    //   console.log("Slected 0", editorModel , changes, changesArray)
-    // console.log("Slected 1", editorModel)
-    // console.log("Slected 2", changes, changesArray, JSON.stringify(changesArray))
-    // console.log("Slected 3", changesArray)
-    // });
-    // console.log('Global hook: component:update', model, editor.getSelected())
+    editor.on('change:changesCount', (editorModel, changes, changesArray) => {
+      if (changes) {
+        if (changesArray.add) {
+          if (changesArray.add === true) {
+            const modelComponent = editor.getSelected();
+            if (modelComponent) {
+              const attrs = modelComponent.getAttributes();
+              const { content } = JSON.parse(
+                JSON.stringify(changesArray),
+              ).changes.added[0];
+              // console.log('ADD:', attrs.id, content);
+              const sectionId = attrs.id.split('_')[0];
+              const fieldIndex = attrs.id.split('_')[1];
+              const fieldId = attrs.id.split('_').slice(-1)[0];
+              console.log('add updateResume ', sectionId, fieldIndex, fieldId, content);
+              if (sectionId && fieldId) {
+                // form list from store
+                const storeData = resumeJSONState[`${sectionId}`];
+                console.log('store data:', resumeJSONState);
+                if (storeData) {
+                  // const dataJSON = "{ `${sectionId}`: { history: { `${sectionId}`: { `${sectionId}`: content} } } }"
+                  console.log('store data update:', storeData, `${sectionId}.history.${fieldIndex}.${fieldId}`);
+                  dispatch(updateResumeJSONState(content, `${sectionId}.history.${fieldIndex}.${fieldId}`));
+                }
+              }
+              // updateRseumeJSONState(attrs, content, []);
+            }
+          } else {
+            console.log(' remove or merged: ', changesArray);
+          }
+        }
+      } else {
+        // console.log('no changes');
+      }
+    });
     dispatch(updateEditorState(editor));
   }, [demopageState]);
 
@@ -144,6 +162,7 @@ BuilderEditor.propTypes = {
 const mapStateToProps = createStructuredSelector({
   editor_state: makeUpdateEditorState(),
   demopageState: makeUpdateDemoPageState(),
+  resumeJSONState: makeUpdateResumeJSONState(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(

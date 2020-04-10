@@ -10,7 +10,7 @@ import {
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
-import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
 import { FaTimes } from 'react-icons/fa';
 import Input from '../../FormComponents/Input';
 import Button from '../../Button';
@@ -18,7 +18,7 @@ import Icons from '../../Icons';
 import './style.scss';
 
 function HobbiesForm({ editorState, resumeJSONState, dispatch }) {
-  const hobbyData = [
+  let hobbyData = [
     { icon_temp: 'icon-adventurer', value: 'Music', icon: <Icons icon="music" /> },
     { icon_temp: 'icon-adventurer', value: 'Singing', icon: <Icons icon="singing" /> },
     { icon_temp: 'icon-adventurer', value: 'Reading', icon: <Icons icon="reading" /> },
@@ -62,8 +62,14 @@ function HobbiesForm({ editorState, resumeJSONState, dispatch }) {
   };
 
   let storeHobbies = null;
-  if (resumeJSONState.Hobbies) {
-    storeHobbies = resumeJSONState.Hobbies.history;
+  if (resumeJSONState.hobbies) {
+    storeHobbies = resumeJSONState.hobbies.history;
+    hobbyData = hobbyData.filter(
+      data =>
+        !storeHobbies
+          .map(tempData => tempData.value.toLowerCase())
+          .includes(data.value.toLowerCase()),
+    );
   }
 
   const [hobbies, setHobbies] = useState(storeHobbies || []);
@@ -105,7 +111,7 @@ function HobbiesForm({ editorState, resumeJSONState, dispatch }) {
     const updatedHob = values;
     const history = { history: updatedHob };
     updateCanvas('hobbies', 'ADD', values, editorState, componentMap);
-    dispatch(updateResumeJSONState(history, 'Hobbies'));
+    dispatch(updateResumeJSONState(history, 'hobbies'));
   };
 
   return (

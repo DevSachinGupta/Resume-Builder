@@ -10,7 +10,7 @@ import {
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
-import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
 import { formatDateValue } from '../../../utils/app/textFormating';
 import Accordian from '../../Accordion';
 import AccomplishmentInputs from './AccomplishmentItems';
@@ -31,8 +31,8 @@ function AccomplishmentForm({ editorState, resumeJSONState, dispatch }) {
   };
 
   let storeAccomplishment = null;
-  if (resumeJSONState.Accomplishment) {
-    storeAccomplishment = resumeJSONState.Accomplishment.history;
+  if (resumeJSONState.accomplishment) {
+    storeAccomplishment = resumeJSONState.accomplishment.history;
   }
 
   const [accomplishments, setAccomplishments] = useState(
@@ -59,7 +59,7 @@ function AccomplishmentForm({ editorState, resumeJSONState, dispatch }) {
       editorState,
       componentMap,
     );
-    dispatch(updateResumeJSONState(history, 'Accomplishment'));
+    dispatch(updateResumeJSONState(history, 'accomplishment'));
   };
 
   return (

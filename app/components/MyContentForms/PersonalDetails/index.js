@@ -10,7 +10,7 @@ import {
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
-import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
 import { formatDateValue } from '../../../utils/app/textFormating';
 import { getCountryList } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
@@ -57,8 +57,8 @@ function PersonalDetails({
   };
 
   let storePersonal = null;
-  if (resumeJSONState.Personal) {
-    storePersonal = resumeJSONState.Personal.history;
+  if (resumeJSONState.personal) {
+    storePersonal = resumeJSONState.personal.history;
   }
 
   const [personal, setPersonal] = useState(
@@ -84,7 +84,7 @@ function PersonalDetails({
     // const updatedPer = formatValues(values);
     const history = { history: values };
     updateCanvas('personal', 'ADD', updatedPer, editorState, componentMap);
-    dispatch(updateResumeJSONState(history, 'Personal'));
+    dispatch(updateResumeJSONState(history, 'personal'));
   };
 
   return (

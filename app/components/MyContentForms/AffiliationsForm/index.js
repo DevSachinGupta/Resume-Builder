@@ -10,7 +10,7 @@ import {
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
-import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
 import { formatDateValue } from '../../../utils/app/textFormating';
 import Accordian from '../../Accordion';
 import AffiliationInputs from './AffiliationItems';
@@ -34,8 +34,8 @@ function AffiliationForm({ editorState, resumeJSONState, dispatch }) {
   };
 
   let storeAffiliation = null;
-  if (resumeJSONState.Affiliation) {
-    storeAffiliation = resumeJSONState.Affiliation.history;
+  if (resumeJSONState.affiliation) {
+    storeAffiliation = resumeJSONState.affiliation.history;
   }
 
   const [affiliations, setAffiliations] = useState(
@@ -61,7 +61,7 @@ function AffiliationForm({ editorState, resumeJSONState, dispatch }) {
     // const updatedAff = [...values.affiliation];
     const history = { history: values.affiliation };
     updateCanvas('affiliation', 'ADD', updatedAff, editorState, componentMap);
-    dispatch(updateResumeJSONState(history, 'Affiliation'));
+    dispatch(updateResumeJSONState(history, 'affiliation'));
   };
 
   return (

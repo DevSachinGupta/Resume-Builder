@@ -30,7 +30,7 @@ const validationMap = {
     validationHandler(
       yup
         .string()
-        .required('Required')
+        // .required('Required')
         .url('Enter a valid url')
         .validate(value),
     ),

@@ -17,7 +17,7 @@ import {
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
-import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
 import { validationMap } from './validation';
 import Button from '../../Button';
 import Input from '../../FormComponents/Input';
@@ -79,8 +79,8 @@ function SocialForm({ editorState, resumeJSONState, dispatch }) {
   ];
 
   let storeSocial = null;
-  if (resumeJSONState.Social) {
-    storeSocial = resumeJSONState.Social.history;
+  if (resumeJSONState.social) {
+    storeSocial = resumeJSONState.social.history;
   }
   const [socials, setSocials] = useState(storeSocial || allInputs);
 
@@ -157,7 +157,7 @@ function SocialForm({ editorState, resumeJSONState, dispatch }) {
     // const updatedSoc = [...values.social];
     const history = { history: values.social };
     updateCanvas('social', 'ADD', updatedSoc, editorState, componentMap);
-    dispatch(updateResumeJSONState(history, 'Social'));
+    dispatch(updateResumeJSONState(history, 'social'));
   };
 
   return (

@@ -10,14 +10,14 @@ import {
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
-import updateCanvas from 'components/Builder/BuilderEditor/ComponentEditor';
+import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
 import { FaTimes } from 'react-icons/fa';
 import Button from '../../Button';
 import Input from '../../FormComponents/Input';
 import './style.scss';
 
 function SkillsForm({ editorState, resumeJSONState, dispatch }) {
-  const skillData = [
+  let skillData = [
     { key: 'Music', value: 'Music' },
     { key: 'B', value: 'B' },
     { key: 'Delhi', value: 'Delhi' },
@@ -39,16 +39,20 @@ function SkillsForm({ editorState, resumeJSONState, dispatch }) {
       componetType: 'attribute',
     },
   };
-  const [skillsData, setSkillsData] = useState(skillData);
 
   let storeSkill = null;
-  if (resumeJSONState.Skill) {
-    storeSkill = resumeJSONState.Skill.history;
+  if (resumeJSONState.skills) {
+    storeSkill = resumeJSONState.skills.history;
+    skillData = skillData.filter(
+      data =>
+        !storeSkill
+          .map(tempData => tempData.value.toLowerCase())
+          .includes(data.value.toLowerCase()),
+    );
   }
-  // const skillDataTemp = skillsData.filter(value => !storeSkill.includes(value));
-  // setSkillsData(skillDataTemp);
 
   const [skills, setSkills] = useState(storeSkill || []);
+  const [skillsData, setSkillsData] = useState(skillData);
 
   const getValues = data => {
     data.rangeVal = 10;
@@ -81,10 +85,9 @@ function SkillsForm({ editorState, resumeJSONState, dispatch }) {
   const handleSave = values => {
     const updatedSkills = formatValues(JSON.parse(JSON.stringify(values)));
     // const updatedSkills = [...values];
-    // console.log(updatedSkills);
     const history = { history: values };
     updateCanvas('skills', 'ADD', updatedSkills, editorState, componentMap);
-    dispatch(updateResumeJSONState(history, 'Skill'));
+    dispatch(updateResumeJSONState(history, 'skills'));
   };
 
   const updateRange = e => {
