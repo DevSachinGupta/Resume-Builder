@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -12,6 +12,7 @@ import {
 import { updateResumeJSONState } from 'containers/Builder/actions';
 import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
 import { formatDateValue } from '../../../utils/app/textFormating';
+import { defaultTo } from 'lodash';
 import Accordian from '../../Accordion';
 import ProjectInputs from './ProjectItems';
 import Button from '../../Button';
@@ -56,20 +57,29 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
     title: { valueMap: 'title', componetType: 'content' },
     summary: { valueMap: 'summary', componetType: 'content' },
     keywords: { valueMap: 'keywords', componetType: 'content' },
-    url: { key: ['href'], valueMap: ['url'], componetType: 'attribute', RemoveHiddenClass: [] },
+    url: {
+      key: ['href'],
+      valueMap: ['url'],
+      componetType: 'attribute',
+      RemoveHiddenClass: [],
+    },
     start: { valueMap: 'start', componetType: 'content' },
     end: { valueMap: 'end', componetType: 'content' },
     description: { valueMap: 'description', componetType: 'content' },
   };
+  const [projects, setProjects] = useState([{ ...blankProFields }]);
+  // let storeProject = null;
+  useEffect(() => {
+    console.log(resumeJSONState);
+    const storeProject = defaultTo(resumeJSONState, 'project.history', null);
+    console.log(storeProject);
+    if (storeProject) {
+      setProjects([{ ...storeProject }]);
+    }
+    // setProjects(storeProject);
+  }, [resumeJSONState]);
 
-  let storeProject = null;
-  if (resumeJSONState.project) {
-    storeProject = resumeJSONState.project.history;
-  }
 
-  const [projects, setProjects] = useState(
-    storeProject || [{ ...blankProFields }],
-  );
 
   const formatValues = values => {
     const tempValues = values;
