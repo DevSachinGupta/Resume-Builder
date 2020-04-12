@@ -24,6 +24,8 @@ const validationMap = {
       yup
         .date()
         .required('Required')
+        .nullable()
+        .typeError('Invalid Date Format it should be dd/mm/yyyy')
         .validate(value),
     ),
   end: value =>
@@ -31,6 +33,8 @@ const validationMap = {
       yup
         .date()
         .required('Required')
+        .nullable()
+        .typeError('Invalid Date Format it should be dd/mm/yyyy')
         .validate(value),
     ),
   tillDate: value =>

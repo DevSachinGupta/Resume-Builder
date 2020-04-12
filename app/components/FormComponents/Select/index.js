@@ -1,3 +1,9 @@
+/**
+ *
+ * Select
+ *
+ */
+
 import React, { memo } from 'react';
 import cx from 'classnames';
 import { useField } from 'formik';
@@ -5,7 +11,7 @@ import { MdCancel } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import './style.scss';
 
-function Checkbox(props) {
+function Select(props) {
   let validateField = props.allowValidation;
   if (props.disabled) {
     validateField = false;
@@ -23,12 +29,36 @@ function Checkbox(props) {
   const handleClearField = () => {
     helpers.setValue('');
   };
-  const { clearable, validate, allowValidation, inputIcon, ...rest } = props;
+
+  const optionList = props.options.map(optionName => {
+    if (props.allowIdAsValue) {
+      return (
+        <option key={optionName.id} value={optionName.id}>
+          {optionName.name}
+        </option>
+      );
+    }
+    return (
+      <option key={optionName.name} value={optionName.name}>
+        {optionName.name}
+      </option>
+    );
+  });
+
+  const {
+    clearable,
+    allowIdAsValue,
+    validate,
+    options,
+    allowValidation,
+    inputIcon,
+    ...rest
+  } = props;
   return (
-    <div className={cx('inputWrapper')}>
+    <div className={cx('inputWrapper')} hidden={props.hidden}>
       <div className="label">{props.label}</div>
       <div
-        className={cx('inputField', {
+        className={cx('inputContainer', {
           fullWidth: props.fullWidth,
           error: validateField && meta.error && meta.touched,
         })}
@@ -36,7 +66,11 @@ function Checkbox(props) {
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}
-        <input {...field} {...rest} />
+        {/* <input {...field} {...props} onChange={(e) => {helpers.setValue(e.target.value) ; props.onStateUpdate(); props.onChange(e);}} /> */}
+        <select {...field} {...rest}>
+          <option value="">Select</option>
+          {optionList}
+        </select>
         {props.clearable && (
           <span className="input-right-Icon cursor-pointer">
             {<MdCancel onClick={handleClearField} />}
@@ -51,21 +85,26 @@ function Checkbox(props) {
     </div>
   );
 }
-Checkbox.defaultProps = {
+
+Select.defaultProps = {
+  allowIdAsValue: false,
   allowValidation: true,
 };
-Checkbox.propTypes = {
-  type: PropTypes.string.isRequired,
+
+Select.propTypes = {
+  allowIdAsValue: PropTypes.bool,
+  options: PropTypes.array.isRequired,
   onChange: PropTypes.func,
   fullWidth: PropTypes.bool,
   inputIcon: PropTypes.node,
   label: PropTypes.string,
+  placeholder: PropTypes.string,
   name: PropTypes.string,
   hidden: PropTypes.bool,
   disabled: PropTypes.bool,
   clearable: PropTypes.bool,
   validate: PropTypes.func.isRequired,
-  value: PropTypes.string,
   allowValidation: PropTypes.bool,
 };
-export default memo(Checkbox);
+
+export default memo(Select);

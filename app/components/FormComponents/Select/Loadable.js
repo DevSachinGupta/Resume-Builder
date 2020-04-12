@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for TextField
+ * Asynchronously loads the component for Select
  *
  */
 

@@ -1,0 +1,11 @@
+.inputWrapper {
+    .inputField {
+        height: 30px;
+        padding-top: 3px;
+        padding-left: 10px;
+        input[type="checkbox"] {
+            vertical-align: middle;
+            cursor: pointer;
+        }
+    }
+}

@@ -1,70 +1,58 @@
 import React, { useState } from 'react';
-import { Formik } from 'formik';
-import Input from '../../FormComponents/Input';
-import Textfield from '../../FormComponents/TextField';
-import MultiselectSkill from '../../FormComponents/MultiselectSkill';
-import './style.scss';
+import { Formik, Form } from 'formik';
+import cx from 'classnames';
+import Button from '../../Button';
 import Dropdown from '../../FormComponents/Dropdown';
+import Tag from '../../Tag';
+import './style.scss';
 
 function SkillsForm() {
   const skillData = [
-    { name: 'Music' },
-    { name: 'Singing' },
-    { name: 'Reading' },
-    { name: 'Writing' },
-    { name: 'Bloging' },
-    { name: 'Poetry' },
-    { name: 'Sketching' },
-    { name: 'Photography' },
-    { name: 'Designing' },
-    { name: 'Painting' },
-    { name: 'Volunteering' },
-    { name: 'Socializing' },
-    { name: 'Gaming' },
-    { name: 'Sport' },
+    { key: 'Music', value: 'Music' },
+    { key: 'B', value: 'B' },
+    { key: 'Delhi', value: 'Delhi' },
+    { key: 'Kolkata', value: 'Kolkata' },
+    { key: 'Mumbai', value: 'Mumbai' },
+    { key: 'New Delhi', value: 'New Delhi' },
+    { key: 'Ghaziabad', value: 'Ghaziabad' },
+    { key: 'Other', value: 'Other' },
   ];
-  const blankSkillsField = {
-    type: '',
+  const blankSkillsField = [];
+  const [data, setData] = useState([]);
+  const updateData = value => {
+    setData([...data, value]);
   };
-  const [data, setData] = useState({
-    datValues: [],
-  });
-  const updateData = (value) => {
-    setData({
-      datValues: [...data.datValues, value],
-    });
-  };
-  console.log(data);
   return (
-    <Formik initialValues={{ blankSkillsField }}>
+    <Formik
+      initialValues={blankSkillsField}
+      onSubmit={(values, actions) => {
+        console.log(values);
+        // handleSave(values);
+      }}
+    >
       {({ handleSubmit, isSubmitting }) => (
-        // <MultiselectSkill options={skillData} showDefaultOptions updateData={updateData} />
-        <Input
-          type="autocomplete"
-          placeholder="Select Your Skills"
-          label="Skills"
-          name="skills"
-          options={skillData}
-          allowCustomText={true}
-          manageRangeVal={true}
-          allowMultiselect={true}
-          showFilterTagIcon={false}
-          filterIconClassList = ''
-          filterNameClassList = 'ml-2'
-          filterTagClassList = ''
-          showDataTagIcon={false}
-          dataIconClassList = ''
-          dataNameClassList = 'tag-name ml-3'
-          dataTagClassList = ''
-          showMultisectInTop={false}
-          showMultisectInBottom={true}
-          // validate={validationMap.country}
-        />
+        <React.Fragment>
+          <div className="tagContainer">
+            {data.map(item => (
+              <Tag>{item.value}</Tag>
+            ))}
+          </div>
+          <Form className="socialFormContainer">
+            <Dropdown
+              onSelect={updateData}
+              name="skils"
+              multiSelect
+              options={skillData}
+            />
+            <div className={cx('footerContainer')}>
+              <Button as="submit" fullWidth type="primary">
+                Save Details
+              </Button>
+            </div>
+          </Form>
+        </React.Fragment>
       )}
     </Formik>
-    // <React.Fragment>
-    //   <Dropdown onSelect={handleOptionSelect} options={options} />
-    // </React.Fragment>
   );
 }
 

@@ -1,6 +1,6 @@
 /**
  *
- * Tests for TextField
+ * Tests for Select
  *
  * @see https://github.com/react-boilerplate/react-boilerplate/tree/master/docs/testing
  *
@@ -10,12 +10,12 @@ import React from 'react';
 import { render } from 'react-testing-library';
 // import 'jest-dom/extend-expect'; // add some helpful assertions
 
-import TextField from '../index';
+import Select from '../index';
 
-describe('<TextField />', () => {
+describe('<Select />', () => {
   it('Expect to not log errors in console', () => {
     const spy = jest.spyOn(global.console, 'error');
-    render(<TextField />);
+    render(<Select />);
     expect(spy).not.toHaveBeenCalled();
   });
 
@@ -31,7 +31,7 @@ describe('<TextField />', () => {
   it.skip('Should render and match the snapshot', () => {
     const {
       container: { firstChild },
-    } = render(<TextField />);
+    } = render(<Select />);
     expect(firstChild).toMatchSnapshot();
   });
 });

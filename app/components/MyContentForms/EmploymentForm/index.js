@@ -1,4 +1,5 @@
-import React, { memo, useState } from 'react';
+import React, { useState, memo, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -12,22 +13,27 @@ import {
   updateEditorState,
   updateResumeJSONState,
 } from 'containers/Builder/actions';
-import { setModalContent } from 'containers/MyContent/actions';
-import { toggleModal } from 'containers/App/actions';
 import { InjectJSONUsingCheerioEmployement } from 'components/CheerioComponent/templates/template_1';
 import { ComponentEditor } from 'components/Builder/BuilderEditor/ComponentEditor';
+import { getCountryList } from '../../../containers/MyContent/actions';
+import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
 import Accordian from '../../Accordion';
 import EmploymentInputs from './EmploymentItems';
 import Button from '../../Button';
 
-function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
+function EmploymentForm({
+  allCountries,
+  editorState,
+  resumeJSONState,
+  dispatch,
+}) {
   const blankEmpFields = {
     position: '',
     employer: '',
     state: '',
     country: '',
-    start: '',
-    end: '',
+    start: null,
+    end: null,
     tillDate: false,
     summary: '',
   };
@@ -60,6 +66,14 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
   const [employments, setEmployments] = useState(
     empStoreState || [{ ...blankEmpFields }],
   );
+
+  const getCountires = useCallback(() => {
+    dispatch(getCountryList());
+  });
+
+  useEffect(() => {
+    getCountires();
+  }, []);
 
   // const handlePrevious = () => {
   //   dispatch(toggleModal());
@@ -111,11 +125,19 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
                 <React.Fragment>
                   {values.employment.map((item, idx) => (
                     <Accordian
+                      key={`Accordian-${idx}`}
                       id={idx}
-                      label={item.employer ? item.employer : `Employment ${idx + 1}`}
+                      label={
+                        item.employer ? item.employer : `Employment ${idx + 1}`
+                      }
                       onClickRemove={() => arrayHelpers.remove(idx)}
                     >
-                      <EmploymentInputs idx={idx} values={item} setFieldValue={setFieldValue} />
+                      <EmploymentInputs
+                        idx={idx}
+                        values={item}
+                        setFieldValue={setFieldValue}
+                        countriesList={allCountries}
+                      />
                     </Accordian>
                   ))}
 
@@ -126,7 +148,6 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
                   >
                     Add Another
                   </Button>
-                  {console.log(' value: ', values)}
                   <div className={cx('footerContainer')}>
                     <Button as="submit" fullWidth type="primary">
                       Save Details
@@ -142,12 +163,19 @@ function EmploymentForm({ editorState, resumeJSONState, dispatch }) {
   );
 }
 
-EmploymentForm.propTypes = {};
+EmploymentForm.propTypes = {
+  allCountries: PropTypes.array.isRequired,
+  editorState: PropTypes.object,
+  resumeJSONState: PropTypes.object,
+  dispatch: PropTypes.func.isRequired,
+};
 
-const mapStateToProps = createStructuredSelector({
-  editorState: makeUpdateEditorState(),
-  resumeJSONState: makeUpdateResumeJSONState(),
-});
+const mapStateToProps = () =>
+  createStructuredSelector({
+    allCountries: makeSelectAllCountiesOptions(),
+    editorState: makeUpdateEditorState(),
+    resumeJSONState: makeUpdateResumeJSONState(),
+  });
 const mapDispatchToProps = null;
 const withConnect = connect(
   mapStateToProps,

@@ -21,34 +21,31 @@ function Accordion(props) {
       setCheckbox(null);
     }
   };
+
   return (
-    <div className="tab hover:shadow py-1 px-2 rounded mb-2 w-full">
+    <div className="tab hover:shadow py-1 px-2 rounded mb-2 w-full overflow-hidden">
       <input
         type="radio"
         onClick={onClickRadio}
         className="absolute opacity-0"
         id={props.id}
         name="test"
+        // checked={true}
       />
       <div className="flex justify-between">
         <label
-          className="block p-1 leading-normal cursor-pointer"
+          className="block p-1 leading-normal cursor-pointer w-full"
           htmlFor={props.id}
         >
           {props.label}
         </label>
-        <Button
-          circular
-          type="button"
-          data-idx={props.id}
-          onClick={props.onClickRemove}
-        >
+        <Button circular type="button" onClick={props.onClickRemove}>
           <FaTimes />
         </Button>
       </div>
       <div
         className={cx('tab-content leading-normal', {
-          'overflow-hidden': !checkbox,
+          'overflow-hidden': checkbox,
         })}
       >
         {props.children}
@@ -60,7 +57,7 @@ function Accordion(props) {
 Accordion.propTypes = {
   id: PropTypes.number,
   label: PropTypes.string,
-  handleRemove: PropTypes.func.isRequired,
+  onClickRemove: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
 

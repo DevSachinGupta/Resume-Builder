@@ -38,6 +38,7 @@ function Modal(props) {
             </div>
           </div>
           {props.children}
+          <div className={cx('footerContainer')}>{props.footer}</div>
         </div>
       </div>
     )
@@ -48,13 +49,13 @@ Modal.defaultProps = {
   loading: true,
 };
 Modal.propTypes = {
-  heading: PropTypes.string,
+  heading: PropTypes.node,
   children: PropTypes.node.isRequired,
   closable: PropTypes.bool,
   actions: PropTypes.array,
   dispatch: PropTypes.func.isRequired,
   isModalOpen: PropTypes.bool.isRequired,
-  footer: PropTypes.node.isRequired,
+  footer: PropTypes.node,
   loading: PropTypes.bool,
 };
 const withConnect = connect(

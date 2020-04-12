@@ -12,7 +12,6 @@ const AffiliationInputs = ({ idx, values, setFieldValue }) => (
     <Row>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Organisation"
           label="Organisation"
           name={`affiliation.${idx}.organization`}
@@ -21,7 +20,6 @@ const AffiliationInputs = ({ idx, values, setFieldValue }) => (
       </Column>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Role"
           label="Role"
           name={`affiliation.${idx}.role`}
@@ -33,9 +31,9 @@ const AffiliationInputs = ({ idx, values, setFieldValue }) => (
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
           placeholder="Start Date"
           label="Start Date"
+          clearable
           name={`affiliation.${idx}.start`}
           validate={validationMap.start}
         />
@@ -43,9 +41,9 @@ const AffiliationInputs = ({ idx, values, setFieldValue }) => (
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
           placeholder="End Date"
           label="End Date"
+          clearable
           disabled={values.tillDate}
           name={`affiliation.${idx}.end`}
           validate={validationMap.end}
@@ -54,7 +52,6 @@ const AffiliationInputs = ({ idx, values, setFieldValue }) => (
       <Column width="1/5" className="px-1">
         <Input
           type="checkbox"
-          data-idx={idx}
           placeholder="Till date"
           label="Till date"
           onChange={() => {
@@ -62,7 +59,7 @@ const AffiliationInputs = ({ idx, values, setFieldValue }) => (
               setFieldValue(`affiliation.${idx}.tillDate`, false);
             } else {
               setFieldValue(`affiliation.${idx}.tillDate`, true);
-              setFieldValue(`affiliation.${idx}.end`, '');
+              setFieldValue(`affiliation.${idx}.end`, null);
             }
           }}
           name={`affiliation.${idx}.tillDate`}
@@ -73,7 +70,6 @@ const AffiliationInputs = ({ idx, values, setFieldValue }) => (
     <Row>
       <Column width="full" className="px-1">
         <TextArea
-          data-idx={idx}
           placeholder="Summary"
           label="Summary"
           name={`affiliation.${idx}.summary`}

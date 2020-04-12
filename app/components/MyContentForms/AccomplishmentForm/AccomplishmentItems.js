@@ -12,7 +12,6 @@ const AccomplishmentInputs = ({ idx }) => (
     <Row>
       <Column width="full" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Title"
           label="Title"
           name={`accomplishment.${idx}.title`}
@@ -24,16 +23,15 @@ const AccomplishmentInputs = ({ idx }) => (
       <Column width="1/2" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
           placeholder="Date"
           label="Date"
+          clearable
           name={`accomplishment.${idx}.date`}
           validate={validationMap.date}
         />
       </Column>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Rank"
           label="Rank"
           name={`accomplishment.${idx}.rank`}
@@ -44,7 +42,6 @@ const AccomplishmentInputs = ({ idx }) => (
     <Row>
       <Column width="full" className="px-1">
         <TextArea
-          data-idx={idx}
           placeholder="Summary"
           label="Summary"
           name={`accomplishment.${idx}.summary`}

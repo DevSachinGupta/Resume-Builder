@@ -7,65 +7,99 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { useField } from 'formik';
+import { useField, Field } from 'formik';
 import { MdCancel } from 'react-icons/md';
 import './style.scss';
 
 function Radio(props) {
-  const [field, meta, helpers] = useField(props.name);
+  let validateField = props.allowValidation;
+  if (props.disabled) {
+    validateField = false;
+  }
+  const [field, meta, helpers] = useField({
+    name: props.name,
+    validate: async value => {
+      const val = validateField
+        ? await props.validate(value).catch(err => err)
+        : null;
+      return val;
+    },
+  });
+
+  const handleClearField = () => {
+    helpers.setValue('');
+  };
+
+  const handleUpdateValue = e => {
+    helpers.setValue(e.target.value);
+  };
+
   return (
-    <div className={cx('inputWrapper')}>
-      <div className="label">{props.label}</div>
-      <div
-        className={cx('inputContainer', {
-          fullWidth: props.fullWidth,
-          error: props.error,
-        })}
-      >
-        {props.inputIcon && (
-          <span className="inputIcon">{props.inputIcon}</span>
-        )}
+    <Field name={props.name}>
+      {() => (
+        <div className={cx('inputWrapper')}>
+          <div className="label">{props.label}</div>
+          <div
+            className={cx('inputContainer', {
+              fullWidth: props.fullWidth,
+              error: validateField && meta.error && meta.touched,
+            })}
+          >
+            {props.inputIcon && (
+              <span className="inputIcon">{props.inputIcon}</span>
+            )}
 
-        {props.values.map((item, idx) => {
-          return (
-            <label className="radio">
-              <input
-                type="radio"
-                {...field}
-                name={props.name}
-                value={item}
-                onChange={props.onChange}
-              />
-              <span className="radio-label">{item}</span>
-            </label>
-          );
-        })}
+            <>
+              {props.values.map(item => (
+                <label key={`radio-${item}`} className="radio">
+                  <input
+                    type="radio"
+                    // {...field}
+                    name={`radio-${props.name}`}
+                    value={item}
+                    checked={field.value === item}
+                    onChange={handleUpdateValue}
+                  />
+                  <span className="radio-label">{item}</span>
+                </label>
+              ))}
+            </>
 
-        {props.clearable && props.value.length > 0 && (
-          <span className="input-right-Icon cursor-pointer">
-            {<MdCancel />}
-          </span>
-        )}
-      </div>
-      {meta.error && meta.touched && (
-        <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
-          {props.error && props.error}
+            {props.clearable && props.values.length > 0 && (
+              <span className="input-right-Icon cursor-pointer">
+                {<MdCancel onClick={handleClearField} />}
+              </span>
+            )}
+          </div>
+          {validateField && meta.error && meta.touched && (
+            <div
+              className={cx('hint', { error_hint: meta.error && meta.touched })}
+            >
+              {meta.error && meta.error.message}
+            </div>
+          )}
         </div>
       )}
-    </div>
+    </Field>
   );
 }
+Radio.defaultProps = {
+  allowValidation: true,
+};
 
 Radio.propTypes = {
-  clearable: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
-  fullWidth: PropTypes.bool.isRequired,
-  inputIcon: PropTypes.node.isRequired,
-  value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-  error: PropTypes.string,
-  name: PropTypes.string.isRequired,
+  // type: PropTypes.string,
+  // onChange: PropTypes.func,
+  fullWidth: PropTypes.bool,
+  inputIcon: PropTypes.node,
   label: PropTypes.string,
-  values: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  name: PropTypes.string,
+  hidden: PropTypes.bool,
+  disabled: PropTypes.bool,
+  clearable: PropTypes.bool,
+  validate: PropTypes.func.isRequired,
+  values: PropTypes.array,
+  allowValidation: PropTypes.bool,
 };
 
 export default memo(Radio);

@@ -4,15 +4,15 @@ import { Row, Column } from '../../Layout';
 import Input from '../../FormComponents/Input';
 import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
+import Select from '../../FormComponents/Select';
 
 //  *****  Education Form Component *****
 
-const EducationInputs = ({ idx, values, setFieldValue }) => (
+const EducationInputs = ({ idx, values, setFieldValue, countriesList }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Degree"
           label="Degree"
           validate={validationMap.title}
@@ -21,7 +21,6 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
       </Column>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Institute Name"
           label="Institute Name"
           validate={validationMap.title}
@@ -32,7 +31,6 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
     <Row>
       <Column width="1/3" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Field of Study"
           label="Field of Study"
           name={`education.${idx}.fieldOfStudy`}
@@ -40,21 +38,21 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
         />
       </Column>
       <Column width="1/3" className="px-1">
-        <Input
-          data-idx={idx}
-          placeholder="State"
-          label="State"
-          name={`education.${idx}.state`}
-          validate={validationMap.state}
+        <Select
+          placeholder="Country"
+          label="Country"
+          name={`education.${idx}.country`}
+          clearable
+          options={countriesList}
+          validate={validationMap.country}
         />
       </Column>
       <Column width="1/3" className="px-1">
         <Input
-          data-idx={idx}
-          placeholder="Country"
-          label="Country"
-          name={`education.${idx}.country`}
-          validate={validationMap.country}
+          placeholder="State"
+          label="State"
+          name={`education.${idx}.state`}
+          validate={validationMap.state}
         />
       </Column>
     </Row>
@@ -62,9 +60,9 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
           placeholder="Start Date"
           label="Start Date"
+          clearable
           name={`education.${idx}.start`}
           validate={validationMap.start}
         />
@@ -72,9 +70,9 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
           placeholder="End Date"
           label="End Date"
+          clearable
           // hidden={values.tillDate}
           disabled={values.tillDate}
           name={`education.${idx}.end`}
@@ -84,7 +82,6 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
       <Column width="1/5" className="px-1">
         <Input
           type="checkbox"
-          data-idx={idx}
           placeholder="Till date"
           label="Till date"
           onChange={() => {
@@ -92,7 +89,7 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
               setFieldValue(`education.${idx}.tillDate`, false);
             } else {
               setFieldValue(`education.${idx}.tillDate`, true);
-              setFieldValue(`education.${idx}.end`, '');
+              setFieldValue(`education.${idx}.end`, null);
             }
           }}
           name={`education.${idx}.tillDate`}
@@ -103,7 +100,6 @@ const EducationInputs = ({ idx, values, setFieldValue }) => (
     <Row>
       <Column width="full" className="px-1">
         <TextArea
-          data-idx={idx}
           placeholder="Summary"
           label="Summary"
           name={`education.${idx}.summary`}
@@ -118,6 +114,7 @@ EducationInputs.propTypes = {
   idx: PropTypes.number,
   values: PropTypes.object,
   setFieldValue: PropTypes.func,
+  countriesList: PropTypes.array.isRequired,
 };
 
 export default EducationInputs;

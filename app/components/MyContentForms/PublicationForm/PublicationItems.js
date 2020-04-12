@@ -12,7 +12,6 @@ const PublicationInputs = ({ idx }) => (
     <Row>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Title"
           label="Title"
           name={`publication.${idx}.title`}
@@ -21,7 +20,6 @@ const PublicationInputs = ({ idx }) => (
       </Column>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Summary"
           label="Summary"
           name={`publication.${idx}.summary`}
@@ -32,7 +30,6 @@ const PublicationInputs = ({ idx }) => (
     <Row>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Reference Link"
           label="Reference Link"
           name={`publication.${idx}.url`}
@@ -42,9 +39,9 @@ const PublicationInputs = ({ idx }) => (
       <Column width="1/2" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
           placeholder="Date"
           label="Date"
+          clearable
           name={`publication.${idx}.date`}
           validate={validationMap.date}
         />
@@ -53,7 +50,6 @@ const PublicationInputs = ({ idx }) => (
     <Row>
       <Column width="full" className="px-1">
         <TextArea
-          data-idx={idx}
           placeholder="Description"
           label="Description"
           name={`publication.${idx}.description`}

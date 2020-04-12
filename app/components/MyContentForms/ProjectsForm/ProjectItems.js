@@ -4,15 +4,15 @@ import Input from '../../FormComponents/Input';
 import { Row, Column } from '../../Layout';
 import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
+import MultiselectSkill  from '../../FormComponents/MultiselectAutocomplete'
 
 //  *****  Project Form Component *****
 
-const ProjectInputs = ({ idx, values, setFieldValue }) => (
+const ProjectInputs = ({ idx, values, setFieldValue, skillData, getValues }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Title"
           label="Title"
           name={`project.${idx}.title`}
@@ -21,7 +21,6 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
       </Column>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Summary"
           label="Summary"
           name={`project.${idx}.summary`}
@@ -31,17 +30,27 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
     </Row>
     <Row>
       <Column width="1/2" className="px-1">
-        <Input
-          data-idx={idx}
+        {/* <AutocompleteInput
+          type="autocomplete"
+          placeholder="Select Your Skills"
+          label="Choose From List"
+          name="Skills"
+          options={skillData}
+          allowCustomText={false}
+          allowMultiselect
+          allowIconsInOptionList
+          updateValues={getValues}
+        /> */}
+         <MultiselectSkill options={skillData} showDefaultOptions />
+        {/* <Input
           placeholder="Technology Used"
           label="Technology Used"
           name={`project.${idx}.keywords`}
           validate={validationMap.keywords}
-        />
+        /> */}
       </Column>
       <Column width="1/2" className="px-1">
         <Input
-          data-idx={idx}
           placeholder="Reference Link"
           label="Reference Link"
           name={`project.${idx}.url`}
@@ -53,9 +62,9 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
           placeholder="Start Date"
           label="Start Date"
+          clearable
           name={`project.${idx}.start`}
           validate={validationMap.start}
         />
@@ -63,9 +72,9 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
       <Column width="2/5" className="px-1">
         <Input
           type="date"
-          data-idx={idx}
           placeholder="End Date"
           label="End Date"
+          clearable
           disabled={values.tillDate}
           name={`project.${idx}.end`}
           validate={validationMap.end}
@@ -74,7 +83,6 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
       <Column width="1/5" className="px-1">
         <Input
           type="checkbox"
-          data-idx={idx}
           placeholder="Till date"
           label="Till date"
           onChange={() => {
@@ -82,7 +90,7 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
               setFieldValue(`project.${idx}.tillDate`, false);
             } else {
               setFieldValue(`project.${idx}.tillDate`, true);
-              setFieldValue(`project.${idx}.end`, '');
+              setFieldValue(`project.${idx}.end`, null);
             }
           }}
           name={`project.${idx}.tillDate`}
@@ -93,7 +101,6 @@ const ProjectInputs = ({ idx, values, setFieldValue }) => (
     <Row>
       <Column width="full" className="px-1">
         <TextArea
-          data-idx={idx}
           placeholder="Description"
           label="Description"
           name={`project.${idx}.description`}
@@ -108,6 +115,7 @@ ProjectInputs.propTypes = {
   idx: PropTypes.number,
   values: PropTypes.object,
   setFieldValue: PropTypes.func,
+  skillData: PropTypes.array,
 };
 
 export default ProjectInputs;

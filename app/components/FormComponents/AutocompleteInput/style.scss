@@ -1,43 +1,100 @@
 @import "../../../styles/app.scss";
-.search-box {
-    width: 100%;
-    padding: 1rem;
-    transition: width 0.3s;
-    }
-    .search-box:focus {
-    width: 100%;
-    outline: none;
-    }
-ul.options {
-    display: block;
-    list-style: none;
-    transition: width 0.3s;
-    margin: auto;
+.autocomplete {
+  .optionsList {
     position: relative;
+    .optionsListItems {
+        height: 12.5rem;
+        overflow: auto;
+        // min-width: 13%;
+        position: absolute;
+        z-index: 99;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #ffffff;
+        li {
+            list-style: none;
+            // width: max-content;
+            :first-child {
+              margin-top: 0.1rem;
+            }
+            :last-child {
+              margin-bottom: 0.1rem;
+            }
+            button {
+                background: none!important;
+                border: none;
+                padding: 0!important;
+                cursor: pointer;
+                width: inherit;
+                width: 100%;
+                text-align: initial;
+                display: inline-flex;
+                align-items: center;
+                @include font();
+            }
+            &:hover,
+            &:focus {
+              background: whitesmoke;
+              color: #00b4cc;
+              cursor: pointer;
+              transition: 0.3s all;
+            }
+            &.option-active {
+              background: whitesmoke;
+              // font-size: 1.5rem;
+              color: #00b4cc;
+            }
+        }
+    }
   }
+}
+// .search-box {
+//     width: 100%;
+//     padding: 1rem;
+//     transition: width 0.3s;
+//     }
+//     .search-box:focus {
+//     width: 100%;
+//     outline: none;
+//     }
+// ul.options {
+//     display: block;
+//     list-style: none;
+//     transition: width 0.3s;
+//     margin: auto;
+//     position: relative;
+//   }
   
-  ul.options li {
-    @include font($size: 12px);
-    display: block;
-    background: white;
-    // margin: 10px auto;
-    padding: 5px;
-    width: 100%;
-    //border-radius: 2px;
-  }
-  ul.options li:hover {
-    // font-weight: bold;
-    color: #00b4cc;
-    cursor: pointer;
-    transition: 0.3s all;
-  }
+//   ul.options li {
+//     @include font($size: 12px);
+//     display: block;
+//     background: white;
+//     // margin: 10px auto;
+//     padding: 5px;
+//     width: 100%;
+//     //border-radius: 2px;
+//   }
+//   ul.options li:hover {
+//     // font-weight: bold;
+//     color: #00b4cc;
+//     cursor: pointer;
+//     transition: 0.3s all;
+//   }
   
-  ul.options li.option-active {
-    background: whitesmoke;
-    // font-size: 1.5rem;
-    color: #00b4cc;
-  }
-  .no-options {
-    color: white;
-  }
-  
+//   ul.options li.option-active {
+//     background: whitesmoke;
+//     // font-size: 1.5rem;
+//     color: #00b4cc;
+//   }
+//   .no-options {
+//     color: white;
+//   }
+// .twoCols .multiselectDiv {
+//   display: grid;
+//   grid-template-columns: repeat(2,minmax(min-content, 1fr));
+// }
+// .fourCols .multiselectDiv {
+//   display: grid;
+//   grid-template-columns: repeat(4,minmax(50%, 1fr));
+// }

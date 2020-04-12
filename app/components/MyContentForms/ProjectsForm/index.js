@@ -1,4 +1,5 @@
 import React, { memo, useState } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import cx from 'classnames';
@@ -19,40 +20,82 @@ import ProjectInputs from './ProjectItems';
 import Button from '../../Button';
 
 function ProjectForm({ editorState, resumeJSONState, dispatch }) {
+  // const skillData = [
+  //   { name: 'Music' },
+  //   { name: 'Singing' },
+  //   { name: 'Reading' },
+  //   { name: 'Writing' },
+  //   { name: 'Blogginging' },
+  //   { name: 'Poetry' },
+  // ];
+  const skillData = [
+    'Music',
+    'Singing',
+    'Reading',
+    'Writing',
+    'Bloging',
+    'Poetry',
+    'Sketching',
+    'Photography',
+    'Designing',
+    'Painting',
+    'Volunteering',
+    'Socializing',
+    'Gaming',
+    'Sport',
+  ];
+
   const blankProFields = {
     title: '',
     summary: '',
     keywords: '',
     url: '',
-    start: '',
-    end: '',
+    start: null,
+    end: null,
     tillDate: false,
     description: '',
   };
-  const [projects, setProjects] = useState([{ ...blankProFields }]);
+  let storeProject = null;
 
-  // const handleSave = values => {
-  //   const updatedEdu = [...values.project];
-  //   const history = { history: updatedEdu };
-  //   const JSONString = JSON.stringify(history);
-  //   const HTMLString = editorState.getHtml();
-  //   const TemplateCss = editorState.getCss();
-  //   const ConvertedHTML = InjectJSONUsingCheerioEducation(
-  //     HTMLString,
-  //     JSONString,
-  //   );
+  if (resumeJSONState.Project) {
+    storeProject = resumeJSONState.Project.history;
+  }
 
-  //   const DemoPage = {
-  //     html: ConvertedHTML,
-  //     css: TemplateCss,
-  //     components: null,
-  //     style: null,
-  //   };
+  const [projects, setProjects] = useState(
+    storeProject || [{ ...blankProFields }],
+  );
 
-  //   dispatch(updateEditorState(ComponentEditor(DemoPage)));
-  //   // dispatch(updateDemoPageState(DemoPage))
-  //   dispatch(updateResumeJSONState(history, 'Project'));
-  // };
+  const handleSave = values => {
+    const updatedEdu = [...values.project];
+    const history = { history: updatedEdu };
+    const JSONString = JSON.stringify(history);
+    const HTMLString = editorState.getHtml();
+    const TemplateCss = editorState.getCss();
+    const ConvertedHTML = InjectJSONUsingCheerioEducation(
+      HTMLString,
+      JSONString,
+    );
+
+    const DemoPage = {
+      html: ConvertedHTML,
+      css: TemplateCss,
+      components: null,
+      style: null,
+    };
+
+    dispatch(updateEditorState(ComponentEditor(DemoPage)));
+    // dispatch(updateDemoPageState(DemoPage))
+    dispatch(updateResumeJSONState(history, 'Project'));
+  };
+
+  const getValues = data => {
+    // console.log("value recieved:- ", data);
+    setHobbies([...hobbies, data]);
+    const hobbyDataTemp = hobbiesData.filter(
+      hData => hData.value.toLowerCase() !== data.value.toLowerCase(),
+    );
+    setHobbiesData(hobbyDataTemp);
+  };
 
   return (
     <div>
@@ -71,11 +114,18 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
                 <React.Fragment>
                   {values.project.map((item, idx) => (
                     <Accordian
+                      key={idx}
                       id={idx}
                       label={item.title ? item.title : `Project ${idx + 1}`}
                       onClickRemove={() => arrayHelpers.remove(idx)}
                     >
-                      <ProjectInputs idx={idx} values={item} setFieldValue={setFieldValue} />
+                      <ProjectInputs
+                        idx={idx}
+                        values={item}
+                        setFieldValue={setFieldValue}
+                        skillData={skillData}
+                        getValues={getValues}
+                      />
                     </Accordian>
                   ))}
 
@@ -86,7 +136,6 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
                   >
                     Add Another
                   </Button>
-                  {console.log(' value: ', values)}
                   <div className={cx('footerContainer')}>
                     <Button as="submit" fullWidth type="primary">
                       Save Details
@@ -101,6 +150,12 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
     </div>
   );
 }
+
+ProjectForm.propTypes = {
+  editorState: PropTypes.object,
+  resumeJSONState: PropTypes.object,
+  dispatch: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = createStructuredSelector({
   editorState: makeUpdateEditorState(),

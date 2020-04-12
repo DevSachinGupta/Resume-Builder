@@ -24,6 +24,8 @@ const validationMap = {
       yup
         .date()
         .required('Required')
+        .nullable()
+        .typeError('Invalid Date Format it should be dd/mm/yyyy')
         .validate(value),
     ),
   summary: value =>

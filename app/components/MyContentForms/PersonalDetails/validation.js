@@ -38,6 +38,8 @@ const validationMap = {
       yup
         .date()
         .required('Required')
+        .nullable()
+        .typeError('Invalid Date Format it should be dd/mm/yyyy')
         .validate(value),
     ),
   gender: value =>
@@ -47,13 +49,14 @@ const validationMap = {
         .required('Required')
         .validate(value),
     ),
-  address: value =>
+  address1: value =>
     validationHandler(
       yup
         .string()
         .required('Required')
         .validate(value),
     ),
+  address2: value => validationHandler(yup.string().validate(value)),
   city: value =>
     validationHandler(
       yup

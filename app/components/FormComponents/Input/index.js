@@ -31,7 +31,7 @@ function Input(props) {
   }
 }
 Input.propTypes = {
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
 };
 
 export default memo(Input);

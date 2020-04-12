@@ -1,91 +1,133 @@
-import React, { useState, useEffect } from 'react';
-import { Formik } from 'formik';
-import axios from 'axios';
+import React, { useState, memo, useEffect, useCallback } from 'react';
+import { Formik, Form } from 'formik';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
+import {
+  makeUpdateResumeJSONState,
+  makeUpdateEditorState,
+} from 'containers/Builder/selectors';
+// import {
+//   updateEditorState,
+//   updateResumeJSONState,
+// } from 'containers/Builder/actions';
+import { getCountryList } from '../../../containers/MyContent/actions';
+import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
 import PersonalDetailsForms from './PersonalDetailsForms';
-import states from '../../DropdownList/stateList';
-import countries from '../../DropdownList/countryList';
+import Button from '../../Button';
 import './style.scss';
 
-function PersonalDetails() {
+function PersonalDetails({
+  allCountries,
+  editorState,
+  resumeJSONState,
+  dispatch,
+}) {
   const blankPersonalFields = {
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
-    dateOfBirth: '',
+    dateOfBirth: null,
     gender: '',
-    address: '',
+    address1: '',
+    address2: '',
     city: '',
     state: '',
     pincode: '',
     country: '',
     brief: '',
   };
-  const [personal, setPersonal] = useState({ ...blankPersonalFields });
+  let storePersonal = null;
 
-  const [country, setCountry] = useState({
-    countryList: [],
-    isLoading: true,
-    errors: null,
+  if (resumeJSONState.Personal) {
+    storePersonal = resumeJSONState.Personal.history;
+  }
+
+  const [personal, setPersonal] = useState(
+    storePersonal || { ...blankPersonalFields },
+  );
+
+  const getCountires = useCallback(() => {
+    dispatch(getCountryList());
   });
 
-  // useEffect(() => {
-  //   axios
-  //     .get('https://resumebuilder.s3.ap-south-1.amazonaws.com/List/countryList.json')
-  //     .then(response => {
-  //       setCountry({
-  //         countryList: response.data,
-  //         isLoading: false,
-  //       });
-  //     })
-  //     .catch(error => {
-  //       setCountry({ error, isLoading: false });
-  //     });
-  // }, []);
-
   useEffect(() => {
-    async function getPosts() {
-      const response = await axios.get('https://resumebuilder.s3.ap-south-1.amazonaws.com/List/countryList.json')
-      try {
-        setCountry({
-          countriesList: response.data,
-          isLoading: false,
-        });
-      } catch (error) {
-        setCountry({ error, isLoading: false });
-      }
-    }
-    getPosts();
+    getCountires();
   }, []);
 
-  // const countriesList = [];
-  // countries.map((item, index) => (countriesList[index] = { name: item.name }));
+  // const handleSave = values => {
+  //   const updatedEdu = [...values.education];
+  //   const history = { history: updatedEdu };
+  //   const JSONString = JSON.stringify(history);
+  //   const HTMLString = editorState.getHtml();
+  //   const TemplateCss = editorState.getCss();
+  //   const ConvertedHTML = InjectJSONUsingCheerioEducation(
+  //     HTMLString,
+  //     JSONString,
+  //   );
 
-  const statesList = [];
-  states.map((item, index) => (statesList[index] = item.name));
+  //   const DemoPage = {
+  //     html: ConvertedHTML,
+  //     css: TemplateCss,
+  //     components: null,
+  //     style: null,
+  //   };
 
-  const updateState = e => {
-    const statesList = [];
-    states.map((item, index) => (statesList[index] = item.name));
-  };
-
-  console.log('axios state: ', country);
-
-  const { isLoading, countriesList } = country;
+  //   dispatch(updateEditorState(ComponentEditor(DemoPage)));
+  //   // dispatch(updateDemoPageState(DemoPage))
+  //   dispatch(updateResumeJSONState(history, 'Personal'));
+  // };
 
   return (
     <div>
-      <Formik initialValues={{ personal }}>
-        {({ handleSubmit, isSubmitting }) => (
-          <React.Fragment>
-            <PersonalDetailsForms
-              countriesList={countriesList}
-              statesList={statesList}
-            />
-          </React.Fragment>
+      <Formik
+        initialValues={personal}
+        onSubmit={(values, actions) => {
+          console.log(values);
+          // handleSave(values);
+        }}
+      >
+        {() => (
+          <Form>
+            <React.Fragment>
+              <PersonalDetailsForms countriesList={allCountries} />
+
+              <div className={cx('footerContainer')}>
+                <Button as="submit" fullWidth type="primary">
+                  Save Details
+                </Button>
+              </div>
+            </React.Fragment>
+          </Form>
         )}
       </Formik>
     </div>
   );
 }
-export default PersonalDetails;
+PersonalDetails.propTypes = {
+  allCountries: PropTypes.array.isRequired,
+  editorState: PropTypes.object,
+  resumeJSONState: PropTypes.object,
+  dispatch: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = () =>
+  createStructuredSelector({
+    allCountries: makeSelectAllCountiesOptions(),
+    editorState: makeUpdateEditorState(),
+    resumeJSONState: makeUpdateResumeJSONState(),
+  });
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+});
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+export default compose(
+  withConnect,
+  memo,
+)(PersonalDetails);

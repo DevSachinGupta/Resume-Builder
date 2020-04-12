@@ -4,77 +4,90 @@
  *
  */
 
-import React, { memo, useState, useEffect, useRef } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import { useField, useFormikContext } from 'formik';
+import ReactDatePicker from 'react-datepicker';
+import { MdCancel } from 'react-icons/md';
+import 'react-datepicker/dist/react-datepicker.css';
+import { useField } from 'formik';
 import cx from 'classnames';
-import { Calendar } from 'react-date-range';
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css'; // theme css file
-import Text from '../Text';
 import './style.scss';
 
-function DatePicker({ type, onChange, ...rest }) {
-  let refNode = useRef(null);
-  const [isPickerActive, toggleDatePicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
-  useEffect(() => {
-    document.addEventListener('mousedown', handleGlobalClick, true);
-    return function cleanup() {
-      document.removeEventListener('mousedown', handleGlobalClick, false);
-    };
+// function DatePicker({ type, name, label, clearable, validate, ...rest }) {
+function DatePicker(props) {
+  let validateField = props.allowValidation;
+  if (props.disabled) {
+    validateField = false;
+  }
+  const [field, meta, helpers] = useField({
+    name: props.name,
+    validate: async value => {
+      const val = validateField
+        ? await props.validate(value).catch(err => err)
+        : null;
+      return val;
+    },
   });
 
-  const { setFieldValue } = useFormikContext();
-  const [field] = useField(rest);
-
-  const handleSelect = date => {
-    onChange(date);
-    setFieldValue(field.name, date);
-    handleDatePicker();
+  const handleClearField = () => {
+    helpers.setValue(null);
   };
 
-  const handleGlobalClick = e => {
-    if (refNode !== null && !refNode.contains(e.target) && isPickerActive) {
-      handleDatePicker();
-    }
-  };
-  const handleDatePicker = () => {
-    toggleDatePicker(!isPickerActive);
-  };
   return (
-    <div
-      className={cx('relative', 'calenderWrapper')}
-      ref={node => (refNode = node)}
-    >
-      <Text
-        onClick={handleDatePicker}
-        value={selectedDate}
-        clearable
-        afterReset={setSelectedDate}
-        {...rest}
-      />
-      {isPickerActive && (
-        <Calendar
-          date={selectedDate}
-          className="shadow rounded z-10 absolute floating-calender"
-          onChange={handleSelect}
-          dateDisplayFormat="MM/DD/YYYY"
+    <div className={cx('calenderWrapper')} hidden={props.hidden}>
+      <div className="label">{props.label}</div>
+      <div
+        className={cx('inputContainer', {
+          fullWidth: props.fullWidth,
+          error: validateField && meta.error && meta.touched,
+        })}
+      >
+        {props.inputIcon && (
+          <span className="inputIcon">{props.inputIcon}</span>
+        )}
+
+        <ReactDatePicker
+          selected={field.value}
+          onChange={date => {
+            helpers.setValue(date);
+          }}
+          dateFormat="dd/MM/yyyy"
+          placeholderText="DD/MM/YYYY"
+          wrapperClassName="w-full"
+          className="customDatePickerInput"
+          showMonthDropdown
+          showYearDropdown
+          {...props}
         />
+        {props.clearable && (
+          <span className="input-right-Icon cursor-pointer">
+            {<MdCancel onClick={handleClearField} />}
+          </span>
+        )}
+      </div>
+      {validateField && meta.error && meta.touched && (
+        <div className={cx('hint', { error_hint: meta.error && meta.touched })}>
+          {meta.error && meta.error.message}
+        </div>
       )}
     </div>
   );
 }
 DatePicker.defaultProps = {
-  onChange: date => {
-    console.log(date);
-  },
+  allowValidation: true,
 };
 DatePicker.propTypes = {
   type: PropTypes.string.isRequired,
   onChange: PropTypes.func,
-  name: PropTypes.string.isRequired,
+  fullWidth: PropTypes.bool,
+  inputIcon: PropTypes.node,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  hidden: PropTypes.bool,
+  disabled: PropTypes.bool,
+  clearable: PropTypes.bool,
   validate: PropTypes.func.isRequired,
+  allowValidation: PropTypes.bool,
 };
 
 export default memo(DatePicker);

@@ -4,7 +4,12 @@
  *
  */
 
-import { DEFAULT_ACTION, SET_MODEL_CONTENT } from './constants';
+import {
+  DEFAULT_ACTION,
+  SET_MODEL_CONTENT,
+  GET_COUNTRY_LIST,
+  GET_STATE_LIST,
+} from './constants';
 import { TOGGLE_MODAL } from '../App/constants';
 export function defaultAction() {
   return {
@@ -21,4 +26,22 @@ export function setModalContent(contentType) {
       type: TOGGLE_MODAL,
     },
   ];
+}
+
+/**
+ * @description Action to be dispatched for country list
+ */
+export function getCountryList() {
+  return {
+    type: GET_COUNTRY_LIST,
+  };
+}
+/**
+ * @description Action to be dispatched for state list based on country ID
+ */
+export function getStateList(countryID) {
+  return {
+    type: GET_STATE_LIST,
+    countryID,
+  };
 }
