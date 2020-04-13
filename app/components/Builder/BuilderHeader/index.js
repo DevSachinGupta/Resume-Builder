@@ -15,8 +15,9 @@ import { GoThreeBars } from 'react-icons/go';
 import { FaUserCircle } from 'react-icons/fa';
 import { toggleHeaderUserMenu } from 'containers/App/actions';
 import { makeSelectIsUserMenuOpen } from 'containers/App/selectors';
-import Button from '../../Button';
+import { setModalContent } from 'containers/MyContent/actions';
 import { toggleSidebar } from '../../../containers/Builder/actions';
+import Button from '../../Button';
 import './progress.css';
 import './style.scss';
 
@@ -48,7 +49,9 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen }) {
           <Button>Save</Button>
         </div>
         <div className={cx('publishButton')}>
-          <Button>Publish</Button>
+          <Button onClick={() => dispatch(setModalContent('publish'))}>
+            Publish
+          </Button>
         </div>
         <div className={cx('navAccountPill')}>
           <FaUserCircle
@@ -62,7 +65,7 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen }) {
           >
             <ul>
               <li>Login</li>
-              <li>Settings</li>
+              <li onClick={() => dispatch(setModalContent('setting'))}>Settings</li>
             </ul>
           </div>
         </div>
