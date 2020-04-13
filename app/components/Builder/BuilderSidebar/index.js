@@ -16,6 +16,7 @@ import { createStructuredSelector } from 'reselect';
 import { toggleSecondarySidebar } from 'containers/Builder/actions';
 import { setModalContent } from 'containers/MyContent/actions';
 import { makeSelectIsSecondarySidebarOpen } from 'containers/Builder/selectors';
+import setPagesContent from '../../Pages';
 import SidebarItem from '../../Sidebar/SidebarItem';
 import { primarySidebar, secondarySidebar } from './sidebarItems';
 import './style.scss';
@@ -28,7 +29,8 @@ function BuilderSidebar({ isSecondarySidebarOpen, dispatch }) {
           key={`sideBar-${index}`}
           icon={item.icon}
           onClick={
-            item.hasSecondary ? () => dispatch(toggleSecondarySidebar()) : null
+            // item.hasSecondary ? () => dispatch(toggleSecondarySidebar()) : null
+            item.hasSecondary ? () => dispatch(toggleSecondarySidebar()) : () => dispatch(setModalContent(item.id))
           }
           title={item.title}
         />

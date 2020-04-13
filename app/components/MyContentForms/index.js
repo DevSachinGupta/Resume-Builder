@@ -41,6 +41,27 @@ export const getModalContent = modelId => {
     case 'accomplishments':
       ModalComponent = React.lazy(() => import('./AccomplishmentForm'));
       break;
+    case 'shareOnline':
+      ModalComponent = React.lazy(() =>
+        import('./SecondaryForms/ShareOnlineForm'),
+      );
+      break;
+    case 'contactUs':
+      ModalComponent = React.lazy(() =>
+        import('./SecondaryForms/ContactUsForm'),
+      );
+      break;
+    case 'feedback':
+      ModalComponent = React.lazy(() =>
+        import('./SecondaryForms/FeedbackForm'),
+      );
+      break;
+    case 'publish':
+      ModalComponent = React.lazy(() => import('./SecondaryForms/PublishForm'));
+      break;
+    case 'setting':
+      ModalComponent = React.lazy(() => import('./SecondaryForms/SettingForm'));
+      break;
     default:
       ModalComponent = React.lazy(() => import('./EducationForm'));
       break;

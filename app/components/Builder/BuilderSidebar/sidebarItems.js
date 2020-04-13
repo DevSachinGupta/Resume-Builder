@@ -5,12 +5,15 @@ const primarySidebar = [
   },
   {
     title: 'Share Online',
+    id: 'shareOnline',
   },
   {
     title: 'Contact us',
+    id: 'contactUs',
   },
   {
     title: 'Feedback',
+    id: 'feedback',
   },
 ];
 const secondarySidebar = [

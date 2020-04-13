@@ -10,7 +10,8 @@ import {
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
 import { updateResumeJSONState } from 'containers/Builder/actions';
-import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
+import { updateCanvas } from 'containers/Builder/saga';
+// import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
 import { formatDateValue } from '../../../utils/app/textFormating';
 import Accordian from '../../Accordion';
 import PublicationInputs from './PublicationItems';
@@ -52,8 +53,10 @@ function PublicationForm({ editorState, resumeJSONState, dispatch }) {
     const updatedPub = formatValues(
       JSON.parse(JSON.stringify(values.publication)),
     );
+    console.log(updateCanvas)
     // const updatedPub = [...values.publication];
     const history = { history: values.publication };
+    // updateCanvas('publication', 'ADD', updatedPub, componentMap);
     updateCanvas('publication', 'ADD', updatedPub, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'publication'));
   };

@@ -30,6 +30,21 @@ const Constants = {
     accomplishments: {
       title: 'Accomplishments',
     },
+    shareOnline: {
+      title: 'Share Online',
+    },
+    contactUs: {
+      title: 'Contact us',
+    },
+    feedback: {
+      title: 'Feedback',
+    },
+    publish: {
+      title: 'Publish',
+    },
+    setting: {
+      title: 'Setting',
+    },
   },
 };
 export default Constants;
