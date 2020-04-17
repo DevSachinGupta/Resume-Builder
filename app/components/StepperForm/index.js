@@ -11,8 +11,9 @@ import Button from '../Button';
 
 function StepperForm(props) {
   const [currentStep, setCurrentStep] = useState(0);
-  const lastStep = props.children.length;
-  //
+  const lastStep = props.children.length - 1;
+
+  console.log(props.isValid);
   const previousButtonClick = () => {
     setCurrentStep(Math.min(currentStep - 1, 0));
   };
@@ -22,6 +23,10 @@ function StepperForm(props) {
         setCurrentStep(Math.min(currentStep + 1, lastStep));
         props.validateForm();
         props.setTouched({});
+        console.log("Inside subm isValid");
+        if (currentStep === lastStep) {
+          // props.finalSubmit();
+        }
       }
     });
   };
@@ -37,7 +42,7 @@ function StepperForm(props) {
       )}
       <Button
         type={currentStep === lastStep ? 'Submit' : 'button'}
-        onClick={currentStep === lastStep && nextButtonClick}
+        onClick={nextButtonClick}
       >
         {currentStep === lastStep ? 'Submit' : 'Continue'}
       </Button>
