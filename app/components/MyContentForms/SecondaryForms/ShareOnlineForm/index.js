@@ -6,49 +6,49 @@
 
 import React, { memo, useState } from 'react';
 // import PropTypes from 'prop-types';
-// import {
-//   FacebookShareButton,
-//   TwitterShareButton,
-//   EmailShareButton,
-//   FacebookIcon,
-//   TwitterIcon,
-//   EmailIcon,
-// } from 'react-share';
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  EmailShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  EmailIcon,
+} from 'react-share';
 import './style.scss';
 
-// const url = window.location.href;
-// const text = 'test';
+const url = window.location.href;
+const text = 'test';
 
 function ShareOnlineForm() {
-  const [state, setState] = useState({
-    shareOpen: 'closeShare',
-    toggleButtonText: 'Share this',
-  });
+  // const [state, setState] = useState({
+  //   shareOpen: 'closeShare',
+  //   toggleButtonText: 'Share this',
+  // });
 
-  const shareOpenToggle = () => {
-    if (state.shareOpen === 'closeShare') {
-      setState({
-        shareOpen: 'openShare',
-        toggleButtonText: 'Hide sharing options',
-      });
-    } else {
-      setState({
-        shareOpen: 'closeShare',
-        toggleButtonText: 'Share this',
-      });
-    }
-  };
+  // const shareOpenToggle = () => {
+  //   if (state.shareOpen === 'closeShare') {
+  //     setState({
+  //       shareOpen: 'openShare',
+  //       toggleButtonText: 'Hide sharing options',
+  //     });
+  //   } else {
+  //     setState({
+  //       shareOpen: 'closeShare',
+  //       toggleButtonText: 'Share this',
+  //     });
+  //   }
+  // };
 
   // URL from current page
-  const url = window.location.href;
-  // URL patterns for Social media sites share functionalities
-  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-  const twitterUrl = `https://twitter.com/intent/tweet?url=${url}`;
-  const linkedinUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${url}`;
+  // const url = window.location.href;
+  // // URL patterns for Social media sites share functionalities
+  // const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+  // const twitterUrl = `https://twitter.com/intent/tweet?url=${url}`;
+  // const linkedinUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${url}`;
   return (
     <div>
       <h5>This is ShareOnlineForm Page</h5>
-      {/* <FacebookShareButton url={url} quote={text} >
+      <FacebookShareButton url={url} quote={text} >
         <FacebookIcon size={32} round />
       </FacebookShareButton>
 
@@ -61,9 +61,9 @@ function ShareOnlineForm() {
         body={`${text}: ${url}`}
       >
         <EmailIcon size={32} round />
-      </EmailShareButton> */}
+      </EmailShareButton>
 
-      <div className="socialShareContainer">
+      {/* <div className="socialShareContainer">
         <div>
           <button
             type="button"
@@ -86,7 +86,7 @@ function ShareOnlineForm() {
             <i className="fa fa-twitter-square" />
           </a>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

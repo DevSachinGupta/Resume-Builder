@@ -141,7 +141,6 @@ function EducationForm({
                       />
                     </Accordian>
                   ))}
-
                   <Button
                     onClick={() => arrayHelpers.push(blankEduFields)}
                     fullWidth

@@ -51,112 +51,112 @@ function BuilderEditor({
   // console.log(demopageState, 'This is the editor_state:Editor');
   DemoPage = demopageState || DemoPage;
   let editor;
-  // useEffect(() => {
-  editor = grapesjs.init({
-    container: '#gjs',
-    // width: '82vw',
-    width: '100%',
-    height: 'calc(100vh - 64px)',
-    components: DemoPage.components || DemoPage.html,
-    style: DemoPage.style || DemoPage.css,
-    storageManager: {
-      autoload: false,
-    },
-    panels: {
-      defaults: [
-        {
-          id: 'devices-c',
-          el: '.deviceContainer',
-          visible: true,
-          buttons: [
-            {
-              id: 'set-device-desktop',
-              command(e) {
-                return e.setDevice('Desktop');
+  useEffect(() => {
+    editor = grapesjs.init({
+      container: '#gjs',
+      // width: '82vw',
+      width: '100%',
+      height: 'calc(100vh - 64px)',
+      components: DemoPage.components || DemoPage.html,
+      style: DemoPage.style || DemoPage.css,
+      storageManager: {
+        autoload: false,
+      },
+      panels: {
+        defaults: [
+          {
+            id: 'devices-c',
+            el: '.deviceContainer',
+            visible: true,
+            buttons: [
+              {
+                id: 'set-device-desktop',
+                command(e) {
+                  return e.setDevice('Desktop');
+                },
+                className: 'fa fa-desktop',
+                active: 1,
               },
-              className: 'fa fa-desktop',
-              active: 1,
-            },
-            {
-              id: 'set-device-tablet',
-              command(e) {
-                return e.setDevice('Tablet');
+              {
+                id: 'set-device-tablet',
+                command(e) {
+                  return e.setDevice('Tablet');
+                },
+                className: 'fa fa-tablet',
               },
-              className: 'fa fa-tablet',
-            },
-            {
-              id: 'set-device-mobile',
-              command(e) {
-                return e.setDevice('Mobile portrait');
+              {
+                id: 'set-device-mobile',
+                command(e) {
+                  return e.setDevice('Mobile portrait');
+                },
+                className: 'fa fa-mobile',
               },
-              className: 'fa fa-mobile',
-            },
-          ],
-        },
-      ],
-    },
-    canvas: {
-      styles: [
-        'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
-        'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style.css', // template 2
-        // 'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style-9.css', // template 9
-        // 'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style-10.css', // template 10
-      ],
-    },
-  });
+            ],
+          },
+        ],
+      },
+      canvas: {
+        styles: [
+          'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
+          'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style.css', // template 2
+          // 'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style-9.css', // template 9
+          // 'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style-10.css', // template 10
+        ],
+      },
+    });
 
-  editor.on('change:changesCount', (editorModel, changes, changesArray) => {
-    if (changes) {
-      if (changesArray.add) {
-        if (changesArray.add === true) {
-          const modelComponent = editor.getSelected();
-          if (modelComponent) {
-            const attrs = modelComponent.getAttributes();
-            const { content } = JSON.parse(
-              JSON.stringify(changesArray),
-            ).changes.added[0];
-            // console.log('ADD:', attrs.id, content);
-            const sectionId = attrs.id.split('_')[0];
-            const fieldIndex = attrs.id.split('_')[1];
-            const fieldId = attrs.id.split('_').slice(-1)[0];
-            console.log(
-              'add updateResume ',
-              sectionId,
-              fieldIndex,
-              fieldId,
-              content,
-            );
-            if (sectionId && fieldId) {
-              // form list from store
-              const storeData = resumeJSONState[`${sectionId}`];
-              console.log('store data:', resumeJSONState);
-              if (storeData) {
-                // const dataJSON = "{ `${sectionId}`: { history: { `${sectionId}`: { `${sectionId}`: content} } } }"
-                console.log(
-                  'store data update:',
-                  storeData,
-                  `${sectionId}.history.${fieldIndex}.${fieldId}`,
-                );
-                dispatch(
-                  updateResumeJSONState(
-                    content,
+    editor.on('change:changesCount', (editorModel, changes, changesArray) => {
+      if (changes) {
+        if (changesArray.add) {
+          if (changesArray.add === true) {
+            const modelComponent = editor.getSelected();
+            if (modelComponent) {
+              const attrs = modelComponent.getAttributes();
+              const { content } = JSON.parse(
+                JSON.stringify(changesArray),
+              ).changes.added[0];
+              // console.log('ADD:', attrs.id, content);
+              const sectionId = attrs.id.split('_')[0];
+              const fieldIndex = attrs.id.split('_')[1];
+              const fieldId = attrs.id.split('_').slice(-1)[0];
+              console.log(
+                'add updateResume ',
+                sectionId,
+                fieldIndex,
+                fieldId,
+                content,
+              );
+              if (sectionId && fieldId) {
+                // form list from store
+                const storeData = resumeJSONState[`${sectionId}`];
+                console.log('store data:', resumeJSONState);
+                if (storeData) {
+                  // const dataJSON = "{ `${sectionId}`: { history: { `${sectionId}`: { `${sectionId}`: content} } } }"
+                  console.log(
+                    'store data update:',
+                    storeData,
                     `${sectionId}.history.${fieldIndex}.${fieldId}`,
-                  ),
-                );
+                  );
+                  dispatch(
+                    updateResumeJSONState(
+                      content,
+                      `${sectionId}.history.${fieldIndex}.${fieldId}`,
+                    ),
+                  );
+                }
               }
+              // updateRseumeJSONState(attrs, content, []);
             }
-            // updateRseumeJSONState(attrs, content, []);
+          } else {
+            console.log(' remove or merged: ', changesArray);
           }
-        } else {
-          console.log(' remove or merged: ', changesArray);
         }
+      } else {
+        // console.log('no changes');
       }
-    } else {
-      // console.log('no changes');
-    }
-  });
-  dispatch(updateEditorState(editor));
-  // }, []);
+    });
+    dispatch(updateEditorState(editor));
+  }, [DemoPage]);
   console.log(editor);
 
   // dispatch(updateTemplateNumberState(template_number))

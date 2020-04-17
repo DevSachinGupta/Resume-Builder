@@ -46,6 +46,10 @@ function PublishForm() {
     if (!values.bucketUserName) {
       errors.bucketUserName = 'Required';
     }
+    // const errors = {};
+    // if (!values.pricingPlan) {
+    //   errors.pricingPlan = 'Required';
+    // }
 
     console.log(errors);
     return errors;

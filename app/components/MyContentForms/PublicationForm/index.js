@@ -56,8 +56,8 @@ function PublicationForm({ editorState, resumeJSONState, dispatch }) {
     console.log(updateCanvas)
     // const updatedPub = [...values.publication];
     const history = { history: values.publication };
-    // updateCanvas('publication', 'ADD', updatedPub, componentMap);
-    updateCanvas('publication', 'ADD', updatedPub, editorState, componentMap);
+    updateCanvas('publication', 'ADD', updatedPub, componentMap);
+    // updateCanvas('publication', 'ADD', updatedPub, editorState, componentMap);
     dispatch(updateResumeJSONState(history, 'publication'));
   };
 
