@@ -1,66 +1,89 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TiChevronRight } from 'react-icons/ti';
-import { FaGoogle, FaFacebookF } from 'react-icons/fa';
+// import { FaGoogle, FaFacebookF } from 'react-icons/fa';
+import { Formik } from 'formik';
+import Button from '../../Button';
 import HR from '../../Layout/HR';
+import Input from '../../FormComponents/Input';
+import Row from '../../Layout/Row';
+import Column from '../../Layout/Column';
+import Carousel from '../../Carousel';
+import { validationMap } from '../validation';
 import './style.css';
-class LoginForm extends React.Component {
-  render() {
-    return (
-      <div className="loginFormContainer px-10 py-8 bg-gray-800 rounded shadow-2xl w-1/3">
-        <div className="header">
-          <div className="title text-4xl">Login</div>
-          <div className="sub-title text-sm text-gray-600">
-            Sign in to your account to Continue
-          </div>
-        </div>
-        <form className="loginForm">
-          <div className="input-group">
-            <label>Email address</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="johndoe@gmail.com"
-              className="text-sm"
+
+function LoginForm() {
+  const blankLoginField = {
+    username: '',
+    password: '',
+  };
+  const onSubmitFunction = () => {};
+  return (
+    <Formik initialValues={blankLoginField} onSubmit={onSubmitFunction}>
+      {() => (
+        <Row className="my-3 bg-white">
+          <Column width="1/3" className="px-1">
+            <Input
+              placeholder="Username"
+              label="Username"
+              name="username"
+              fullWidth
+              validate={validationMap.username}
             />
-          </div>
-          <div className="input-group">
-            <label>
-              <span>Password</span>
-              <span>Lost Password</span>
-            </label>
-            <input
+            <Input
               type="password"
-              name="password"
               placeholder="Password"
-              className="text-sm"
+              label="Password"
+              name="password"
+              fullWidth
+              validate={validationMap.password}
             />
-          </div>
-          <button className="my-4 focus:outline-none rounded-full bg-purple-800 px-10 py-2 text-white hover:shadow-lg text-sm shadow">
-            <span>Sign in</span>
-            <TiChevronRight
-              className="ml-1"
-              style={{ display: 'inline-block' }}
-            />
-          </button>
-        </form>
-        <HR content="Or Continue with" />
-        <div className="social-login">
-          <button className="google-login mr-2">
-            <FaGoogle />
-          </button>
-          <button className="facebook-login ml-2">
-            <FaFacebookF />
-          </button>
-        </div>
-        <div className="footer mt-16">
-          <div className="text-xs text-gray-600">
-            Not Registered?{' '}
-            <Link to="/signup" className="hover:text-gray-700">Create account</Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
+            <Row>
+              <Column width="1/2" className="inline-block">
+                <Input type="checkbox" placeholder="Remember me" />
+              </Column>
+              <Column width="1/2">
+                <Link
+                  to="login"
+                  className="float-right"
+                  style={{ 'padding-top': '0.5rem' }}
+                >
+                  Forget Password
+                </Link>
+              </Column>
+            </Row>
+            <Button as="submit" fullWidth type="primary">
+              Login <TiChevronRight className="inline float-r" />
+            </Button>
+            <Button as="button" fullWidth type="primary mt-2">
+              <Link to="/signup">Sign Up</Link>
+            </Button>
+            <HR />
+            <Row>
+              <Column width="1/4" className="capitalize">
+                or login with
+              </Column>
+              <Column width="1/4 px-4" className="">
+                Facebook
+              </Column>
+              <Column width="1/4 px-4" className="">
+                Github
+              </Column>
+              <Column width="1/4 px-4" className="">
+                LinkedIn
+              </Column>
+            </Row>
+          </Column>
+          <Column width="2/3" className="px-1">
+            <Carousel showArrows showIndicators autoplay id="loginCarousel">
+              <div className="w-full h-full text-center">1</div>
+              <div className="w-full h-full text-center">2</div>
+              <div className="w-full h-full text-center">3</div>
+            </Carousel>
+          </Column>
+        </Row>
+      )}
+    </Formik>
+  );
 }
 export default LoginForm;
