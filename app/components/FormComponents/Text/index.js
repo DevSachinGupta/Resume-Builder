@@ -19,6 +19,7 @@ function Text(props) {
       return val;
     },
   });
+  // console.log("input field data: ", field, meta);
 
   const handleClearField = () => {
     helpers.setValue('');

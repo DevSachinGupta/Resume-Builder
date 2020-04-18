@@ -50,9 +50,9 @@ function BuilderEditor({
 }) {
   // console.log(demopageState, 'This is the editor_state:Editor');
   DemoPage = demopageState || DemoPage;
-  let editor;
+  // let editor;
   useEffect(() => {
-    editor = grapesjs.init({
+    const editor = grapesjs.init({
       container: '#gjs',
       // width: '82vw',
       width: '100%',
@@ -157,7 +157,7 @@ function BuilderEditor({
     });
     dispatch(updateEditorState(editor));
   }, [DemoPage]);
-  console.log(editor);
+  // console.log(editor);
 
   // dispatch(updateTemplateNumberState(template_number))
   return (

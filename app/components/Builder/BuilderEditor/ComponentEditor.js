@@ -67,7 +67,7 @@ async function getJsonFromDataIdBased(
     const parentComponent = editor.DomComponents.componentsById[id].parent();
     const parseParentComponent = JSON.parse(JSON.stringify(parentComponent));
     const tempComponent = [];
-
+    // console.log("component",JSON.parse(JSON.stringify(component)));
     payload.forEach((data, index) => {
       const temp = JSON.parse(JSON.stringify(component));
       setLeafAttribute(temp, sectionId, index, payload[index], componentMap);
@@ -84,7 +84,7 @@ async function getJsonFromDataIdBased(
 }
 
 function setLeafAttribute(objt, sectionId, index, data, componentMap) {
-  if (objt.attributes.id) {
+  if (objt.attributes && objt.attributes.id) {
     const id = objt.attributes.id.replace(`${sectionId}_0_`, '');
     const mapping = componentMap[id];
     if (mapping) {
@@ -110,7 +110,7 @@ function setLeafAttribute(objt, sectionId, index, data, componentMap) {
       objt.attributes.id = objt.attributes.id.replace('0', index);
     }
   }
-  if (objt.components.length !== 0) {
+  if (objt.components && objt.components.length !== 0) {
     objt.components.forEach(child =>
       setLeafAttribute(child, sectionId, index, data, componentMap),
     );

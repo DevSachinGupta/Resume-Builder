@@ -13,22 +13,25 @@ function StepperForm(props) {
   const [currentStep, setCurrentStep] = useState(0);
   const lastStep = props.children.length - 1;
 
-  console.log(props.isValid);
+  console.log('forms isValid', currentStep, props.isValid);
   const previousButtonClick = () => {
     setCurrentStep(Math.min(currentStep - 1, 0));
   };
   const nextButtonClick = () => {
-    props.submitForm().then(() => {
-      if (props.isValid) {
-        setCurrentStep(Math.min(currentStep + 1, lastStep));
-        props.validateForm();
-        props.setTouched({});
-        console.log("Inside subm isValid");
-        if (currentStep === lastStep) {
-          // props.finalSubmit();
+    props
+      .submitForm()
+      .then(() => {
+        if (props.isValid) {
+          console.log('Inside subm isValid');
+          setCurrentStep(Math.min(currentStep + 1, lastStep));
+          props.validateForm();
+          props.setTouched({});
+          if (currentStep === lastStep) {
+            // props.finalSubmit();
+          }
         }
-      }
-    });
+      })
+      .catch(console.log('error'));
   };
   return (
     <div className="stepper">
