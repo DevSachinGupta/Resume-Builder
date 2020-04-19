@@ -5,19 +5,18 @@ import { compose } from 'redux';
 import { Formik, Form } from 'formik';
 import cx from 'classnames';
 import { createStructuredSelector } from 'reselect';
+import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  makeUpdateResumeJSONState,
-  makeUpdateEditorState,
-} from 'containers/Builder/selectors';
-import { updateResumeJSONState } from 'containers/Builder/actions';
-import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
+  updateResumeJSONState,
+  updateEditorCanvas,
+} from 'containers/Builder/actions';
 import { FaTimes } from 'react-icons/fa';
 import Input from '../../FormComponents/Input';
 import Button from '../../Button';
 import Icons from '../../Icons';
 import './style.scss';
 
-function HobbiesForm({ editorState, resumeJSONState, dispatch }) {
+function HobbiesForm({ resumeJSONState, dispatch }) {
   let hobbyData = [
     { icon_temp: 'icon-adventurer', value: 'Music', icon: <Icons icon="music" /> },
     { icon_temp: 'icon-adventurer', value: 'Singing', icon: <Icons icon="singing" /> },
@@ -52,12 +51,12 @@ function HobbiesForm({ editorState, resumeJSONState, dispatch }) {
     url: {
       key: ['href', 'title'],
       valueMap: ['value', 'value'],
-      componetType: 'attribute',
+      componentType: 'attribute',
     },
     icon: {
       key: ['class'],
       valueMap: ['icon_temp'],
-      componetType: 'attribute',
+      componentType: 'attribute',
     },
   };
 
@@ -110,7 +109,7 @@ function HobbiesForm({ editorState, resumeJSONState, dispatch }) {
   const handleSave = values => {
     const updatedHob = values;
     const history = { history: updatedHob };
-    updateCanvas('hobbies', 'ADD', values, editorState, componentMap);
+    dispatch(updateEditorCanvas('hobbies', 'ADD', values, componentMap));
     dispatch(updateResumeJSONState(history, 'hobbies'));
   };
 
@@ -156,13 +155,11 @@ function HobbiesForm({ editorState, resumeJSONState, dispatch }) {
   );
 }
 HobbiesForm.propTypes = {
-  editorState: PropTypes.object,
   resumeJSONState: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  editorState: makeUpdateEditorState(),
   resumeJSONState: makeUpdateResumeJSONState(),
 });
 const mapDispatchToProps = null;

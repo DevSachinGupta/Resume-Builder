@@ -5,12 +5,11 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import cx from 'classnames';
 import { Formik, Form, FieldArray } from 'formik';
+import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  makeUpdateResumeJSONState,
-  makeUpdateEditorState,
-} from 'containers/Builder/selectors';
-import { updateResumeJSONState } from 'containers/Builder/actions';
-import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
+  updateResumeJSONState,
+  updateEditorCanvas,
+} from 'containers/Builder/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
 import { getCountryList } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
@@ -18,12 +17,7 @@ import Accordian from '../../Accordion';
 import EmploymentInputs from './EmploymentItems';
 import Button from '../../Button';
 
-function EmploymentForm({
-  allCountries,
-  editorState,
-  resumeJSONState,
-  dispatch,
-}) {
+function EmploymentForm({ allCountries, resumeJSONState, dispatch }) {
   const blankEmpFields = {
     position: '',
     employer: '',
@@ -35,13 +29,13 @@ function EmploymentForm({
     summary: '',
   };
   const componentMap = {
-    position: { valueMap: 'position', componetType: 'content' },
-    employer: { valueMap: 'employer', componetType: 'content' },
-    state: { valueMap: 'state', componetType: 'content' },
-    country: { valueMap: 'country', componetType: 'content' },
-    start: { valueMap: 'start', componetType: 'content' },
-    end: { valueMap: 'end', componetType: 'content' },
-    summary: { valueMap: 'summary', componetType: 'content' },
+    position: { valueMap: 'position', componentType: 'content' },
+    employer: { valueMap: 'employer', componentType: 'content' },
+    state: { valueMap: 'state', componentType: 'content' },
+    country: { valueMap: 'country', componentType: 'content' },
+    start: { valueMap: 'start', componentType: 'content' },
+    end: { valueMap: 'end', componentType: 'content' },
+    summary: { valueMap: 'summary', componentType: 'content' },
   };
 
   let empStoreState = null;
@@ -82,17 +76,10 @@ function EmploymentForm({
     const updatedEmp = formatValues(
       JSON.parse(JSON.stringify(values.employment)),
     );
-    // const updatedEmp = [...values.employment];
     const history = { history: values.employment };
-    updateCanvas('employment', 'ADD', updatedEmp, editorState, componentMap);
+    dispatch(updateEditorCanvas('employment', 'ADD', updatedEmp, componentMap));
     dispatch(updateResumeJSONState(history, 'employment'));
   };
-
-  // const handleSaveAndNext = () => {
-  //   handleSave();
-  //   dispatch(toggleModal());
-  //   dispatch(setModalContent('education'));
-  // };
 
   return (
     <div>
@@ -151,7 +138,6 @@ function EmploymentForm({
 
 EmploymentForm.propTypes = {
   allCountries: PropTypes.array.isRequired,
-  editorState: PropTypes.object,
   resumeJSONState: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
@@ -159,7 +145,6 @@ EmploymentForm.propTypes = {
 const mapStateToProps = () =>
   createStructuredSelector({
     allCountries: makeSelectAllCountiesOptions(),
-    editorState: makeUpdateEditorState(),
     resumeJSONState: makeUpdateResumeJSONState(),
   });
 const mapDispatchToProps = null;

@@ -15,6 +15,8 @@ import {
   UPDATE_RESUMEJSON_STATE,
   UPDATE_DEMOPAGE_STATE,
   UPDATE_TEMPLATE_NUMBER_STATE,
+  UPDATE_CANVAS,
+  UPDATE_RESUME_EVENT_HANDLER,
 } from './constants';
 
 export const initialState = {
@@ -55,13 +57,22 @@ const builderReducer = (state = initialState, action) =>
         draft.editor_state = action.editor_state;
         break;
       case UPDATE_RESUMEJSON_STATE:
-        draft.resume_json_state = {...state.resume_json_state, [action.section_key_state]: action.resume_json_state }
+        draft.resume_json_state = {
+          ...state.resume_json_state,
+          [action.section_key_state]: action.resume_json_state,
+        };
         break;
       case UPDATE_DEMOPAGE_STATE:
         draft.demopage_state = action.demopage_state;
         break;
       case UPDATE_TEMPLATE_NUMBER_STATE:
         draft.template_number_state = action.template_number_state;
+        break;
+      case UPDATE_CANVAS:
+        console.log('update canvas reducer');
+        break;
+      case UPDATE_RESUME_EVENT_HANDLER:
+        console.log('update UPDATE_RESUME_EVENT_HANDLER');
         break;
       default:
         break;

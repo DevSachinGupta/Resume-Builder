@@ -14,6 +14,8 @@ import {
   UPDATE_RESUMEJSON_STATE,
   UPDATE_DEMOPAGE_STATE,
   UPDATE_TEMPLATE_NUMBER_STATE,
+  UPDATE_CANVAS,
+  UPDATE_RESUME_EVENT_HANDLER,
 } from './constants';
 
 export function defaultAction() {
@@ -47,7 +49,7 @@ export function getBuilderTheme(theme) {
   };
 }
 /**
- * @description function to be dispatched the fetched theme 
+ * @description function to be dispatched the fetched theme
  */
 export function getBuilderThemeContent(themeId) {
   return {
@@ -90,5 +92,39 @@ export function updateTemplateNumberState(template_number_state) {
   return {
     type: UPDATE_TEMPLATE_NUMBER_STATE,
     template_number_state,
+  };
+}
+/**
+ * @description function to update canvas
+ */
+export function updateEditorCanvas(
+  sectionId,
+  operation,
+  payload,
+  componentMap,
+) {
+  return {
+    type: UPDATE_CANVAS,
+    sectionId,
+    operation,
+    payload,
+    componentMap,
+  };
+}
+/**
+ * @description function to update resume event handler
+ */
+export function updateResumeEventHanlder(
+  sectionId,
+  fieldId,
+  fieldIndex,
+  content,
+) {
+  return {
+    type: UPDATE_RESUME_EVENT_HANDLER,
+    sectionId,
+    fieldId,
+    fieldIndex,
+    content,
   };
 }

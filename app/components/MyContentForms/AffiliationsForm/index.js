@@ -5,18 +5,17 @@ import { compose } from 'redux';
 import cx from 'classnames';
 import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
+import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  makeUpdateResumeJSONState,
-  makeUpdateEditorState,
-} from 'containers/Builder/selectors';
-import { updateResumeJSONState } from 'containers/Builder/actions';
-import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
+  updateResumeJSONState,
+  updateEditorCanvas,
+} from 'containers/Builder/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
 import Accordian from '../../Accordion';
 import AffiliationInputs from './AffiliationItems';
 import Button from '../../Button';
 
-function AffiliationForm({ editorState, resumeJSONState, dispatch }) {
+function AffiliationForm({ resumeJSONState, dispatch }) {
   const blankAffFields = {
     organization: '',
     role: '',
@@ -26,11 +25,11 @@ function AffiliationForm({ editorState, resumeJSONState, dispatch }) {
     summary: '',
   };
   const componentMap = {
-    organization: { valueMap: 'organization', componetType: 'content' },
-    role: { valueMap: 'role', componetType: 'content' },
-    start: { valueMap: 'start', componetType: 'content' },
-    end: { valueMap: 'end', componetType: 'content' },
-    summary: { valueMap: 'summary', componetType: 'content' },
+    organization: { valueMap: 'organization', componentType: 'content' },
+    role: { valueMap: 'role', componentType: 'content' },
+    start: { valueMap: 'start', componentType: 'content' },
+    end: { valueMap: 'end', componentType: 'content' },
+    summary: { valueMap: 'summary', componentType: 'content' },
   };
 
   let storeAffiliation = null;
@@ -58,9 +57,10 @@ function AffiliationForm({ editorState, resumeJSONState, dispatch }) {
     const updatedAff = formatValues(
       JSON.parse(JSON.stringify(values.affiliation)),
     );
-    // const updatedAff = [...values.affiliation];
     const history = { history: values.affiliation };
-    updateCanvas('affiliation', 'ADD', updatedAff, editorState, componentMap);
+    dispatch(
+      updateEditorCanvas('affiliation', 'ADD', updatedAff, componentMap),
+    );
     dispatch(updateResumeJSONState(history, 'affiliation'));
   };
 
@@ -121,13 +121,11 @@ function AffiliationForm({ editorState, resumeJSONState, dispatch }) {
 }
 
 AffiliationForm.propTypes = {
-  editorState: PropTypes.object,
   resumeJSONState: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  editorState: makeUpdateEditorState(),
   resumeJSONState: makeUpdateResumeJSONState(),
 });
 const mapDispatchToProps = null;

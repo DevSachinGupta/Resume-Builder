@@ -4,11 +4,11 @@ import Input from '../../FormComponents/Input';
 import { Row, Column } from '../../Layout';
 import { validationMap } from './validation';
 import TextArea from '../../FormComponents/TextArea';
-import MultiselectSkill  from '../../FormComponents/MultiselectAutocomplete'
+import MultiselectSkill from '../../FormComponents/MultiselectAutocomplete';
 
 //  *****  Project Form Component *****
 
-const ProjectInputs = ({ idx, values, setFieldValue, skillData, getValues }) => (
+const ProjectInputs = ({ idx, values, setFieldValue, skillData }) => (
   <div>
     <Row>
       <Column width="1/2" className="px-1">
@@ -30,24 +30,11 @@ const ProjectInputs = ({ idx, values, setFieldValue, skillData, getValues }) => 
     </Row>
     <Row>
       <Column width="1/2" className="px-1">
-        {/* <AutocompleteInput
-          type="autocomplete"
-          placeholder="Select Your Skills"
-          label="Choose From List"
-          name="Skills"
-          options={skillData}
-          allowCustomText={false}
-          allowMultiselect
-          allowIconsInOptionList
-          updateValues={getValues}
-        /> */}
-         <MultiselectSkill name={`project.${idx}.keywords`} options={skillData} showDefaultOptions />
-        {/* <Input
-          placeholder="Technology Used"
-          label="Technology Used"
+        <MultiselectSkill
           name={`project.${idx}.keywords`}
-          validate={validationMap.keywords}
-        /> */}
+          options={skillData}
+          showDefaultOptions
+        />
       </Column>
       <Column width="1/2" className="px-1">
         <Input

@@ -8,32 +8,21 @@ import React, { memo, useEffect, useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import axios from 'axios';
 import {
   makeUpdateDemoPageState,
-  makeUpdateEditorState,
   makeUpdateResumeJSONState,
   makeSelectGetThemeContent,
 } from 'containers/Builder/selectors';
 import {
-  updateTemplateNumberState,
   updateEditorState,
-  updateResumeJSONState,
   getBuilderThemeContent,
+  updateResumeEventHanlder,
 } from 'containers/Builder/actions';
 
-import { updateRseumeJSONState } from 'components/Builder/BuilderEditor/ComponentEditor';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
 import './style.scss';
-
-import { inspect } from 'util';
-
-// import TemplateHTML from '../../CheerioComponent/templates/template_1/html.js';
-
-// const template_number = 1;
 
 let DemoPage = {
   html: 'blank',
@@ -115,7 +104,6 @@ function BuilderEditor({
               const { content } = JSON.parse(
                 JSON.stringify(changesArray),
               ).changes.added[0];
-              // console.log('ADD:', attrs.id, content);
               const sectionId = attrs.id.split('_')[0];
               const fieldIndex = attrs.id.split('_')[1];
               const fieldId = attrs.id.split('_').slice(-1)[0];
@@ -127,25 +115,15 @@ function BuilderEditor({
                 content,
               );
               if (sectionId && fieldId) {
-                // form list from store
-                const storeData = resumeJSONState[`${sectionId}`];
-                console.log('store data:', resumeJSONState);
-                if (storeData) {
-                  // const dataJSON = "{ `${sectionId}`: { history: { `${sectionId}`: { `${sectionId}`: content} } } }"
-                  console.log(
-                    'store data update:',
-                    storeData,
-                    `${sectionId}.history.${fieldIndex}.${fieldId}`,
-                  );
-                  dispatch(
-                    updateResumeJSONState(
-                      content,
-                      `${sectionId}.history.${fieldIndex}.${fieldId}`,
-                    ),
-                  );
-                }
+                dispatch(
+                  updateResumeEventHanlder(
+                    sectionId,
+                    fieldId,
+                    fieldIndex,
+                    content,
+                  ),
+                );
               }
-              // updateRseumeJSONState(attrs, content, []);
             }
           } else {
             console.log(' remove or merged: ', changesArray);
@@ -157,9 +135,6 @@ function BuilderEditor({
     });
     dispatch(updateEditorState(editor));
   }, [DemoPage]);
-  // console.log(editor);
-
-  // dispatch(updateTemplateNumberState(template_number))
   return (
     <div>
       <div id="gjs" className="editor-container" />

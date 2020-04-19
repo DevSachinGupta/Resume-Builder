@@ -5,12 +5,11 @@ import { compose } from 'redux';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
+import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  makeUpdateResumeJSONState,
-  makeUpdateEditorState,
-} from 'containers/Builder/selectors';
-import { updateResumeJSONState } from 'containers/Builder/actions';
-import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
+  updateResumeJSONState,
+  updateEditorCanvas,
+} from 'containers/Builder/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
 import { getCountryList } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
@@ -18,12 +17,7 @@ import PersonalDetailsForms from './PersonalDetailsForms';
 import Button from '../../Button';
 import './style.scss';
 
-function PersonalDetails({
-  allCountries,
-  editorState,
-  resumeJSONState,
-  dispatch,
-}) {
+function PersonalDetails({ allCountries, resumeJSONState, dispatch }) {
   const blankPersonalFields = {
     firstName: '',
     lastName: '',
@@ -40,20 +34,20 @@ function PersonalDetails({
     brief: '',
   };
   const componentMap = {
-    firstName: { valueMap: 'firstName', componetType: 'content' },
-    lastName: { valueMap: 'lastName', componetType: 'content' },
-    fullName: { valueMap: 'fullName', componetType: 'content' },
-    email: { valueMap: 'email', componetType: 'content' },
-    phone: { valueMap: 'phone', componetType: 'content' },
-    dateOfBirth: { valueMap: 'dateOfBirth', componetType: 'content' },
-    gender: { valueMap: 'gender', componetType: 'content' },
-    address1: { valueMap: 'address1', componetType: 'content' },
-    address2: { valueMap: 'address2', componetType: 'content' },
-    city: { valueMap: 'city', componetType: 'content' },
-    state: { valueMap: 'state', componetType: 'content' },
-    country: { valueMap: 'country', componetType: 'content' },
-    pincode: { valueMap: 'pincode', componetType: 'content' },
-    brief: { valueMap: 'brief', componetType: 'content' },
+    firstName: { valueMap: 'firstName', componentType: 'content' },
+    lastName: { valueMap: 'lastName', componentType: 'content' },
+    fullName: { valueMap: 'fullName', componentType: 'content' },
+    email: { valueMap: 'email', componentType: 'content' },
+    phone: { valueMap: 'phone', componentType: 'content' },
+    dateOfBirth: { valueMap: 'dateOfBirth', componentType: 'content' },
+    gender: { valueMap: 'gender', componentType: 'content' },
+    address1: { valueMap: 'address1', componentType: 'content' },
+    address2: { valueMap: 'address2', componentType: 'content' },
+    city: { valueMap: 'city', componentType: 'content' },
+    state: { valueMap: 'state', componentType: 'content' },
+    country: { valueMap: 'country', componentType: 'content' },
+    pincode: { valueMap: 'pincode', componentType: 'content' },
+    brief: { valueMap: 'brief', componentType: 'content' },
   };
 
   let storePersonal = null;
@@ -75,15 +69,14 @@ function PersonalDetails({
 
   const formatValues = values => {
     const tempValues = values;
-    tempValues['fullName'] = `${tempValues.firstName} ${tempValues.lastName}`;
+    tempValues.fullName = `${tempValues.firstName} ${tempValues.lastName}`;
     tempValues.dateOfBirth = formatDateValue(tempValues.dateOfBirth);
     return tempValues;
   };
   const handleSave = values => {
     const updatedPer = formatValues(JSON.parse(JSON.stringify(values)));
-    // const updatedPer = formatValues(values);
     const history = { history: values };
-    updateCanvas('personal', 'ADD', updatedPer, editorState, componentMap);
+    dispatch(updateEditorCanvas('personal', 'ADD', updatedPer, componentMap));
     dispatch(updateResumeJSONState(history, 'personal'));
   };
 
@@ -115,7 +108,6 @@ function PersonalDetails({
 }
 PersonalDetails.propTypes = {
   allCountries: PropTypes.array.isRequired,
-  editorState: PropTypes.object,
   resumeJSONState: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
@@ -123,7 +115,6 @@ PersonalDetails.propTypes = {
 const mapStateToProps = () =>
   createStructuredSelector({
     allCountries: makeSelectAllCountiesOptions(),
-    editorState: makeUpdateEditorState(),
     resumeJSONState: makeUpdateResumeJSONState(),
   });
 const mapDispatchToProps = dispatch => ({

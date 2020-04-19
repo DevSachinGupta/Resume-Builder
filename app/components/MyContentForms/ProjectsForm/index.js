@@ -5,27 +5,18 @@ import { compose } from 'redux';
 import cx from 'classnames';
 import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
+import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  makeUpdateResumeJSONState,
-  makeUpdateEditorState,
-} from 'containers/Builder/selectors';
-import { updateResumeJSONState } from 'containers/Builder/actions';
-import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
+  updateResumeJSONState,
+  updateEditorCanvas,
+} from 'containers/Builder/actions';
 import { defaultTo } from 'lodash';
 import { formatDateValue } from '../../../utils/app/textFormating';
 import Accordian from '../../Accordion';
 import ProjectInputs from './ProjectItems';
 import Button from '../../Button';
 
-function ProjectForm({ editorState, resumeJSONState, dispatch }) {
-  // const skillData = [
-  //   { name: 'Music' },
-  //   { name: 'Singing' },
-  //   { name: 'Reading' },
-  //   { name: 'Writing' },
-  //   { name: 'Blogginging' },
-  //   { name: 'Poetry' },
-  // ];
+function ProjectForm({ resumeJSONState, dispatch }) {
   const skillData = [
     'Music',
     'Singing',
@@ -54,18 +45,18 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
     description: '',
   };
   const componentMap = {
-    title: { valueMap: 'title', componetType: 'content' },
-    summary: { valueMap: 'summary', componetType: 'content' },
-    keywords: { valueMap: 'keywords', componetType: 'content' },
+    title: { valueMap: 'title', componentType: 'content' },
+    summary: { valueMap: 'summary', componentType: 'content' },
+    keywords: { valueMap: 'keywords', componentType: 'content' },
     url: {
       key: ['href'],
       valueMap: ['url'],
-      componetType: 'attribute',
+      componentType: 'attribute',
       RemoveHiddenClass: [],
     },
-    start: { valueMap: 'start', componetType: 'content' },
-    end: { valueMap: 'end', componetType: 'content' },
-    description: { valueMap: 'description', componetType: 'content' },
+    start: { valueMap: 'start', componentType: 'content' },
+    end: { valueMap: 'end', componentType: 'content' },
+    description: { valueMap: 'description', componentType: 'content' },
   };
 
   // useEffect(() => {
@@ -104,18 +95,9 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
   };
   const handleSave = values => {
     const updatedPro = formatValues(JSON.parse(JSON.stringify(values.project)));
-    // const updatedPro = [...values.project];
     const history = { history: values.project };
-    updateCanvas('project', 'ADD', updatedPro, editorState, componentMap);
+    dispatch(updateEditorCanvas('project', 'ADD', updatedPro, componentMap));
     dispatch(updateResumeJSONState(history, 'project'));
-  };
-
-  const getValues = data => {
-    setHobbies([...hobbies, data]);
-    const hobbyDataTemp = hobbiesData.filter(
-      hData => hData.value.toLowerCase() !== data.value.toLowerCase(),
-    );
-    setHobbiesData(hobbyDataTemp);
   };
 
   return (
@@ -145,7 +127,6 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
                         values={item}
                         setFieldValue={setFieldValue}
                         skillData={skillData}
-                        getValues={getValues}
                       />
                     </Accordian>
                   ))}
@@ -173,13 +154,11 @@ function ProjectForm({ editorState, resumeJSONState, dispatch }) {
 }
 
 ProjectForm.propTypes = {
-  editorState: PropTypes.object,
   resumeJSONState: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  editorState: makeUpdateEditorState(),
   resumeJSONState: makeUpdateResumeJSONState(),
 });
 const mapDispatchToProps = null;

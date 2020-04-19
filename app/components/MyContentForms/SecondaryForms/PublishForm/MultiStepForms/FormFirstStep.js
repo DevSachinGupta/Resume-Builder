@@ -9,6 +9,14 @@ export const FormFirstStep = () => (
       placeholder="bucketUserName"
       label="bucketUserName"
       name="title"
+      autoFocus
+      validate={validationMap.title}
+      // allowValidation={false}
+    />
+    <Input
+      placeholder="bucketUserName"
+      label="bucketUserName"
+      name="country"
       validate={validationMap.title}
       // allowValidation={false}
     />

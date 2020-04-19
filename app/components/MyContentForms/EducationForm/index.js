@@ -11,12 +11,11 @@ import { compose } from 'redux';
 import cx from 'classnames';
 import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
+import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  makeUpdateResumeJSONState,
-  makeUpdateEditorState,
-} from 'containers/Builder/selectors';
-import { updateResumeJSONState } from 'containers/Builder/actions';
-import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
+  updateResumeJSONState,
+  updateEditorCanvas,
+} from 'containers/Builder/actions';
 import { toggleModal } from 'containers/App/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
 import {
@@ -28,12 +27,7 @@ import EducationInputs from './EducationItems';
 import Accordian from '../../Accordion';
 import Button from '../../Button';
 
-function EducationForm({
-  allCountries,
-  editorState,
-  resumeJSONState,
-  dispatch,
-}) {
+function EducationForm({ allCountries, resumeJSONState, dispatch }) {
   const blankEduFields = {
     title: '',
     institution: '',
@@ -46,21 +40,21 @@ function EducationForm({
     summary: '',
   };
   const componentMap = {
-    title: { valueMap: 'title', componetType: 'content' },
-    institution: { valueMap: 'institution', componetType: 'content' },
-    fieldOfStudy: { valueMap: 'fieldOfStudy', componetType: 'content' },
-    state: { valueMap: 'state', componetType: 'content' },
-    country: { valueMap: 'country', componetType: 'content' },
-    start: { valueMap: 'start', componetType: 'content' },
-    end: { valueMap: 'end', componetType: 'content' },
-    summary: { valueMap: 'summary', componetType: 'content' },
+    title: { valueMap: 'title', componentType: 'content' },
+    institution: { valueMap: 'institution', componentType: 'content' },
+    fieldOfStudy: { valueMap: 'fieldOfStudy', componentType: 'content' },
+    state: { valueMap: 'state', componentType: 'content' },
+    country: { valueMap: 'country', componentType: 'content' },
+    start: { valueMap: 'start', componentType: 'content' },
+    end: { valueMap: 'end', componentType: 'content' },
+    summary: { valueMap: 'summary', componentType: 'content' },
   };
 
   let storeEducation = null;
   if (resumeJSONState.education) {
     storeEducation = resumeJSONState.education.history;
   }
-  console.log(resumeJSONState)
+  console.log(resumeJSONState);
   const [educations, setEducations] = useState(
     storeEducation || [{ ...blankEduFields }],
   );
@@ -89,9 +83,8 @@ function EducationForm({
     const updatedEdu = formatValues(
       JSON.parse(JSON.stringify(values.education)),
     );
-    // const updatedEdu = [...values.education];
     const history = { history: values.education };
-    updateCanvas('education', 'ADD', updatedEdu, editorState, componentMap);
+    dispatch(updateEditorCanvas('education', 'ADD', updatedEdu, componentMap));
     dispatch(updateResumeJSONState(history, 'education'));
     dispatch(toggleModal());
   };
@@ -152,8 +145,10 @@ function EducationForm({
                     <Button
                       type="button"
                       onClick={() => {
-                        setFieldValue('publish', 2, false);
-                        handleSubmit();
+                        dispatch(toggleModal());
+                        dispatch(setModalContent('personalDetails'));
+                        // setFieldValue('publish', 2, false);
+                        // handleSubmit();
                       }}
                     >
                       Previous
@@ -197,7 +192,6 @@ function EducationForm({
 }
 EducationForm.propTypes = {
   allCountries: PropTypes.array.isRequired,
-  editorState: PropTypes.object,
   resumeJSONState: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
@@ -205,7 +199,6 @@ EducationForm.propTypes = {
 const mapStateToProps = () =>
   createStructuredSelector({
     allCountries: makeSelectAllCountiesOptions(),
-    editorState: makeUpdateEditorState(),
     resumeJSONState: makeUpdateResumeJSONState(),
   });
 

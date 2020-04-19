@@ -5,19 +5,17 @@ import { compose } from 'redux';
 import cx from 'classnames';
 import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
+import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  makeUpdateResumeJSONState,
-  makeUpdateEditorState,
-} from 'containers/Builder/selectors';
-import { updateResumeJSONState } from 'containers/Builder/actions';
-import { updateCanvas } from 'containers/Builder/saga';
-// import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
+  updateResumeJSONState,
+  updateEditorCanvas,
+} from 'containers/Builder/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
 import Accordian from '../../Accordion';
 import PublicationInputs from './PublicationItems';
 import Button from '../../Button';
 
-function PublicationForm({ editorState, resumeJSONState, dispatch }) {
+function PublicationForm({ resumeJSONState, dispatch }) {
   const blankPubFields = {
     title: '',
     summary: '',
@@ -26,11 +24,11 @@ function PublicationForm({ editorState, resumeJSONState, dispatch }) {
     description: '',
   };
   const componentMap = {
-    title: { valueMap: 'title', componetType: 'content' },
-    summary: { valueMap: 'summary', componetType: 'content' },
-    date: { valueMap: 'date', componetType: 'content' },
-    url: { key: ['href'], valueMap: ['url'], componetType: 'attribute' },
-    description: { valueMap: 'description', componetType: 'content' },
+    title: { valueMap: 'title', componentType: 'content' },
+    summary: { valueMap: 'summary', componentType: 'content' },
+    date: { valueMap: 'date', componentType: 'content' },
+    url: { key: ['href'], valueMap: ['url'], componentType: 'attribute' },
+    description: { valueMap: 'description', componentType: 'content' },
   };
 
   let storePublication = null;
@@ -53,11 +51,10 @@ function PublicationForm({ editorState, resumeJSONState, dispatch }) {
     const updatedPub = formatValues(
       JSON.parse(JSON.stringify(values.publication)),
     );
-    console.log(updateCanvas)
-    // const updatedPub = [...values.publication];
     const history = { history: values.publication };
-    updateCanvas('publication', 'ADD', updatedPub, componentMap);
-    // updateCanvas('publication', 'ADD', updatedPub, editorState, componentMap);
+    dispatch(
+      updateEditorCanvas('publication', 'ADD', updatedPub, componentMap),
+    );
     dispatch(updateResumeJSONState(history, 'publication'));
   };
 
@@ -110,13 +107,11 @@ function PublicationForm({ editorState, resumeJSONState, dispatch }) {
 }
 
 PublicationForm.propTypes = {
-  editorState: PropTypes.object,
   resumeJSONState: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  editorState: makeUpdateEditorState(),
   resumeJSONState: makeUpdateResumeJSONState(),
 });
 const mapDispatchToProps = null;

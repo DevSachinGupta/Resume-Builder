@@ -5,18 +5,17 @@ import { compose } from 'redux';
 import cx from 'classnames';
 import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
+import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  makeUpdateResumeJSONState,
-  makeUpdateEditorState,
-} from 'containers/Builder/selectors';
-import { updateResumeJSONState } from 'containers/Builder/actions';
-import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
+  updateResumeJSONState,
+  updateEditorCanvas,
+} from 'containers/Builder/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
 import Accordian from '../../Accordion';
 import AccomplishmentInputs from './AccomplishmentItems';
 import Button from '../../Button';
 
-function AccomplishmentForm({ editorState, resumeJSONState, dispatch }) {
+function AccomplishmentForm({ resumeJSONState, dispatch }) {
   const blankAccompFields = {
     title: '',
     date: null,
@@ -24,10 +23,10 @@ function AccomplishmentForm({ editorState, resumeJSONState, dispatch }) {
     summary: '',
   };
   const componentMap = {
-    title: { valueMap: 'title', componetType: 'content' },
-    date: { valueMap: 'date', componetType: 'content' },
-    rank: { valueMap: 'rank', componetType: 'content' },
-    summary: { valueMap: 'summary', componetType: 'content' },
+    title: { valueMap: 'title', componentType: 'content' },
+    date: { valueMap: 'date', componentType: 'content' },
+    rank: { valueMap: 'rank', componentType: 'content' },
+    summary: { valueMap: 'summary', componentType: 'content' },
   };
 
   let storeAccomplishment = null;
@@ -50,14 +49,9 @@ function AccomplishmentForm({ editorState, resumeJSONState, dispatch }) {
     const updatedAccom = formatValues(
       JSON.parse(JSON.stringify(values.accomplishment)),
     );
-    // const updatedAccom = [...values.accomplishment];
     const history = { history: values.accomplishment };
-    updateCanvas(
-      'accomplishment',
-      'ADD',
-      updatedAccom,
-      editorState,
-      componentMap,
+    dispatch(
+      updateEditorCanvas('accomplishment', 'ADD', updatedAccom, componentMap),
     );
     dispatch(updateResumeJSONState(history, 'accomplishment'));
   };
@@ -113,13 +107,11 @@ function AccomplishmentForm({ editorState, resumeJSONState, dispatch }) {
 }
 
 AccomplishmentForm.propTypes = {
-  editorState: PropTypes.object,
   resumeJSONState: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  editorState: makeUpdateEditorState(),
   resumeJSONState: makeUpdateResumeJSONState(),
 });
 const mapDispatchToProps = null;

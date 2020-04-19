@@ -19,6 +19,7 @@ import { FormSecondStep } from './MultiStepForms/FormSecondStep';
 function PublishForm() {
   const formData = {
     title: '',
+    country: '',
     state: '',
   };
   return (
@@ -27,7 +28,7 @@ function PublishForm() {
       <Formik
         // enableReinitialize
         initialValues={{ ...formData }}
-        onSubmit={values => {
+        onSubmit={(values, actions) => {
           // eslint-disable-next-line no-console
           console.log(values);
         }}

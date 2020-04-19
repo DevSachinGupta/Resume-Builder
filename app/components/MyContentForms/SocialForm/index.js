@@ -12,18 +12,17 @@ import {
 import { Formik, Form, FieldArray } from 'formik';
 import cx from 'classnames';
 import { createStructuredSelector } from 'reselect';
+import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  makeUpdateResumeJSONState,
-  makeUpdateEditorState,
-} from 'containers/Builder/selectors';
-import { updateResumeJSONState } from 'containers/Builder/actions';
-import { updateCanvas } from 'components/Builder/BuilderEditor/ComponentEditor';
+  updateResumeJSONState,
+  updateEditorCanvas,
+} from 'containers/Builder/actions';
 import { validationMap } from './validation';
 import Button from '../../Button';
 import Input from '../../FormComponents/Input';
 import './style.scss';
 
-function SocialForm({ editorState, resumeJSONState, dispatch }) {
+function SocialForm({ resumeJSONState, dispatch }) {
   const blankSocialFields = {
     icon: FaGlobeAsia,
     name: 'other',
@@ -32,11 +31,11 @@ function SocialForm({ editorState, resumeJSONState, dispatch }) {
     icon_temp: 'icon-github',
   };
   const componentMap = {
-    url: { key: ['href'], valueMap: ['url'], componetType: 'attribute' },
+    url: { key: ['href'], valueMap: ['url'], componentType: 'attribute' },
     icon: {
       key: ['class'],
       valueMap: ['icon_temp'],
-      componetType: 'attribute',
+      componentType: 'attribute',
     },
   };
 
@@ -142,21 +141,13 @@ function SocialForm({ editorState, resumeJSONState, dispatch }) {
 
   const formatValues = values => {
     let tempValues = values;
-    // tempValues.forEach((value, index) => {
-    //   if (tempValues[index].url === '') {
-    //     console.log("blank",tempValues[index].name, index)
-    //     // tempValues.splice(index, 1);
-    //   }
-    // });
     tempValues = tempValues.filter(data => data.url !== '');
     return tempValues;
   };
   const handleSave = values => {
     const updatedSoc = formatValues(JSON.parse(JSON.stringify(values.social)));
-    console.log(updatedSoc);
-    // const updatedSoc = [...values.social];
     const history = { history: values.social };
-    updateCanvas('social', 'ADD', updatedSoc, editorState, componentMap);
+    dispatch(updateEditorCanvas('social', 'ADD', updatedSoc, componentMap));
     dispatch(updateResumeJSONState(history, 'social'));
   };
 
@@ -226,13 +217,11 @@ function SocialForm({ editorState, resumeJSONState, dispatch }) {
 }
 
 SocialForm.propTypes = {
-  editorState: PropTypes.object,
   resumeJSONState: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  editorState: makeUpdateEditorState(),
   resumeJSONState: makeUpdateResumeJSONState(),
 });
 const mapDispatchToProps = null;

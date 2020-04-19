@@ -1,18 +1,21 @@
 import { takeLatest, all, call, put, select } from 'redux-saga/effects';
 import axios from 'axios';
-import { GET_DEFAULT_THEME, GET_THEME_CONTENT } from './constants';
-// Individual exports for testing
+import {
+  GET_DEFAULT_THEME,
+  GET_THEME_CONTENT,
+  UPDATE_CANVAS,
+  UPDATE_RESUME_EVENT_HANDLER,
+} from './constants';
+
 export default function* builderSaga() {
   yield all([
     takeLatest(GET_DEFAULT_THEME, getThemeDetails),
     takeLatest(GET_THEME_CONTENT, getThemeContent),
-    updateCanvas(),
+    takeLatest(UPDATE_CANVAS, updateCanvas),
+    takeLatest(UPDATE_RESUME_EVENT_HANDLER, updateResumeEventHandler),
   ]);
 }
-// export default function* builderSaga() {
-//   yield takeLatest(GET_DEFAULT_THEME, getThemeDetails);
-//   yield takeLatest(GET_THEME_CONTENT, getThemeContent);
-// }
+
 function* getThemeDetails() {
   console.log('HELLO WORLD');
 }
@@ -32,19 +35,37 @@ function* getThemeContent(params) {
   }
 }
 
-export function* updateCanvas(sectionId, operation, payload, componentMap) {
-  console.log("inside saga function")
+export function* updateResumeEventHandler(params) {
   try {
-    const editorState = yield select(state => state.editor_state);
+    const storeData = yield select(state => state.builder.resume_json_state);
+    if (
+      storeData &&
+      storeData[`${params.sectionId}`] &&
+      storeData[`${params.sectionId}`].history[`${params.fieldIndex}`] &&
+      storeData[`${params.sectionId}`].history[`${params.fieldIndex}`][
+        `${params.fieldId}`
+      ]
+    ) {
+      storeData[`${params.sectionId}`].history[`${params.fieldIndex}`][
+        `${params.fieldId}`
+      ] = params.content;
+    }
+  } catch (error) {
+    console.log('error from updateResumeEventHandler saga: ', error);
+  }
+}
+
+export function* updateCanvas(params) {
+  try {
+    const editorState = yield select(state => state.builder.editor_state);
     yield call(
       updateCanvasFunction,
-      sectionId,
-      operation,
-      payload,
+      params.sectionId,
+      params.operation,
+      params.payload,
       editorState,
-      componentMap,
+      params.componentMap,
     );
-    // yield put({ type: 'ACTION_SUCCESS', data });
   } catch (error) {
     console.log('error from updateCanvas saga: ', error);
   }
@@ -78,7 +99,7 @@ async function getJsonFromDataClassBased(
       const parseComponent = JSON.parse(JSON.stringify(component));
       const mapping = componentMap[item];
       if (mapping) {
-        if (mapping.componetType === 'attribute') {
+        if (mapping.componentType === 'attribute') {
           mapping.key.forEach((keyItem, idx) => {
             if (keyItem === 'class') {
               parseComponent.classes.push(payload[mapping.valueMap[idx]]);
@@ -111,6 +132,7 @@ async function getJsonFromDataIdBased(
     editor.DomComponents.componentsById[`${sectionId}Section`].removeClass(
       'd-none',
     );
+    // console.log("component:", JSON.parse(JSON.stringify(component)) )
     const parentComponent = editor.DomComponents.componentsById[id].parent();
     const parseParentComponent = JSON.parse(JSON.stringify(parentComponent));
     const tempComponent = [];
@@ -131,7 +153,7 @@ async function getJsonFromDataIdBased(
 }
 
 function setLeafAttribute(objt, sectionId, index, data, componentMap) {
-  if (objt.attributes.id) {
+  if (objt.attributes && objt.attributes.id) {
     const id = objt.attributes.id.replace(`${sectionId}_0_`, '');
     const mapping = componentMap[id];
     if (mapping) {
@@ -141,12 +163,12 @@ function setLeafAttribute(objt, sectionId, index, data, componentMap) {
       ) {
         objt.classes = objt.classes.filter(value => value.name !== 'd-none');
       }
-      if (mapping.componetType === 'attribute') {
+      if (mapping.componentType === 'attribute') {
         mapping.key.forEach((keyItem, idx) => {
           if (keyItem === 'class') {
             objt.classes.push(data[mapping.valueMap[idx]]);
           } else if (keyItem === 'style') {
-            objt.style[mapping.styleMap[idx]] = data[mapping.valueMap[idx]];
+            // objt.style[mapping.styleMap[idx]] = data[mapping.valueMap[idx]];
           } else {
             objt.attributes[keyItem] = data[mapping.valueMap[idx]];
           }
@@ -157,7 +179,7 @@ function setLeafAttribute(objt, sectionId, index, data, componentMap) {
       objt.attributes.id = objt.attributes.id.replace('0', index);
     }
   }
-  if (objt.components.length !== 0) {
+  if (objt.components && objt.components.length !== 0) {
     objt.components.forEach(child =>
       setLeafAttribute(child, sectionId, index, data, componentMap),
     );

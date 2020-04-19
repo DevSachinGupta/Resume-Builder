@@ -31,7 +31,7 @@ async function getJsonFromDataClassBased(
       const parseComponent = JSON.parse(JSON.stringify(component));
       const mapping = componentMap[item];
       if (mapping) {
-        if (mapping.componetType === 'attribute') {
+        if (mapping.componentType === 'attribute') {
           mapping.key.forEach((keyItem, idx) => {
             if (keyItem === 'class') {
               parseComponent.classes.push(payload[mapping.valueMap[idx]]);
@@ -94,7 +94,7 @@ function setLeafAttribute(objt, sectionId, index, data, componentMap) {
       ) {
         objt.classes = objt.classes.filter(value => value.name !== 'd-none');
       }
-      if (mapping.componetType === 'attribute') {
+      if (mapping.componentType === 'attribute') {
         mapping.key.forEach((keyItem, idx) => {
           if (keyItem === 'class') {
             objt.classes.push(data[mapping.valueMap[idx]]);
