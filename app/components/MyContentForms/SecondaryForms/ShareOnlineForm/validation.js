@@ -5,59 +5,21 @@ const validationHandler = validation =>
     validation.then(() => resolve(false)).catch(err => reject(err));
   });
 const validationMap = {
-  firstName: value =>
+  title: value =>
     validationHandler(
       yup
         .string()
         .required('Required')
         .validate(value),
     ),
-  lastName: value =>
+  institution: value =>
     validationHandler(
       yup
         .string()
         .required('Required')
         .validate(value),
     ),
-  email: value =>
-    validationHandler(
-      yup
-        .string()
-        .required('Required')
-        .validate(value),
-    ),
-  phone: value =>
-    validationHandler(
-      yup
-        .string()
-        // .required('Required')
-        .validate(value),
-    ),
-  dateOfBirth: value =>
-    validationHandler(
-      yup
-        .date()
-        .required('Required')
-        .nullable()
-        .typeError('Invalid Date Format it should be dd/mm/yyyy')
-        .validate(value),
-    ),
-  gender: value =>
-    validationHandler(
-      yup
-        .string()
-        .required('Required')
-        .validate(value),
-    ),
-  address1: value =>
-    validationHandler(
-      yup
-        .string()
-        .required('Required')
-        .validate(value),
-    ),
-  address2: value => validationHandler(yup.string().validate(value)),
-  city: value =>
+  fieldOfStudy: value =>
     validationHandler(
       yup
         .string()
@@ -71,13 +33,6 @@ const validationMap = {
         .required('Required')
         .validate(value),
     ),
-  pincode: value =>
-    validationHandler(
-      yup
-        .string()
-        .required('Required')
-        .validate(value),
-    ),
   country: value =>
     validationHandler(
       yup
@@ -85,7 +40,32 @@ const validationMap = {
         .required('Required')
         .validate(value),
     ),
-  brief: value =>
+  start: value =>
+    validationHandler(
+      yup
+        .date()
+        .required('Required')
+        .nullable()
+        .typeError('Invalid Date Format it should be dd/mm/yyyy')
+        .validate(value),
+    ),
+  end: value =>
+    validationHandler(
+      yup
+        .date()
+        .required('Required')
+        .nullable()
+        .typeError('Invalid Date Format it should be dd/mm/yyyy')
+        .validate(value),
+    ),
+  tillDate: value =>
+    validationHandler(
+      yup
+        .bool()
+        .required('Required')
+        .validate(value),
+    ),
+  summary: value =>
     validationHandler(
       yup
         .string()

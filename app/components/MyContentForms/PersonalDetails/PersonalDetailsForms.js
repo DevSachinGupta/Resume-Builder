@@ -16,6 +16,7 @@ const PersonalDetailsForm = ({ countriesList }) => (
           placeholder="First Name"
           label="First Name"
           name="firstName"
+          className="capitalize"
           validate={validationMap.firstName}
         />
       </Column>
@@ -132,6 +133,7 @@ const PersonalDetailsForm = ({ countriesList }) => (
           placeholder="Summary"
           label="Summary"
           name="brief"
+          // className="capitalize"
           validate={validationMap.brief}
         />
       </Column>

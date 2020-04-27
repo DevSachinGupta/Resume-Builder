@@ -38,17 +38,29 @@ function* getThemeContent(params) {
 export function* updateResumeEventHandler(params) {
   try {
     const storeData = yield select(state => state.builder.resume_json_state);
-    if (
-      storeData &&
-      storeData[`${params.sectionId}`] &&
-      storeData[`${params.sectionId}`].history[`${params.fieldIndex}`] &&
-      storeData[`${params.sectionId}`].history[`${params.fieldIndex}`][
-        `${params.fieldId}`
-      ]
-    ) {
-      storeData[`${params.sectionId}`].history[`${params.fieldIndex}`][
-        `${params.fieldId}`
-      ] = params.content;
+    if (params.sectionId === 'personal') {
+      if (
+        storeData &&
+        storeData[`${params.sectionId}`] &&
+        storeData[`${params.sectionId}`].history[`${params.fieldId}`]
+      ) {
+        storeData[`${params.sectionId}`].history[`${params.fieldId}`] =
+          params.content;
+      }
+    } else {
+      // eslint-disable-next-line no-lonely-if
+      if (
+        storeData &&
+        storeData[`${params.sectionId}`] &&
+        storeData[`${params.sectionId}`].history[`${params.fieldIndex}`] &&
+        storeData[`${params.sectionId}`].history[`${params.fieldIndex}`][
+          `${params.fieldId}`
+        ]
+      ) {
+        storeData[`${params.sectionId}`].history[`${params.fieldIndex}`][
+          `${params.fieldId}`
+        ] = params.content;
+      }
     }
   } catch (error) {
     console.log('error from updateResumeEventHandler saga: ', error);
@@ -99,19 +111,52 @@ async function getJsonFromDataClassBased(
       const parseComponent = JSON.parse(JSON.stringify(component));
       const mapping = componentMap[item];
       if (mapping) {
+        if (mapping.addHiddenClass && mapping.addHiddenClass === true) {
+          // objt.classes = objt.classes.filter(value => value.name !== 'd-none');
+          const filterAddHidden = editor.getWrapper().find(`.${item}Section`);
+          filterAddHidden.forEach(componentHidden => {
+            componentHidden.addClass('d-none');
+          });
+        } else {
+          const filterAddHidden = editor.getWrapper().find(`.${item}Section`);
+          filterAddHidden.forEach(componentHidden => {
+            componentHidden.removeClass('d-none');
+          });
+        }
         if (mapping.componentType === 'attribute') {
           mapping.key.forEach((keyItem, idx) => {
             if (keyItem === 'class') {
               parseComponent.classes.push(payload[mapping.valueMap[idx]]);
             } else if (keyItem === 'style') {
-              parseComponent.style[mapping.styleMap[idx]] =
-                payload[mapping.valueMap[idx]];
+              // parseComponent.style[mapping.styleMap[idx]] =
+              //   payload[mapping.valueMap[idx]];
+              const tempStyle = JSON.parse(JSON.stringify(editor.getStyle()));
+              const styleProp = {};
+              styleProp[mapping.styleMap[idx]] = payload[mapping.valueMap[idx]];
+              tempStyle.push({
+                selectors: [
+                  {
+                    name: `${sectionId}_${item}`,
+                    label: `${sectionId}_${item}`,
+                    type: 1,
+                    active: true,
+                    private: false,
+                    protected: false,
+                  },
+                ],
+                style: styleProp,
+              });
+              // console.log("styleProp:", styleProp, tempStyle);
+              editor.setStyle(tempStyle);
             } else {
               parseComponent.attributes[keyItem] =
                 payload[mapping.valueMap[idx]];
             }
           });
         } else {
+          if (parseComponent.components) {
+            delete parseComponent.components;
+          }
           parseComponent.content = payload[mapping.valueMap];
         }
       }
@@ -139,7 +184,14 @@ async function getJsonFromDataIdBased(
 
     payload.forEach((data, index) => {
       const temp = JSON.parse(JSON.stringify(component));
-      setLeafAttribute(temp, sectionId, index, payload[index], componentMap);
+      setLeafAttribute(
+        temp,
+        sectionId,
+        index,
+        payload[index],
+        componentMap,
+        editor,
+      );
       temp.attributes.id = `${sectionId}_${index}`;
       tempComponent.push(temp);
     });
@@ -152,36 +204,59 @@ async function getJsonFromDataIdBased(
   }
 }
 
-function setLeafAttribute(objt, sectionId, index, data, componentMap) {
+function setLeafAttribute(objt, sectionId, index, data, componentMap, editor) {
   if (objt.attributes && objt.attributes.id) {
     const id = objt.attributes.id.replace(`${sectionId}_0_`, '');
     const mapping = componentMap[id];
     if (mapping) {
-      if (
-        mapping.RemoveHiddenClass &&
-        mapping.RemoveHiddenClass[index] === true
-      ) {
+      if (mapping.addHiddenClass && mapping.addHiddenClass[index] === true) {
+        // objt.classes = objt.classes.filter(value => value.name !== 'd-none');
+        objt.classes.push('d-none');
+        console.log("inside add d-none")
+      } else {
         objt.classes = objt.classes.filter(value => value.name !== 'd-none');
+        console.log("inside remov d-none")
       }
+      objt.attributes.id = objt.attributes.id.replace('0', index);
       if (mapping.componentType === 'attribute') {
         mapping.key.forEach((keyItem, idx) => {
           if (keyItem === 'class') {
             objt.classes.push(data[mapping.valueMap[idx]]);
           } else if (keyItem === 'style') {
-            // objt.style[mapping.styleMap[idx]] = data[mapping.valueMap[idx]];
+            objt.classes.push(objt.attributes.id);
+            const tempStyle = JSON.parse(JSON.stringify(editor.getStyle()));
+            const styleProp = {};
+            styleProp[mapping.styleMap[idx]] = data[mapping.valueMap[idx]];
+            tempStyle.push({
+              selectors: [
+                {
+                  name: objt.attributes.id,
+                  label: objt.attributes.id,
+                  type: 1,
+                  active: true,
+                  private: false,
+                  protected: false,
+                },
+              ],
+              style: styleProp,
+            });
+            // console.log("styleProp:", styleProp, tempStyle);
+            editor.setStyle(tempStyle);
           } else {
             objt.attributes[keyItem] = data[mapping.valueMap[idx]];
           }
         });
       } else {
+        if (objt.components) {
+          delete objt.components;
+        }
         objt.content = data[mapping.valueMap];
       }
-      objt.attributes.id = objt.attributes.id.replace('0', index);
     }
   }
   if (objt.components && objt.components.length !== 0) {
     objt.components.forEach(child =>
-      setLeafAttribute(child, sectionId, index, data, componentMap),
+      setLeafAttribute(child, sectionId, index, data, componentMap, editor),
     );
   }
 }

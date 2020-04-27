@@ -1,6 +1,6 @@
 /**
  *
- * MultiStepForm
+ * Pricing
  *
  */
 
@@ -8,10 +8,10 @@ import React, { memo } from 'react';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-function MultiStepForm() {
+function Pricing() {
   return <div />;
 }
 
-MultiStepForm.propTypes = {};
+Pricing.propTypes = {};
 
-export default memo(MultiStepForm);
+export default memo(Pricing);
