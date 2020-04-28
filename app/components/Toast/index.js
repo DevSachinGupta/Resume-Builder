@@ -19,6 +19,7 @@ function Toast(props) {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      // console.log("toast called")
       if (autoDelete && toastList.length && list.length) {
         deleteToast(toastList[0].id);
       }
@@ -36,7 +37,7 @@ function Toast(props) {
     toastList.splice(toastListItem, 1);
     setList([...list]);
   };
-  console.log("toast called")
+
   return (
     <>
       <div className={`notification-container ${position}`}>

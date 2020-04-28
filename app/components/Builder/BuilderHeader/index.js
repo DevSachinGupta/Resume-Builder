@@ -23,7 +23,7 @@ import './progress.css';
 import './style.scss';
 
 function BuilderHeader({ dispatch, isHeaderMenuOpen }) {
-  const [displayToasts, setDisplayToasts] = useState(false);
+  const [toastList, setToastList] = useState([]);
 
   useEffect(() => {
     np.configure({
@@ -41,34 +41,21 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen }) {
     backgroundColor: '#f0ad4e',
     icon: <GoThreeBars />,
   };
-
   const list = [toastProperties];
   let toast = null;
-  // toast = (
-  //   <div>
-  //     <Toast
-  //       toastList={list}
-  //       position="top-right"
-  //       autoDelete
-  //       autoDeleteTime={5000}
-  //     />
-  //   </div>
-  // );
+  toast = (
+    <div>
+      <Toast
+        toastList={toastList}
+        position="bottom-left"
+        autoDelete
+        dismissTime={2000}
+      />
+    </div>
+  );
   const displayToast = () => {
     console.log("called diplay")
-    // if (displayToasts) {
-      toast = (
-        <div>
-          <Toast
-            toastList={list}
-            position="top-right"
-            autoDelete
-            autoDeleteTime={5000}
-          />
-        </div>
-      );
-    // }
-    setDisplayToasts(!displayToasts);
+    setToastList([...toastList, toastProperties]);
   };
 
   // end toast test

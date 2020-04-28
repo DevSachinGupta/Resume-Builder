@@ -131,17 +131,17 @@ function BuilderEditor({ demopageState, dispatch }) {
       }
     });
 
-    console.log("show editor",showEditorPanel)
+    // console.log("show editor",showEditorPanel)
     if (true) {
       setShowEditorPanel(1);
       const PanelObject = editor.Panels.getPanels();
-      console.log("Panels Lsit1 panels:", editor.Panels.getPanels());
-      console.log("Panels Lsit1 panels:", PanelObject.where({id:'devices-c'}));
+      // console.log("Panels Lsit1 panels:", editor.Panels.getPanels());
+      // console.log("Panels Lsit1 panels:", PanelObject.where({id:'devices-c'}));
       
       const nodes = document.querySelectorAll(".deviceContainer"); //.forEach(e => e.parentNode.removeChild(e));
-      console.log("nodes: ", nodes[0].childNodes)
-      nodes[0].childNodes.forEach(e => console.log("child:",  e.parentNode.removeChild(e)));
-      console.log("nodes: ", nodes)
+      // console.log("nodes: ", nodes[0].childNodes)
+      // nodes[0].childNodes.forEach(e => console.log("child:",  e.parentNode.removeChild(e)));
+      // console.log("nodes: ", nodes)
       // PanelObject.remove({id:'devices-c'})
       // console.log("Panels Lsit1 panels:", PanelObject.remove({id:'devices-c'}));
       // console.log("Panels Lsit1:", editor.Panels.getPanels());
@@ -178,7 +178,7 @@ function BuilderEditor({ demopageState, dispatch }) {
         ]);
       editor.Panels.render();
       // console.log("Panels Lsit2 button:", editor.Panels.getButton("devices-c", "set-device-desktop"));
-      console.log("Panels Lsit2 panels:", editor.Panels.getPanels());
+      // console.log("Panels Lsit2 panels:", editor.Panels.getPanels());
 
       dispatch(updateEditorState(editor));
     }

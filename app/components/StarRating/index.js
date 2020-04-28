@@ -67,12 +67,6 @@ function StarRating(props) {
               </span>
             ))}
           </div>
-          {/* <div>
-            <Stars
-              count={value}
-              handleClick={number => setFieldValue(fieldName, number)}
-            />
-          </div> */}
         </div>
       )}
     </Field>
