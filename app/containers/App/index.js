@@ -13,6 +13,7 @@ import Proptypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
+import Settings from 'containers/Settings/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Authenticate from 'containers/Authenticate/Loadable';
 import Builder from 'containers/Builder/Loadable';
@@ -40,6 +41,7 @@ const App = ({ dispatch }) => (
     <Switch>
       <Route exact path="/" component={HomePage} />
       <Route path="/features" component={FeaturePage} />
+      <Route path="/settings" component={Settings} />
       <Route
         path="/login"
         render={routeProps => <Authenticate {...routeProps} method="login" />}

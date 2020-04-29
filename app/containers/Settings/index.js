@@ -13,6 +13,7 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
+import SettingPage from 'components/SettingPage';
 import makeSelectSettings from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -22,11 +23,7 @@ export function Settings() {
   useInjectReducer({ key: 'settings', reducer });
   useInjectSaga({ key: 'settings', saga });
 
-  return (
-    <div>
-      <FormattedMessage {...messages.header} />
-    </div>
-  );
+  return <SettingPage />;
 }
 
 Settings.propTypes = {
