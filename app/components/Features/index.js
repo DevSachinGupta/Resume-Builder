@@ -21,7 +21,7 @@ function Features() {
 		"category": [],
 		"rating": -1,
 		"pagesize": 12,
-		"sortOrder": -1, // no of user === then rating
+		"sortOrder": -1, // Relevence:- no of user === then rating 
 		"viewType": "Grid",
   });
   function updateFilter(key, value) {
@@ -49,6 +49,12 @@ function Features() {
     if(filters.rating !== -1) {
       newList = newList.filter(d => d.rating === filters.rating);
     }
+    switch(filters.sortOrder) {
+      case -1: break;
+      
+    }
+    newList = newList.slice(0, filters.pagesize);
+    return newList;
   };
   
   return (
