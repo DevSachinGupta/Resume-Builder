@@ -7,7 +7,7 @@ export default [
       "category": [
         "Timeliner"
       ],
-      "price": "134 INR",
+      "price": "134",
       "rating": 2,
       "usersCount": 139
     },
@@ -20,7 +20,7 @@ export default [
         "Classic",
         "Stylish"
       ],
-      "price": "Free",
+      "price": "0",
       "rating": 1,
       "usersCount": 34
     },
@@ -32,7 +32,7 @@ export default [
       "category": [
         "Stylish",
       ],
-      "price": "260 INR",
+      "price": "260",
       "rating": 1,
       "usersCount": 277
     },
@@ -44,7 +44,7 @@ export default [
       "category": [
         "Modern"
       ],
-      "price": "441 INR",
+      "price": "441",
       "rating": 5,
       "usersCount": 112
     },
@@ -57,7 +57,7 @@ export default [
         "Passion",
         "Modern"
       ],
-      "price": "736 INR",
+      "price": "736",
       "rating": 3,
       "usersCount": 90
     },
@@ -71,7 +71,7 @@ export default [
         "Passion",
         "Timeliner"
       ],
-      "price": "27 INR",
+      "price": "27",
       "rating": 3,
       "usersCount": 290
     },
@@ -83,7 +83,7 @@ export default [
       "category": [
         "Timeliner"
       ],
-      "price": "Free",
+      "price": "0",
       "rating": 4,
       "usersCount": 54
     },
@@ -95,7 +95,7 @@ export default [
       "category": [
         "Modern",
       ],
-      "price": "100 INR",
+      "price": "100",
       "rating": 1,
       "usersCount": 273
     },
@@ -107,7 +107,7 @@ export default [
       "category": [
         "Timeliner"
       ],
-      "price": "562 INR",
+      "price": "562",
       "rating": 4,
       "usersCount": 170
     },
@@ -120,7 +120,7 @@ export default [
         "Modern",
         "Timeliner"
       ],
-      "price": "280 INR",
+      "price": "280",
       "rating": 5,
       "usersCount": 186
     },
@@ -133,7 +133,7 @@ export default [
         "Timeliner",
         "Classic"
       ],
-      "price": "Free",
+      "price": "0",
       "rating": 4,
       "usersCount": 254
     },
@@ -147,7 +147,7 @@ export default [
         "Classic",
         "Stylish",
       ],
-      "price": "495 INR",
+      "price": "495",
       "rating": 5,
       "usersCount": 62
     },
@@ -160,7 +160,7 @@ export default [
         "Modern",
         "Passion"
       ],
-      "price": "630 INR",
+      "price": "630",
       "rating": 5,
       "usersCount": 78
     },
@@ -174,7 +174,7 @@ export default [
         "Stylish",
         "Passion"
       ],
-      "price": "343 INR",
+      "price": "243",
       "rating": 4,
       "usersCount": 219
     },
@@ -188,7 +188,7 @@ export default [
         "Stylish",
         "Classic",
       ],
-      "price": "593 INR",
+      "price": "593",
       "rating": 1,
       "usersCount": 222
     },
@@ -202,7 +202,7 @@ export default [
         "Timeliner",
         "Modern"
       ],
-      "price": "Free",
+      "price": "0",
       "rating": 2,
       "usersCount": 157
     },
@@ -216,7 +216,7 @@ export default [
         "Classic",
         "Stylish"
       ],
-      "price": "348 INR",
+      "price": "348",
       "rating": 2,
       "usersCount": 146
     },
@@ -229,7 +229,7 @@ export default [
         "Modern",
         "Timeliner"
       ],
-      "price": "406 INR",
+      "price": "406",
       "rating": 3,
       "usersCount": 175
     },
@@ -242,7 +242,7 @@ export default [
         "Timeliner",
         "Passion",
       ],
-      "price": "285 INR",
+      "price": "285",
       "rating": 4,
       "usersCount": 90
     },
@@ -254,7 +254,7 @@ export default [
       "category": [
         "Passion"
       ],
-      "price": "113 INR",
+      "price": "113",
       "rating": 5,
       "usersCount": 253
     },
@@ -268,7 +268,7 @@ export default [
         "Passion",
         "Modern"
       ],
-      "price": "Free",
+      "price": "0",
       "rating": 1,
       "usersCount": 81
     },
@@ -281,7 +281,7 @@ export default [
         "Timeliner",
         "Modern"
       ],
-      "price": "120 INR",
+      "price": "120",
       "rating": 3,
       "usersCount": 226
     },
@@ -294,7 +294,7 @@ export default [
         "Passion",
         "Stylish"
       ],
-      "price": "662 INR",
+      "price": "662",
       "rating": 4,
       "usersCount": 275
     },
@@ -307,7 +307,7 @@ export default [
         "Timeliner",
         "Classic"
       ],
-      "price": "78 INR",
+      "price": "78",
       "rating": 5,
       "usersCount": 283
     },
@@ -319,7 +319,7 @@ export default [
       "category": [
         "Classic"
       ],
-      "price": "442 INR",
+      "price": "442",
       "rating": 3,
       "usersCount": 77
     },
@@ -331,7 +331,7 @@ export default [
       "category": [
         "Stylish",
       ],
-      "price": "Free",
+      "price": "0",
       "rating": 2,
       "usersCount": 78
     },
@@ -344,7 +344,7 @@ export default [
         "Modern",
         "Classic"
       ],
-      "price": "Free",
+      "price": "0",
       "rating": 2,
       "usersCount": 260
     },
@@ -358,7 +358,7 @@ export default [
         "Timeliner",
         "Modern",
       ],
-      "price": "396 INR",
+      "price": "396",
       "rating": 1,
       "usersCount": 181
     },
@@ -373,7 +373,7 @@ export default [
         "Classic",
         "Timeliner"
       ],
-      "price": "Free",
+      "price": "0",
       "rating": 5,
       "usersCount": 61
     },
@@ -387,7 +387,7 @@ export default [
         "Passion",
         "Modern"
       ],
-      "price": "619 INR",
+      "price": "619",
       "rating": 5,
       "usersCount": 251
     },
@@ -400,7 +400,7 @@ export default [
         "Modern",
         "Classic"
       ],
-      "price": "726 INR",
+      "price": "726",
       "rating": 4,
       "usersCount": 29
     },
@@ -414,7 +414,7 @@ export default [
         "Timeliner",
         "Classic"
       ],
-      "price": "67 INR",
+      "price": "67",
       "rating": 3,
       "usersCount": 104
     },
@@ -428,7 +428,7 @@ export default [
         "Stylish",
         "Modern"
       ],
-      "price": "Free",
+      "price": "0",
       "rating": 2,
       "usersCount": 25
     },
@@ -440,7 +440,7 @@ export default [
       "category": [
         "Modern"
       ],
-      "price": "44 INR",
+      "price": "44",
       "rating": 3,
       "usersCount": 195
     },
@@ -454,7 +454,7 @@ export default [
         "Timeliner",
         "Classic"
       ],
-      "price": "623 INR",
+      "price": "623",
       "rating": 2,
       "usersCount": 159
     },
@@ -469,7 +469,7 @@ export default [
         "Classic",
         "Passion"
       ],
-      "price": "150 INR",
+      "price": "150",
       "rating": 4,
       "usersCount": 260
     },
@@ -481,7 +481,7 @@ export default [
       "category": [
         "Stylish"
       ],
-      "price": "Free",
+      "price": "0",
       "rating": 1,
       "usersCount": 278
     },
@@ -495,7 +495,7 @@ export default [
         "Classic",
         "Stylish"
       ],
-      "price": "612 INR",
+      "price": "612",
       "rating": 3,
       "usersCount": 26
     },
@@ -507,7 +507,7 @@ export default [
       "category": [
         "Classic"
       ],
-      "price": "316 INR",
+      "price": "316",
       "rating": 2,
       "usersCount": 143
     },
@@ -520,7 +520,7 @@ export default [
         "Timeliner",
         "Stylish"
       ],
-      "price": "588 INR",
+      "price": "588",
       "rating": 4,
       "usersCount": 238
     }

@@ -12,7 +12,7 @@ import Sidebar from './Sidebar';
 import BodyLayout from './BodyLayout';
 import Footer from './Footer';
 import './style.scss';
-import templateList from './templatesList';
+import templateList2 from './templatesList';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
@@ -23,32 +23,40 @@ function Features() {
     rating: -1,
     pagesize: 12,
     sortOrder: -1, // Relevence:- no of user === then rating
-    viewType: 'Grid',
   });
+  const [templateList, setTemplateList] = React.useState([]);
+
+  React.useEffect(() => {
+    getFilteredList();
+  },[filters]);
+
   function updateFilter(key, value) {
-    console.log('updateFile', key, value)
-    const data = {};
+    // console.log("Update Filter :- ", key, " : ", value);
+    const data = {...filters};
     data[key] = value;
-    setFilters({ ...filters, ...data });
+    setFilters({ ...data });
+    // getFilteredList();
   }
   function getFilteredList() {
     let newList = [];
-    if (filters.pricing !== '-1') {
+    if (filters.pricing != '-1') {
       const data = filters.pricing.split('-');
-      newList = templateList.filter(d => {
+      newList = templateList2.filter(d => {
         if (data.length > 1) {
           return (
-            parseFloat(d.price) <= parseFloat(data[0]) &&
-            parseFloat(d.price) <= parseFloat(data[1])
+            parseFloat(data[0]) <= parseFloat(d.price)  &&
+            parseFloat(data[1]) >= parseFloat(d.price) 
           );
         }
-        if (data.indexOf('>') > 0) {
+        if (data[0].indexOf('>') > -1) {
           return parseFloat(d.price) >= parseFloat(data[0].replace('>', ''));
         }
-        if (data.indexOf('<') > 0) {
+        if (data[0].indexOf('<') > -1) {
           return parseFloat(d.price) <= parseFloat(data[0].replace('<', ''));
         }
       });
+    } else {
+      newList = templateList2;
     }
     if (filters.category.length !== 0) {
       newList = newList.filter(d =>
@@ -59,11 +67,25 @@ function Features() {
       newList = newList.filter(d => d.rating === filters.rating);
     }
     switch (filters.sortOrder) {
-      case -1:
+      case 0 : // Pricing High ---> low
+        newList.sort((a,b) => parseFloat(a.price) > parseFloat(b.price) ? -1 : parseFloat(b.price) > parseFloat(a.price) ? 1 : 0);
         break;
+      case 1 : // Pricing low ---> High
+        newList.sort((a,b) => parseFloat(a.price) > parseFloat(b.price) ? 1 : parseFloat(b.price) > parseFloat(a.price) ? -1 : 0);
+        break;
+      case 2 : // rating low ---> High
+        newList.sort((a,b) => parseInt(a.rating) > parseInt(b.rating) ? 1 : parseInt(b.rating) > parseInt(a.rating) ? -1 : 0);
+        break;
+      default:
+        newList.sort((a,b) => {
+          // if(parseInt(a.rating) > parseInt(b.rating)) return 1;
+          return parseInt(a.rating) > parseInt(b.rating) ? -1 : parseInt(b.rating) > parseInt(a.rating) ? 1 : 0;
+        });
+        break;
+      
     }
     newList = newList.slice(0, filters.pagesize);
-    return newList;
+    setTemplateList(newList);
   }
 
   return (
@@ -84,7 +106,6 @@ function Features() {
             </div>
             <div className="w-3/4 ml-6 mt-2">
               <BodyLayout
-                viewType={filters.viewType}
                 templateItems={templateList}
               />
             </div>

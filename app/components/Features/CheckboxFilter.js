@@ -10,12 +10,25 @@ import PropTypes from 'prop-types';
 
 function CheckboxFilter(props) {
   const categoryFieldValues = [
-    { key: '0', value: 'Classic' },
-    { key: '1', value: 'Modern' },
-    { key: '2', value: 'Passion' },
-    { key: '3', value: 'Stylish' },
-    { key: '4', value: 'Timeliner' },
+    { key: 'Classic', value: 'Classic' },
+    { key: 'Modern', value: 'Modern' },
+    { key: 'Passion', value: 'Passion' },
+    { key: 'Stylish', value: 'Stylish' },
+    { key: 'Timeliner', value: 'Timeliner' },
   ];
+  const [options, setOptions] = React.useState([]);
+  const handelCheckboxClick = e => {
+    let updatedOptions = [...options];
+    if(e.currentTarget.checked) {
+      updatedOptions = [...options, e.currentTarget.value];
+      setOptions(updatedOptions);
+    } else {
+      updatedOptions = options.filter(d => d !== e.currentTarget.value);
+      setOptions(updatedOptions);
+    }
+
+    props.updateFilter('category', updatedOptions);
+  };
   return (
     <div>
       <div className="w-full mx-auto">
@@ -37,9 +50,7 @@ function CheckboxFilter(props) {
                         name="priceFilter"
                         value={item.key}
                         id={item.key}
-                        onChange={e => {
-                          props.updateFilter('category', e.currentTarget.value);
-                        }}
+                        onChange={handelCheckboxClick}
                       />
                     </div>
                     <div className="flex-grow font-medium pl-2">
