@@ -13,17 +13,25 @@ import ListFooter from './ListFooter';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-function BodyLayout() {
+function BodyLayout(props) {
+  const [layoutView, setLayoutView] = React.useState('Grid');
+  const switchLayoutView = e => {
+    console.log('view', e.currentTarget.value, layoutView);
+    console.log('view', e);
+    setLayoutView(e.currentTarget.value);
+  };
+
   return (
     <div>
-      {/* <div className="mb-4">
-        <GridRow />
-      </div> */}
       <div className="mb-4">
-        <CardGrid />
+        <GridRow switchLayoutView={switchLayoutView} layoutView={layoutView} />
       </div>
       <div className="mb-4">
-        <CardList />
+        {layoutView === 'Grid' ? (
+          <CardGrid templateItems={props.templateItems} />
+        ) : (
+          <CardList templateItems={props.templateItems} />
+        )}
       </div>
       <div className="mb-4">
         <ListFooter />

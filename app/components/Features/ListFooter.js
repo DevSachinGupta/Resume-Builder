@@ -28,14 +28,10 @@ function ListFooter() {
           <span className="mr-2">24</span>
         </div>
         <div className="p-3 rounded-full  hover:bg-gray-100">
-          <button className="w-5 h-5">
-            &lt;
-          </button>
+          <button className="w-5 h-5">&lt;</button>
         </div>
         <div className="p-3 rounded-full  hover:bg-gray-100">
-          <button className="w-5 h-5">
-            &gt;
-          </button>
+          <button className="w-5 h-5">&gt;</button>
         </div>
       </div>
     </div>

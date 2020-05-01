@@ -5,10 +5,17 @@
  */
 
 import React, { memo } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-function CheckboxFilter() {
+function CheckboxFilter(props) {
+  const categoryFieldValues = [
+    { key: '0', value: 'Classic' },
+    { key: '1', value: 'Modern' },
+    { key: '2', value: 'Passion' },
+    { key: '3', value: 'Stylish' },
+    { key: '4', value: 'Timeliner' },
+  ];
   return (
     <div>
       <div className="w-full mx-auto">
@@ -19,43 +26,41 @@ function CheckboxFilter() {
                 Category
               </div>
               <div className="pb-3 text-sm">
-                <div className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 pt-2">
-                  <div className="">
-                    <input type="checkbox"></input>
-                  </div>
-                  <div className="flex-grow font-medium pl-2">Classic</div>
-                  <div className="text-sm font-normal text-gray-500 tracking-wide px-2 bg-gray-300 rounded-full">
-                    Counts
-                  </div>
-                </div>
-                <div className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 pt-2">
-                  <div className="">
-                    <input type="checkbox"></input>
-                  </div>
-                  <div className="flex-grow font-medium pl-2">Modern</div>
-                  <div className="text-sm font-normal text-gray-500 tracking-wide px-2 bg-gray-300 rounded-full">
-                    Counts
-                  </div>
-                </div>
-                <div className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 pt-2">
-                  <div className="">
-                    <input type="checkbox"></input>
-                  </div>
-                  <div className="flex-grow font-medium pl-2">Timeline</div>
-                  <div className="text-sm font-normal text-gray-500 tracking-wide px-2 bg-gray-300 rounded-full">
-                    Counts
-                  </div>
-                </div>
+                {categoryFieldValues.map(item => (
+                  <label
+                    htmlFor={item.key}
+                    className="flex justify-start text-gray-700 hover:text-blue-400 hover:bg-blue-100 cursor-pointer rounded-md px-2 pt-2"
+                  >
+                    <div className="">
+                      <input
+                        type="checkbox"
+                        name="priceFilter"
+                        value={item.key}
+                        id={item.key}
+                        onChange={e => {
+                          props.updateFilter('category', e.currentTarget.value);
+                        }}
+                      />
+                    </div>
+                    <div className="flex-grow font-medium pl-2">
+                      {item.value}
+                    </div>
+                    <div className="text-sm font-normal text-gray-500 tracking-wide px-2 bg-gray-300 rounded-full">
+                      {item.count ? item.count : '0'}
+                    </div>
+                  </label>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    // </div>
   );
 }
 
-CheckboxFilter.propTypes = {};
+CheckboxFilter.propTypes = {
+  updateFilter: PropTypes.func,
+};
 
 export default memo(CheckboxFilter);

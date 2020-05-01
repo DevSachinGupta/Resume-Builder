@@ -137,8 +137,8 @@ function BuilderEditor({ demopageState, dispatch }) {
       const PanelObject = editor.Panels.getPanels();
       // console.log("Panels Lsit1 panels:", editor.Panels.getPanels());
       // console.log("Panels Lsit1 panels:", PanelObject.where({id:'devices-c'}));
-      
-      const nodes = document.querySelectorAll(".deviceContainer"); //.forEach(e => e.parentNode.removeChild(e));
+
+      const nodes = document.querySelectorAll('.deviceContainer'); // .forEach(e => e.parentNode.removeChild(e));
       // console.log("nodes: ", nodes[0].childNodes)
       // nodes[0].childNodes.forEach(e => console.log("child:",  e.parentNode.removeChild(e)));
       // console.log("nodes: ", nodes)

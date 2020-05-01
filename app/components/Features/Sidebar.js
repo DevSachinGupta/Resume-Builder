@@ -12,7 +12,7 @@ import RatingFilter from './RatingFilter';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-function Sidebar() {
+function Sidebar(props) {
   return (
     <div>
       <div className="mb-4">
@@ -31,13 +31,13 @@ function Sidebar() {
         </div>
       </div>
       <div className="mb-4">
-        <RadioFilter />
+        <RadioFilter updateFilter={props.updateFilter}/>
       </div>
       <div className="mb-4">
-        <CheckboxFilter />
+        <CheckboxFilter updateFilter={props.updateFilter} />
       </div>
       <div className="mb-4">
-        <RatingFilter />
+        <RatingFilter updateFilter={props.updateFilter}/>
       </div>
       <div className="mb-4">
         <button className="mt-3 text-base font-medium bg-blue-500 w-full text-white rounded-lg px-6 py-2 block shadow-xl hover:text-white hover:bg-blue-800">

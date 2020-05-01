@@ -5,17 +5,20 @@
  */
 
 import React, { memo } from 'react';
-import { GoThreeBars } from 'react-icons/go';
-import { FaUserCircle } from 'react-icons/fa';
+import cx from 'classnames';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-function GridRow() {
+function GridRow(props) {
+  console.log("value gridRow", props)
   return (
     <div className="flex text-center justify-end my-auto GridRow">
       <div className="ml-3 GridRowDropdown">
         <div className="group inline-block">
-          <button className="outline-none focus:outline-none px-3 py-1 bg-transparent flex items-center min-w-32">
+          <button
+            type="button"
+            className="outline-none focus:outline-none px-3 py-1 bg-transparent flex items-center min-w-32"
+          >
             <span className="pr-1 font-semibold flex-1">Default</span>
             <span>
               <svg
@@ -35,13 +38,21 @@ function GridRow() {
             <li className="rounded-sm px-3 py-1 hover:bg-gray-100">
               Lowest Price
             </li>
-            <li className="rounded-sm px-3 py-1 hover:bg-gray-100">Highest Price</li>
+            <li className="rounded-sm px-3 py-1 hover:bg-gray-100">
+              Highest Price
+            </li>
           </ul>
         </div>
       </div>
       <div className="bg-gray-200 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded-full inline-flex">
         <button
-          className="inline-flex items-center transition-colors duration-300 ease-in focus:outline-none hover:text-blue-400 focus:text-blue-400 rounded-l-full px-4 py-2 activeGrid"
+          type="button"
+          onClick={props.switchLayoutView}
+          value="Grid"
+          className={cx(
+            'inline-flex items-center transition-colors duration-300 ease-in focus:outline-none hover:text-blue-400 focus:text-blue-400 rounded-l-full px-4 py-2',
+            { activeGrid: props.layoutView === 'Grid' },
+          )}
           id="grid"
         >
           <svg
@@ -64,7 +75,13 @@ function GridRow() {
           <span>Grid</span>
         </button>
         <button
-          className="inline-flex items-center transition-colors duration-300 ease-in focus:outline-none hover:text-blue-400 focus:text-blue-400 rounded-r-full px-4 py-2"
+          type="button"
+          onClick={props.switchLayoutView}
+          value="List"
+          className={cx(
+            'inline-flex items-center transition-colors duration-300 ease-in focus:outline-none hover:text-blue-400 focus:text-blue-400 rounded-l-full px-4 py-2',
+            { activeGrid: props.layoutView === 'List' },
+          )}
           id="list"
         >
           <svg

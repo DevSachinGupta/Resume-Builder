@@ -5,10 +5,18 @@
  */
 
 import React, { memo } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import cx from 'classnames';
 // import styled from 'styled-components';
 
-function RatingFilter() {
+function RatingFilter(props) {
+  const ratingFieldValues = [
+    { key: '5', value: '5' },
+    { key: '4', value: '4' },
+    { key: '3', value: '3' },
+    { key: '2', value: '2' },
+    { key: '1', value: '1' },
+  ];
   return (
     <div>
       <div className="w-full mx-auto">
@@ -19,76 +27,50 @@ function RatingFilter() {
                 Rating
               </div>
               <div className="pb-3 text-sm">
-                <div className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 pt-2">
-                  <div className="flex-grow font-medium pl-2 text-base RatingFilter">
-                    <span className="star ml-1 activeStar">&#9733;</span>
-                    <span className="star ml-1 activeStar">&#9733;</span>
-                    <span className="star ml-1 activeStar">&#9733;</span>
-                    <span className="star ml-1 activeStar">&#9733;</span>
-                    <span className="star ml-1 activeStar">&#9733;</span>
-                  </div>
-                  <div className="text-sm font-normal text-gray-500 tracking-wide px-2 bg-gray-300 rounded-full">
-                    Counts
-                  </div>
-                </div>
-                <div className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 pt-2">
-                  <div className="flex-grow font-medium pl-2 text-base RatingFilter">
-                    <span className="star ml-1 activeStar">&#9733;</span>
-                    <span className="star ml-1 activeStar">&#9733;</span>
-                    <span className="star ml-1 activeStar">&#9733;</span>
-                    <span className="star ml-1 activeStar">&#9733;</span>
-                    <span className="star ml-1 ">&#9733;</span>
-                  </div>
-                  <div className="text-sm font-normal text-gray-500 tracking-wide px-2 bg-gray-300 rounded-full">
-                    Counts
-                  </div>
-                </div>
-                <div className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 pt-2">
-                  <div className="flex-grow font-medium pl-2 text-base RatingFilter">
-                    <span className="star ml-1 activeStar">&#9733;</span>
-                    <span className="star ml-1 activeStar">&#9733;</span>
-                    <span className="star ml-1 activeStar">&#9733;</span>
-                    <span className="star ml-1 ">&#9733;</span>
-                    <span className="star ml-1 ">&#9733;</span>
-                  </div>
-                  <div className="text-sm font-normal text-gray-500 tracking-wide px-2 bg-gray-300 rounded-full">
-                    Counts
-                  </div>
-                </div>
-                <div className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 pt-2">
-                  <div className="flex-grow font-medium pl-2 text-base RatingFilter">
-                    <span className="star ml-1 activeStar">&#9733;</span>
-                    <span className="star ml-1 activeStar">&#9733;</span>
-                    <span className="star ml-1 ">&#9733;</span>
-                    <span className="star ml-1 ">&#9733;</span>
-                    <span className="star ml-1 ">&#9733;</span>
-                  </div>
-                  <div className="text-sm font-normal text-gray-500 tracking-wide px-2 bg-gray-300 rounded-full">
-                    Counts
-                  </div>
-                </div>
-                <div className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 pt-2">
-                  <div className="flex-grow font-medium pl-2 text-base RatingFilter">
-                    <span className="star ml-1 activeStar">&#9733;</span>
-                    <span className="star ml-1 ">&#9733;</span>
-                    <span className="star ml-1 ">&#9733;</span>
-                    <span className="star ml-1 ">&#9733;</span>
-                    <span className="star ml-1 ">&#9733;</span>
-                  </div>
-                  <div className="text-sm font-normal text-gray-500 tracking-wide px-2 bg-gray-300 rounded-full">
-                    Counts
-                  </div>
-                </div>
+                {ratingFieldValues.map(item => (
+                  <label
+                    htmlFor={item.key}
+                    className="flex justify-start text-gray-700 hover:text-blue-400 hover:bg-blue-100 cursor-pointer rounded-md px-2 pt-2"
+                  >
+                    <div
+                      type="button"
+                      className="flex-grow font-medium pl-2 text-base RatingFilter"
+                    >
+                      <button
+                        type="button"
+                        value={item.key}
+                        id={item.key}
+                        onClick={e => {
+                          props.updateFilter('rating', e.currentTarget.value);
+                        }}
+                      >
+                        {[1, 2, 3, 4, 5].map(e => (
+                          <span
+                            className={cx('star ml-1', 'text-xl', {
+                              activeStar: e <= parseInt(item.value),
+                            })}
+                          >
+                            &#9733;
+                          </span>
+                        ))}
+                      </button>
+                    </div>
+                    <div className="text-sm font-normal text-gray-500 tracking-wide px-2 bg-gray-300 rounded-full">
+                      {item.count ? item.count : '0'}
+                    </div>
+                  </label>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    // </div>
   );
 }
 
-RatingFilter.propTypes = {};
+RatingFilter.propTypes = {
+  updateFilter: PropTypes.func,
+};
 
 export default memo(RatingFilter);
