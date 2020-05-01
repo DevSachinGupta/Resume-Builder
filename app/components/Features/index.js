@@ -7,6 +7,7 @@
 import React, { memo } from 'react';
 import Header from './Header';
 import SearchBar from './SearchBar';
+import GridRow from './GridRow';
 import Sidebar from './Sidebar';
 import BodyLayout from './BodyLayout';
 import Footer from './Footer';
@@ -32,6 +33,10 @@ function Features() {
               <Sidebar />
             </div>
             <div className="w-3/4 ml-6 mt-2">
+              {/* <div> */}
+              <div className="mb-4">
+                <GridRow />
+              </div>
               <BodyLayout />
             </div>
           </div>

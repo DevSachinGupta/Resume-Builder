@@ -16,9 +16,9 @@ import ListFooter from './ListFooter';
 function BodyLayout() {
   return (
     <div>
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <GridRow />
-      </div>
+      </div> */}
       <div className="mb-4">
         <CardGrid />
       </div>
