@@ -31,15 +31,10 @@ let DemoPage = {
   style: null,
 };
 
-function BuilderEditor({
-  editor_state,
-  demopageState,
-  resumeJSONState,
-  dispatch,
-}) {
-  // console.log(demopageState, 'This is the editor_state:Editor');
+function BuilderEditor({ demopageState, dispatch }) {
   DemoPage = demopageState || DemoPage;
-  // let editor;
+  const [showEditorPanel, setShowEditorPanel] = useState(0);
+
   useEffect(() => {
     const editor = grapesjs.init({
       container: '#gjs',
@@ -56,7 +51,7 @@ function BuilderEditor({
           {
             id: 'devices-c',
             el: '.deviceContainer',
-            visible: true,
+            visible: false,
             buttons: [
               {
                 id: 'set-device-desktop',
@@ -104,25 +99,27 @@ function BuilderEditor({
               const { content } = JSON.parse(
                 JSON.stringify(changesArray),
               ).changes.added[0];
-              const sectionId = attrs.id.split('_')[0];
-              const fieldIndex = attrs.id.split('_')[1];
-              const fieldId = attrs.id.split('_').slice(-1)[0];
-              console.log(
-                'add updateResume ',
-                sectionId,
-                fieldIndex,
-                fieldId,
-                content,
-              );
-              if (sectionId && fieldId) {
-                dispatch(
-                  updateResumeEventHanlder(
-                    sectionId,
-                    fieldId,
-                    fieldIndex,
-                    content,
-                  ),
+              if (attrs.id) {
+                const sectionId = attrs.id.split('_')[0];
+                const fieldIndex = attrs.id.split('_')[1];
+                const fieldId = attrs.id.split('_').slice(-1)[0];
+                console.log(
+                  'add updateResume ',
+                  sectionId,
+                  fieldIndex,
+                  fieldId,
+                  content,
                 );
+                if (sectionId && fieldId) {
+                  dispatch(
+                    updateResumeEventHanlder(
+                      sectionId,
+                      fieldId,
+                      fieldIndex,
+                      content,
+                    ),
+                  );
+                }
               }
             }
           } else {
@@ -133,7 +130,58 @@ function BuilderEditor({
         // console.log('no changes');
       }
     });
-    dispatch(updateEditorState(editor));
+
+    // console.log("show editor",showEditorPanel)
+    if (true) {
+      setShowEditorPanel(1);
+      const PanelObject = editor.Panels.getPanels();
+      // console.log("Panels Lsit1 panels:", editor.Panels.getPanels());
+      // console.log("Panels Lsit1 panels:", PanelObject.where({id:'devices-c'}));
+      
+      const nodes = document.querySelectorAll(".deviceContainer"); //.forEach(e => e.parentNode.removeChild(e));
+      // console.log("nodes: ", nodes[0].childNodes)
+      // nodes[0].childNodes.forEach(e => console.log("child:",  e.parentNode.removeChild(e)));
+      // console.log("nodes: ", nodes)
+      // PanelObject.remove({id:'devices-c'})
+      // console.log("Panels Lsit1 panels:", PanelObject.remove({id:'devices-c'}));
+      // console.log("Panels Lsit1:", editor.Panels.getPanels());
+      // editor.Panels.removePanel('devices-c');
+      // console.log("Panels Lsit:", editor.Panels.getPanels());
+      // editor.Panels.removeButton('devices-c' , 'set-device-desktop' );
+      // editor.Panels.removeButton('devices-c' , 'set-device-desktop' );
+      // editor.Panels.removeButton('devices-c' , 'set-device-desktop' );
+      editor.Panels.addPanel({ id: 'devices-c', el: '.deviceContainer' })
+        .get('buttons')
+        .add([
+          {
+            id: 'set-device-desktop',
+            command(e) {
+              return e.setDevice('Desktop');
+            },
+            className: 'fa fa-desktop',
+            active: 1,
+          },
+          {
+            id: 'set-device-tablet',
+            command(e) {
+              return e.setDevice('Tablet');
+            },
+            className: 'fa fa-tablet',
+          },
+          {
+            id: 'set-device-mobile',
+            command(e) {
+              return e.setDevice('Mobile portrait');
+            },
+            className: 'fa fa-mobile',
+          },
+        ]);
+      editor.Panels.render();
+      // console.log("Panels Lsit2 button:", editor.Panels.getButton("devices-c", "set-device-desktop"));
+      // console.log("Panels Lsit2 panels:", editor.Panels.getPanels());
+
+      dispatch(updateEditorState(editor));
+    }
   }, [DemoPage]);
   return (
     <div>
@@ -147,9 +195,7 @@ BuilderEditor.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  // editor_state: makeUpdateEditorState(),
   demopageState: makeUpdateDemoPageState(),
-  resumeJSONState: makeUpdateResumeJSONState(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(

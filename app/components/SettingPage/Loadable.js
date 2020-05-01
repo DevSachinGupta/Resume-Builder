@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for MultiStepForm
+ * Asynchronously loads the component for SettingPage
  *
  */
 

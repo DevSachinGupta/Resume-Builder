@@ -1,6 +1,6 @@
 /**
  *
- * Tests for MultiStepForm
+ * Tests for Settings
  *
  * @see https://github.com/react-boilerplate/react-boilerplate/tree/master/docs/testing
  *
@@ -8,14 +8,21 @@
 
 import React from 'react';
 import { render } from 'react-testing-library';
+import { IntlProvider } from 'react-intl';
 // import 'jest-dom/extend-expect'; // add some helpful assertions
 
-import MultiStepForm from '../index';
+import { Settings } from '../index';
+import { DEFAULT_LOCALE } from '../../../i18n';
 
-describe('<MultiStepForm />', () => {
+describe('<Settings />', () => {
   it('Expect to not log errors in console', () => {
     const spy = jest.spyOn(global.console, 'error');
-    render(<MultiStepForm />);
+    const dispatch = jest.fn();
+    render(
+      <IntlProvider locale={DEFAULT_LOCALE}>
+        <Settings dispatch={dispatch} />
+      </IntlProvider>,
+    );
     expect(spy).not.toHaveBeenCalled();
   });
 
@@ -31,7 +38,11 @@ describe('<MultiStepForm />', () => {
   it.skip('Should render and match the snapshot', () => {
     const {
       container: { firstChild },
-    } = render(<MultiStepForm />);
+    } = render(
+      <IntlProvider locale={DEFAULT_LOCALE}>
+        <Settings />
+      </IntlProvider>,
+    );
     expect(firstChild).toMatchSnapshot();
   });
 });

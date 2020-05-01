@@ -52,7 +52,7 @@ function ProjectForm({ resumeJSONState, dispatch }) {
       key: ['href'],
       valueMap: ['url'],
       componentType: 'attribute',
-      RemoveHiddenClass: [],
+      addHiddenClass: [],
     },
     start: { valueMap: 'start', componentType: 'content' },
     end: { valueMap: 'end', componentType: 'content' },
@@ -86,9 +86,9 @@ function ProjectForm({ resumeJSONState, dispatch }) {
         tempValues[index].end = formatDateValue(tempValues[index].end);
       }
       if (tempValues[index].url === '') {
-        componentMap.url.RemoveHiddenClass.push(false);
+        componentMap.url.addHiddenClass.push(true);
       } else {
-        componentMap.url.RemoveHiddenClass.push(true);
+        componentMap.url.addHiddenClass.push(false);
       }
     });
     return tempValues;

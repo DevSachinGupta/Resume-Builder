@@ -30,7 +30,7 @@ const validationMap = {
     validationHandler(
       yup
         .string()
-        .required('Required')
+        // .required('Required')
         .validate(value),
     ),
   dateOfBirth: value =>

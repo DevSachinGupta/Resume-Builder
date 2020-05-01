@@ -30,7 +30,7 @@ function Accordion(props) {
         className="absolute opacity-0"
         id={props.id}
         name="test"
-        // checked={true}
+        checked
       />
       <div className="flex justify-between">
         <label

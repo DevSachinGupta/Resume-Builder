@@ -38,7 +38,11 @@ function PersonalDetails({ allCountries, resumeJSONState, dispatch }) {
     lastName: { valueMap: 'lastName', componentType: 'content' },
     fullName: { valueMap: 'fullName', componentType: 'content' },
     email: { valueMap: 'email', componentType: 'content' },
-    phone: { valueMap: 'phone', componentType: 'content' },
+    phone: {
+      valueMap: 'phone',
+      componentType: 'content',
+      addHiddenClass: false,
+    },
     dateOfBirth: { valueMap: 'dateOfBirth', componentType: 'content' },
     gender: { valueMap: 'gender', componentType: 'content' },
     address1: { valueMap: 'address1', componentType: 'content' },
@@ -71,6 +75,11 @@ function PersonalDetails({ allCountries, resumeJSONState, dispatch }) {
     const tempValues = values;
     tempValues.fullName = `${tempValues.firstName} ${tempValues.lastName}`;
     tempValues.dateOfBirth = formatDateValue(tempValues.dateOfBirth);
+    if (tempValues.phone === '') {
+      componentMap.phone.addHiddenClass = true;
+    } else {
+      componentMap.phone.addHiddenClass = false;
+    }
     return tempValues;
   };
   const handleSave = values => {
