@@ -41,7 +41,10 @@ function RatingFilter(props) {
                         value={item.key}
                         id={item.key}
                         onClick={e => {
-                          props.updateFilter('rating', parseInt(e.currentTarget.value));
+                          props.updateFilter(
+                            'rating',
+                            parseInt(e.currentTarget.value),
+                          );
                         }}
                       >
                         {[1, 2, 3, 4, 5].map(e => (

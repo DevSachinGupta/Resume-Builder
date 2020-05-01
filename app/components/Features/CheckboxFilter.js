@@ -19,7 +19,7 @@ function CheckboxFilter(props) {
   const [options, setOptions] = React.useState([]);
   const handelCheckboxClick = e => {
     let updatedOptions = [...options];
-    if(e.currentTarget.checked) {
+    if (e.currentTarget.checked) {
       updatedOptions = [...options, e.currentTarget.value];
       setOptions(updatedOptions);
     } else {

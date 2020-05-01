@@ -21,6 +21,7 @@ function Features() {
     pricing: '-1',
     category: [],
     rating: -1,
+    pageNumber: 1,
     pagesize: 12,
     sortOrder: -1, // Relevence:- no of user === then rating
   });
@@ -28,11 +29,11 @@ function Features() {
 
   React.useEffect(() => {
     getFilteredList();
-  },[filters]);
+  }, [filters]);
 
   function updateFilter(key, value) {
     // console.log("Update Filter :- ", key, " : ", value);
-    const data = {...filters};
+    const data = { ...filters };
     data[key] = value;
     setFilters({ ...data });
     // getFilteredList();
@@ -44,8 +45,8 @@ function Features() {
       newList = templateList2.filter(d => {
         if (data.length > 1) {
           return (
-            parseFloat(data[0]) <= parseFloat(d.price)  &&
-            parseFloat(data[1]) >= parseFloat(d.price) 
+            parseFloat(data[0]) <= parseFloat(d.price) &&
+            parseFloat(data[1]) >= parseFloat(d.price)
           );
         }
         if (data[0].indexOf('>') > -1) {
@@ -67,24 +68,45 @@ function Features() {
       newList = newList.filter(d => d.rating === filters.rating);
     }
     switch (filters.sortOrder) {
-      case 0 : // Pricing High ---> low
-        newList.sort((a,b) => parseFloat(a.price) > parseFloat(b.price) ? -1 : parseFloat(b.price) > parseFloat(a.price) ? 1 : 0);
+      case 0: // Pricing High ---> low
+        newList.sort((a, b) =>
+          parseFloat(a.price) > parseFloat(b.price)
+            ? -1
+            : parseFloat(b.price) > parseFloat(a.price)
+              ? 1
+              : 0,
+        );
         break;
-      case 1 : // Pricing low ---> High
-        newList.sort((a,b) => parseFloat(a.price) > parseFloat(b.price) ? 1 : parseFloat(b.price) > parseFloat(a.price) ? -1 : 0);
+      case 1: // Pricing low ---> High
+        newList.sort((a, b) =>
+          parseFloat(a.price) > parseFloat(b.price)
+            ? 1
+            : parseFloat(b.price) > parseFloat(a.price)
+              ? -1
+              : 0,
+        );
         break;
-      case 2 : // rating low ---> High
-        newList.sort((a,b) => parseInt(a.rating) > parseInt(b.rating) ? 1 : parseInt(b.rating) > parseInt(a.rating) ? -1 : 0);
+      case 2: // rating low ---> High
+        newList.sort((a, b) =>
+          parseInt(a.rating) > parseInt(b.rating)
+            ? 1
+            : parseInt(b.rating) > parseInt(a.rating)
+              ? -1
+              : 0,
+        );
         break;
       default:
-        newList.sort((a,b) => {
+        newList.sort((a, b) =>
           // if(parseInt(a.rating) > parseInt(b.rating)) return 1;
-          return parseInt(a.rating) > parseInt(b.rating) ? -1 : parseInt(b.rating) > parseInt(a.rating) ? 1 : 0;
-        });
+          parseInt(a.rating) > parseInt(b.rating)
+            ? -1
+            : parseInt(b.rating) > parseInt(a.rating)
+              ? 1
+              : 0,
+        );
         break;
-      
     }
-    newList = newList.slice(0, filters.pagesize);
+    newList = newList.slice((filters.pageNumber -1) * filters.pagesize, filters.pageNumber * filters.pagesize);
     setTemplateList(newList);
   }
 
@@ -105,9 +127,7 @@ function Features() {
               <Sidebar updateFilter={updateFilter} />
             </div>
             <div className="w-3/4 ml-6 mt-2">
-              <BodyLayout
-                templateItems={templateList}
-              />
+              <BodyLayout templateItems={templateList} />
             </div>
           </div>
         </div>
