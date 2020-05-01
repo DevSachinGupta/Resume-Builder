@@ -212,10 +212,10 @@ function setLeafAttribute(objt, sectionId, index, data, componentMap, editor) {
       if (mapping.addHiddenClass && mapping.addHiddenClass[index] === true) {
         // objt.classes = objt.classes.filter(value => value.name !== 'd-none');
         objt.classes.push('d-none');
-        console.log("inside add d-none")
+        console.log('inside add d-none');
       } else {
         objt.classes = objt.classes.filter(value => value.name !== 'd-none');
-        console.log("inside remov d-none")
+        console.log('inside remov d-none');
       }
       objt.attributes.id = objt.attributes.id.replace('0', index);
       if (mapping.componentType === 'attribute') {

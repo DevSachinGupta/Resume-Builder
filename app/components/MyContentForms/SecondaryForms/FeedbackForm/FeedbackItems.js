@@ -9,7 +9,11 @@ const FeedbackInputs = ({ setRating }) => (
   <div>
     <Row>
       <div className="rating">
-        <StarRating numberOfStars="5" currentRatingValue="0" onClick={setRating} />
+        <StarRating
+          numberOfStars="5"
+          currentRatingValue="0"
+          onClick={setRating}
+        />
       </div>
     </Row>
     <Row>

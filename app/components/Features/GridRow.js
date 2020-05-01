@@ -35,7 +35,9 @@ function GridRow() {
             <li className="rounded-sm px-3 py-1 hover:bg-gray-100">
               Lowest Price
             </li>
-            <li className="rounded-sm px-3 py-1 hover:bg-gray-100">Highest Price</li>
+            <li className="rounded-sm px-3 py-1 hover:bg-gray-100">
+              Highest Price
+            </li>
           </ul>
         </div>
       </div>

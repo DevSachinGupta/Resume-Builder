@@ -5,7 +5,7 @@
  */
 
 import React, { memo } from 'react';
-import {GoThreeBars} from 'react-icons/go';
+import { GoThreeBars } from 'react-icons/go';
 import { FaUserCircle } from 'react-icons/fa';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';

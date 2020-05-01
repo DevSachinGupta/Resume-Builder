@@ -26,25 +26,34 @@ function CardGrid() {
                 </div> */}
               </div>
               <div className="p-4 h-auto md:h-40 lg:h-48">
-                <h1 className="text-gray-900 font-bold text-xl md:text-base lg:text-lg">Template 1</h1>
+                <h1 className="text-gray-900 font-bold text-xl md:text-base lg:text-lg">
+                  Template 1
+                </h1>
                 <div className="flex mt-3">
-                  <h1 className="flex-grow item-center my-auto text-gray-700 font-bold text-sm ">150 INR</h1>
+                  <h1 className="flex-grow item-center my-auto text-gray-700 font-bold text-sm ">
+                    150 INR
+                  </h1>
                   <div className="flex item-center">
-                    <span className="star ml-1 text-xl activeStar">&#9733;</span>
-                    <span className="star ml-1 text-xl activeStar">&#9733;</span>
-                    <span className="star ml-1 text-xl activeStar">&#9733;</span>
+                    <span className="star ml-1 text-xl activeStar">
+                      &#9733;
+                    </span>
+                    <span className="star ml-1 text-xl activeStar">
+                      &#9733;
+                    </span>
+                    <span className="star ml-1 text-xl activeStar">
+                      &#9733;
+                    </span>
                     <span className="star ml-1 text-xl ">&#9733;</span>
                     <span className="star ml-1 text-xl ">&#9733;</span>
                   </div>
                 </div>
                 <p className="mt-2 text-gray-600 text-sm">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit In odit exercitationem fuga id nam quia
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit In
+                  odit exercitationem fuga id nam quia
                 </p>
               </div>
             </div>
           </div>
-
-
 
           <div className="w-full lg:w-1/3 md:mx-2 mb-4 md:mb-0">
             <div className="bg-white rounded-lg overflow-hidden shadow relative">
@@ -54,11 +63,17 @@ function CardGrid() {
                 alt=""
               />
               <div className="p-4 h-auto md:h-40 lg:h-48">
-                <h1 className="text-gray-900 font-bold text-xl md:text-base lg:text-lg">Template 2</h1>
+                <h1 className="text-gray-900 font-bold text-xl md:text-base lg:text-lg">
+                  Template 2
+                </h1>
                 <div className="flex mt-3">
-                  <h1 className="flex-grow item-center my-auto text-gray-700 font-bold text-sm ">Free</h1>
+                  <h1 className="flex-grow item-center my-auto text-gray-700 font-bold text-sm ">
+                    Free
+                  </h1>
                   <div className="flex item-center">
-                    <span className="star ml-1 text-xl activeStar">&#9733;</span>
+                    <span className="star ml-1 text-xl activeStar">
+                      &#9733;
+                    </span>
                     <span className="star ml-1 text-xl ">&#9733;</span>
                     <span className="star ml-1 text-xl ">&#9733;</span>
                     <span className="star ml-1 text-xl ">&#9733;</span>
@@ -66,7 +81,8 @@ function CardGrid() {
                   </div>
                 </div>
                 <p className="mt-2 text-gray-600 text-sm">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit In odit exercitationem fuga id nam quia
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit In
+                  odit exercitationem fuga id nam quia
                 </p>
               </div>
             </div>
@@ -79,19 +95,28 @@ function CardGrid() {
                 alt=""
               />
               <div className="p-4 h-auto md:h-40 lg:h-48">
-                <h1 className="text-gray-900 font-bold text-xl md:text-base lg:text-lg">Template 3</h1>
+                <h1 className="text-gray-900 font-bold text-xl md:text-base lg:text-lg">
+                  Template 3
+                </h1>
                 <div className="flex mt-3">
-                  <h1 className="flex-grow item-center my-auto text-gray-700 font-bold text-sm ">Free</h1>
+                  <h1 className="flex-grow item-center my-auto text-gray-700 font-bold text-sm ">
+                    Free
+                  </h1>
                   <div className="flex item-center">
-                    <span className="star ml-1 text-xl activeStar">&#9733;</span>
-                    <span className="star ml-1 text-xl activeStar">&#9733;</span>
+                    <span className="star ml-1 text-xl activeStar">
+                      &#9733;
+                    </span>
+                    <span className="star ml-1 text-xl activeStar">
+                      &#9733;
+                    </span>
                     <span className="star ml-1 text-xl ">&#9733;</span>
                     <span className="star ml-1 text-xl ">&#9733;</span>
                     <span className="star ml-1 text-xl ">&#9733;</span>
                   </div>
                 </div>
                 <p className="mt-2 text-gray-600 text-sm">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit In odit exercitationem fuga id nam quia
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit In
+                  odit exercitationem fuga id nam quia
                 </p>
               </div>
             </div>

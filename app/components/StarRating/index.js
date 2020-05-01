@@ -61,7 +61,7 @@ function StarRating(props) {
                 key={n + 1}
                 data-value={n + 1}
                 onMouseOver={hoverHandler}
-                onClick={(e) => starClickHandler(e, setFieldValue)}
+                onClick={e => starClickHandler(e, setFieldValue)}
               >
                 &#9733;
               </span>

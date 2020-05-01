@@ -54,7 +54,7 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen }) {
     </div>
   );
   const displayToast = () => {
-    console.log("called diplay")
+    console.log('called diplay');
     setToastList([...toastList, toastProperties]);
   };
 

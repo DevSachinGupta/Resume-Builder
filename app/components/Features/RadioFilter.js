@@ -21,7 +21,7 @@ function RadioFilter() {
               <div className="pb-3 text-sm">
                 <div className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 pt-2">
                   <div className="">
-                    <input type="radio"></input>
+                    <input type="radio" />
                   </div>
                   <div className="flex-grow font-medium pl-2">>50 INR</div>
                   <div className="text-sm font-normal text-gray-500 tracking-wide px-2 bg-gray-300 rounded-full">
@@ -30,7 +30,7 @@ function RadioFilter() {
                 </div>
                 <div className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 pt-2">
                   <div className="">
-                    <input type="radio"></input>
+                    <input type="radio" />
                   </div>
                   <div className="flex-grow font-medium pl-2">>50 INR</div>
                   <div className="text-sm font-normal text-gray-500 tracking-wide px-2 bg-gray-300 rounded-full">
@@ -39,7 +39,7 @@ function RadioFilter() {
                 </div>
                 <div className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 pt-2">
                   <div className="">
-                    <input type="radio"></input>
+                    <input type="radio" />
                   </div>
                   <div className="flex-grow font-medium pl-2">>50 INR</div>
                   <div className="text-sm font-normal text-gray-500 tracking-wide px-2 bg-gray-300 rounded-full">
