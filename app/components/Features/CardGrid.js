@@ -6,6 +6,7 @@
 
 import React, { memo } from 'react';
 import cx from 'classnames';
+import { IoIosRocket } from 'react-icons/io';
 
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
@@ -52,6 +53,19 @@ function CardGrid(props) {
                       <p className="mt-2 text-gray-600 text-sm">
                         {item.description}
                       </p>
+                      <div className="flex mt-3 justify-end">
+                        <div className="my-auto justtify-between mr-2">
+                          <button className="flex text-gray-700 border-black border px-2 py-1 text-sm ">
+                            Preview
+                          </button>
+                        </div>
+
+                        <div className="my-auto justtify-between">
+                          <button className="flex text-gray-700 border-black border px-2 py-1 text-sm ">
+                          <IoIosRocket size={22} class="bg-white text-teal-400" /> Select
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
