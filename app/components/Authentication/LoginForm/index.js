@@ -1,89 +1,63 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { TiChevronRight } from 'react-icons/ti';
-// import { FaGoogle, FaFacebookF } from 'react-icons/fa';
-import { Formik } from 'formik';
-import Button from '../../Button';
-import HR from '../../Layout/HR';
-import Input from '../../FormComponents/Input';
-import Row from '../../Layout/Row';
-import Column from '../../Layout/Column';
-import Carousel from '../../Carousel';
-import { validationMap } from '../validation';
+import { FaGoogle, FaFacebookF } from 'react-icons/fa';
+import LoginFormFormik from './LoginForm';
 import './style.css';
 
 function LoginForm() {
-  const blankLoginField = {
-    username: '',
-    password: '',
-  };
-  const onSubmitFunction = () => {};
   return (
-    <Formik initialValues={blankLoginField} onSubmit={onSubmitFunction}>
-      {() => (
-        <Row className="my-3 bg-white">
-          <Column width="1/3" className="px-1">
-            <Input
-              placeholder="Username"
-              label="Username"
-              name="username"
-              fullWidth
-              validate={validationMap.username}
-            />
-            <Input
-              type="password"
-              placeholder="Password"
-              label="Password"
-              name="password"
-              fullWidth
-              validate={validationMap.password}
-            />
-            <Row>
-              <Column width="1/2" className="inline-block">
-                <Input type="checkbox" placeholder="Remember me" />
-              </Column>
-              <Column width="1/2">
+    <section className="bg-gray-100 ">
+      <div className="container mx-auto px-4 h-full">
+        <div className="flex content-center items-center justify-center h-full">
+          <div className="w-full lg:w-4/12 px-4 mt-5">
+            <div className="relative flex flex-col min-w-0 w-full mb-6">
+              <div className="text-center text-xl mb-0 px-6 py-3">NetCV.</div>
+            </div>
+            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg  bg-gray-300 border-0">
+              <div className="rounded-t mb-0 px-6 py-6">
+                <div className="text-center mb-3">
+                  <h6 className="text-gray-600 text-sm font-bold">
+                    Login with
+                  </h6>
+                </div>
+                <div className="btn-wrapper text-center social-login">
+                  <button
+                    type="button"
+                    className="bg-white rounded-full p-1 mr-2"
+                  >
+                    <FaGoogle />
+                  </button>
+                  <button type="button" className="bg-white rounded-full p-1">
+                    <FaFacebookF />
+                  </button>
+                </div>
+              </div>
+              <div className="flex-auto px-4 lg:px-10 py-6 pt-0">
+                <div className="text-gray-500 text-center mb-3 font-bold">
+                  <small>Or login with credentials</small>
+                </div>
+                <LoginFormFormik />
+              </div>
+            </div>
+
+            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 bg-gray-100 border-2">
+              <div className="text-center text-sm mb-0 px-6 py-3">
+                <span>New to NetCV? </span>
                 <Link
-                  to="login"
-                  className="float-right"
-                  style={{ 'padding-top': '0.5rem' }}
+                  to="/signup"
+                  className="text-blue-500 hover:text-blue-700"
                 >
-                  Forget Password
+                  Create an account
                 </Link>
-              </Column>
-            </Row>
-            <Button as="submit" fullWidth type="primary">
-              Login <TiChevronRight className="inline float-r" />
-            </Button>
-            <Button as="button" fullWidth type="primary mt-2">
-              <Link to="/signup">Sign Up</Link>
-            </Button>
-            <HR />
-            <Row>
-              <Column width="1/4" className="capitalize">
-                or login with
-              </Column>
-              <Column width="1/4 px-4" className="">
-                Facebook
-              </Column>
-              <Column width="1/4 px-4" className="">
-                Github
-              </Column>
-              <Column width="1/4 px-4" className="">
-                LinkedIn
-              </Column>
-            </Row>
-          </Column>
-          <Column width="2/3" className="px-1">
-            <Carousel showArrows showIndicators autoplay id="loginCarousel">
-              <div className="w-full h-full text-center">1</div>
-              <div className="w-full h-full text-center">2</div>
-              <div className="w-full h-full text-center">3</div>
-            </Carousel>
-          </Column>
-        </Row>
-      )}
-    </Formik>
+                {/* <a href="#" className="text-blue-500">
+                  Create new account
+                </a> */}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 export default LoginForm;

@@ -27,7 +27,7 @@ export function Authenticate({ method }) {
         <title>Authenticate</title>
         <meta name="description" content="Description of Authenticate" />
       </Helmet>
-      <div className="container mx-auto bg-gray-400 ">
+      <div>
         {method === 'login' ? <LoginFrom /> : <RegistrationFrom />}
       </div>
     </div>

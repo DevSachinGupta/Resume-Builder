@@ -1,88 +1,60 @@
 import React from 'react';
-import { TiChevronRight } from 'react-icons/ti';
 import { Link } from 'react-router-dom';
 import { FaGoogle, FaFacebookF } from 'react-icons/fa';
-import HR from '../../Layout/HR';
+import RegistrationFormFormik from './RegistrationForm';
 import './style.css';
-function RegistrationFrom() {
+function RegistrationForm() {
   return (
-    <div className="registrationFormContainer px-10 py-8 bg-gray-800 rounded shadow-2xl w-1/3">
-      <div className="header">
-        <div className="title text-4xl capitalize">Create Account</div>
-        <div className="sub-title text-sm text-gray-600">
-          Create your free account to get your online resume.
+    <section className="bg-gray-100 ">
+      <div className="container mx-auto px-4 h-full">
+        <div className="flex content-center items-center justify-center h-full">
+          <div className="w-full lg:w-4/12 px-4 mt-5">
+
+            <div className="relative flex flex-col min-w-0 w-full mb-6">
+              <div className="text-center text-xl mb-0 px-6 py-3">NetCV.</div>
+            </div>
+            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg  bg-gray-300 border-0">
+              <div className="rounded-t mb-0 px-6 py-6">
+                <div className="text-center mb-3">
+                  <h6 className="text-gray-600 text-sm font-bold">
+                    Sign up with
+                  </h6>
+                </div>
+                <div className="btn-wrapper text-center social-login">
+                  <button
+                    type="button"
+                    className="bg-white rounded-full p-1 mr-2"
+                  >
+                    <FaGoogle />
+                  </button>
+                  <button type="button" className="bg-white rounded-full p-1">
+                    <FaFacebookF />
+                  </button>
+                </div>
+              </div>
+              <div className="flex-auto px-4 lg:px-10 py-6 pt-0">
+                <div className="text-gray-500 text-center mb-3 font-bold">
+                  <small>Or Sign up with credentials</small>
+                </div>
+                <RegistrationFormFormik />
+              </div>
+            </div>
+
+            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 bg-gray-100 border-2">
+              <div className="text-center text-sm mb-0 px-6 py-3">
+                <span>Already have Account? </span>
+                <Link to="/login" className="text-blue-500 hover:text-blue-700">
+                  Login
+                </Link>
+                {/* <a href="#" className="text-blue-500">
+                  Create new account
+                </a> */}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <form className="registrationForm">
-        <div className="input-group">
-          {/* <label>Name</label> */}
-          <input
-            type="text"
-            name="name"
-            placeholder="John Doe"
-            className="text-sm"
-          />
-        </div>
-        <div className="input-group">
-          {/* <label>Email address</label> */}
-          <input
-            type="email"
-            name="email"
-            placeholder="johndoe@gmail.com"
-            className="text-sm"
-          />
-        </div>
-        <div className="input-group">
-          {/* <label>
-            <span>Password</span>
-          </label> */}
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            className="text-sm"
-          />
-        </div>
-        <div className="input-group">
-          {/* <label>
-            <span>Confirm Password</span>
-          </label> */}
-          <input
-            type="password"
-            name="password"
-            placeholder="Confirm Password"
-            className="text-sm"
-          />
-        </div>
-        <button
-          type="button"
-          className="my-4 focus:outline-none rounded-full bg-purple-800 px-10 py-2 text-white hover:shadow-lg text-sm shadow"
-        >
-          <span>Create account</span>
-          <TiChevronRight
-            className="ml-1"
-            style={{ display: 'inline-block' }}
-          />
-        </button>
-      </form>
-      <HR content="Create Account with" />
-      <div className="social-login">
-        <button type="button" className="google-login mr-2">
-          <FaGoogle />
-        </button>
-        <button type="button" className="facebook-login ml-2">
-          <FaFacebookF />
-        </button>
-      </div>
-      <div className="footer mt-16">
-        <div className="text-xs text-gray-600">
-          Already Registered?{' '}
-          <Link to="login" className="hover:text-gray-700">
-            Login instead
-          </Link>
-        </div>
-      </div>
-    </div>
+    </section>
   );
 }
-export default RegistrationFrom;
+export default RegistrationForm;

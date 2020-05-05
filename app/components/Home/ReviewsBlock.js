@@ -31,7 +31,7 @@ function ReviewsBlock() {
                   alt=""
                 />
                 <h1 className="font-bold text-lg mt-2  ">Lorem Ipsum</h1>
-                <h1 className="text-md mb-4">Founder</h1>
+                <h1 className="text-blue-500 text-md mb-4">Founder</h1>
                 <p className="px-8 mb-4  ">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores molestias, molestiae ex autem dicta nulla blanditiis
                 </p>
@@ -45,7 +45,7 @@ function ReviewsBlock() {
                   alt=""
                 />
                 <h1 className="font-bold text-lg mt-2  ">Lorem Ipsum</h1>
-                <h1 className="text-md mb-4">Founder</h1>
+                <h1 className="text-blue-500 text-md mb-4">Founder</h1>
                 <p className="px-8 mb-4  ">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores molestias, molestiae ex autem dicta nulla blanditiis
                 </p>
@@ -59,7 +59,7 @@ function ReviewsBlock() {
                   alt=""
                 />
                 <h1 className="font-bold text-lg mt-2  ">Lorem Ipsum</h1>
-                <h1 className="text-md mb-4">Founder</h1>
+                <h1 className="text-blue-500 text-md mb-4">Founder</h1>
                 <p className="px-8 mb-4  ">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores molestias, molestiae ex autem dicta nulla blanditiis
                 </p>
@@ -73,7 +73,7 @@ function ReviewsBlock() {
                   alt=""
                 />
                 <h1 className="font-bold text-lg mt-2  ">Lorem Ipsum</h1>
-                <h1 className="text-md mb-4">Founder</h1>
+                <h1 className="text-blue-500 text-md mb-4">Founder</h1>
                 <p className="px-8 mb-4  ">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores molestias, molestiae ex autem dicta nulla blanditiis
                 </p>
@@ -87,7 +87,7 @@ function ReviewsBlock() {
                   alt=""
                 />
                 <h1 className="font-bold text-lg mt-2  ">Lorem Ipsum</h1>
-                <h1 className="text-md mb-4">Founder</h1>
+                <h1 className="text-blue-500 text-md mb-4">Founder</h1>
                 <p className="px-8 mb-4  ">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores molestias, molestiae ex autem dicta nulla blanditiis
                 </p>
@@ -101,7 +101,7 @@ function ReviewsBlock() {
                   alt=""
                 />
                 <h1 className="font-bold text-lg mt-2  ">Lorem Ipsum</h1>
-                <h1 className="text-md mb-4">Founder</h1>
+                <h1 className="text-blue-500 text-md mb-4">Founder</h1>
                 <p className="px-8 mb-4  ">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores molestias, molestiae ex autem dicta nulla blanditiis
                 </p>

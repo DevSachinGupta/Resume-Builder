@@ -25,10 +25,10 @@ function Text(props) {
     helpers.setValue('');
   };
 
-  const { clearable, validate, allowValidation, inputIcon, ...rest } = props;
+  const { clearable, validate, allowValidation, inputIcon, className, ...rest } = props;
   return (
     <div className={cx('inputWrapper')} hidden={props.hidden}>
-      <div className="label">{props.label}</div>
+      <div className={cx('label', props.classNameLabel)}>{props.label}</div>
       <div
         className={cx('inputContainer', {
           fullWidth: props.fullWidth,
@@ -38,7 +38,11 @@ function Text(props) {
         {props.inputIcon && (
           <span className="inputIcon">{props.inputIcon}</span>
         )}
-        <input {...field} {...rest} />
+        <input
+          className={cx('inputStyle', props.className)}
+          {...field}
+          {...rest}
+        />
         {props.clearable && (
           <span className="input-right-Icon cursor-pointer">
             {<MdCancel onClick={handleClearField} />}
@@ -63,6 +67,8 @@ Text.propTypes = {
   inputIcon: PropTypes.node,
   label: PropTypes.string,
   name: PropTypes.string,
+  className: PropTypes.string,
+  classNameLabel: PropTypes.string,
   hidden: PropTypes.bool,
   disabled: PropTypes.bool,
   clearable: PropTypes.bool,

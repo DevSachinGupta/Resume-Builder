@@ -26,5 +26,6 @@
     line-height: 1.5em;
     color: #818078;
     background-color: #2d3748;
+    /* background-color: attr(data-background); */
   }
 }
