@@ -6,24 +6,75 @@
 
 import React, { memo } from 'react';
 import Carousel from '../Carousel';
+import './CarouselTemplateStyle.scss';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
 function TemplateSliderBlock() {
+  const settings = {
+    dots: true,
+    centerMode: true,
+    infinite: true,
+    speed: 500,
+    centerPadding: '30px',
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          centerPadding: '40px',
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          centerPadding: '40px',
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
   return (
-    <section className="border-b py-8">
-      <div className="container mx-auto flex flex-wrap pt-4 pb-4">
-        <div className="w-full text-black p-6 flex flex-col flex-grow flex-shrink">
-          <Carousel showArrows showIndicators autoplay id="loginCarousel">
-            <div className="w-full h-full text-center">
-              <img
-                src={require('./images/ScreenViews.png')}
-                alt=""
-                className="max-w-full h-auto mx-auto justify-center"
-              />
+    <section className="border-b py-4" id="templateSection">
+      <div className="container mx-auto">
+        <div className="w-full text-black p-6">
+          <Carousel settings={settings}>
+            <div className="p-4">
+              <img className=" " src={require('./images/cv.jpg')} />
             </div>
-            <div className="w-full h-full text-center">2</div>
-            <div className="w-full h-full text-center">3</div>
+            <div className="p-4">
+              <img className=" " src={require('./images/cv.jpg')} />
+            </div>
+            <div className="p-4">
+              <img className=" " src={require('./images/cv.jpg')} />
+            </div>
+            <div className="p-4">
+              <img className=" " src={require('./images/cv.jpg')} />
+            </div>
+            <div className="p-4">
+              <img className=" " src={require('./images/cv.jpg')} />
+            </div>
+            <div className="p-4">
+              <img className=" " src={require('./images/cv.jpg')} />
+            </div>
+            <div className="p-4">
+              <img className=" " src={require('./images/cv.jpg')} />
+            </div>
+            <div className="p-4">
+              <img className=" " src={require('./images/cv.jpg')} />
+            </div>
+            <div className="p-4">
+              <img className=" " src={require('./images/cv.jpg')} />
+            </div>
+            <div className="p-4">
+              <img className=" " src={require('./images/cv.jpg')} />
+            </div>
           </Carousel>
         </div>
       </div>

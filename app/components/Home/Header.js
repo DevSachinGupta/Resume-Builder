@@ -13,12 +13,19 @@ function Header() {
     <nav id="header" className="fixed w-full z-30 top-0 ">
       <div className="bg-gray-200">
         <div className="w-full container md:max-w-6xl md:mx-auto md:flex md:items-center md:justify-between mt-0 py-2">
-          <div class="pl-4 flex items-center">
-            <a href="#" class="inline-block py-2 text-gray-800 text-2xl font-bold">NetCV.</a >
+          <div className="pl-4 flex items-center">
+            <a
+              href="#"
+              className="inline-block py-2 text-gray-800 text-2xl font-bold"
+              alt="NetCV."
+            >
+              NetCV.
+            </a>
           </div>
 
           <div className="block lg:hidden pr-4">
             <button
+              type="button"
               id="nav-toggle"
               className="flex items-center p-1 text-orange-800 hover:text-gray-900"
             >
@@ -41,23 +48,15 @@ function Header() {
               <li className="mr-3">
                 <a
                   className="inline-block py-2 px-4 text-gray-600  hover:font-bold no-underline"
-                  href="#"
+                  href="#templateSection"
                 >
-                  How it Works
+                  Features
                 </a>
               </li>
               <li className="mr-3">
                 <a
                   className="inline-block py-2 px-4 text-gray-600  hover:font-bold no-underline"
-                  href="#"
-                >
-                  Solutions
-                </a>
-              </li>
-              <li className="mr-3">
-                <a
-                  className="inline-block py-2 px-4 text-gray-600  hover:font-bold no-underline"
-                  href="#"
+                  href="#pricingSection"
                 >
                   Pricing
                 </a>
@@ -65,24 +64,43 @@ function Header() {
               <li className="mr-3">
                 <a
                   className="inline-block py-2 px-4 text-gray-600  hover:font-bold no-underline"
-                  href="#"
+                  href="#getStartedSection"
                 >
-                  Desktop
+                  Contact
                 </a>
               </li>
-
+              <li className="mr-3">
+                <a
+                  className="inline-block py-2 px-4 text-gray-600  hover:font-bold no-underline"
+                  href="/docs"
+                  target="_blank"
+                >
+                  Docs
+                </a>
+              </li>
+              <li className="mr-3">
+                <a
+                  className="inline-block py-2 px-4 text-gray-600  hover:font-bold no-underline"
+                  href="https://spectrum.chat/"
+                  target="_blank"
+                >
+                  Community
+                </a>
+              </li>
             </ul>
-            <div id="navAction" >
-             <a
+            <div id="navAction">
+              <a
                 href="login"
-                class="inline-block py-1 md:py-4 text-gray-500 hover:text-gray-600 mr-6"
-                >Login</a
+                className="inline-block py-1 md:py-4 text-gray-500 hover:text-gray-600 mr-6"
               >
+                Login
+              </a>
               <a
                 href="signup"
-                class="inline-block py-2 px-4 text-gray-700 bg-white hover:bg-gray-100 rounded-lg"
-                >Start a free trial</a
+                className="inline-block py-2 px-4 text-gray-700 bg-white hover:bg-gray-100 rounded-lg"
               >
+                Start a free trial
+              </a>
             </div>
           </div>
         </div>

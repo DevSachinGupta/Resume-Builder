@@ -41,14 +41,14 @@ img.shape-temps-amk-four {
 
 img.shape-temps-amk-five {
   position: absolute;
-  bottom: 14%;
+  bottom: 38%;
   right: 7%;
   z-index: -1;
 }
 
 img.shape-temps-amk-six {
   position: absolute;
-  bottom: 18%;
+  bottom: 42%;
   left: 23%;
   z-index: -1;
 }
@@ -74,5 +74,58 @@ img.shape-temps-amk-six {
       -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
       -ms-transform: rotate(360deg);  /* IE 9 */
       transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
+  }
+}
+
+/*-----------------
+    FeatureBloack - 4
+------------------*/
+#featureSection {
+  padding-bottom:6.25em;
+  background-image:url('./images/home-features-bg-1.svg'),url('./images/home-features-bg-2.svg');
+  background-position:right top,left bottom;
+  background-size:100% auto;
+  background-repeat:no-repeat;
+
+  .heading h6 {
+    color: rgb(5, 185, 147);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    font-size: 15px;
+  }
+  .heading h3 {
+    font-size: 34px;
+    line-height: 1.4;
+    font-weight: 600;
+  }
+}
+
+/*-----------------
+    getStartedBloack 
+------------------*/
+#getStartedSection {
+  background-image: url('./images/inner.png');
+  // background-color: rgb(5, 185, 147);
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -ms-background-size: cover;
+}
+
+/*-----------------
+    ProicingBlock 
+------------------*/
+#pricingSection{
+  .heading h6 {
+    color: rgb(5, 185, 147);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    font-size: 15px;
+  }
+  .heading h3 {
+    font-size: 34px;
+    line-height: 1.4;
+    font-weight: 600;
   }
 }

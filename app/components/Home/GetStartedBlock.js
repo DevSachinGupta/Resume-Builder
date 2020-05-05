@@ -10,7 +10,7 @@ import React, { memo } from 'react';
 
 function GetStartedBlock() {
   return (
-    <section className="bg-gray-200 py-8">
+    <section className="py-8 bg-gray-200" id="getStartedSection">
       <div className="container mx-auto text-center mb-6">
         {/* <h1 className="w-full my-2 text-5xl font-bold leading-tight text-center text-white">
           Get Started
@@ -23,10 +23,12 @@ function GetStartedBlock() {
 
         <button
           type="button"
-          className="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold my-6 py-4 px-8 shadow-lg"
+          className="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold my-6 py-4 px-8 shadow-md hover:shadow-xl"
         >
           Get Started
         </button>
+        <div className="mt-4 mb-2 text-lg leading-tight">We're here to help you! Get in touch with us.</div>
+        <h6 className="text-md leading-tight">support@net.co</h6>
       </div>
     </section>
   );

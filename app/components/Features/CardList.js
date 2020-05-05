@@ -6,6 +6,7 @@
 
 import React, { memo } from 'react';
 import cx from 'classnames';
+import { IoIosRocket } from 'react-icons/io';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
@@ -39,12 +40,19 @@ function CardList(props) {
                 <h1 className="text-gray-700 font-bold text-xl">
                   {item.price === '0' ? 'Free' : `${item.price} INR`}
                 </h1>
-                <button
-                  type="button"
-                  className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded"
-                >
-                  Get Started
-                </button>
+                <div className="flex mt-3 justify-end">
+                  <div className="my-auto justtify-between mr-2">
+                    <button className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black">
+                      Preview
+                    </button>
+                  </div>
+
+                  <div className="my-auto justtify-between">
+                    <button className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black ">
+                    <IoIosRocket size={22} className="bg-white text-teal-400" /> Select
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -10,18 +10,19 @@ import React, { memo } from 'react';
 
 function FeatureFirstBlock() {
   return (
-    <section className="bg-gray-200 py-8">
+    <section className="bg-gray-100 py-8" id="featureSection">
       <div className="container max-w-5xl mx-auto m-8">
-        <h1 className="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800">
-          Features
-        </h1>
+        <div className="mb-4 text-center heading">
+          <h6>Business Consultancy</h6>
+          <h3>Efficient Solution For Your Business</h3>
+        </div>
         <div className="w-full mb-4">
           <div className="h-1 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t" />
         </div>
 
         <div className="flex flex-wrap">
           <div className="w-5/6 sm:w-1/2 p-6">
-            <h3 className="text-3xl text-gray-800 font-bold leading-none mb-3">
+            <h3 className="text-3xl text-gray-800 leading-none mb-3">
               Customized Templates
             </h3>
             <p className="text-gray-600 mb-8">
@@ -57,7 +58,7 @@ function FeatureFirstBlock() {
           </div>
           <div className="w-full sm:w-1/2 p-6 mt-6">
             <div className="align-middle">
-              <h3 className="text-3xl text-gray-800 font-bold leading-none mb-3">
+              <h3 className="text-3xl text-gray-800 leading-none mb-3">
                 Build a perfectly resume in minutes
               </h3>
               <p className="text-gray-600 mb-8">
@@ -78,7 +79,7 @@ function FeatureFirstBlock() {
 
           <div className="flex flex-wrap">
             <div className="w-5/6 sm:w-1/2 p-6">
-              <h3 className="text-3xl text-gray-800 font-bold leading-none mb-3">
+              <h3 className="text-3xl text-gray-800 leading-none mb-3">
                 Free resources and support
               </h3>
               <p className="text-gray-600 mb-8">
