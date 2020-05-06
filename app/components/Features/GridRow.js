@@ -6,14 +6,33 @@
 
 import React, { memo } from 'react';
 import cx from 'classnames';
+import Select from 'react-dropdown-select';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
 function GridRow(props) {
-  console.log("value gridRow", props)
+  const options = [
+    {id:1, name:'Lowest Price'},
+    {id:0, name:'Highest Price'},
+    {id:2, name:'Lowest Rating'},
+    {id:3, name:'Highest Rating'},
+  ];
   return (
     <div className="flex text-center justify-end my-auto GridRow">
-      <div className="ml-3 GridRowDropdown">
+      <div className="ml-3 featureDropdown">
+        <Select
+          placeholder="Default"
+          className="border-0"
+          labelField="name"
+          searchable={false}
+          options={options}
+          values={[]}
+          onChange={value => {
+            props.updateFilter('sortOrder', value[0].id);
+          }}
+        />
+      </div>
+      {/* <div className="ml-3 GridRowDropdown">
         <div className="group inline-block">
           <button
             type="button"
@@ -31,10 +50,7 @@ function GridRow(props) {
               </svg>
             </span>
           </button>
-          <ul
-            className="bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute 
-  transition duration-150 ease-in-out origin-top min-w-32"
-          >
+          <ul className="bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute transition duration-150 ease-in-out origin-top min-w-32">
             <li className="rounded-sm px-3 py-1 hover:bg-gray-100">
               Lowest Price
             </li>
@@ -43,7 +59,7 @@ function GridRow(props) {
             </li>
           </ul>
         </div>
-      </div>
+      </div> */}
       <div className="bg-gray-200 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded-full inline-flex">
         <button
           type="button"

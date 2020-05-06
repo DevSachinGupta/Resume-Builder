@@ -12,8 +12,6 @@ import { IoIosRocket } from 'react-icons/io';
 // import styled from 'styled-components';
 
 function CardGrid(props) {
-  const rowCount = props.templateItems.length / 3;
-  console.log('rowcount', rowCount);
   return (
     <main className="py-4">
       <div className="">

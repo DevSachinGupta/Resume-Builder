@@ -26,6 +26,7 @@ function Features() {
     sortOrder: -1, // Relevence:- no of user === then rating
   });
   const [templateList, setTemplateList] = React.useState([]);
+  const [filteredItemCount, setFilteredItemCount] = React.useState(0);
 
   React.useEffect(() => {
     getFilteredList();
@@ -34,10 +35,16 @@ function Features() {
   function updateFilter(key, value) {
     // console.log("Update Filter :- ", key, " : ", value);
     const data = { ...filters };
-    data[key] = value;
+    if (key === 'pageChange') {
+      data.pageNumber =
+        value === '++' ? data.pageNumber + 1 : data.pageNumber - 1;
+    } else {
+      data[key] = value;
+    }
     setFilters({ ...data });
     // getFilteredList();
   }
+  // console.log(filters)
   function getFilteredList() {
     let newList = [];
     if (filters.pricing != '-1') {
@@ -106,7 +113,11 @@ function Features() {
         );
         break;
     }
-    newList = newList.slice((filters.pageNumber -1) * filters.pagesize, filters.pageNumber * filters.pagesize);
+    setFilteredItemCount(newList.length);
+    newList = newList.slice(
+      (filters.pageNumber - 1) * filters.pagesize,
+      filters.pageNumber * filters.pagesize,
+    );
     setTemplateList(newList);
   }
 
@@ -127,7 +138,12 @@ function Features() {
               <Sidebar updateFilter={updateFilter} />
             </div>
             <div className="w-3/4 ml-6 mt-2">
-              <BodyLayout templateItems={templateList} />
+              <BodyLayout
+                templateItems={templateList}
+                updateFilter={updateFilter}
+                filters={filters}
+                filteredItemCount={filteredItemCount}
+              />
             </div>
           </div>
         </div>

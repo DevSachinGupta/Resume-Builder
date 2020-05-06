@@ -6,28 +6,46 @@
 .activeStar {
   color: yellow;
 }
+.featureDropdown {
+  .react-dropdown-select {
+    border: 0px;
+  }
+  .react-dropdown-select-content input {
+    font-size: 100%;
+    margin-left: 0;
+    text-align: end;
+  }
+  .react-dropdown-select-item {
+    color: black;
+    background-color: white;
+    font-size: 80%;
+  }
+}
+
 .GridRow {
   .activeGrid {
     background: white;
     border-radius: 9999px;
     color: #63b3ed;
   }
-  .GridRowDropdown {
-    li>ul                 { transform: translatex(100%) scale(0) }
-    li:hover>ul           { transform: translatex(101%) scale(1) }
-    li > button svg       { transform: rotate(-90deg) }
-    li:hover > button svg { transform: rotate(-270deg) }
-  
-    /* Below styles fake what can be achieved with the tailwind config
-       you need to add the group-hover variant to scale and define your custom
-       min width style.
-       See https://codesandbox.io/s/tailwindcss-multilevel-dropdown-y91j7?file=/index.html
-       for implementation with config file
-    */
-    .group:hover .group-hover\:scale-100 { transform: scale(1) }
-    .group:hover .group-hover\:-rotate-180 { transform: rotate(180deg) }
-    .scale-0 { transform: scale(0) }
-    .min-w-32 { min-width: 8rem }
+  .featureDropdown {
+    .react-dropdown-select {
+      border: 0px;
+    }
+    .react-dropdown-select-content {
+      font-weight: 600;
+    }
+    .react-dropdown-select-content input {
+      font-weight: 600;
+      font-size: 100%;
+      margin-left: 0;
+      text-align: end;
+    }
+    .react-dropdown-select-item {
+      color: black;
+      background-color: white;
+      font-size: 80%;
+    }
   }
 }
 
