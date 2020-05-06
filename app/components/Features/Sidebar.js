@@ -5,7 +5,7 @@
  */
 
 import React, { memo } from 'react';
-import { FaUserCircle } from 'react-icons/fa';
+import { IoMdSearch } from 'react-icons/io';
 import RadioFilter from './RadioFilter';
 import CheckboxFilter from './CheckboxFilter';
 import RatingFilter from './RatingFilter';
@@ -25,7 +25,7 @@ function Sidebar(props) {
           />
           <span>
             <button type="submit" className="absolute right-0 mt-2 mr-4">
-              <FaUserCircle size={22} class="bg-white " />
+              <IoMdSearch size={22} class="bg-white " />
             </button>
           </span>
         </div>

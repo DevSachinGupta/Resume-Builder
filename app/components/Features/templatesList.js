@@ -4,6 +4,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 0',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner'],
@@ -16,6 +17,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 1',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Classic', 'Stylish'],
@@ -28,6 +30,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 2',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Stylish'],
@@ -40,6 +43,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 3',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern'],
@@ -52,6 +56,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 4',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Passion', 'Modern'],
@@ -64,6 +69,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 5',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Classic', 'Passion', 'Timeliner'],
@@ -76,6 +82,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 6',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner'],
@@ -88,6 +95,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 7',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern'],
@@ -100,6 +108,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 8',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner'],
@@ -112,6 +121,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 9',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Timeliner'],
@@ -124,6 +134,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 10',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Classic'],
@@ -136,6 +147,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 11',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Classic', 'Stylish'],
@@ -148,6 +160,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 12',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Passion'],
@@ -160,6 +173,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 13',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Stylish', 'Passion'],
@@ -172,6 +186,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 14',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Stylish', 'Classic'],
@@ -184,6 +199,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 15',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Classic', 'Timeliner', 'Modern'],
@@ -196,6 +212,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 16',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Classic', 'Stylish'],
@@ -208,6 +225,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 17',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Timeliner'],
@@ -220,6 +238,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 18',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Passion'],
@@ -232,6 +251,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 19',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Passion'],
@@ -244,6 +264,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 20',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Stylish', 'Passion', 'Modern'],
@@ -256,6 +277,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 21',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Modern'],
@@ -268,6 +290,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 22',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Passion', 'Stylish'],
@@ -280,6 +303,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 23',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Classic'],
@@ -292,6 +316,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 24',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Classic'],
@@ -304,6 +329,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 25',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Stylish'],
@@ -316,6 +342,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 26',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Classic'],
@@ -340,6 +367,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 28',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Passion', 'Classic', 'Timeliner'],
@@ -352,6 +380,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 29',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Stylish', 'Passion', 'Modern'],
@@ -376,6 +405,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 31',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Timeliner', 'Classic'],
@@ -388,6 +418,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 32',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Stylish', 'Modern'],
@@ -400,6 +431,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 33',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern'],
@@ -412,6 +444,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 34',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Stylish', 'Timeliner', 'Classic'],
@@ -424,6 +457,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 35',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Passion', 'Classic', 'Passion'],
@@ -436,6 +470,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 36',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Stylish'],
@@ -448,6 +483,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 37',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Passion', 'Classic', 'Stylish'],
@@ -460,6 +496,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 38',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Classic'],
@@ -472,6 +509,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 39',
+    templateURL: 'http://jitendra002.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Stylish'],
