@@ -38,8 +38,8 @@ function SettingForm() {
   // Define your menu
   const settingMenu = [
     {
-      title: 'General', // Title that is displayed as text in the menu
-      url: '/settings/general', // Identifier (url-slug)
+      title: 'General',
+      url: '/settings/general',
     },
     {
       title: 'Profile',
@@ -86,7 +86,6 @@ function SettingForm() {
   // Menu
   const switchContentMenu = menuItem => {
     if (currentPage !== menuItem.url) {
-      // Switch to menuItem's url and reload the components
       setCurrentPage(menuItem.url);
     }
   };
