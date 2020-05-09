@@ -9,6 +9,7 @@ import React, { memo } from 'react';
 // import styled from 'styled-components';
 
 function Header() {
+  const [isExpanded, toggleExpansion] = React.useState(false)
   return (
     <nav id="header" className="fixed w-full z-30 top-0 ">
       <div className="bg-gray-200">
@@ -25,6 +26,7 @@ function Header() {
 
           <div className="block lg:hidden pr-4">
             <button
+              onClick={() => toggleExpansion(!isExpanded)}
               type="button"
               id="nav-toggle"
               className="flex items-center p-1 text-orange-800 hover:text-gray-900"
@@ -41,7 +43,7 @@ function Header() {
           </div>
 
           <div
-            className="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20"
+            className={`${ isExpanded ? `block` : `hidden` } w-full flex-grow lg:flex lg:items-center lg:w-auto mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20`}
             id="nav-content"
           >
             <ul className="list-reset lg:flex justify-center flex-1 items-center">
