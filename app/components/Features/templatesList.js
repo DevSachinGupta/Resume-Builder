@@ -8,6 +8,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner'],
+    searchBag: ['Timeliner'],
     price: '134',
     rating: 2,
     usersCount: 139,
@@ -21,6 +22,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Classic', 'Stylish'],
+    searchBag: ['Classic', 'Stylish'],
     price: '0',
     rating: 1,
     usersCount: 34,
@@ -34,6 +36,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Stylish'],
+    searchBag: ['Stylish'],
     price: '260',
     rating: 1,
     usersCount: 277,
@@ -47,6 +50,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern'],
+    searchBag: ['Modern'],
     price: '441',
     rating: 5,
     usersCount: 112,
@@ -60,6 +64,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Passion', 'Modern'],
+    searchBag: ['Passion', 'Modern'],
     price: '736',
     rating: 3,
     usersCount: 90,
@@ -73,6 +78,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Classic', 'Passion', 'Timeliner'],
+    searchBag: ['Classic', 'Passion', 'Timeliner'],
     price: '27',
     rating: 3,
     usersCount: 290,
@@ -86,6 +92,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner'],
+    searchBag: ['Timeliner'],
     price: '0',
     rating: 4,
     usersCount: 54,
@@ -99,6 +106,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern'],
+    searchBag: ['Modern'],
     price: '100',
     rating: 1,
     usersCount: 273,
@@ -112,6 +120,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner'],
+    searchBag: ['Timeliner'],
     price: '562',
     rating: 4,
     usersCount: 170,
@@ -125,6 +134,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Timeliner'],
+    searchBag: ['Modern', 'Timeliner'],
     price: '280',
     rating: 5,
     usersCount: 186,
@@ -138,6 +148,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Classic'],
+    searchBag: ['Timeliner', 'Classic'],
     price: '0',
     rating: 4,
     usersCount: 254,
@@ -151,6 +162,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Classic', 'Stylish'],
+    searchBag: ['Timeliner', 'Classic', 'Stylish'],
     price: '495',
     rating: 5,
     usersCount: 62,
@@ -164,6 +176,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Passion'],
+    searchBag: ['Modern', 'Passion'],
     price: '630',
     rating: 5,
     usersCount: 78,
@@ -177,6 +190,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Stylish', 'Passion'],
+    searchBag: ['Timeliner', 'Stylish', 'Passion'],
     price: '243',
     rating: 4,
     usersCount: 219,
@@ -190,6 +204,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Stylish', 'Classic'],
+    searchBag: ['Modern', 'Stylish', 'Classic'],
     price: '593',
     rating: 1,
     usersCount: 222,
@@ -203,6 +218,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Classic', 'Timeliner', 'Modern'],
+    searchBag: ['Classic', 'Timeliner', 'Modern'],
     price: '0',
     rating: 2,
     usersCount: 157,
@@ -216,6 +232,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Classic', 'Stylish'],
+    searchBag: ['Modern', 'Classic', 'Stylish'],
     price: '348',
     rating: 2,
     usersCount: 146,
@@ -229,6 +246,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Timeliner'],
+    searchBag: ['Modern', 'Timeliner'],
     price: '406',
     rating: 3,
     usersCount: 175,
@@ -242,6 +260,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Passion'],
+    searchBag: ['Timeliner', 'Passion'],
     price: '285',
     rating: 4,
     usersCount: 90,
@@ -255,6 +274,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Passion'],
+    searchBag: ['Passion'],
     price: '113',
     rating: 5,
     usersCount: 253,
@@ -268,6 +288,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Stylish', 'Passion', 'Modern'],
+    searchBag: ['Stylish', 'Passion', 'Modern'],
     price: '0',
     rating: 1,
     usersCount: 81,
@@ -281,6 +302,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Modern'],
+    searchBag: ['Timeliner', 'Modern'],
     price: '120',
     rating: 3,
     usersCount: 226,
@@ -294,6 +316,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Passion', 'Stylish'],
+    searchBag: ['Passion', 'Stylish'],
     price: '662',
     rating: 4,
     usersCount: 275,
@@ -307,6 +330,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Classic'],
+    searchBag: ['Timeliner', 'Classic'],
     price: '78',
     rating: 5,
     usersCount: 283,
@@ -320,6 +344,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Classic'],
+    searchBag: ['Classic'],
     price: '442',
     rating: 3,
     usersCount: 77,
@@ -333,6 +358,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Stylish'],
+    searchBag: ['Stylish'],
     price: '0',
     rating: 2,
     usersCount: 78,
@@ -346,6 +372,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Classic'],
+    searchBag: ['Modern', 'Classic'],
     price: '0',
     rating: 2,
     usersCount: 260,
@@ -358,6 +385,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Stylish', 'Timeliner', 'Modern'],
+    searchBag: ['Stylish', 'Timeliner', 'Modern'],
     price: '396',
     rating: 1,
     usersCount: 181,
@@ -371,6 +399,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Passion', 'Classic', 'Timeliner'],
+    searchBag: ['Modern', 'Passion', 'Classic', 'Timeliner'],
     price: '0',
     rating: 5,
     usersCount: 61,
@@ -384,6 +413,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Stylish', 'Passion', 'Modern'],
+    searchBag: ['Stylish', 'Passion', 'Modern'],
     price: '619',
     rating: 5,
     usersCount: 251,
@@ -396,6 +426,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Classic'],
+    searchBag: ['Modern', 'Classic'],
     price: '726',
     rating: 4,
     usersCount: 29,
@@ -409,6 +440,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern', 'Timeliner', 'Classic'],
+    searchBag: ['Modern', 'Timeliner', 'Classic'],
     price: '67',
     rating: 3,
     usersCount: 104,
@@ -422,6 +454,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Stylish', 'Modern'],
+    searchBag: ['Timeliner', 'Stylish', 'Modern'],
     price: '0',
     rating: 2,
     usersCount: 25,
@@ -435,6 +468,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Modern'],
+    searchBag: ['Modern'],
     price: '44',
     rating: 3,
     usersCount: 195,
@@ -448,6 +482,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Stylish', 'Timeliner', 'Classic'],
+    searchBag: ['Stylish', 'Timeliner', 'Classic'],
     price: '623',
     rating: 2,
     usersCount: 159,
@@ -461,6 +496,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Passion', 'Classic', 'Passion'],
+    searchBag: ['Timeliner', 'Passion', 'Classic', 'Passion'],
     price: '150',
     rating: 4,
     usersCount: 260,
@@ -474,6 +510,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Stylish'],
+    searchBag: ['Stylish'],
     price: '0',
     rating: 1,
     usersCount: 278,
@@ -487,6 +524,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Passion', 'Classic', 'Stylish'],
+    searchBag: ['Passion', 'Classic', 'Stylish'],
     price: '612',
     rating: 3,
     usersCount: 26,
@@ -500,6 +538,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Classic'],
+    searchBag: ['Classic'],
     price: '316',
     rating: 2,
     usersCount: 143,
@@ -513,6 +552,7 @@ export default [
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner', 'Stylish'],
+    searchBag: ['Timeliner', 'Stylish'],
     price: '588',
     rating: 4,
     usersCount: 238,

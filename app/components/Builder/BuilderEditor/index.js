@@ -12,13 +12,14 @@ import {
   makeUpdateDemoPageState,
   makeUpdateResumeJSONState,
   makeSelectGetThemeContent,
+  makeUpdateShowThemeToggle,
 } from 'containers/Builder/selectors';
 import {
   updateEditorState,
   getBuilderThemeContent,
   updateResumeEventHanlder,
 } from 'containers/Builder/actions';
-
+import Features from 'components/Features';
 import PropTypes from 'prop-types';
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
@@ -31,7 +32,7 @@ let DemoPage = {
   style: null,
 };
 
-function BuilderEditor({ demopageState, dispatch }) {
+function BuilderEditor({ demopageState, showTemplateSelection, dispatch }) {
   DemoPage = demopageState || DemoPage;
   const [showEditorPanel, setShowEditorPanel] = useState(0);
 
@@ -183,9 +184,19 @@ function BuilderEditor({ demopageState, dispatch }) {
       dispatch(updateEditorState(editor));
     }
   }, [DemoPage]);
+  // console.log('showTemplateSelection', showTemplateSelection);
   return (
     <div>
-      <div id="gjs" className="editor-container" />
+      {showTemplateSelection ? (
+        <div id="myTheme" className="mytheme-container hbjh">
+          <Features />
+        </div>
+      ) : null}
+      <div
+        id="gjs"
+        className="editor-container"
+        hidden={showTemplateSelection}
+      />
     </div>
   );
 }
@@ -196,6 +207,7 @@ BuilderEditor.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   demopageState: makeUpdateDemoPageState(),
+  showTemplateSelection: makeUpdateShowThemeToggle(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(

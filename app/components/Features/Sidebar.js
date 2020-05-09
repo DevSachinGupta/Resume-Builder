@@ -9,6 +9,7 @@ import { IoMdSearch } from 'react-icons/io';
 import RadioFilter from './RadioFilter';
 import CheckboxFilter from './CheckboxFilter';
 import RatingFilter from './RatingFilter';
+import Button from '../Button';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
@@ -40,9 +41,14 @@ function Sidebar(props) {
         <RatingFilter updateFilter={props.updateFilter}/>
       </div>
       <div className="mb-4">
-        <button className="mt-3 text-base font-medium bg-blue-500 w-full text-white rounded-lg px-6 py-2 block shadow-xl hover:text-white hover:bg-blue-800">
+        <Button
+          className="mt-3 text-base font-medium bg-blue-500 w-full text-white rounded-lg px-6 py-2 block shadow-lg hover:text-white hover:bg-blue-800"
+          onClick={e => {
+            props.updateFilter('clearFilter', '');
+          }}
+        >
           Clear All Filters
-        </button>
+        </Button>
       </div>
     </div>
   );

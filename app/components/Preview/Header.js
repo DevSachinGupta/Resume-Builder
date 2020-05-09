@@ -15,7 +15,7 @@ function Header(props) {
   const userProfilePhoto =
     'http://jitendra003.netcv.site/images/profile_photo.png';
   return (
-    <div className="bg-black">
+    <div className="bg-white shadow-lg text-black h-16">
       <div className="container mx-auto px-8">
         <div className="flex items-center py-2 px-10">
           <div className="w-1/4 flex items-center">
@@ -24,28 +24,28 @@ function Header(props) {
             </div>
           </div>
           <div className="w-2/4 flex flex-grow text-center">
-            <div className="text-sm flex text-gray-100 items-center mx-auto">
+            <div className="text-sm flex items-center mx-auto">
               This Template is Copyright of NetCV
             </div>
           </div>
           <div className="w-1/4 flex items-center justify-end">
             <button
               type="button"
-              className="border-r pr-2"
+              className="border-r-2 pr-2"
               onClick={() => {
                 props.setPreviewWidth('100%');
               }}
             >
-              <IoIosDesktop size={30} class="bg-black text-white " />
+              <IoIosDesktop size={30} class="" />
             </button>
             <button
               type="button"
-              className="border-r pr-2 pl-2"
+              className="border-r-2 pr-2 pl-2"
               onClick={() => {
                 props.setPreviewWidth('480px');
               }}
             >
-              <IoIosTabletPortrait size={30} class="bg-black text-white " />
+              <IoIosTabletPortrait size={30} class=" " />
             </button>
             <button
               type="button"
@@ -54,7 +54,7 @@ function Header(props) {
                 props.setPreviewWidth('320px');
               }}
             >
-              <FaMobileAlt size={30} class="bg-black text-white " />
+              <FaMobileAlt size={30} class="" />
             </button>
           </div>
         </div>

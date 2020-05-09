@@ -27,7 +27,6 @@ export function setModalContent(contentType) {
     },
   ];
 }
-
 /**
  * @description Action to be dispatched for country list
  */

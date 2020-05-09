@@ -16,6 +16,7 @@ import {
   UPDATE_TEMPLATE_NUMBER_STATE,
   UPDATE_CANVAS,
   UPDATE_RESUME_EVENT_HANDLER,
+  SHOW_THEMES_TOGGLE,
 } from './constants';
 
 export function defaultAction() {
@@ -29,6 +30,14 @@ export function defaultAction() {
 export function toggleSidebar() {
   return {
     type: HANDLE_SIDEBAR_STATE,
+  };
+}
+/**
+ * @description function to handle Theme toggle State
+ */
+export function showThemeToggle() {
+  return {
+    type: SHOW_THEMES_TOGGLE,
   };
 }
 /**

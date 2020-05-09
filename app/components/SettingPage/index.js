@@ -48,7 +48,7 @@ function SettingPage() {
     }
   };
   return (
-    <div className="bg-gray-200">
+    <div className="bg-white">
       <div>
         <Header />
       </div>

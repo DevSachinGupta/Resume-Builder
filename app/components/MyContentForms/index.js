@@ -51,6 +51,9 @@ export const getModalContent = modelId => {
         import('./SecondaryForms/ContactUsForm'),
       );
       break;
+    case 'myTemplates':
+      ModalComponent = React.lazy(() => import('../Features'));
+      break;
     case 'feedback':
       ModalComponent = React.lazy(() =>
         import('./SecondaryForms/FeedbackForm'),

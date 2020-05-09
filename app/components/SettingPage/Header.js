@@ -14,7 +14,7 @@ function Header(props) {
   const userProfilePhoto =
     'http://jitendra003.netcv.site/images/profile_photo.png';
   return (
-    <div className="bg-black mb-6">
+    <div className="bg-white text-black shadow-lg mb-6">
       <div className="container mx-auto px-8">
         <div className="flex items-center py-2 px-10">
           <div className="w-3/4 flex items-center">
@@ -24,22 +24,22 @@ function Header(props) {
             <div className="ml-4">
               <div className="text-sm flex items-center my-auto">
                 <div>
-                  <a href="#" className="no-underline text-gray-100 pr-3">
+                  <a href="#" className="no-underline pr-3">
                     Templates
                   </a>
                 </div>
                 <div>
-                  <a href="#" className="no-underline text-gray-100 pr-3">
+                  <a href="#" className="no-underline  pr-3">
                     Settings
                   </a>
                 </div>
                 <div>
-                  <a href="#" className="no-underline text-gray-100 pr-3">
+                  <a href="#" className="no-underline  pr-3">
                     Docs
                   </a>
                 </div>
                 <div>
-                  <a href="#" className="no-underline text-gray-100 pr-3">
+                  <a href="#" className="no-underline  pr-3">
                     Community
                   </a>
                 </div>
@@ -58,13 +58,13 @@ function Header(props) {
               <button>
                 <div className="text-sm flex items-center">
                   <div>
-                    <span className="no-underline text-gray-100">
+                    <span className="no-underline">
                       {userName}
                     </span>
                   </div>
                   <div>
                     <svg
-                      className="fill-current text-gray-100 h-4 w-4"
+                      className="fill-current h-4 w-4"
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
                       height="24"

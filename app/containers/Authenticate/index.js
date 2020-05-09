@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import LoginFrom from 'components/Authentication/LoginForm';
 import RegistrationFrom from 'components/Authentication/SignupForm';
+// import ForgotPasswordForm from 'components/Authentication/ForgotPasswordForm';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';

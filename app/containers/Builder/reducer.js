@@ -17,6 +17,7 @@ import {
   UPDATE_TEMPLATE_NUMBER_STATE,
   UPDATE_CANVAS,
   UPDATE_RESUME_EVENT_HANDLER,
+  SHOW_THEMES_TOGGLE,
 } from './constants';
 
 export const initialState = {
@@ -30,6 +31,7 @@ export const initialState = {
   resume_json_state: {},
   demopage_state: null,
   template_number_state: null,
+  showThemeToggle: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -69,10 +71,11 @@ const builderReducer = (state = initialState, action) =>
         draft.template_number_state = action.template_number_state;
         break;
       case UPDATE_CANVAS:
-        console.log('update canvas reducer');
         break;
       case UPDATE_RESUME_EVENT_HANDLER:
-        console.log('update UPDATE_RESUME_EVENT_HANDLER');
+        break;
+      case SHOW_THEMES_TOGGLE:
+        draft.showThemeToggle = !state.showThemeToggle;
         break;
       default:
         break;

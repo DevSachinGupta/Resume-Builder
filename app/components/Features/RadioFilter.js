@@ -21,7 +21,7 @@ function RadioFilter(props) {
       <div className="w-full mx-auto">
         <div className="flex justify-center">
           <div className="w-full max-w-md">
-            <div className="bg-white shadow-md rounded-lg px-2 py-2">
+            <div className="bg-white shadow-md border-gray-200 border rounded-lg px-2 py-2">
               <div className="block text-gray-700 text-lg font-semibold py-2 px-2">
                 Pricing
               </div>

@@ -13,7 +13,7 @@ function Preview(props) {
   const templateURL = 'http://jitendra002.netcv.site/';
   const [previewWidth, setPreviewWidth] = React.useState('100%');
   return (
-    <div className="bg-gray-200">
+    <div className="bg-white">
       <div>
         <Header setPreviewWidth={setPreviewWidth} />
       </div>
@@ -25,7 +25,8 @@ function Preview(props) {
           sandbox="allow-same-origin allow-forms allow-scripts"
           seamless
           width={previewWidth}
-          style={{ overflow: 'hidden' }}
+          style={{ height: 'calc(100vh - 64px)' }}
+          // style={{ overflow: 'hidden' }}
           title="Template Preview"
         />
       </div>

@@ -4,6 +4,10 @@ const primarySidebar = [
     hasSecondary: true,
   },
   {
+    title: 'My Themes',
+    id: 'myThemes',
+  },
+  {
     title: 'Share Online',
     id: 'shareOnline',
   },

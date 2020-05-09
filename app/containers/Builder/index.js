@@ -42,8 +42,6 @@ export function Builder({ themeContent, dispatch }) {
     dispatch(updateDemoPageState(DemoPage));
   }, [themeContent]);
 
-  // console.log("from coontainer: ", DemoPage)
-
   dispatch(updateTemplateNumberState(template_number));
   // dispatch(updateDemoPageState(DemoPage));
   return (

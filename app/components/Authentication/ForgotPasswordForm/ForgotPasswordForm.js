@@ -4,7 +4,7 @@ import Button from '../../Button';
 import Input from '../../FormComponents/Input';
 import { validationMap } from '../validation';
 
-function LoginFormFormik() {
+function ForgotPasswordFormFormik() {
   const blankLoginField = {
     username: '',
     password: '',
@@ -30,7 +30,7 @@ function LoginFormFormik() {
               style={{ transition: 'all 0.15s ease 0s' }}
             /> */}
             <Input
-              placeholder="Email"
+              placeholder="Enter Email Address..."
               className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
               label="Email"
               name="email"
@@ -38,52 +38,8 @@ function LoginFormFormik() {
               validate={validationMap.username}
             />
           </div>
-          <div className="relative w-full mb-3">
-            {/* <label
-              className="block uppercase text-gray-700 text-xs font-bold mb-2"
-              htmlFor="grid-password"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
-              placeholder="Password"
-              style={{ transition: 'all 0.15s ease 0s' }}
-              val
-            /> */}
-            <Input
-              type="password"
-              className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
-              placeholder="Password"
-              label="Password"
-              name="password"
-              fullWidth
-              validate={validationMap.password}
-            />
-          </div>
-          <div>
-            <label className="inline-flex items-center cursor-pointer">
-              {/* <input
-                id="customCheckLogin"
-                type="checkbox"
-                className="form-checkbox text-gray-800 ml-1 w-5 h-5"
-                style={{ transition: 'all 0.15s ease 0s' }}
-              /> */}
-              <Input
-                className="form-checkbox text-gray-800 ml-1 w-5 h-5 pl-0"
-                style={{ transition: 'all 0.15s ease 0s' }}
-                type="checkbox"
-                placeholder="Remember me"
-                allowValidation={false}
-              />
-              <span className="ml-2 text-sm font-semibold text-gray-700">
-                Remember me
-              </span>
-            </label>
-          </div>
           <div className="text-center mt-6">
-            <Button as="submit"
+            <Button as="submit" type="primary" 
               className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full">
               Login 
             </Button>
@@ -97,7 +53,12 @@ function LoginFormFormik() {
           </div>
           <div className="text-center ">
             <a href="#" className="text-blue-500" alt="Forgot password">
-              <small>Forgot password?</small>
+              <small>Create an Account!</small>
+            </a>
+          </div>
+          <div className="text-center ">
+            <a href="#" className="text-blue-500" alt="Forgot password">
+              <small>Already have an Account? Login</small>
             </a>
           </div>
         </div>
@@ -141,4 +102,4 @@ function LoginFormFormik() {
     </Formik>
   );
 }
-export default LoginFormFormik;
+export default ForgotPasswordFormFormik;

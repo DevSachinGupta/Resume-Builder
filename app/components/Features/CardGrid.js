@@ -53,14 +53,14 @@ function CardGrid(props) {
                       </p>
                       <div className="flex mt-3 justify-end">
                         <div className="my-auto justtify-between mr-2">
-                          <button className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black">
+                          <button type="button" className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black">
                             Preview
                           </button>
                         </div>
 
                         <div className="my-auto justtify-between">
-                          <button className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black">
-                          <IoIosRocket size={22} class="bg-white text-teal-400" /> Select
+                          <button type="button" className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black">
+                            <IoIosRocket size={22} class="bg-white text-teal-500" /> Select
                           </button>
                         </div>
                       </div>

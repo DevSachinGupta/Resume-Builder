@@ -20,6 +20,7 @@ function Features() {
   const [filters, setFilters] = React.useState({
     pricing: '-1',
     category: [],
+    searchKey: [],
     rating: -1,
     pageNumber: 1,
     pagesize: 12,
@@ -38,6 +39,13 @@ function Features() {
     if (key === 'pageChange') {
       data.pageNumber =
         value === '++' ? data.pageNumber + 1 : data.pageNumber - 1;
+    } else if (key === 'clearFilter') {
+      data.pricing = '-1';
+      data.category = [];
+      data.rating = -1;
+      data.pageNumber = 1;
+      data.pagesize = 12;
+      data.sortOrder = -1;
     } else {
       data[key] = value;
     }
@@ -69,6 +77,11 @@ function Features() {
     if (filters.category.length !== 0) {
       newList = newList.filter(d =>
         d.category.some(s => filters.category.includes(s)),
+      );
+    }
+    if (filters.searchKey.length !== 0) {
+      newList = newList.filter(d =>
+        d.searchBag.some(s => filters.searchKey.includes(s)),
       );
     }
     if (filters.rating !== -1) {
@@ -122,7 +135,7 @@ function Features() {
   }
 
   return (
-    <div className="bg-gray-200">
+    <div className="bg-white text-black">
       <div>
         <Header />
       </div>

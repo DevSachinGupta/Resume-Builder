@@ -19,3 +19,4 @@ export const UPDATE_TEMPLATE_NUMBER_STATE =
 export const UPDATE_CANVAS = 'app/Builder/UPDATE_CANVAS';
 export const UPDATE_RESUME_EVENT_HANDLER =
   'app/Builder/UPDATE_RESUME_EVENT_HANDLER';
+export const SHOW_THEMES_TOGGLE = 'app/Builder/SHOW_THEMES_TOGGLE';

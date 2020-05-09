@@ -13,7 +13,10 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { FaArrowLeft } from 'react-icons/fa';
 import { createStructuredSelector } from 'reselect';
-import { toggleSecondarySidebar } from 'containers/Builder/actions';
+import {
+  toggleSecondarySidebar,
+  showThemeToggle,
+} from 'containers/Builder/actions';
 import { setModalContent } from 'containers/MyContent/actions';
 import { makeSelectIsSecondarySidebarOpen } from 'containers/Builder/selectors';
 import SidebarItem from '../../Sidebar/SidebarItem';
@@ -31,7 +34,9 @@ function BuilderSidebar({ isSecondarySidebarOpen, dispatch }) {
             // item.hasSecondary ? () => dispatch(toggleSecondarySidebar()) : null
             item.hasSecondary
               ? () => dispatch(toggleSecondarySidebar())
-              : () => dispatch(setModalContent(item.id))
+              : item.id === 'myThemes'
+                ? () => dispatch(showThemeToggle())
+                : () => dispatch(setModalContent(item.id))
           }
           title={item.title}
         />

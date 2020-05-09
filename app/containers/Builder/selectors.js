@@ -60,6 +60,11 @@ const makeUpdateTemplateNumberState = () =>
     selectBuilderDomain,
     substate => substate.template_number_state,
   );
+const makeUpdateShowThemeToggle = () =>
+  createSelector(
+    selectBuilderDomain,
+    substate => substate.showThemeToggle,
+  );
 export default makeSelectBuilder;
 export {
   selectBuilderDomain,
@@ -71,4 +76,5 @@ export {
   makeUpdateResumeJSONState,
   makeUpdateDemoPageState,
   makeUpdateTemplateNumberState,
+  makeUpdateShowThemeToggle,
 };

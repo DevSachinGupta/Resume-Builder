@@ -34,7 +34,7 @@ function CheckboxFilter(props) {
       <div className="w-full mx-auto">
         <div className="flex justify-center">
           <div className="w-full max-w-md">
-            <div className="bg-white shadow-md rounded-lg px-2 py-2">
+            <div className="bg-white shadow-md border-gray-200 border  rounded-lg px-2 py-2">
               <div className="block text-gray-700 text-lg font-semibold py-2 px-2">
                 Category
               </div>
@@ -56,9 +56,9 @@ function CheckboxFilter(props) {
                     <div className="flex-grow font-medium pl-2">
                       {item.value}
                     </div>
-                    <div className="text-sm font-normal text-gray-500 tracking-wide px-2 bg-gray-300 rounded-full">
+                    {/* <div className="text-sm font-normal text-gray-500 tracking-wide px-2 bg-gray-300 rounded-full">
                       {item.count ? item.count : '0'}
-                    </div>
+                    </div> */}
                   </label>
                 ))}
               </div>
