@@ -5,6 +5,10 @@
  */
 
 import React, { memo } from 'react';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { updateTemplateNumberState } from 'containers/Builder/actions';
 import Header from './Header';
 import SearchBar from './SearchBar';
 import GridRow from './GridRow';
@@ -16,7 +20,7 @@ import templateList2 from './templatesList';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-function Features() {
+function Features({ dispatch }) {
   const [filters, setFilters] = React.useState({
     pricing: '-1',
     category: [],
@@ -156,6 +160,7 @@ function Features() {
                 updateFilter={updateFilter}
                 filters={filters}
                 filteredItemCount={filteredItemCount}
+                updateTemplateNumber="updateTemplateNumber"
               />
             </div>
           </div>
@@ -174,4 +179,20 @@ function Features() {
 
 Features.propTypes = {};
 
-export default memo(Features);
+const mapStateToProps = createStructuredSelector({});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  memo,
+)(Features);

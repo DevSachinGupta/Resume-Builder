@@ -18,14 +18,16 @@ import {
   updateDemoPageState,
   getBuilderThemeContent,
 } from 'containers/Builder/actions';
-import makeSelectBuilder, { makeSelectGetThemeContent } from './selectors';
+import makeSelectBuilder, { makeSelectGetThemeContent, makeUpdateTemplateNumberState } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
-const template_number = '2';
-export function Builder({ themeContent, dispatch }) {
+// const template_number = '6';
+export function Builder({ template_number, themeContent, dispatch }) {
   useInjectReducer({ key: 'builder', reducer });
   useInjectSaga({ key: 'builder', saga });
+
+  console.log("template number d:", template_number)
 
   const getThemeContent = useCallback(() => {
     dispatch(getBuilderThemeContent(template_number));
@@ -42,7 +44,7 @@ export function Builder({ themeContent, dispatch }) {
     dispatch(updateDemoPageState(DemoPage));
   }, [themeContent]);
 
-  dispatch(updateTemplateNumberState(template_number));
+  // dispatch(updateTemplateNumberState(template_number));
   // dispatch(updateDemoPageState(DemoPage));
   return (
     <BuilderLayout>
@@ -58,6 +60,7 @@ Builder.propTypes = {};
 const mapStateToProps = createStructuredSelector({
   builder: makeSelectBuilder(),
   themeContent: makeSelectGetThemeContent(),
+  template_number: makeUpdateTemplateNumberState(),
 });
 
 function mapDispatchToProps(dispatch) {

@@ -5,13 +5,18 @@
  */
 
 import React, { memo } from 'react';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { updateTemplateNumberState } from 'containers/Builder/actions';
 import cx from 'classnames';
 import { IoIosRocket } from 'react-icons/io';
-
+import { Link } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
 function CardGrid(props) {
+  // console.log("dis",props)
   return (
     <main className="py-4">
       <div className="">
@@ -53,15 +58,33 @@ function CardGrid(props) {
                       </p>
                       <div className="flex mt-3 justify-end">
                         <div className="my-auto justtify-between mr-2">
-                          <button type="button" className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black">
+                          {/* <button
+                            type="button"
+                            className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black"
+                          >
                             Preview
-                          </button>
+                          </button> */}
+                          <Link
+                            to={`/preview/${encodeURIComponent(item.templateURL)}`}
+                            target="_blank"
+                            className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black"
+                          >
+                            Preview
+                          </Link>
                         </div>
 
                         <div className="my-auto justtify-between">
-                          <button type="button" className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black">
-                            <IoIosRocket size={22} class="bg-white text-teal-500" /> Select
-                          </button>
+                          <Link
+                            onClick={() => props.dispatch(updateTemplateNumberState(item.id))}
+                            to="/builder"
+                            className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black"
+                          >
+                            <IoIosRocket
+                              size={22}
+                              class="bg-white text-teal-500"
+                            />{' '}
+                            Select
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -113,4 +136,21 @@ function CardGrid(props) {
 
 CardGrid.propTypes = {};
 
-export default memo(CardGrid);
+// export default memo(CardGrid);
+const mapStateToProps = createStructuredSelector({});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  memo,
+)(CardGrid);

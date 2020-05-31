@@ -24,13 +24,13 @@ export const initialState = {
   isSidebarOpen: true,
   isSecondarySidebarOpen: false,
   theme: {
-    data: 'Hello',
+    data: '',
     isLoaded: false,
   },
   editor_state: null,
   resume_json_state: {},
   demopage_state: null,
-  template_number_state: null,
+  template_number_state: 2,
   showThemeToggle: false,
 };
 
@@ -68,6 +68,7 @@ const builderReducer = (state = initialState, action) =>
         draft.demopage_state = action.demopage_state;
         break;
       case UPDATE_TEMPLATE_NUMBER_STATE:
+        console.log("update temp number:", action.template_number_state)
         draft.template_number_state = action.template_number_state;
         break;
       case UPDATE_CANVAS:

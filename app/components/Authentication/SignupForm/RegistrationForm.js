@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { memo } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import { TiChevronRight } from 'react-icons/ti';
 import { Formik } from 'formik';
+import { getUserSignup } from '../../../containers/Authenticate/actions';
 import Button from '../../Button';
 import Input from '../../FormComponents/Input';
 import { validationMap } from '../validation';
 
-function RegistrationFormFormik() {
+function RegistrationFormFormik({ dispatch }) {
   const blankLoginField = {
     username: '',
     password: '',
   };
+  // dispatch(getUserSignup);
   const onSubmitFunction = values => {
-    console.log(values);
+    console.log("signup",values);
+    dispatch(getUserSignup);
   };
   return (
     <Formik initialValues={blankLoginField} onSubmit={onSubmitFunction}>
@@ -126,6 +132,12 @@ function RegistrationFormFormik() {
             >
               Create Account
             </button>
+            <button
+              className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+              onClick={() => { dispatch(getUserSignup("jit10@jit.com","jit10","jit"))}}
+            >
+              test
+            </button>
           </div>
           {/* <div className="text-center ">
             <a href="#" className="text-blue-500" alt="Forgot password">
@@ -173,4 +185,16 @@ function RegistrationFormFormik() {
     </Formik>
   );
 }
-export default RegistrationFormFormik;
+// export default RegistrationFormFormik;
+const mapStateToProps = () => createStructuredSelector({});
+
+const mapDispatchToProps = null;
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+const withCompose = compose(
+  withConnect,
+  memo,
+);
+export default withCompose(RegistrationFormFormik);

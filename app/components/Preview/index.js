@@ -10,7 +10,7 @@ import Header from './Header';
 // import styled from 'styled-components';
 
 function Preview(props) {
-  const templateURL = 'http://jitendra002.netcv.site/';
+  const templateURL = decodeURIComponent(props.match.params.templateURL);
   const [previewWidth, setPreviewWidth] = React.useState('100%');
   return (
     <div className="bg-white">

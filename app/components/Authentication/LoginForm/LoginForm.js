@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { memo } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import { Formik } from 'formik';
+import axios from 'axios';
+import {
+  getUserLogin,
+  getUserLogout,
+} from '../../../containers/Authenticate/actions';
 import Button from '../../Button';
 import Input from '../../FormComponents/Input';
 import { validationMap } from '../validation';
 
-function LoginFormFormik() {
+function LoginFormFormik({ dispatch }) {
   const blankLoginField = {
     username: '',
     password: '',
@@ -83,17 +91,47 @@ function LoginFormFormik() {
             </label>
           </div>
           <div className="text-center mt-6">
-            <Button as="submit"
-              className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full">
-              Login 
-            </Button>
-            {/* <button
+            <Button
+              as="submit"
               className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
-              type="submit"
-              style={{ transition: 'all 0.15s ease 0s' }}
             >
               Login
-            </button> */}
+            </Button>
+            <button
+              className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+              onClick={() => {
+                axios.post('http://localhost:2000/login', {
+                  username: 'jit10',
+                  password: 'jit',
+                })
+                .then(response => {
+                  console.log('login response: ');
+                  console.log(response);
+                  if (response.status === 200) {
+                    // update App.js state
+                    // this.props.updateUser({
+                    //   loggedIn: true,
+                    //   username: response.data.username,
+                    // });
+                    // update the state to redirect to home
+                    // this.setState({
+                    //   redirectTo: '/',
+                    // });
+                  }
+                })
+                // dispatch(getUserLogin('jit10', 'jit'));
+              }}
+            >
+              Login
+            </button>
+            <button
+              className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+              onClick={() => {
+                dispatch(getUserLogout('jit10'));
+              }}
+            >
+              Logout
+            </button>
           </div>
           <div className="text-center ">
             <a href="#" className="text-blue-500" alt="Forgot password">
@@ -141,4 +179,16 @@ function LoginFormFormik() {
     </Formik>
   );
 }
-export default LoginFormFormik;
+// export default LoginFormFormik;
+const mapStateToProps = () => createStructuredSelector({});
+
+const mapDispatchToProps = null;
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+const withCompose = compose(
+  withConnect,
+  memo,
+);
+export default withCompose(LoginFormFormik);

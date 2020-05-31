@@ -4,7 +4,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 0',
-    templateURL: 'http://jitendra002.netcv.site/',
+    templateURL: 'http://jitendra004.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Timeliner'],
@@ -18,7 +18,7 @@ export default [
     imageUrl:
       'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
     title: 'Template 1',
-    templateURL: 'http://jitendra002.netcv.site/',
+    templateURL: 'http://jitendra003.netcv.site/',
     description:
       'Lorem ipsum dolor sit amet consect amet consectetur adipisicing elit',
     category: ['Classic', 'Stylish'],

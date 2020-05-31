@@ -30,9 +30,9 @@ function BodyLayout(props) {
       </div>
       <div className="mb-4">
         {layoutView === 'Grid' ? (
-          <CardGrid templateItems={props.templateItems} />
+          <CardGrid templateItems={props.templateItems} updateTemplateNumber={props.updateTemplateNumber} />
         ) : (
-          <CardList templateItems={props.templateItems} />
+          <CardList templateItems={props.templateItems} updateTemplateNumber={props.updateTemplateNumber} />
         )}
       </div>
       <div className="mb-4">

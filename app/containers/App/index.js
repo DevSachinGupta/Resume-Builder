@@ -43,7 +43,7 @@ const App = ({ dispatch }) => (
       <Route exact path="/" component={HomePage} />
       <Route path="/features" component={FeaturePage} />
       <Route path="/settings" component={Settings} />
-      <Route path="/preview" component={Preview} />
+      <Route path="/preview/:templateURL" component={Preview} />
       <Route
         path="/login"
         render={routeProps => <Authenticate {...routeProps} method="login" />}
