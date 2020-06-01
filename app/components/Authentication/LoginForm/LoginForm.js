@@ -103,7 +103,7 @@ function LoginFormFormik({ dispatch }) {
                 axios.post('http://localhost:2000/login', {
                   username: 'jit10',
                   password: 'jit',
-                })
+                }, { withCredentials: true })
                 .then(response => {
                   console.log('login response: ');
                   console.log(response);
@@ -127,7 +127,23 @@ function LoginFormFormik({ dispatch }) {
             <button
               className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
               onClick={() => {
-                dispatch(getUserLogout('jit10'));
+				  axios.post('http://localhost:2000/logout',{},{ withCredentials: true })
+                .then(response => {
+                  console.log('logout response: ');
+                  console.log(response);
+                  if (response.status === 200) {
+                    // update App.js state
+                    // this.props.updateUser({
+                    //   loggedIn: true,
+                    //   username: response.data.username,
+                    // });
+                    // update the state to redirect to home
+                    // this.setState({
+                    //   redirectTo: '/',
+                    // });
+                  }
+                })
+                //dispatch(getUserLogout('jit10'));
               }}
             >
               Logout
