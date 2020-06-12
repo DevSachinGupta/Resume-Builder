@@ -11,6 +11,7 @@ export default function* authenticateSaga() {
     takeLatest(`${AUTHENTICATE}_LOGOUT`, userLogout),
     takeLatest(`${AUTHENTICATE}_SIGNUP`, userSignup),
     takeLatest(`${AUTHENTICATE}_FORGOT_PASSWORD`, userForgotPassword),
+    takeLatest(`${AUTHENTICATE}_FORGOT_PASSWORD_RESET`, userForgotPasswordReset),
   ]);
 }
 
@@ -29,14 +30,18 @@ function* userLogin(params) {
   try {
     const res = yield call(
       axios
-        .post('http://localhost:2000/login', {
-          username: params.username,
-          password: params.password,
-        })
+        .post(
+          'http://localhost:2000/login',
+          {
+            username: params.username,
+            password: params.password,
+          },
+          { withCredentials: true },
+        )
         .then(response => {
-          console.log('login response: ');
-          console.log(response);
+          console.log('login response: ', response);
           if (response.status === 200) {
+            console.log('response.ststus userLogin ', response.status);
             // update App.js state
             // this.props.updateUser({
             //   loggedIn: true,
@@ -49,14 +54,13 @@ function* userLogin(params) {
           }
         })
         .catch(error => {
-          console.log('login error: ');
-          console.log(error);
+          console.log('login error: ', error);
         }),
     );
     // yield put({ type: `${GET_THEME_CONTENT}_SUCCESS`, data: res.data });
-    console.log(res);
+    console.log('res from login', res);
   } catch (e) {
-    console.log("catch err",e);
+    console.log('catch err login', e);
   }
 }
 
@@ -64,16 +68,17 @@ function* userLogout(params) {
   try {
     const res = yield call(
       axios
-        .post('http://localhost:2000/logout')
+        .post('http://localhost:2000/logout', {}, { withCredentials: true })
         .then(response => {
           console.log('logout response: ');
           console.log(response);
           if (response.status === 200) {
+            console.log('response.ststus logout ', response.status);
             // update App.js state
-            this.props.updateUser({
-              loggedIn: true,
-              username: response.data.username,
-            });
+            // this.props.updateUser({
+            //   loggedIn: true,
+            //   username: response.data.username,
+            // });
             // update the state to redirect to home
             // this.setState({
             //   redirectTo: '/',
@@ -86,9 +91,9 @@ function* userLogout(params) {
         }),
     );
     // yield put({ type: `${GET_THEME_CONTENT}_SUCCESS`, data: res.data });
-    console.log(res);
+    console.log('res from logout', res);
   } catch (e) {
-    console.log(e);
+    console.log('catch err logout', e);
   }
 }
 
@@ -97,18 +102,20 @@ function* userSignup(params) {
   try {
     const res = yield call(
       axios
-        .post('http://localhost:2000/register', {
-          registeredEmail: params.registeredEmail,
-          username: params.username,
-          password: params.password,
-          // registeredEmail: "jit9@jit.com",
-          // username: "jit9",
-          // password: "jit",
-        })
+        .post(
+          'http://localhost:2000/signup',
+          {
+            registeredEmail: params.registeredEmail,
+            username: params.username,
+            password: params.password,
+          },
+          { withCredentials: true },
+        )
         .then(response => {
           console.log('register response: ');
           console.log(response);
           if (response.status === 200) {
+            console.log('response status', response.status);
             // update App.js state
             // this.props.updateUser({
             //   loggedIn: true,
@@ -136,10 +143,8 @@ function* userForgotPassword(params) {
   try {
     const res = yield call(
       axios
-        .post('http://localhost:2000/register', {
-          registeredEmail: "jit9@jit.com",
-          username: "jit9",
-          password: "jit",
+        .post('http://localhost:2000/forgotPassword', {
+          username: params.username,
         })
         .then(response => {
           console.log('register response: ');
@@ -158,6 +163,40 @@ function* userForgotPassword(params) {
         })
         .catch(error => {
           console.log('register error: ');
+          console.log(error);
+        }),
+    );
+    // yield put({ type: `${GET_THEME_CONTENT}_SUCCESS`, data: res.data });
+    console.log(res);
+  } catch (e) {
+    console.log(e);
+  }
+}
+function* userForgotPasswordReset(params) {
+  try {
+    const res = yield call(
+      axios
+        .post('http://localhost:2000/resetPassword', {
+          newPassword: params.newPassword,
+          token: params.token,
+        })
+        .then(response => {
+          console.log('reset response: ');
+          console.log(response);
+          if (response.status === 200) {
+            // update App.js state
+            this.props.updateUser({
+              loggedIn: true,
+              username: response.data.username,
+            });
+            // update the state to redirect to home
+            // this.setState({
+            //   redirectTo: '/',
+            // });
+          }
+        })
+        .catch(error => {
+          console.log('reset error: ');
           console.log(error);
         }),
     );

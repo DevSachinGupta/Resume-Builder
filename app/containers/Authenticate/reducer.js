@@ -33,6 +33,8 @@ const authenticateReducer = (state = initialState, action) =>
         break;
       case `${AUTHENTICATE}_FORGOT_PASSWORD`:
         break;
+      case `${AUTHENTICATE}_FORGOT_PASSWORD_RESET`:
+        break;
       default:
         break;
     }

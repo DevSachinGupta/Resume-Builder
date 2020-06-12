@@ -8,6 +8,7 @@ import React, { memo } from 'react';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import axios from 'axios';
 import { updateTemplateNumberState } from 'containers/Builder/actions';
 import Header from './Header';
 import SearchBar from './SearchBar';
@@ -16,7 +17,7 @@ import Sidebar from './Sidebar';
 import BodyLayout from './BodyLayout';
 import Footer from './Footer';
 import './style.scss';
-import templateList2 from './templatesList';
+// import templateList2 from './templatesList';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
@@ -30,12 +31,39 @@ function Features({ dispatch }) {
     pagesize: 12,
     sortOrder: -1, // Relevence:- no of user === then rating
   });
+  const [templateList2, setTemplateList2] = React.useState([]);
   const [templateList, setTemplateList] = React.useState([]);
   const [filteredItemCount, setFilteredItemCount] = React.useState(0);
 
   React.useEffect(() => {
     getFilteredList();
-  }, [filters]);
+  }, [filters,templateList2]);
+
+  React.useEffect(() => {
+    axios
+      .get('http://localhost:2000/getAllTemplateList', {})
+      .then(response => {
+        console.log('reset response: ');
+        console.log(response);
+        if (response.status === 200) {
+          console.log("response.status === 200", response.status, response.data.data.templateList)
+          setTemplateList2(response.data.data.templateList);
+          // update App.js state
+          // this.props.updateUser({
+          //   loggedIn: true,
+          //   username: response.data.username,
+          // });
+          // update the state to redirect to home
+          // this.setState({
+          //   redirectTo: '/',
+          // });
+        }
+      })
+      .catch(error => {
+        console.log('reset error: ');
+        console.log(error);
+      });
+  }, []);
 
   function updateFilter(key, value) {
     // console.log("Update Filter :- ", key, " : ", value);

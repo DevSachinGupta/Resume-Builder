@@ -49,9 +49,6 @@ function LoginForm() {
                 >
                   Create an account
                 </Link>
-                {/* <a href="#" className="text-blue-500">
-                  Create new account
-                </a> */}
               </div>
             </div>
           </div>

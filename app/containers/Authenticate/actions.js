@@ -44,10 +44,19 @@ export function getUserSignup(registeredEmail, username, password) {
 /**
  * @description Action to be dispatched for forgot password authentication
  */
-export function getUserForgotPassword(username, password) {
+export function getUserForgotPassword(username) {
   return {
     type: `${AUTHENTICATE}_FORGOT_PASSWORD`,
     username,
-    password,
+  };
+}
+/**
+ * @description Action to be dispatched for reset password
+ */
+export function getUserForgotPasswordReset(newPassword, token) {
+  return {
+    type: `${AUTHENTICATE}_FORGOT_PASSWORD_RESET`,
+    newPassword,
+    token,
   };
 }

@@ -62,6 +62,14 @@ const App = ({ dispatch }) => (
         path="/signup"
         render={routeProps => <Authenticate {...routeProps} method="signup" />}
       />
+      <Route
+        path="/forgotpwd"
+        render={routeProps => <Authenticate {...routeProps} method="forgotpwd" />}
+      />
+      <Route
+        path="/resetPassword/:tokenId"
+        render={routeProps => <Authenticate {...routeProps} method="resetPassword" />}
+      />
       <Route path="/signup" component={Authenticate} />
       <Route path="" component={NotFoundPage} />
     </Switch>

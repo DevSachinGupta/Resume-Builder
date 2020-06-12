@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import ForgotPasswordFormFormik from './ForgotPasswordForm';
 import './style.css';
 
@@ -22,7 +22,10 @@ function ForgotPasswordForm() {
               </div>
               <div className="flex-auto px-4 lg:px-10 py-6 pt-0">
                 <div className="text-gray-600 text-center mb-3">
-                  <small>We get it, stuff happens. Just enter your email address below and we'll send you a link to reset your password!</small>
+                  <small>
+                    We get it, stuff happens. Just enter your email address
+                    below and we'll send you a link to reset your password!
+                  </small>
                 </div>
                 <ForgotPasswordFormFormik />
               </div>

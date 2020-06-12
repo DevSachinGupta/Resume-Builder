@@ -46,9 +46,6 @@ function RegistrationForm() {
                 <Link to="/login" className="text-blue-500 hover:text-blue-700">
                   Login
                 </Link>
-                {/* <a href="#" className="text-blue-500">
-                  Create new account
-                </a> */}
               </div>
             </div>
           </div>

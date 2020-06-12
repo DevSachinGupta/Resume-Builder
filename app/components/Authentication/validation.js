@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 const validationHandler = validation =>
   new Promise((resolve, reject) => {
-    validation.then(valid => resolve(valid)).catch(err => reject(err));
+    validation.then(() => resolve(false)).catch(err => reject(err));
   });
 const validationMap = {
   firstName: value =>
@@ -32,6 +32,13 @@ const validationMap = {
         .string()
         .required('Required')
         .min(8)
+        .validate(value),
+    ),
+  acceptCheckbox: value =>
+    validationHandler(
+      yup
+        .bool()
+        .oneOf([true], '')
         .validate(value),
     ),
 };
