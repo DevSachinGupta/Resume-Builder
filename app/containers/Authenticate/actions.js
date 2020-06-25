@@ -4,7 +4,7 @@
  *
  */
 
-import { DEFAULT_ACTION, AUTHENTICATE } from './constants';
+import { DEFAULT_ACTION, AUTHENTICATE, USER_LOADING } from './constants';
 
 export function defaultAction() {
   return {
@@ -12,33 +12,57 @@ export function defaultAction() {
   };
 }
 /**
+ * @description Action to be set current user after authentication
+ */
+export function setCurrentUser(isAuthenticated, userData) {
+  return {
+    type: `${AUTHENTICATE}_SET_CURRENT_USER`,
+    isAuthenticated,
+    userData,
+  };
+}
+/**
+ * @description Action to be set user loading while authentication
+ */
+export function setUserLoading() {
+  return {
+    type: USER_LOADING,
+  };
+}
+/**
  * @description Action to be dispatched for login authentication
  */
-export function getUserLogin(username, password) {
+export function getUserLogin(username, password, setSubmitError) {
   return {
     type: `${AUTHENTICATE}_LOGIN`,
     username,
     password,
+    setSubmitError,
   };
 }
 /**
  * @description Action to be dispatched for logout authentication
  */
-export function getUserLogout(username) {
+export function getUserLogout() {
   return {
     type: `${AUTHENTICATE}_LOGOUT`,
-    username,
   };
 }
 /**
  * @description Action to be dispatched for signup authentication
  */
-export function getUserSignup(registeredEmail, username, password) {
+export function getUserSignup(
+  registeredEmail,
+  username,
+  password,
+  setSubmitError,
+) {
   return {
     type: `${AUTHENTICATE}_SIGNUP`,
     registeredEmail,
     username,
     password,
+    setSubmitError,
   };
 }
 /**

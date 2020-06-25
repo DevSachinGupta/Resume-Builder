@@ -18,6 +18,7 @@ import {
   updateEditorState,
   getBuilderThemeContent,
   updateResumeEventHanlder,
+  getBuilderThemeContentTest,
 } from 'containers/Builder/actions';
 import Features from 'components/Features';
 import PropTypes from 'prop-types';
@@ -32,10 +33,22 @@ let DemoPage = {
   style: null,
 };
 
-function BuilderEditor({ demopageState, showTemplateSelection, dispatch }) {
+function BuilderEditor({
+  demopageState,
+  showTemplateSelection,
+  dispatch,
+}) {
   DemoPage = demopageState || DemoPage;
   const [showEditorPanel, setShowEditorPanel] = useState(0);
-
+  useEffect(() => {
+    console.log("getBuilderThemeCt")
+    dispatch(getBuilderThemeContentTest(setShowEditorPanel));
+  }, []);
+  // const response = await dispatch(getBuilderThemeContentTest())
+  console.log("getBuilderThemeContentTestoutput: ", showEditorPanel)
+  useEffect(() => {
+    console.log("getBuilderThemeContentTestoutput effect: ", showEditorPanel)
+  },[showEditorPanel]);
   useEffect(() => {
     const editor = grapesjs.init({
       container: '#gjs',

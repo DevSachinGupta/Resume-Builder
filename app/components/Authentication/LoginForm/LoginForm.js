@@ -16,9 +16,11 @@ function LoginFormFormik({ dispatch }) {
     password: '',
   };
   const [login, setLogin] = useState({ ...blankLoginField });
+  const [submitError, setSubmitError] = useState(null);
   const onSubmitFunction = values => {
-    dispatch(getUserLogin(values.username, values.password));
+    dispatch(getUserLogin(values.username, values.password, setSubmitError));
   };
+  console.log("msg:", submitError)
   return (
     <Formik
       initialValues={login}
@@ -65,6 +67,13 @@ function LoginFormFormik({ dispatch }) {
                     Remember me
                   </span>
                 </label>
+              </div>
+              <div className="relative w-full mb-3">
+                {submitError && (
+                  <p className="text-red-500">
+                    <strong>{submitError.status}</strong>
+                  </p>
+                )}
               </div>
               <div className="text-center mt-6">
                 <Button

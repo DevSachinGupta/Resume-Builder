@@ -17,9 +17,16 @@ function RegistrationFormFormik({ dispatch }) {
     acceptCheckbox: false,
   };
   const [signup, setSignup] = useState({ ...blankSignupField });
-  // dispatch(getUserSignup);
+  const [submitError, setSubmitError] = useState(null);
   const onSubmitFunction = values => {
-    dispatch(getUserSignup(values.email, values.username, values.password));
+    dispatch(
+      getUserSignup(
+        values.email,
+        values.username,
+        values.password,
+        setSubmitError,
+      ),
+    );
   };
   return (
     <Formik
@@ -91,6 +98,13 @@ function RegistrationFormFormik({ dispatch }) {
                     </small>
                   </span>
                 </label>
+              </div>
+              <div className="relative w-full mb-3">
+                {submitError && (
+                  <p className="text-red-500">
+                    <strong>{submitError.status}</strong>
+                  </p>
+                )}
               </div>
               <div className="text-center mt-6">
                 <Button

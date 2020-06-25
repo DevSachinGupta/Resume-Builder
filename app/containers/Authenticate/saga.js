@@ -1,5 +1,8 @@
 import { takeLatest, all, call, put, select } from 'redux-saga/effects';
 import axios from 'axios';
+// import { useHistory } from "react-router-dom";
+// import { browserHistory } from 'react-router';
+import history from '../App/history';
 import { AUTHENTICATE } from './constants';
 
 export default function* authenticateSaga() {
@@ -11,7 +14,10 @@ export default function* authenticateSaga() {
     takeLatest(`${AUTHENTICATE}_LOGOUT`, userLogout),
     takeLatest(`${AUTHENTICATE}_SIGNUP`, userSignup),
     takeLatest(`${AUTHENTICATE}_FORGOT_PASSWORD`, userForgotPassword),
-    takeLatest(`${AUTHENTICATE}_FORGOT_PASSWORD_RESET`, userForgotPasswordReset),
+    takeLatest(
+      `${AUTHENTICATE}_FORGOT_PASSWORD_RESET`,
+      userForgotPasswordReset,
+    ),
   ]);
 }
 
@@ -26,72 +32,134 @@ export function* isAuthentication() {
   }
 }
 
+function login(username, password) {
+  return axios
+    .post(
+      'http://localhost:2000/login',
+      {
+        username,
+        password,
+      },
+      { withCredentials: true },
+    )
+    .then(response => {
+      if (response.status === 200) {
+        return response;
+      }
+      return response;
+    })
+    .catch(error => {
+      console.log('login error: ', error);
+    });
+}
+
+function logout() {
+  return axios
+    .post('http://localhost:2000/logout', {}, { withCredentials: true })
+    .then(response => {
+      console.log('logout response: ', response);
+      if (response.status === 200) {
+        return response;
+      }
+      return response;
+    })
+    .catch(error => {
+      console.log('logout error: ');
+      console.log(error);
+    });
+}
+
+function signup(registeredEmail, username, password) {
+  return axios
+    .post(
+      'http://localhost:2000/signup',
+      {
+        registeredEmail,
+        username,
+        password,
+      },
+      { withCredentials: true },
+    )
+    .then(response => {
+      console.log('register response: ', response);
+      if (response.status === 200) {
+        return response;
+      }
+      return response;
+    })
+    .catch(error => {
+      console.log('register error: ', error.response);
+    });
+}
+
+function forgotPassword(username) {
+  return axios
+    .post('http://localhost:2000/forgotPassword', {
+      username,
+    })
+    .then(response => {
+      console.log('forgotPassword response: ', response);
+      if (response.status === 200) {
+        return response;
+      }
+      return response;
+    })
+    .catch(error => {
+      console.log('forgotPassword error: ', error);
+    });
+}
+
+function forgotPasswordReset(newPassword, token) {
+  return axios
+    .post('http://localhost:2000/resetPassword', {
+      newPassword,
+      token,
+    })
+    .then(response => {
+      console.log('reset response: ', response);
+      if (response.status === 200) {
+        return response;
+      }
+      return response;
+    })
+    .catch(error => {
+      console.log('reset error: ', error);
+    });
+}
+
 function* userLogin(params) {
   try {
-    const res = yield call(
-      axios
-        .post(
-          'http://localhost:2000/login',
-          {
-            username: params.username,
-            password: params.password,
-          },
-          { withCredentials: true },
-        )
-        .then(response => {
-          console.log('login response: ', response);
-          if (response.status === 200) {
-            console.log('response.ststus userLogin ', response.status);
-            // update App.js state
-            // this.props.updateUser({
-            //   loggedIn: true,
-            //   username: response.data.username,
-            // });
-            // update the state to redirect to home
-            // this.setState({
-            //   redirectTo: '/',
-            // });
-          }
-        })
-        .catch(error => {
-          console.log('login error: ', error);
-        }),
-    );
-    // yield put({ type: `${GET_THEME_CONTENT}_SUCCESS`, data: res.data });
-    console.log('res from login', res);
+    const response = yield call(login, params.username, params.password);
+    if (response.status === 200) {
+      yield put({
+        type: `${AUTHENTICATE}_SET_CURRENT_USER`,
+        isAuthenticated: true,
+        userData: response.data.data.user,
+      });
+      const isAuthenticated = yield select(state => state.authenticate);
+      console.log(isAuthenticated);
+      history.push('/features');
+    } else {
+      params.setSubmitError(response);
+    }
   } catch (e) {
     console.log('catch err login', e);
   }
 }
 
-function* userLogout(params) {
+function* userLogout() {
   try {
-    const res = yield call(
-      axios
-        .post('http://localhost:2000/logout', {}, { withCredentials: true })
-        .then(response => {
-          console.log('logout response: ');
-          console.log(response);
-          if (response.status === 200) {
-            console.log('response.ststus logout ', response.status);
-            // update App.js state
-            // this.props.updateUser({
-            //   loggedIn: true,
-            //   username: response.data.username,
-            // });
-            // update the state to redirect to home
-            // this.setState({
-            //   redirectTo: '/',
-            // });
-          }
-        })
-        .catch(error => {
-          console.log('logout error: ');
-          console.log(error);
-        }),
-    );
-    // yield put({ type: `${GET_THEME_CONTENT}_SUCCESS`, data: res.data });
-    console.log('res from logout', res);
+    const response = yield call(logout);
+    if (response.status === 200) {
+      yield put({
+        type: `${AUTHENTICATE}_SET_CURRENT_USER`,
+        isAuthenticated: false,
+        userData: {},
+      });
+      const isAuthenticated = yield select(state => state.authenticate);
+      console.log(isAuthenticated);
+      history.push('/login');
+    }
   } catch (e) {
     console.log('catch err logout', e);
   }
@@ -100,40 +168,24 @@ function* userLogout(params) {
 function* userSignup(params) {
   console.log('register: ');
   try {
-    const res = yield call(
-      axios
-        .post(
-          'http://localhost:2000/signup',
-          {
-            registeredEmail: params.registeredEmail,
-            username: params.username,
-            password: params.password,
-          },
-          { withCredentials: true },
-        )
-        .then(response => {
-          console.log('register response: ');
-          console.log(response);
-          if (response.status === 200) {
-            console.log('response status', response.status);
-            // update App.js state
-            // this.props.updateUser({
-            //   loggedIn: true,
-            //   username: response.data.username,
-            // });
-            // update the state to redirect to home
-            // this.setState({
-            //   redirectTo: '/',
-            // });
-          }
-        })
-        .catch(error => {
-          console.log('register error: ');
-          console.log(error);
-        }),
+    const response = yield call(
+      signup,
+      params.registeredEmail,
+      params.username,
+      params.password,
     );
-    // yield put({ type: `${GET_THEME_CONTENT}_SUCCESS`, data: res.data });
-    console.log(res);
+    if (response.status === 200) {
+      yield put({
+        type: `${AUTHENTICATE}_SET_CURRENT_USER`,
+        isAuthenticated: true,
+        userData: response.data.data.user,
+      });
+      const isAuthenticated = yield select(state => state.authenticate);
+      console.log(isAuthenticated);
+      history.push('/features');
+    } else {
+      params.setSubmitError(response);
+    }
   } catch (e) {
     console.log(e);
   }
@@ -141,69 +193,27 @@ function* userSignup(params) {
 
 function* userForgotPassword(params) {
   try {
-    const res = yield call(
-      axios
-        .post('http://localhost:2000/forgotPassword', {
-          username: params.username,
-        })
-        .then(response => {
-          console.log('register response: ');
-          console.log(response);
-          if (response.status === 200) {
-            // update App.js state
-            this.props.updateUser({
-              loggedIn: true,
-              username: response.data.username,
-            });
-            // update the state to redirect to home
-            // this.setState({
-            //   redirectTo: '/',
-            // });
-          }
-        })
-        .catch(error => {
-          console.log('register error: ');
-          console.log(error);
-        }),
-    );
-    // yield put({ type: `${GET_THEME_CONTENT}_SUCCESS`, data: res.data });
-    console.log(res);
+    const response = yield call(forgotPassword, params.username);
+    if (response.status === 200) {
+      console.log('A link is sent to your mail ID');
+    }
   } catch (e) {
-    console.log(e);
+    console.log('catch err userForgotPassword', e);
   }
 }
 function* userForgotPasswordReset(params) {
   try {
-    const res = yield call(
-      axios
-        .post('http://localhost:2000/resetPassword', {
-          newPassword: params.newPassword,
-          token: params.token,
-        })
-        .then(response => {
-          console.log('reset response: ');
-          console.log(response);
-          if (response.status === 200) {
-            // update App.js state
-            this.props.updateUser({
-              loggedIn: true,
-              username: response.data.username,
-            });
-            // update the state to redirect to home
-            // this.setState({
-            //   redirectTo: '/',
-            // });
-          }
-        })
-        .catch(error => {
-          console.log('reset error: ');
-          console.log(error);
-        }),
+    const response = yield call(
+      forgotPasswordReset,
+      params.username,
+      params.token,
     );
-    // yield put({ type: `${GET_THEME_CONTENT}_SUCCESS`, data: res.data });
-    console.log(res);
+    if (response.status === 200) {
+      console.log('reset password successfully');
+      history.push('/login');
+    }
   } catch (e) {
-    console.log(e);
+    console.log('catch err userForgotPasswordReset', e);
   }
 }
 

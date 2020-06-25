@@ -11,6 +11,7 @@ export default function* builderSaga() {
   yield all([
     takeLatest(GET_DEFAULT_THEME, getThemeDetails),
     takeLatest(GET_THEME_CONTENT, getThemeContent),
+    takeLatest(`${GET_THEME_CONTENT}_TEST`, getTestDispatchReturn),
     takeLatest(UPDATE_CANVAS, updateCanvas),
     takeLatest(UPDATE_RESUME_EVENT_HANDLER, updateResumeEventHandler),
   ]);
@@ -30,6 +31,46 @@ function* getThemeContent(params) {
     );
     yield put({ type: `${GET_THEME_CONTENT}_SUCCESS`, data: response.data });
     console.log(response);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function signup(registeredEmail, username, password) {
+  return axios
+    .post(
+      'http://localhost:2000/login',
+      {
+        username,
+        password,
+      },
+      { withCredentials: true },
+    )
+    .then(response => {
+      console.log('register response: ', response);
+      if (response.status === 200) {
+        return response;
+      }
+      return response;
+    })
+    .catch(error => {
+      console.log('register error: ', error.response);
+    });
+}
+
+function* getTestDispatchReturn(params) {
+  console.log("inside getTestDispatchRet");
+  try {
+    const response = yield call(
+      signup,
+      'jitendra990',
+      'jitdrapra990',
+    );
+    if (response) {
+      console.log('isAuthenticatedd', params.updateFunction);
+      yield call(params.updateFunction, response);
+      return response;
+    }
   } catch (e) {
     console.log(e);
   }

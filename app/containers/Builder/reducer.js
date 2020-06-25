@@ -46,6 +46,8 @@ const builderReducer = (state = initialState, action) =>
       case `${GET_THEME_CONTENT}_SUCCESS`:
         draft.theme.data = action.data;
         break;
+      case `${GET_THEME_CONTENT}_TEST`:
+        break;
       case SET_DEFAULT_THEME:
         draft.theme.isLoaded = true;
         break;

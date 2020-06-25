@@ -66,6 +66,13 @@ export function getBuilderThemeContent(themeId) {
     themeId,
   };
 }
+// testing
+export function getBuilderThemeContentTest(updateFunction) {
+  return {
+    type: `${GET_THEME_CONTENT}_TEST`,
+    updateFunction,
+  };
+}
 /**
  * @description function to update editor state
  */

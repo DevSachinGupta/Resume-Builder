@@ -12,10 +12,10 @@ import Select from 'react-dropdown-select';
 
 function ListFooter(props) {
   const options = [
-    {id:1, value:'12'},
-    {id:2, value:'18'},
-    {id:3, value:'24'},
-    {id:4, value:'30'},
+    { id: 1, value: '12' },
+    { id: 2, value: '18' },
+    { id: 3, value: '24' },
+    { id: 4, value: '30' },
   ];
   const startItem =
     props.pagesize * (props.pageNumber - 1) === 0

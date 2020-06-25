@@ -5,7 +5,14 @@
  */
 
 import React, { memo } from 'react';
-import Header from './Header';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import {
+  makeSelectGetUserIsAuthenticated,
+  makeSelectGetCurrentUserData,
+} from '../../containers/Authenticate/selectors';
+import Header from '../Features/Header';
 import SettingsMenu from './SettingsMenu';
 import SettingsContent from './SettingsContent';
 import ProfilePage from './ProfilePage';
@@ -18,7 +25,9 @@ import './style.scss';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-function SettingPage() {
+function SettingPage({ user, userData, dispatch }) {
+  console.log('SettingPage userData', userData);
+  console.log('SettingPage user', user);
   const settingMenu = [
     {
       title: 'Profile',
@@ -36,10 +45,10 @@ function SettingPage() {
       title: 'Payments',
       url: '/settings/payments',
     },
-    {
-      title: 'Subscription',
-      url: '/settings/subscription',
-    },
+    // {
+    //   title: 'Subscription',
+    //   url: '/settings/subscription',
+    // },
   ];
   const [currentPage, setCurrentPage] = React.useState('/settings/profile');
   const switchContentMenu = menuItem => {
@@ -48,11 +57,11 @@ function SettingPage() {
     }
   };
   return (
-    <div className="bg-white">
+    <div className="bg-white flex flex-col h-screen justify-between">
       <div>
-        <Header />
+        <Header user={user} userData={userData} dispatch={dispatch} />
       </div>
-      <div className="flex ">
+      <div className="flex mb-auto">
         <div className="container mx-auto px-8">
           <div className="flex px-10">
             <div className="w-full pl-6 text-2xl">Account Settings</div>
@@ -69,22 +78,38 @@ function SettingPage() {
           <div className="px-10">
             <div className="px-4 mt-2">
               <SettingsContent currentPage={currentPage}>
-                <ProfilePage handler="/settings/profile" />
-                <PlansPage handler="/settings/plans" />
-                <NotificationsPage handler="/settings/notifications" />
-                <PaymentsPage handler="/settings/payments" />
-                <SubscriptionPage handler="/settings/subscription" />
+                <ProfilePage
+                  userData={userData}
+                  dispatch={dispatch}
+                  handler="/settings/profile"
+                />
+                <PlansPage
+                  userData={userData}
+                  dispatch={dispatch}
+                  handler="/settings/plans"
+                />
+                <NotificationsPage
+                  userData={userData}
+                  dispatch={dispatch}
+                  handler="/settings/notifications"
+                />
+                <PaymentsPage
+                  userData={userData}
+                  dispatch={dispatch}
+                  handler="/settings/payments"
+                />
+                {/* <SubscriptionPage
+                  userData={userData}
+                  dispatch={dispatch}
+                  handler="/settings/subscription"
+                /> */}
               </SettingsContent>
             </div>
           </div>
         </div>
       </div>
-      <div className="mt-8">
-        <div className="container mx-auto ">
-          <div className="px-10">
-            <Footer />
-          </div>
-        </div>
+      <div className="mx-4 mt-8">
+        <Footer />
       </div>
     </div>
   );
@@ -92,4 +117,23 @@ function SettingPage() {
 
 SettingPage.propTypes = {};
 
-export default memo(SettingPage);
+const mapStateToProps = createStructuredSelector({
+  user: makeSelectGetUserIsAuthenticated(),
+  userData: makeSelectGetCurrentUserData(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  memo,
+)(SettingPage);

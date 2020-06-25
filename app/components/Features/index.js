@@ -10,6 +10,10 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import axios from 'axios';
 import { updateTemplateNumberState } from 'containers/Builder/actions';
+import {
+  makeSelectGetUserIsAuthenticated,
+  makeSelectGetCurrentUserData,
+} from '../../containers/Authenticate/selectors';
 import Header from './Header';
 import SearchBar from './SearchBar';
 import GridRow from './GridRow';
@@ -21,7 +25,7 @@ import './style.scss';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-function Features({ dispatch }) {
+function Features({ user, userData, dispatch }) {
   const [filters, setFilters] = React.useState({
     pricing: '-1',
     category: [],
@@ -37,31 +41,21 @@ function Features({ dispatch }) {
 
   React.useEffect(() => {
     getFilteredList();
-  }, [filters,templateList2]);
+  }, [filters, templateList2]);
 
   React.useEffect(() => {
     axios
-      .get('http://localhost:2000/getAllTemplateList', {})
+      // .get('http://localhost:2000/template/getAllTemplateList')
+      .get('http://localhost:2000/template/getAllTemplateList', {
+        withCredentials: true,
+      })
       .then(response => {
-        console.log('reset response: ');
-        console.log(response);
         if (response.status === 200) {
-          console.log("response.status === 200", response.status, response.data.data.templateList)
           setTemplateList2(response.data.data.templateList);
-          // update App.js state
-          // this.props.updateUser({
-          //   loggedIn: true,
-          //   username: response.data.username,
-          // });
-          // update the state to redirect to home
-          // this.setState({
-          //   redirectTo: '/',
-          // });
         }
       })
       .catch(error => {
-        console.log('reset error: ');
-        console.log(error);
+        console.log('res err', error.response);
       });
   }, []);
 
@@ -167,11 +161,11 @@ function Features({ dispatch }) {
   }
 
   return (
-    <div className="bg-white text-black">
+    <div className="bg-white flex flex-col h-screen justify-between text-black">
       <div>
-        <Header />
+        <Header user={user} userData={userData} dispatch={dispatch} />
       </div>
-      <div className="flex ">
+      <div className="flex mb-auto">
         <div className="container mx-auto px-8">
           {/* <div className="flex px-10">
             <div className="w-full">
@@ -194,12 +188,8 @@ function Features({ dispatch }) {
           </div>
         </div>
       </div>
-      <div className="mt-8">
-        <div className="container mx-auto ">
-          <div className="px-10">
-            <Footer />
-          </div>
-        </div>
+      <div className="mx-4 mt-8">
+        <Footer />
       </div>
     </div>
   );
@@ -207,7 +197,10 @@ function Features({ dispatch }) {
 
 Features.propTypes = {};
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  user: makeSelectGetUserIsAuthenticated(),
+  userData: makeSelectGetCurrentUserData(),
+});
 
 function mapDispatchToProps(dispatch) {
   return {

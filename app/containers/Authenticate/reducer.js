@@ -4,11 +4,12 @@
  *
  */
 import produce from 'immer';
-import { DEFAULT_ACTION, AUTHENTICATE } from './constants';
+import { DEFAULT_ACTION, AUTHENTICATE, USER_LOADING } from './constants';
 
 export const initialState = {
-  uuid: null,
-  isAuthenticated: null,
+  isAuthenticated: false,
+  userData: {},
+  loading: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -17,12 +18,15 @@ const authenticateReducer = (state = initialState, action) =>
     switch (action.type) {
       case DEFAULT_ACTION:
         break;
-      case `${AUTHENTICATE}_SET`:
-        draft.uuid = action.uuid;
-        draft.isAuthenticated = true;
+      case `${AUTHENTICATE}_SET_CURRENT_USER`:
+        draft.isAuthenticated = action.isAuthenticated;
+        draft.userData = action.userData;
+        break;
+      case USER_LOADING:
+        draft.loading = true;
         break;
       case `${AUTHENTICATE}_UNSET`:
-        draft.uuid = null;
+        draft.userData = null;
         draft.isAuthenticated = false;
         break;
       case `${AUTHENTICATE}_LOGIN`:

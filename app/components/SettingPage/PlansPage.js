@@ -5,56 +5,63 @@
  */
 
 import React, { memo } from 'react';
+import Button from '../Button';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-function PlansPage() {
+function PlansPage(props) {
   return (
-    <div className="flex-items w-full bg-gray-300 shadow-md rounded-md border-b border-gray-500">
-      <div className="flex px-5 pt-3">
-        <div className="w-full pl-6 text-xl">Plans settings</div>
+    <div className="flex-items w-full shadow-md rounded-md border-t border-gray-200 ">
+      <div className="flex justify-between px-5 pt-3">
+        <div className="pl-6 text-xl">Plans settings</div>
+        {/* <Button as="submit" type="primary" className="text-white">
+          Save Changes
+        </Button> */}
       </div>
-      <div className="md:px-16 py-5 w-full">
-        <div className="mb-4 md:flex md:justify-between">
-          <div className="mb-4 md:mr-2 md:mb-0 w-1/2">
-            <label
-              className="block mb-2 text-sm  text-gray-700"
-              htmlFor="firstName"
-            >
-              First Name
-            </label>
-            <input
-              className="w-full px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-700 border focus:outline-none focus:shadow-outline"
-              id="firstName"
-              type="text"
-              placeholder="First Name"
-            />
-          </div>
-          <div className="md:ml-2 w-1/2">
-            <label
-              className="block mb-2 text-sm  text-gray-700"
-              htmlFor="lastName"
-            >
-              Last Name
-            </label>
-            <input
-              className="w-full px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-700 border focus:outline-none focus:shadow-outline"
-              id="lastName"
-              type="text"
-              placeholder="Last Name"
-            />
+      <div className="md:px-16 pt-5 w-full">
+        <div className="mb-4 md:flex ">
+          <label className="block text-sm  text-gray-700">Current Plan</label>
+        </div>
+        <div className="mb-4 md:flex ">
+          <div className="border border-gray-600">
+            <table className="min-w-full bg-white">
+              <thead className="bg-green-600 text-white">
+                <tr>
+                  <th className="w-1/5 text-left py-3 px-4 uppercase font-semibold text-sm">
+                    Plan
+                  </th>
+                  <th className="w-1/5 text-left py-3 px-4 uppercase font-semibold text-sm">
+                    Activated Date
+                  </th>
+                  <th className="w-1/5 text-left py-3 px-4 uppercase font-semibold text-sm">
+                    Expiry Date
+                  </th>
+                  <th className="w-2/5 text-left py-3 px-4 uppercase font-semibold text-sm">
+                    Desscription
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white">
+                <tr>
+                  <td className="w-1/5 text-left py-3 px-4">{props.userData.settings.orders.planName || '-'}</td>
+                  <td className="w-1/5 text-left py-3 px-4">{props.userData.settings.orders.activetedDate || '-'}</td>
+                  <td className="w-1/5 text-left py-3 px-4">{props.userData.settings.orders.expiryDate || '-'}</td>
+                  <td className="w-2/5 text-sm text-left py-3 px-4">
+                  {props.userData.settings.orders.planDescription || '-'}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <div className="mb-4">
-          <label className="block mb-2 text-sm  text-gray-700" htmlFor="email">
-            Email
-          </label>
-          <input
-            className="w-full px-3 py-2 mb-3 text-sm leading-tight bg-gray-200 text-gray-700 border focus:outline-none focus:shadow-outline"
-            id="email"
-            type="email"
-            placeholder="Email"
-          />
+      </div>
+      <div className="md:px-16 py-5 border-b w-full">
+        <div className="mb-4 md:flex ">
+          <div className="md:ml-2">
+            <Button type="primary" className="text-white">
+              Upgrade Your Plan
+            </Button>
+          </div>
         </div>
       </div>
     </div>

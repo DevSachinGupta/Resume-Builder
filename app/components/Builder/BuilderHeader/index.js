@@ -17,12 +17,15 @@ import { toggleHeaderUserMenu } from 'containers/App/actions';
 import { makeSelectIsUserMenuOpen } from 'containers/App/selectors';
 import { setModalContent } from 'containers/MyContent/actions';
 import Toast from 'components/Toast';
+import { makeUpdateEditorState } from 'containers/Builder/selectors';
 import { toggleSidebar } from '../../../containers/Builder/actions';
+import { getUserLogout } from '../../../containers/Authenticate/actions';
+import { handleSave } from '../../apiRequest';
 import Button from '../../Button';
 import './progress.css';
 import './style.scss';
 
-function BuilderHeader({ dispatch, isHeaderMenuOpen }) {
+function BuilderHeader({ dispatch, isHeaderMenuOpen, editorState }) {
   const [toastList, setToastList] = useState([]);
 
   useEffect(() => {
@@ -80,7 +83,8 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen }) {
           <Button>Preview</Button>
         </div>
         <div className={cx('publishButton')}>
-          <Button onClick={() => displayToast()}>Save</Button>
+          <Button onClick={() => handleSave(editorState)}>Save</Button>
+          {/* <Button onClick={() => displayToast()}>Save</Button> */}
         </div>
         {toast}
         <div className={cx('publishButton')}>
@@ -99,7 +103,14 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen }) {
             })}
           >
             <ul>
-              <li>Login</li>
+              <li
+                onClick={() => {
+                  dispatch(getUserLogout());
+                  dispatch(toggleHeaderUserMenu());
+                }}
+              >
+                Logout
+              </li>
               <li
                 onClick={() => {
                   dispatch(toggleHeaderUserMenu());
@@ -123,6 +134,7 @@ BuilderHeader.propTypes = {
 const withConnect = connect(
   createStructuredSelector({
     isHeaderMenuOpen: makeSelectIsUserMenuOpen(),
+    editorState: makeUpdateEditorState(),
   }),
   null,
 );

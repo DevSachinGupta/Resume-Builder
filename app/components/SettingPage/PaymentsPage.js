@@ -8,7 +8,7 @@ import React, { memo } from 'react';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-function PaymentsPage() {
+function PaymentsPage(props) {
   return (
     <div className="flex-items w-full shadow-md rounded-md  border-t border-gray-200 ">
       <div className="flex px-5 pt-3">
@@ -34,6 +34,22 @@ function PaymentsPage() {
               </tr>
             </thead>
             <tbody className="bg-white">
+              {props.userData.settings.orders.map(item => (
+                <tr>
+                  <td className="w-1/4 text-left py-3 px-4">
+                    {item.planName || '-'}
+                  </td>
+                  <td className="w-1/4 text-left py-3 px-4">
+                    {item.activetedDate || '-'}
+                  </td>
+                  <td className="w-1/4 text-left py-3 px-4">
+                    {item.expiryDate || '-'}
+                  </td>
+                  <td className="w-1/4 text-left py-3 px-4">
+                    {item.transactionID || '-'}
+                  </td>
+                </tr>
+              ))}
               <tr>
                 <td className="w-1/4 text-left py-3 px-4">Standard</td>
                 <td className="w-1/4 text-left py-3 px-4">24 Feb 2020</td>
