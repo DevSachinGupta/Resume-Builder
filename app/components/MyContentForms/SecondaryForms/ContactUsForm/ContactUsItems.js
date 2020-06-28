@@ -9,11 +9,16 @@ import Select from '../../../FormComponents/Select';
 const ContactUsInputs = ({ subjectsList }) => (
   <div>
     <Row>
-      <div>
+      <div className="flex flex-col min-w-0 w-full mb-6 text-center">
+        <div className="text-center leading-none text-xl  mb-0 px-6 pb-3"><small className="text-xs font-light ">Powered by </small>NetCV.</div>
+        <div className="text-base">Feel free to contact us for any support.</div>
+        <small className="text-sm font-light leading-tight">support@netcv.com</small>
+      </div>
+      {/* <div>
         <h3>Powered by Netcv()logo</h3>
         <h4>support@netcv.co.in</h4>
         <h5>Feel free to contact Us for any support.</h5>
-      </div>
+      </div> */}
     </Row>
     <Row>
       <Column width="full" className="px-1">

@@ -46,9 +46,9 @@ function StarRating(props) {
     <Field name="rating" id="rating" type="number">
       {({ form: { setFieldValue } }) => (
         <div>
-          <label htmlFor="rating" className="label-color">
+          {/* <label htmlFor="rating" className="label-color">
             Rating
-          </label>
+          </label> */}
           <div
             className="rating"
             ref={ratingRef}

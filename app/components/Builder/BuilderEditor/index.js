@@ -33,22 +33,18 @@ let DemoPage = {
   style: null,
 };
 
-function BuilderEditor({
-  demopageState,
-  showTemplateSelection,
-  dispatch,
-}) {
+function BuilderEditor({ demopageState, showTemplateSelection, dispatch }) {
   DemoPage = demopageState || DemoPage;
   const [showEditorPanel, setShowEditorPanel] = useState(0);
   useEffect(() => {
-    console.log("getBuilderThemeCt")
+    console.log('getBuilderThemeCt');
     dispatch(getBuilderThemeContentTest(setShowEditorPanel));
   }, []);
   // const response = await dispatch(getBuilderThemeContentTest())
-  console.log("getBuilderThemeContentTestoutput: ", showEditorPanel)
+  console.log('getBuilderThemeContentTestoutput: ', showEditorPanel);
   useEffect(() => {
-    console.log("getBuilderThemeContentTestoutput effect: ", showEditorPanel)
-  },[showEditorPanel]);
+    console.log('getBuilderThemeContentTestoutput effect: ', showEditorPanel);
+  }, [showEditorPanel]);
   useEffect(() => {
     const editor = grapesjs.init({
       container: '#gjs',
@@ -195,9 +191,24 @@ function BuilderEditor({
       // console.log("Panels Lsit2 panels:", editor.Panels.getPanels());
 
       dispatch(updateEditorState(editor));
+      // const iframe = document.getElementsByClassName('gjs-frame')[0];
+      // console.log("iframe data: ", iframe)
+      // if (iframe) {
+      //   console.log("iframe height: ",iframe.contentWindow.document.documentElement.scrollHeight)
+      //   iframe.style.height = `${
+      //     iframe.contentWindow.document.documentElement.scrollHeight
+      //   }px`;
+      //   // console.log("iframe height: ", iframe.contentWindow.document.body.scrollHeight)
+      //   iframe.onload = function() {
+      //     iframe.style.height = `${
+      //       iframe.contentWindow.document.documentElement.scrollHeight
+      //     }px`;
+      //   };
+      // }
     }
   }, [DemoPage]);
   // console.log('showTemplateSelection', showTemplateSelection);
+
   return (
     <div>
       {showTemplateSelection ? (

@@ -15,6 +15,7 @@ import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import Settings from 'containers/Settings/Loadable';
 import Preview from 'components/Preview';
+import DeleteAccountPage from 'components/SettingPage/DeleteAccount/DeleteAccountPage';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Authenticate from 'containers/Authenticate/Loadable';
 import Builder from 'containers/Builder/Loadable';
@@ -78,6 +79,13 @@ const App = ({ dispatch }) => (
             <Authenticate {...routeProps} method="resetPassword" />
           )}
         />
+        <Route
+          path="/accountVerify/:tokenId"
+          render={routeProps => (
+            <Authenticate {...routeProps} method="accountVerify" />
+          )}
+        />
+        <Route path="/deleteAccount/:tokenId" component={DeleteAccountPage} />
         <Route path="/signup" component={Authenticate} />
         <Route path="" component={NotFoundPage} />
       </Switch>

@@ -7,19 +7,22 @@ import TextArea from '../../../FormComponents/TextArea';
 
 const FeedbackInputs = ({ setRating }) => (
   <div>
-    <Row>
+    <Row className="justify-center">
       <div className="rating">
-        <StarRating
-          numberOfStars="5"
-          currentRatingValue="0"
-          onClick={setRating}
-        />
+        <div className="label-color">Feedback Us</div>
+        <div className="text-center">
+          <StarRating
+            numberOfStars="5"
+            currentRatingValue="0"
+            onClick={setRating}
+          />
+        </div>
       </div>
     </Row>
     <Row>
       <Column width="full" className="px-1">
         <TextArea
-          placeholder="Message"
+          placeholder="Provide your valuable Feedback"
           label="Message"
           name="message"
           validate={validationMap.message}

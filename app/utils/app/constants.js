@@ -34,10 +34,11 @@ const Constants = {
       title: 'Share Online',
     },
     contactUs: {
-      title: 'Contact us',
+      title: '',
+      // title: 'Contact us',
     },
     feedback: {
-      title: 'Feedback',
+      title: '',
     },
     publish: {
       title: 'Publish',

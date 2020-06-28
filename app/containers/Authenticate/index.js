@@ -12,6 +12,7 @@ import LoginFrom from 'components/Authentication/LoginForm';
 import RegistrationFrom from 'components/Authentication/SignupForm';
 import ForgotPasswordForm from 'components/Authentication/ForgotPasswordForm';
 import ForgotPasswordResetForm from 'components/Authentication/ForgotPasswordResetForm';
+import AccountVerifyPage from 'components/Authentication/AccountVerify/AccountVerifyPage';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -39,6 +40,9 @@ export function Authenticate(props) {
       renderObj = (
         <ForgotPasswordResetForm tokenId={props.match.params.tokenId} />
       );
+      break;
+    case 'accountVerify':
+      renderObj = <AccountVerifyPage tokenId={props.match.params.tokenId} />;
       break;
     default:
       renderObj = <RegistrationFrom />;

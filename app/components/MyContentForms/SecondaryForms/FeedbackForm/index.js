@@ -8,6 +8,7 @@ import React, { memo, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Formik, Form } from 'formik';
+import axios from 'axios';
 import FeedbackInputs from './FeedbackItems';
 import Button from '../../../Button';
 import './style.scss';
@@ -19,6 +20,7 @@ function FeedbackForm() {
   };
 
   const [feedback, setFeedback] = useState(blankFeedbackFields);
+  const [submitError, setSubmitError] = useState(null);
 
   const setRating = rating => {
     const feedbackTemp = { ...feedback };
@@ -26,7 +28,28 @@ function FeedbackForm() {
     setFeedback(feedbackTemp);
   };
   const handleSave = values => {
-    // call fetch with post method in saga
+    axios
+      .post(
+        'http://localhost:2000/feedback/addRating',
+        {
+          rating: values.rating,
+          message: values.message,
+        },
+        { withCredentials: true },
+      )
+      .then(response => {
+        console.log('handleSubmitRating response: ', response);
+        if (response.status === 200) {
+          // TODO: info on toast -- success case and also Model
+          console.log('succesfully submit feedback');
+        } else {
+          setSubmitError({status:'Something went wrong while submitting!'})
+          console.log('Something went wrong while submitting: ', response);
+        }
+      })
+      .catch(error => {
+        console.log('handleSubmitRating error: ', error);
+      });
   };
 
   return (
@@ -43,6 +66,20 @@ function FeedbackForm() {
             <div className="feedbackContainer">
               <FeedbackInputs setRating={setRating} />
             </div>
+            <div className="relative w-full text-center">
+              {submitError && (
+                <p className="text-red-600 font-normal text-sm">
+                  {submitError.status}
+                </p>
+              )}
+            </div>
+            {/* <div className="relative w-full text-center">
+              {submitError && (
+                <p className="text-red-600 font-normal text-sm">
+                 Something went wrong while submitting
+                </p>
+              )}
+            </div> */}
             <div className={cx('footerContainer')}>
               <Button as="submit" fullWidth type="primary">
                 Submit

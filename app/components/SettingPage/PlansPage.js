@@ -43,11 +43,17 @@ function PlansPage(props) {
               </thead>
               <tbody className="bg-white">
                 <tr>
-                  <td className="w-1/5 text-left py-3 px-4">{props.userData.settings.orders.planName || '-'}</td>
-                  <td className="w-1/5 text-left py-3 px-4">{props.userData.settings.orders.activetedDate || '-'}</td>
-                  <td className="w-1/5 text-left py-3 px-4">{props.userData.settings.orders.expiryDate || '-'}</td>
+                  <td className="w-1/5 text-left py-3 px-4">
+                    {props.userData.settings.activePlan.planName || '-'}
+                  </td>
+                  <td className="w-1/5 text-left py-3 px-4">
+                    {props.userData.settings.activePlan.activetedDate || '-'}
+                  </td>
+                  <td className="w-1/5 text-left py-3 px-4">
+                    {props.userData.settings.activePlan.expiryDate || '-'}
+                  </td>
                   <td className="w-2/5 text-sm text-left py-3 px-4">
-                  {props.userData.settings.orders.planDescription || '-'}
+                    {props.userData.settings.activePlan.planDescription || '-'}
                   </td>
                 </tr>
               </tbody>
@@ -58,7 +64,7 @@ function PlansPage(props) {
       <div className="md:px-16 py-5 border-b w-full">
         <div className="mb-4 md:flex ">
           <div className="md:ml-2">
-            <Button type="primary" className="text-white">
+            <Button type="primary" className="text-white" onClick={e => {}}>
               Upgrade Your Plan
             </Button>
           </div>

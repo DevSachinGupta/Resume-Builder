@@ -1,1 +1,8 @@
 @import '../../../../styles/app.scss';
+
+.feedbackContainer {
+    textarea {
+        min-height: 95px;
+        width:  410px !important;
+    }
+}
