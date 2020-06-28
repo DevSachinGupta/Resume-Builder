@@ -1,0 +1,12 @@
+.themesSection {
+    padding: 0 10px 0 10px;
+    .themeHeader{
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    button{
+        &.active{
+            color: blue;
+        }
+    }
+}
