@@ -20,7 +20,7 @@ import {
   updateResumeEventHanlder,
   getBuilderThemeContentTest,
 } from 'containers/Builder/actions';
-import Features from 'components/Features';
+import Themes from 'components/Themes';
 import PropTypes from 'prop-types';
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
@@ -213,7 +213,7 @@ function BuilderEditor({ demopageState, showTemplateSelection, dispatch }) {
     <div>
       {showTemplateSelection ? (
         <div id="myTheme" className="mytheme-container hbjh">
-          <Features />
+          <Themes />
         </div>
       ) : null}
       <div
