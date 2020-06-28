@@ -7,12 +7,14 @@
 
 import React from 'react';
 import cx from 'classnames';
+import axios from 'axios';
 import { IoMdSearch } from 'react-icons/io';
 import Row from 'components/Layout/Row';
 import Column from 'components/Layout/Column';
 import CardGrid from 'components/Features/CardGrid';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
+import 'components/Features/style.scss';
 import './style.scss';
 
 function Themes() {
@@ -23,11 +25,32 @@ function Themes() {
   });
   const [searchText, setSearchtext] = React.useState('');
   const [activeBtnId, setActiveBtnId] = React.useState('allBtn');
+  const [templateList, setTemplateList] = React.useState([]);
+
   const updateFilters = (key, value) => {
-    const data = { ...filters };
-    data[key] = value;
-    setFilters({ ...data });
+    const data1 = { ...filters };
+    data1[key] = value;
+    setFilters({ ...data1 });
   };
+
+  React.useEffect(() => {
+    axios
+      .get('http://localhost:2000/template/getAllTemplateList', {
+        withCredentials: true,
+      })
+      .then(response => {
+        if (response.status === 200) {
+          setTemplateList(response.data.data.templateList);
+          updateFilters('data', response.data.data.templateList);
+          console.log('res log', response);
+        }
+      })
+      .catch(error => {
+        // console.log('res err', error.response);
+      });
+  }, []);
+
+  console.log("data list ", filters);
 
   return (
     <div className="themesSection">
