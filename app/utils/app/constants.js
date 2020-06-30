@@ -31,7 +31,7 @@ const Constants = {
       title: 'Accomplishments',
     },
     shareOnline: {
-      title: 'Share Online',
+      title: '',
     },
     contactUs: {
       title: '',
@@ -41,7 +41,7 @@ const Constants = {
       title: '',
     },
     publish: {
-      title: 'Publish',
+      title: '',
     },
     setting: {
       title: 'Setting',

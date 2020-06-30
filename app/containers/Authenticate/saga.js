@@ -69,22 +69,21 @@ function logout() {
     });
 }
 
-function signup(registeredEmail, username, password) {
+function signup(registeredEmail, username, firstName, lastName, password) {
   return axios
     .post(
       'http://localhost:2000/signup',
       {
         registeredEmail,
         username,
+        firstName,
+        lastName,
         password,
       },
       { withCredentials: true },
     )
     .then(response => {
       console.log('register response: ', response);
-      if (response.status === 200) {
-        return response;
-      }
       return response;
     })
     .catch(error => {
@@ -172,22 +171,31 @@ function* userSignup(params) {
       signup,
       params.registeredEmail,
       params.username,
+      params.firstName,
+      params.lastName,
       params.password,
     );
     if (response.status === 200) {
-      yield put({
-        type: `${AUTHENTICATE}_SET_CURRENT_USER`,
-        isAuthenticated: true,
-        userData: response.data.data.user,
+      params.setSignupStatus(true);
+      params.setLoadingStatus(false);
+      console.log('succesfully submit your request.');
+    } else if (response.status === 204) {
+      params.setSubmitError({
+        status: 'A user is already exits with username $',
       });
-      const isAuthenticated = yield select(state => state.authenticate);
-      console.log(isAuthenticated);
-      history.push('/features');
     } else {
-      params.setSubmitError(response);
+      params.setSubmitError({
+        status: 'Something went wrong while submitting!',
+      });
     }
+    params.setLoadingStatus(false);
+    console.log('Something went wrong while re: ', response);
   } catch (e) {
-    console.log(e);
+    params.setLoadingStatus(false);
+    params.setSubmitError({
+      status: 'Something went wrong while submitting!',
+    });
+    console.log('userSignup error: ', error);
   }
 }
 

@@ -31,8 +31,11 @@ export const initialState = {
   resume_json_state: {},
   demopage_state: null,
   template_number_state: 2,
+  updateCanvasCount: 0,
   showThemeToggle: false,
 };
+
+const canvasUpdateLimit = 2;
 
 /* eslint-disable default-case, no-param-reassign */
 const builderReducer = (state = initialState, action) =>
@@ -74,6 +77,13 @@ const builderReducer = (state = initialState, action) =>
         draft.template_number_state = action.template_number_state;
         break;
       case UPDATE_CANVAS:
+        break;
+      case `${UPDATE_CANVAS}_COUNT`:
+        if (draft.updateCanvasCount === canvasUpdateLimit) {
+          draft.updateCanvasCount = 0;
+        } else {
+          draft.updateCanvasCount += 1;
+        }
         break;
       case UPDATE_RESUME_EVENT_HANDLER:
         break;

@@ -11,6 +11,7 @@ import { compose } from 'redux';
 import cx from 'classnames';
 import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
+import { useToasts } from 'react-toast-notifications';
 import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
   updateResumeJSONState,
@@ -23,6 +24,7 @@ import {
   setModalContent,
 } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
+import { updateResumeKeyValue } from '../index';
 import EducationInputs from './EducationItems';
 import Accordian from '../../Accordion';
 import Button from '../../Button';
@@ -67,6 +69,8 @@ function EducationForm({ allCountries, resumeJSONState, dispatch }) {
     getCountires();
   }, []);
 
+  const { addToast } = useToasts();
+
   const formatValues = values => {
     const tempValues = values;
     tempValues.forEach((value, index) => {
@@ -86,6 +90,7 @@ function EducationForm({ allCountries, resumeJSONState, dispatch }) {
     const history = { history: values.education };
     dispatch(updateEditorCanvas('education', 'ADD', updatedEdu, componentMap));
     dispatch(updateResumeJSONState(history, 'education'));
+    updateResumeKeyValue('education', values.education, addToast);
     dispatch(toggleModal());
   };
   const handleSaveAndNext = values => {
@@ -103,7 +108,7 @@ function EducationForm({ allCountries, resumeJSONState, dispatch }) {
       <Formik
         initialValues={{ education: educations }}
         onSubmit={(values, actions) => {
-          console.log(values, actions);
+          console.log('val and action', values, actions);
           if (values.publish === 0) {
             handleSave(values);
           } else if (values.publish === 1) {

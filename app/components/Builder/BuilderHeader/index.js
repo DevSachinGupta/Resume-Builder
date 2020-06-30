@@ -8,26 +8,26 @@ import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import cx from 'classnames';
-import np from 'nprogress';
 import { createStructuredSelector } from 'reselect';
+import cx from 'classnames';
+import axios from 'axios';
+import np from 'nprogress';
+import { Link } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
 import { GoThreeBars } from 'react-icons/go';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaUserCircle, FaMobileAlt } from 'react-icons/fa';
+import { IoIosDesktop, IoIosTabletPortrait } from 'react-icons/io';
 import { toggleHeaderUserMenu } from 'containers/App/actions';
 import { makeSelectIsUserMenuOpen } from 'containers/App/selectors';
 import { setModalContent } from 'containers/MyContent/actions';
-import Toast from 'components/Toast';
 import { makeUpdateEditorState } from 'containers/Builder/selectors';
 import { toggleSidebar } from '../../../containers/Builder/actions';
 import { getUserLogout } from '../../../containers/Authenticate/actions';
-import { handleSave } from '../../apiRequest';
 import Button from '../../Button';
 import './progress.css';
 import './style.scss';
 
 function BuilderHeader({ dispatch, isHeaderMenuOpen, editorState }) {
-  const [toastList, setToastList] = useState([]);
-
   useEffect(() => {
     np.configure({
       showSpinner: false,
@@ -35,33 +35,43 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen, editorState }) {
     });
     // np.start({});
   }, []);
+  const { addToast } = useToasts();
 
-  // toast test
-  const toastProperties = {
-    id: 1,
-    title: 'Warning',
-    description: 'This is a warning toast component',
-    backgroundColor: '#f0ad4e',
-    icon: <GoThreeBars />,
-  };
-  const list = [toastProperties];
-  let toast = null;
-  toast = (
-    <div>
-      <Toast
-        toastList={toastList}
-        position="bottom-left"
-        autoDelete
-        dismissTime={2000}
-      />
-    </div>
-  );
-  const displayToast = () => {
-    console.log('called diplay');
-    setToastList([...toastList, toastProperties]);
-  };
+  const saveBuilderSession = editor => {
+    const HTMLCode = editor.getHtml();
+    const CSSCode = editor.getCss();
+    const JSCode = '';
+    console.log('HTML Code: ', HTMLCode);
+    console.log('CSS Code: ', CSSCode);
 
-  // end toast test
+    axios
+      .post(
+        'http://localhost:2000/builder/saveBuilderSession',
+        {
+          HTMLCode,
+          CSSCode,
+          JSCode,
+        },
+        { withCredentials: true },
+      )
+      .then(response => {
+        if (response.status === 200) {
+          addToast('Save successfully!', { appearance: 'info' });
+          console.log('succesfully submit your request.', response);
+        } else {
+          addToast('Issue while saving! Please try later.', {
+            appearance: 'error',
+          });
+          console.log('Something went wrong while submitting: ', response);
+        }
+      })
+      .catch(error => {
+        addToast('Issue while saving! Please try later.', {
+          appearance: 'error',
+        });
+        console.log('saveBuilderSession error: ', error);
+      });
+  };
 
   return (
     <div className="header-container flex bg-white border-b border-gray-200 inset-x-0 z-100 h-16 items-center shadow-lg">
@@ -74,19 +84,66 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen, editorState }) {
       >
         <GoThreeBars size={22} />
       </Button>
-      <div className={cx('deviceContainer')} />
-      <div className="panel__top">
-        <div className="panel__basic-actions" />
+      <div className={cx('deviceContainer')}>
+        <div className="panel__top">
+          <div className="w-1/4 flex items-center ">
+            <button
+              type="button"
+              className="border-r-2 pr-2"
+              onClick={() => {
+                editorState.setDevice('Desktop');
+              }}
+            >
+              <IoIosDesktop size={30} class="" />
+            </button>
+            <button
+              type="button"
+              className="border-r-2 pr-2 pl-2"
+              onClick={() => {
+                editorState.setDevice('Tablet');
+              }}
+            >
+              <IoIosTabletPortrait size={30} class=" " />
+            </button>
+            <button
+              type="button"
+              className="pl-2"
+              onClick={() => {
+                editorState.setDevice('Mobile portrait');
+              }}
+            >
+              <FaMobileAlt size={30} class="" />
+            </button>
+          </div>
+
+          {/* <div className="panel__basic-actions" /> */}
+        </div>
       </div>
       <div className={cx('actionContainer')}>
         <div className={cx('publishButton')}>
-          <Button>Preview</Button>
+          <Link
+            to={{
+              pathname: '/preview/vefe',
+              aboutProps: {
+                BuilderData: 'editorState',
+              },
+            }}
+            // target="_blank"
+            className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black"
+          >
+            Preview
+          </Link>
+          <Button
+            onClick={() => {
+              console.log('testing preview');
+            }}
+          >
+            Preview
+          </Button>
         </div>
         <div className={cx('publishButton')}>
-          <Button onClick={() => handleSave(editorState)}>Save</Button>
-          {/* <Button onClick={() => displayToast()}>Save</Button> */}
+          <Button onClick={() => saveBuilderSession(editorState)}>Save</Button>
         </div>
-        {toast}
         <div className={cx('publishButton')}>
           <Button onClick={() => dispatch(setModalContent('publish'))}>
             Publish

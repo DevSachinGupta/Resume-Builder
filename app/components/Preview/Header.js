@@ -28,7 +28,7 @@ function Header(props) {
               This Template is Copyright of NetCV
             </div>
           </div>
-          <div className="w-1/4 flex items-center justify-end">
+          <div className="w-1/4 flex items-center ">
             <button
               type="button"
               className="border-r-2 pr-2"

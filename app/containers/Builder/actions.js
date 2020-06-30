@@ -128,6 +128,14 @@ export function updateEditorCanvas(
   };
 }
 /**
+ * @description function to increase canvas update count
+ */
+export function updateCanvasCount() {
+  return {
+    type: `${UPDATE_CANVAS}_COUNT`,
+  };
+}
+/**
  * @description function to update resume event handler
  */
 export function updateResumeEventHanlder(
@@ -135,6 +143,7 @@ export function updateResumeEventHanlder(
   fieldId,
   fieldIndex,
   content,
+  addToast,
 ) {
   return {
     type: UPDATE_RESUME_EVENT_HANDLER,
@@ -142,5 +151,6 @@ export function updateResumeEventHanlder(
     fieldId,
     fieldIndex,
     content,
+    addToast,
   };
 }

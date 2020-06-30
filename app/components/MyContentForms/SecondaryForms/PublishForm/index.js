@@ -23,32 +23,32 @@ function PublishForm() {
     state: '',
   };
   return (
-    <React.Fragment>
-      <div>Multi Step Form using React And Formik</div>
-      <Formik
-        // enableReinitialize
-        initialValues={{ ...formData }}
-        onSubmit={(values, actions) => {
-          // eslint-disable-next-line no-console
-          console.log(values);
-        }}
-      >
-        {({ isValid, setTouched, submitForm, validateForm }) => (
-          <Form>
-            <StepperForm
-              showPreviousButton
-              isValid={isValid}
-              setTouched={setTouched}
-              submitForm={submitForm}
-              validateForm={validateForm}
-            >
-              <FormFirstStep />
-              <FormSecondStep />
-            </StepperForm>
-          </Form>
-        )}
-      </Formik>
-    </React.Fragment>
+    <FormFirstStep />
+    // <React.Fragment>
+    //   <Formik
+    //     // enableReinitialize
+    //     initialValues={{ ...formData }}
+    //     onSubmit={(values, actions) => {
+    //       // eslint-disable-next-line no-console
+    //       console.log(values);
+    //     }}
+    //   >
+    //     {({ isValid, setTouched, submitForm, validateForm }) => (
+    //       <Form>
+    //         <StepperForm
+    //           showPreviousButton
+    //           isValid={isValid}
+    //           setTouched={setTouched}
+    //           submitForm={submitForm}
+    //           validateForm={validateForm}
+    //         >
+    //           <FormFirstStep />
+    //           <FormSecondStep />
+    //         </StepperForm>
+    //       </Form>
+    //     )}
+    //   </Formik>
+    // </React.Fragment>
   );
 }
 

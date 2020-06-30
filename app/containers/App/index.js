@@ -11,6 +11,7 @@ import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import Proptypes from 'prop-types';
 import { Router, Switch, Route } from 'react-router-dom';
+import { ToastProvider } from 'react-toast-notifications';
 import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import Settings from 'containers/Settings/Loadable';
@@ -34,66 +35,70 @@ const AppWrapper = styled.div`
 `;
 
 const App = ({ dispatch }) => (
-  <AppWrapper>
-    <Helmet
-      titleTemplate="%s - React.js Boilerplate"
-      defaultTitle="React.js Boilerplate"
-    >
-      <meta name="description" content="A React.js Boilerplate application" />
-    </Helmet>
-    <Router history={history}>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/features" component={FeaturePage} />
-        <Route path="/settings" component={Settings} />
-        <Route path="/preview/:templateURL" component={Preview} />
-        <Route
-          path="/login"
-          render={routeProps => <Authenticate {...routeProps} method="login" />}
-        />
-        <Route
-          path="/builder"
-          component={() => {
-            const location = new URLSearchParams(window.location.search);
-            if (location.has('modal')) {
-              dispatch(setModalContent(location.get('modal')));
-            }
-            return <Builder />;
-          }}
-        />
-        <Route
-          path="/signup"
-          render={routeProps => (
-            <Authenticate {...routeProps} method="signup" />
-          )}
-        />
-        <Route
-          path="/forgotpwd"
-          render={routeProps => (
-            <Authenticate {...routeProps} method="forgotpwd" />
-          )}
-        />
-        <Route
-          path="/resetPassword/:tokenId"
-          render={routeProps => (
-            <Authenticate {...routeProps} method="resetPassword" />
-          )}
-        />
-        <Route
-          path="/accountVerify/:tokenId"
-          render={routeProps => (
-            <Authenticate {...routeProps} method="accountVerify" />
-          )}
-        />
-        <Route path="/deleteAccount/:tokenId" component={DeleteAccountPage} />
-        <Route path="/signup" component={Authenticate} />
-        <Route path="" component={NotFoundPage} />
-      </Switch>
-    </Router>
-    {/* <Footer /> */}
-    <MyContentContainer />
-    <GlobalStyle />
-  </AppWrapper>
+  <ToastProvider autoDismiss autoDismissTimeout={2000} placement="bottom-left">
+    <AppWrapper>
+      <Helmet
+        titleTemplate="%s - React.js Boilerplate"
+        defaultTitle="React.js Boilerplate"
+      >
+        <meta name="description" content="A React.js Boilerplate application" />
+      </Helmet>
+      <Router history={history}>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/features" component={FeaturePage} />
+          <Route path="/settings" component={Settings} />
+          <Route path="/preview/:templateURL" component={Preview} />
+          <Route
+            path="/login"
+            render={routeProps => (
+              <Authenticate {...routeProps} method="login" />
+            )}
+          />
+          <Route
+            path="/builder"
+            component={() => {
+              const location = new URLSearchParams(window.location.search);
+              if (location.has('modal')) {
+                dispatch(setModalContent(location.get('modal')));
+              }
+              return <Builder />;
+            }}
+          />
+          <Route
+            path="/signup"
+            render={routeProps => (
+              <Authenticate {...routeProps} method="signup" />
+            )}
+          />
+          <Route
+            path="/forgotpwd"
+            render={routeProps => (
+              <Authenticate {...routeProps} method="forgotpwd" />
+            )}
+          />
+          <Route
+            path="/resetPassword/:tokenId"
+            render={routeProps => (
+              <Authenticate {...routeProps} method="resetPassword" />
+            )}
+          />
+          <Route
+            path="/accountVerify/:tokenId"
+            render={routeProps => (
+              <Authenticate {...routeProps} method="accountVerify" />
+            )}
+          />
+          <Route path="/deleteAccount/:tokenId" component={DeleteAccountPage} />
+          <Route path="/signup" component={Authenticate} />
+          <Route path="" component={NotFoundPage} />
+        </Switch>
+      </Router>
+      {/* <Footer /> */}
+      <MyContentContainer />
+      <GlobalStyle />
+    </AppWrapper>
+  </ToastProvider>
 );
 App.propTypes = {
   dispatch: Proptypes.func.isRequired,

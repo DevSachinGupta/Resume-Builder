@@ -5,20 +5,27 @@
  */
 
 import React, { memo, useState } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import axios from 'axios';
-import { FaSpinner } from 'react-icons/fa';
 import { Formik, Form } from 'formik';
+import { useToasts } from 'react-toast-notifications';
+import { toggleModal } from 'containers/App/actions';
+import DotsLoading from '../../../LoadingIndicator/dotsLoading';
 import ContactUsInputs from './ContactUsItems';
 import Button from '../../../Button';
 import './style.scss';
 
-function ContactUsForm() {
+function ContactUsForm({ dispatch }) {
   const blankContactUsFields = {
     subject: '',
     message: '',
   };
+  const { addToast } = useToasts();
+  const [loadingStatus, setLoadingStatus] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const subjectsList = [
     {
@@ -40,6 +47,7 @@ function ContactUsForm() {
   ];
 
   const handleSave = values => {
+    setLoadingStatus(true);
     axios
       .post(
         'http://localhost:2000/contactUs/addContactUs',
@@ -52,14 +60,18 @@ function ContactUsForm() {
       .then(response => {
         console.log('addContactUs response: ', response);
         if (response.status === 200) {
-          setSubmitError({status:' submitting!'})
+          dispatch(toggleModal());
+          addToast('Feedback Submmited!', { appearance: 'info' });
           console.log('succesfully submit your request.');
         } else {
-          setSubmitError({status:'Something went wrong while submitting!'})
+          setSubmitError({ status: 'Something went wrong while submitting!' });
           console.log('Something went wrong while submitting: ', response);
         }
+        setLoadingStatus(false);
       })
       .catch(error => {
+        setLoadingStatus(false);
+        setSubmitError({ status: 'Something went wrong while submitting!' });
         console.log('addContactUs error: ', error);
       });
   };
@@ -85,11 +97,7 @@ function ContactUsForm() {
                 </p>
               )}
             </div>
-            <div className="relative w-full text-center">
-                <p className="text-red-600 font-normal text-sm">
-                  <FaSpinner className="spin"/>
-                </p>
-            </div>
+            {loadingStatus && <DotsLoading loadingText="Submitting..." />}
             <div className={cx('footerContainer')}>
               <Button as="submit" fullWidth type="primary">
                 Submit
@@ -102,6 +110,19 @@ function ContactUsForm() {
   );
 }
 
-ContactUsForm.propTypes = {};
+ContactUsForm.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
 
-export default memo(ContactUsForm);
+const mapStateToProps = () => createStructuredSelector({});
+
+const mapDispatchToProps = null;
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+const withCompose = compose(
+  withConnect,
+  memo,
+);
+export default withCompose(ContactUsForm);

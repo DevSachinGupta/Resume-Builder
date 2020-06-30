@@ -54,15 +54,23 @@ export function getUserLogout() {
 export function getUserSignup(
   registeredEmail,
   username,
+  firstName,
+  lastName,
   password,
   setSubmitError,
+  setSignupStatus,
+  setLoadingStatus,
 ) {
   return {
     type: `${AUTHENTICATE}_SIGNUP`,
     registeredEmail,
     username,
+    firstName,
+    lastName,
     password,
     setSubmitError,
+    setSignupStatus,
+    setLoadingStatus,
   };
 }
 /**

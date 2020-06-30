@@ -36,36 +36,39 @@ function* getThemeContent(params) {
   }
 }
 
-function signup(registeredEmail, username, password) {
-  return axios
+export const updateResumeKeyValue = (resumeKey, data, addToast) => {
+  axios
     .post(
-      'http://localhost:2000/login',
+      'http://localhost:2000/builder/updateResumeJSON',
       {
-        username,
-        password,
+        resumeKey,
+        data,
       },
       { withCredentials: true },
     )
     .then(response => {
-      console.log('register response: ', response);
       if (response.status === 200) {
-        return response;
+        // addToast('Save successfully!', { appearance: 'info' });
+        console.log('succesfully submit your request.', response);
+      } else {
+        // addToast('Issue while saving! Please try later.', {
+        //   appearance: 'error',
+        // });
+        console.log('Something went wrong while submitting: ', response);
       }
-      return response;
     })
     .catch(error => {
-      console.log('register error: ', error.response);
+      // addToast('Issue while saving! Please try later.', {
+      //   appearance: 'error',
+      // });
+      console.log('updateResumeKeyValue error: ', error);
     });
-}
+};
 
 function* getTestDispatchReturn(params) {
-  console.log("inside getTestDispatchRet");
+  console.log('inside getTestDispatchRet');
   try {
-    const response = yield call(
-      signup,
-      'jitendra990',
-      'jitdrapra990',
-    );
+    const response = yield call(signup, 'jitendra990', 'jitdrapra990');
     if (response) {
       console.log('isAuthenticatedd', params.updateFunction);
       yield call(params.updateFunction, response);
@@ -77,6 +80,10 @@ function* getTestDispatchReturn(params) {
 }
 
 export function* updateResumeEventHandler(params) {
+  console.log('inside updateResumeEventHandler: ');
+  params.addToast('Issue while saving! Please .... try later.', {
+    appearance: 'error',
+  });
   try {
     const storeData = yield select(state => state.builder.resume_json_state);
     if (params.sectionId === 'personal') {
@@ -87,6 +94,15 @@ export function* updateResumeEventHandler(params) {
       ) {
         storeData[`${params.sectionId}`].history[`${params.fieldId}`] =
           params.content;
+        yield put({ type: `${UPDATE_CANVAS}_COUNT` });
+        const updateCanvasCount = yield select(
+          state => state.builder.updateCanvasCount,
+        );
+        console.log('updateCanvasCount values: ', updateCanvasCount);
+        if (updateCanvasCount === 0) {
+          // updateResumeKeyValue('All', storeData, params.addToast);
+          updateResumeKeyValue('all', storeData);
+        }
       }
     } else {
       // eslint-disable-next-line no-lonely-if
@@ -101,6 +117,15 @@ export function* updateResumeEventHandler(params) {
         storeData[`${params.sectionId}`].history[`${params.fieldIndex}`][
           `${params.fieldId}`
         ] = params.content;
+        yield put({ type: `${UPDATE_CANVAS}_COUNT` });
+        const updateCanvasCount = yield select(
+          state => state.builder.updateCanvasCount,
+        );
+        console.log('updateCanvasCount values: ', updateCanvasCount);
+        if (updateCanvasCount === 0) {
+          // updateResumeKeyValue('All', storeData, params.addToast);
+          updateResumeKeyValue('all', storeData);
+        }
       }
     }
   } catch (error) {
