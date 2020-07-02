@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import { useToasts } from 'react-toast-notifications';
 import cx from 'classnames';
 import { Formik, Form, FieldArray } from 'formik';
 import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
@@ -10,8 +11,13 @@ import {
   updateResumeJSONState,
   updateEditorCanvas,
 } from 'containers/Builder/actions';
+import { toggleModal } from 'containers/App/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
-import { getCountryList } from '../../../containers/MyContent/actions';
+import {
+  getCountryList,
+  setModalContent,
+} from '../../../containers/MyContent/actions';
+import { updateResumeKeyValue } from '../index';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
 import Accordian from '../../Accordion';
 import EmploymentInputs from './EmploymentItems';
@@ -55,10 +61,7 @@ function EmploymentForm({ allCountries, resumeJSONState, dispatch }) {
     getCountires();
   }, []);
 
-  // const handlePrevious = () => {
-  //   dispatch(toggleModal());
-  //   dispatch(setModalContent('education'));
-  // };
+  const { addToast } = useToasts();
 
   const formatValues = values => {
     const tempValues = values;
@@ -72,6 +75,7 @@ function EmploymentForm({ allCountries, resumeJSONState, dispatch }) {
     });
     return tempValues;
   };
+
   const handleSave = values => {
     const updatedEmp = formatValues(
       JSON.parse(JSON.stringify(values.employment)),
@@ -79,6 +83,15 @@ function EmploymentForm({ allCountries, resumeJSONState, dispatch }) {
     const history = { history: values.employment };
     dispatch(updateEditorCanvas('employment', 'ADD', updatedEmp, componentMap));
     dispatch(updateResumeJSONState(history, 'employment'));
+    updateResumeKeyValue('employment', values.employment, addToast);
+    dispatch(toggleModal());
+  };
+  const handleSaveAndNext = values => {
+    handleSave(values);
+    dispatch(setModalContent('projects'));
+  };
+  const handlePrevious = () => {
+    dispatch(setModalContent('education'));
   };
 
   return (
@@ -86,11 +99,17 @@ function EmploymentForm({ allCountries, resumeJSONState, dispatch }) {
       <Formik
         initialValues={{ employment: employments }}
         onSubmit={(values, actions) => {
-          console.log(values);
-          handleSave(values);
+          console.log('val and action', values, actions);
+          if (values.publish === 0) {
+            handleSave(values);
+          } else if (values.publish === 1) {
+            handleSaveAndNext(values);
+          } else if (values.publish === 2) {
+            handlePrevious(values);
+          }
         }}
       >
-        {({ values, setFieldValue }) => (
+        {({ values, setFieldValue, handleSubmit }) => (
           <Form>
             <FieldArray
               name="employment"
@@ -122,10 +141,57 @@ function EmploymentForm({ allCountries, resumeJSONState, dispatch }) {
                     Add Another
                   </Button>
                   <div className={cx('footerContainer')}>
+                    <div className="mx-2 flex justify-between">
+                      <div className="flex justify-left">
+                        <div className="pr-2">
+                          <Button
+                            type="primary"
+                            onClick={() => {
+                              setFieldValue('publish', 2, false);
+                              handleSubmit();
+                            }}
+                          >
+                            Previous
+                          </Button>
+                        </div>
+                        <div className="pr-2">
+                          <Button
+                            type="primary"
+                            onClick={() => {
+                              setFieldValue('publish', 0, false);
+                              handleSubmit();
+                            }}
+                          >
+                            Save
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="flex justify-end">
+                        <div className="pl-6 pr-2">
+                          <Button
+                            type="primary"
+                            onClick={() => {
+                              setFieldValue('publish', 1, false);
+                              handleSubmit();
+                            }}
+                          >
+                            Save and Next
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                    {/* <Button as="submit" type="primary">
+                      Save Details
+                    </Button>
+                    <Button as="submit" type="primary">
+                      Save and Next
+                    </Button> */}
+                  </div>
+                  {/* <div className={cx('footerContainer')}>
                     <Button as="submit" fullWidth type="primary">
                       Save Details
                     </Button>
-                  </div>
+                  </div> */}
                 </React.Fragment>
               )}
             />

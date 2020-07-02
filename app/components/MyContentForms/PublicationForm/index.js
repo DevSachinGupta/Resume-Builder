@@ -5,12 +5,16 @@ import { compose } from 'redux';
 import cx from 'classnames';
 import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
+import { useToasts } from 'react-toast-notifications';
 import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
   updateResumeJSONState,
   updateEditorCanvas,
 } from 'containers/Builder/actions';
+import { toggleModal } from 'containers/App/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
+import { setModalContent } from '../../../containers/MyContent/actions';
+import { updateResumeKeyValue } from '../index';
 import Accordian from '../../Accordion';
 import PublicationInputs from './PublicationItems';
 import Button from '../../Button';
@@ -40,6 +44,8 @@ function PublicationForm({ resumeJSONState, dispatch }) {
     storePublication || [{ ...blankPubFields }],
   );
 
+  const { addToast } = useToasts();
+
   const formatValues = values => {
     const tempValues = values;
     tempValues.forEach((value, index) => {
@@ -56,6 +62,15 @@ function PublicationForm({ resumeJSONState, dispatch }) {
       updateEditorCanvas('publication', 'ADD', updatedPub, componentMap),
     );
     dispatch(updateResumeJSONState(history, 'publication'));
+    updateResumeKeyValue('publication', values.publication, addToast);
+    dispatch(toggleModal());
+  };
+  const handleSaveAndNext = values => {
+    handleSave(values);
+    dispatch(setModalContent('accomplishments'));
+  };
+  const handlePrevious = () => {
+    dispatch(setModalContent('hobbies'));
   };
 
   return (
@@ -63,11 +78,17 @@ function PublicationForm({ resumeJSONState, dispatch }) {
       <Formik
         initialValues={{ publication: publications }}
         onSubmit={(values, actions) => {
-          console.log(values);
-          handleSave(values);
+          console.log('val and action', values, actions);
+          if (values.publish === 0) {
+            handleSave(values);
+          } else if (values.publish === 1) {
+            handleSaveAndNext(values);
+          } else if (values.publish === 2) {
+            handlePrevious(values);
+          }
         }}
       >
-        {({ values }) => (
+        {({ values, setFieldValue, handleSubmit }) => (
           <Form>
             <FieldArray
               name="publication"
@@ -92,10 +113,57 @@ function PublicationForm({ resumeJSONState, dispatch }) {
                     Add Another
                   </Button>
                   <div className={cx('footerContainer')}>
+                    <div className="mx-2 flex justify-between">
+                      <div className="flex justify-left">
+                        <div className="pr-2">
+                          <Button
+                            type="primary"
+                            onClick={() => {
+                              setFieldValue('publish', 2, false);
+                              handleSubmit();
+                            }}
+                          >
+                            Previous
+                          </Button>
+                        </div>
+                        <div className="pr-2">
+                          <Button
+                            type="primary"
+                            onClick={() => {
+                              setFieldValue('publish', 0, false);
+                              handleSubmit();
+                            }}
+                          >
+                            Save
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="flex justify-end">
+                        <div className="pl-6 pr-2">
+                          <Button
+                            type="primary"
+                            onClick={() => {
+                              setFieldValue('publish', 1, false);
+                              handleSubmit();
+                            }}
+                          >
+                            Save and Next
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                    {/* <Button as="submit" type="primary">
+                      Save Details
+                    </Button>
+                    <Button as="submit" type="primary">
+                      Save and Next
+                    </Button> */}
+                  </div>
+                  {/* <div className={cx('footerContainer')}>
                     <Button as="submit" fullWidth type="primary">
                       Save Details
                     </Button>
-                  </div>
+                  </div> */}
                 </React.Fragment>
               )}
             />

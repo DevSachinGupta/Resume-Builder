@@ -5,13 +5,18 @@ import { compose } from 'redux';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
+import { useToasts } from 'react-toast-notifications';
 import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
   updateResumeJSONState,
   updateEditorCanvas,
 } from 'containers/Builder/actions';
+import { toggleModal } from 'containers/App/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
-import { getCountryList } from '../../../containers/MyContent/actions';
+import {
+  getCountryList,
+  setModalContent,
+} from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
 import PersonalDetailsForms from './PersonalDetailsForms';
 import Button from '../../Button';
@@ -70,6 +75,8 @@ function PersonalDetails({ allCountries, resumeJSONState, dispatch }) {
   useEffect(() => {
     getCountires();
   }, []);
+
+  const { addToast } = useToasts();
 
   const formatValues = values => {
     const tempValues = values;
