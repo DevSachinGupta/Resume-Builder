@@ -5,12 +5,16 @@ import { compose } from 'redux';
 import { Formik, Form } from 'formik';
 import cx from 'classnames';
 import { createStructuredSelector } from 'reselect';
+import { useToasts } from 'react-toast-notifications';
 import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
   updateResumeJSONState,
   updateEditorCanvas,
 } from 'containers/Builder/actions';
 import { FaTimes } from 'react-icons/fa';
+import { toggleModal } from 'containers/App/actions';
+import { setModalContent } from '../../../containers/MyContent/actions';
+// import { updateResumeKeyValue } from '../index';
 import Input from '../../FormComponents/Input';
 import Button from '../../Button';
 import Icons from '../../Icons';
@@ -106,24 +110,40 @@ function HobbiesForm({ resumeJSONState, dispatch }) {
     ));
   }
 
+  const { addToast } = useToasts();
+
   const handleSave = values => {
     const updatedHob = values;
     const history = { history: updatedHob };
     dispatch(updateEditorCanvas('hobbies', 'ADD', values, componentMap));
     dispatch(updateResumeJSONState(history, 'hobbies'));
+    // updateResumeKeyValue('hobbies', values, addToast);
+    dispatch(toggleModal());
+  };
+  const handleSaveAndNext = values => {
+    handleSave(values);
+    dispatch(setModalContent('publication'));
+  };
+  const handlePrevious = () => {
+    dispatch(setModalContent('social'));
   };
 
   return (
     <Formik
       initialValues={[...hobbies]}
       onSubmit={values => {
-        // eslint-disable-next-line no-console
-        console.log(values);
-        handleSave(values);
+        console.log('val and action', values);
+        if (values.publish === 0) {
+          handleSave(values);
+        } else if (values.publish === 1) {
+          handleSaveAndNext(values);
+        } else if (values.publish === 2) {
+          handlePrevious(values);
+        }
       }}
       enableReinitialize
     >
-      {() => (
+      {({ setFieldValue, handleSubmit }) => (
         <Form>
           <div className="hobbbiesSections">
             {hobbies.length ? (
@@ -144,10 +164,57 @@ function HobbiesForm({ resumeJSONState, dispatch }) {
               allowValidation={false}
             />
             <div className={cx('footerContainer')}>
+              <div className="mx-2 flex justify-between">
+                <div className="flex justify-left">
+                  <div className="pr-2">
+                    <Button
+                      type="primary"
+                      onClick={() => {
+                        setFieldValue('publish', 2, false);
+                        handleSubmit();
+                      }}
+                    >
+                      Previous
+                    </Button>
+                  </div>
+                  <div className="pr-2">
+                    <Button
+                      type="primary"
+                      onClick={() => {
+                        setFieldValue('publish', 0, false);
+                        handleSubmit();
+                      }}
+                    >
+                      Save
+                    </Button>
+                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <div className="pl-6 pr-2">
+                    <Button
+                      type="primary"
+                      onClick={() => {
+                        setFieldValue('publish', 1, false);
+                        handleSubmit();
+                      }}
+                    >
+                      Save and Next
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              {/* <Button as="submit" type="primary">
+                Save Details
+              </Button>
+              <Button as="submit" type="primary">
+                Save and Next
+              </Button> */}
+            </div>
+            {/* <div className={cx('footerContainer')}>
               <Button as="submit" fullWidth type="primary">
                 Save Details
               </Button>
-            </div>
+            </div> */}
           </div>
         </Form>
       )}

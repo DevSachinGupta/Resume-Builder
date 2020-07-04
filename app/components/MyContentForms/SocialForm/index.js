@@ -11,12 +11,16 @@ import {
 } from 'react-icons/fa';
 import { Formik, Form, FieldArray } from 'formik';
 import cx from 'classnames';
+import { useToasts } from 'react-toast-notifications';
+import { toggleModal } from 'containers/App/actions';
+// import { updateResumeKeyValue } from '../index';
 import { createStructuredSelector } from 'reselect';
 import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
   updateResumeJSONState,
   updateEditorCanvas,
 } from 'containers/Builder/actions';
+import { setModalContent } from '../../../containers/MyContent/actions';
 import { validationMap } from './validation';
 import Button from '../../Button';
 import Input from '../../FormComponents/Input';
@@ -139,6 +143,8 @@ function SocialForm({ resumeJSONState, dispatch }) {
     }
   };
 
+  const { addToast } = useToasts();
+
   const formatValues = values => {
     let tempValues = values;
     tempValues = tempValues.filter(data => data.url !== '');
@@ -149,6 +155,16 @@ function SocialForm({ resumeJSONState, dispatch }) {
     const history = { history: values.social };
     dispatch(updateEditorCanvas('social', 'ADD', updatedSoc, componentMap));
     dispatch(updateResumeJSONState(history, 'social'));
+    // updateResumeKeyValue('social', values.social, addToast);
+    dispatch(toggleModal());
+  };
+
+  const handleSaveAndNext = values => {
+    handleSave(values);
+    dispatch(setModalContent('hobbies'));
+  };
+  const handlePrevious = () => {
+    dispatch(setModalContent('affilication'));
   };
 
   return (
@@ -156,11 +172,17 @@ function SocialForm({ resumeJSONState, dispatch }) {
       <Formik
         initialValues={{ social: socials }}
         onSubmit={(values, actions) => {
-          console.log(values);
-          handleSave(values);
+          console.log('val and action', values, actions);
+          if (values.publish === 0) {
+            handleSave(values);
+          } else if (values.publish === 1) {
+            handleSaveAndNext(values);
+          } else if (values.publish === 2) {
+            handlePrevious(values);
+          }
         }}
       >
-        {({ values, setFieldValue }) => (
+        {({ values, setFieldValue, handleSubmit }) => (
           <Form>
             <FieldArray
               name="social"
@@ -202,10 +224,51 @@ function SocialForm({ resumeJSONState, dispatch }) {
                     Add Another
                   </Button>
                   <div className={cx('footerContainer')}>
+                    <div className="mx-2 flex justify-between">
+                      <div className="flex justify-left">
+                        <div className="pr-2">
+                          <Button
+                            type="primary"
+                            onClick={() => {
+                              setFieldValue('publish', 2, false);
+                              handleSubmit();
+                            }}
+                          >
+                            Previous
+                          </Button>
+                        </div>
+                        <div className="pr-2">
+                          <Button
+                            type="primary"
+                            onClick={() => {
+                              setFieldValue('publish', 0, false);
+                              handleSubmit();
+                            }}
+                          >
+                            Save
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="flex justify-end">
+                        <div className="pl-6 pr-2">
+                          <Button
+                            type="primary"
+                            onClick={() => {
+                              setFieldValue('publish', 1, false);
+                              handleSubmit();
+                            }}
+                          >
+                            Save and Next
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/* <div className={cx('footerContainer')}>
                     <Button as="submit" fullWidth type="primary">
                       Save Details
                     </Button>
-                  </div>
+                  </div> */}
                 </React.Fragment>
               )}
             />
