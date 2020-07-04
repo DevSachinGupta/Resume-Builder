@@ -95,11 +95,9 @@ function EducationForm({ allCountries, resumeJSONState, dispatch }) {
   };
   const handleSaveAndNext = values => {
     handleSave(values);
-    // dispatch(toggleModal());
     dispatch(setModalContent('employmentDetails'));
   };
-  const handlePrevious = values => {
-    // dispatch(toggleModal());
+  const handlePrevious = () => {
     dispatch(setModalContent('personalDetails'));
   };
 
@@ -146,39 +144,46 @@ function EducationForm({ allCountries, resumeJSONState, dispatch }) {
                   >
                     Add Another
                   </Button>
-                  <div className={cx('footerContainer flex')}>
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        dispatch(toggleModal());
-                        dispatch(setModalContent('personalDetails'));
-                        // setFieldValue('publish', 2, false);
-                        // handleSubmit();
-                      }}
-                    >
-                      Previous
-                    </Button>
-
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        setFieldValue('publish', 0, false);
-                        handleSubmit();
-                      }}
-                    >
-                      Save
-                    </Button>
-
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        setFieldValue('publish', 1, false);
-                        handleSubmit();
-                      }}
-                    >
-                      Save and Next
-                    </Button>
-
+                  <div className={cx('footerContainer')}>
+                    <div className="mx-2 flex justify-between">
+                      <div className="flex justify-left">
+                        <div className="pr-2">
+                          <Button
+                            type="primary"
+                            onClick={() => {
+                              setFieldValue('publish', 2, false);
+                              handleSubmit();
+                            }}
+                          >
+                            Previous
+                          </Button>
+                        </div>
+                        <div className="pr-2">
+                          <Button
+                            type="primary"
+                            onClick={() => {
+                              setFieldValue('publish', 0, false);
+                              handleSubmit();
+                            }}
+                          >
+                            Save
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="flex justify-end">
+                        <div className="pl-6 pr-2">
+                          <Button
+                            type="primary"
+                            onClick={() => {
+                              setFieldValue('publish', 1, false);
+                              handleSubmit();
+                            }}
+                          >
+                            Save and Next
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
                     {/* <Button as="submit" type="primary">
                       Save Details
                     </Button>
