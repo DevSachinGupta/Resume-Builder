@@ -121,7 +121,7 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen, editorState }) {
       </div>
       <div className={cx('actionContainer')}>
         <div className={cx('publishButton')}>
-          <Link
+          {/* <Link
             to={{
               pathname: '/preview/vefe',
               aboutProps: {
@@ -132,14 +132,8 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen, editorState }) {
             className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black"
           >
             Preview
-          </Link>
-          <Button
-            onClick={() => {
-              console.log('testing preview');
-            }}
-          >
-            Preview
-          </Button>
+          </Link> */}
+          <Button onClick={() => dispatch(toggleSidebar())}>Preview</Button>
         </div>
         <div className={cx('publishButton')}>
           <Button onClick={() => saveBuilderSession(editorState)}>Save</Button>
