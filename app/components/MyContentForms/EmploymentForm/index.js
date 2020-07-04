@@ -10,6 +10,7 @@ import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
   updateResumeJSONState,
   updateEditorCanvas,
+  updateResumeKeyValue,
 } from 'containers/Builder/actions';
 import { toggleModal } from 'containers/App/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
@@ -81,7 +82,7 @@ function EmploymentForm({ allCountries, resumeJSONState, dispatch }) {
     const history = { history: values.employment };
     dispatch(updateEditorCanvas('employment', 'ADD', updatedEmp, componentMap));
     dispatch(updateResumeJSONState(history, 'employment'));
-    // updateResumeKeyValue('employment', values.employment, addToast);
+    dispatch(updateResumeKeyValue('employment', values.employment, addToast));
     dispatch(toggleModal());
   };
   const handleSaveAndNext = values => {
@@ -89,6 +90,7 @@ function EmploymentForm({ allCountries, resumeJSONState, dispatch }) {
     dispatch(setModalContent('projects'));
   };
   const handlePrevious = () => {
+    dispatch(toggleModal());
     dispatch(setModalContent('education'));
   };
 

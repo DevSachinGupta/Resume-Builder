@@ -162,13 +162,14 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen, editorState }) {
               >
                 Logout
               </li>
-              <li
-                onClick={() => {
-                  dispatch(toggleHeaderUserMenu());
-                  dispatch(setModalContent('setting'));
-                }}
-              >
-                Settings
+              <li>
+                <Link
+                  to="settings"
+                  target="_blank"
+                  className="no-underline  pr-3"
+                >
+                  Settings
+                </Link>
               </li>
             </ul>
           </div>

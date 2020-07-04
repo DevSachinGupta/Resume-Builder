@@ -7,11 +7,11 @@ import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
 import { useToasts } from 'react-toast-notifications';
 import { toggleModal } from 'containers/App/actions';
-// import { updateResumeKeyValue } from '../index';
 import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
   updateResumeJSONState,
   updateEditorCanvas,
+  updateResumeKeyValue,
 } from 'containers/Builder/actions';
 import { defaultTo } from 'lodash';
 import { setModalContent } from '../../../containers/MyContent/actions';
@@ -104,7 +104,7 @@ function ProjectForm({ resumeJSONState, dispatch }) {
     const history = { history: values.project };
     dispatch(updateEditorCanvas('project', 'ADD', updatedPro, componentMap));
     dispatch(updateResumeJSONState(history, 'project'));
-    // updateResumeKeyValue('project', values.project, addToast);
+    dispatch(updateResumeKeyValue('project', values.project, addToast));
     dispatch(toggleModal());
   };
   const handleSaveAndNext = values => {
@@ -112,6 +112,7 @@ function ProjectForm({ resumeJSONState, dispatch }) {
     dispatch(setModalContent('skills'));
   };
   const handlePrevious = () => {
+    dispatch(toggleModal());
     dispatch(setModalContent('employmentDetails'));
   };
 

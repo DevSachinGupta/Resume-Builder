@@ -98,6 +98,7 @@ function EducationForm({ allCountries, resumeJSONState, dispatch }) {
     dispatch(setModalContent('employmentDetails'));
   };
   const handlePrevious = () => {
+    dispatch(toggleModal());
     dispatch(setModalContent('personalDetails'));
   };
 

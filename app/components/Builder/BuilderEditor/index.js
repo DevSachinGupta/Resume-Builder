@@ -19,7 +19,6 @@ import {
   updateEditorState,
   getBuilderThemeContent,
   updateResumeEventHanlder,
-  getBuilderThemeContentTest,
 } from 'containers/Builder/actions';
 import Themes from 'components/Themes';
 import PropTypes from 'prop-types';

@@ -13,12 +13,12 @@ import { Formik, Form, FieldArray } from 'formik';
 import cx from 'classnames';
 import { useToasts } from 'react-toast-notifications';
 import { toggleModal } from 'containers/App/actions';
-// import { updateResumeKeyValue } from '../index';
 import { createStructuredSelector } from 'reselect';
 import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
   updateResumeJSONState,
   updateEditorCanvas,
+  updateResumeKeyValue,
 } from 'containers/Builder/actions';
 import { setModalContent } from '../../../containers/MyContent/actions';
 import { validationMap } from './validation';
@@ -155,7 +155,7 @@ function SocialForm({ resumeJSONState, dispatch }) {
     const history = { history: values.social };
     dispatch(updateEditorCanvas('social', 'ADD', updatedSoc, componentMap));
     dispatch(updateResumeJSONState(history, 'social'));
-    // updateResumeKeyValue('social', values.social, addToast);
+    dispatch(updateResumeKeyValue('social', values.social, addToast));
     dispatch(toggleModal());
   };
 
@@ -164,6 +164,7 @@ function SocialForm({ resumeJSONState, dispatch }) {
     dispatch(setModalContent('hobbies'));
   };
   const handlePrevious = () => {
+    dispatch(toggleModal());
     dispatch(setModalContent('affilication'));
   };
 

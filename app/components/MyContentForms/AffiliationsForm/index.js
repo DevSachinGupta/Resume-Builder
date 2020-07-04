@@ -7,11 +7,11 @@ import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
 import { useToasts } from 'react-toast-notifications';
 import { toggleModal } from 'containers/App/actions';
-// import { updateResumeKeyValue } from '../index';
 import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
   updateResumeJSONState,
   updateEditorCanvas,
+  updateResumeKeyValue,
 } from 'containers/Builder/actions';
 import { setModalContent } from '../../../containers/MyContent/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
@@ -68,7 +68,7 @@ function AffiliationForm({ resumeJSONState, dispatch }) {
       updateEditorCanvas('affiliation', 'ADD', updatedAff, componentMap),
     );
     dispatch(updateResumeJSONState(history, 'affiliation'));
-    // updateResumeKeyValue('affiliation', values.affiliation, addToast);
+    dispatch(updateResumeKeyValue('affiliation', values.affiliation, addToast));
     dispatch(toggleModal());
   };
 
@@ -77,6 +77,7 @@ function AffiliationForm({ resumeJSONState, dispatch }) {
     dispatch(setModalContent('social'));
   };
   const handlePrevious = () => {
+    dispatch(toggleModal());
     dispatch(setModalContent('skills'));
   };
 

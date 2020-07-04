@@ -7,11 +7,11 @@ import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
 import { useToasts } from 'react-toast-notifications';
 import { toggleModal } from 'containers/App/actions';
-// import { updateResumeKeyValue } from '../index';
 import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
   updateResumeJSONState,
   updateEditorCanvas,
+  updateResumeKeyValue,
 } from 'containers/Builder/actions';
 import { setModalContent } from '../../../containers/MyContent/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
@@ -62,7 +62,7 @@ function PublicationForm({ resumeJSONState, dispatch }) {
       updateEditorCanvas('publication', 'ADD', updatedPub, componentMap),
     );
     dispatch(updateResumeJSONState(history, 'publication'));
-    // updateResumeKeyValue('publication', values.publication, addToast);
+    dispatch(updateResumeKeyValue('publication', values.publication, addToast));
     dispatch(toggleModal());
   };
   const handleSaveAndNext = values => {
@@ -70,6 +70,7 @@ function PublicationForm({ resumeJSONState, dispatch }) {
     dispatch(setModalContent('accomplishments'));
   };
   const handlePrevious = () => {
+    dispatch(toggleModal());
     dispatch(setModalContent('hobbies'));
   };
 

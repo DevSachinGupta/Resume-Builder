@@ -18,6 +18,7 @@ import {
   UPDATE_CANVAS,
   UPDATE_RESUME_EVENT_HANDLER,
   SHOW_THEMES_TOGGLE,
+  UPDATE_RESUME_KEY_VALUE_DB,
 } from './constants';
 
 export const initialState = {
@@ -48,8 +49,6 @@ const builderReducer = (state = initialState, action) =>
         break;
       case `${GET_THEME_CONTENT}_SUCCESS`:
         draft.theme.data = action.data;
-        break;
-      case `${GET_THEME_CONTENT}_TEST`:
         break;
       case SET_DEFAULT_THEME:
         draft.theme.isLoaded = true;
@@ -86,6 +85,8 @@ const builderReducer = (state = initialState, action) =>
         }
         break;
       case UPDATE_RESUME_EVENT_HANDLER:
+        break;
+      case UPDATE_RESUME_KEY_VALUE_DB:
         break;
       case SHOW_THEMES_TOGGLE:
         draft.showThemeToggle = !state.showThemeToggle;

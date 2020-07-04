@@ -10,6 +10,7 @@ import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
   updateResumeJSONState,
   updateEditorCanvas,
+  updateResumeKeyValue,
 } from 'containers/Builder/actions';
 import { FaTimes } from 'react-icons/fa';
 import { toggleModal } from 'containers/App/actions';
@@ -117,7 +118,7 @@ function HobbiesForm({ resumeJSONState, dispatch }) {
     const history = { history: updatedHob };
     dispatch(updateEditorCanvas('hobbies', 'ADD', values, componentMap));
     dispatch(updateResumeJSONState(history, 'hobbies'));
-    // updateResumeKeyValue('hobbies', values, addToast);
+    dispatch(updateResumeKeyValue('hobbies', values, addToast));
     dispatch(toggleModal());
   };
   const handleSaveAndNext = values => {
@@ -125,6 +126,7 @@ function HobbiesForm({ resumeJSONState, dispatch }) {
     dispatch(setModalContent('publication'));
   };
   const handlePrevious = () => {
+    dispatch(toggleModal());
     dispatch(setModalContent('social'));
   };
 

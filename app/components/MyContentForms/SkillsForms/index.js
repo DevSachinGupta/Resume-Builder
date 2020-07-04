@@ -6,12 +6,12 @@ import { Formik, Form } from 'formik';
 import cx from 'classnames';
 import { useToasts } from 'react-toast-notifications';
 import { toggleModal } from 'containers/App/actions';
-// import { updateResumeKeyValue } from '../index';
 import { createStructuredSelector } from 'reselect';
 import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
   updateResumeJSONState,
   updateEditorCanvas,
+  updateResumeKeyValue,
 } from 'containers/Builder/actions';
 import { FaTimes } from 'react-icons/fa';
 import { setModalContent } from '../../../containers/MyContent/actions';
@@ -92,7 +92,7 @@ function SkillsForm({ resumeJSONState, dispatch }) {
     const history = { history: values };
     dispatch(updateEditorCanvas('skills', 'ADD', updatedSkills, componentMap));
     dispatch(updateResumeJSONState(history, 'skills'));
-    // updateResumeKeyValue('skills', values, addToast);
+    dispatch(updateResumeKeyValue('skills', values, addToast));
     dispatch(toggleModal());
   };
   const handleSaveAndNext = values => {
@@ -100,6 +100,7 @@ function SkillsForm({ resumeJSONState, dispatch }) {
     dispatch(setModalContent('affilication'));
   };
   const handlePrevious = () => {
+    dispatch(toggleModal());
     dispatch(setModalContent('projects'));
   };
 
@@ -156,7 +157,7 @@ function SkillsForm({ resumeJSONState, dispatch }) {
       }}
       enableReinitialize
     >
-      {(setFieldValue, handleSubmit) => (
+      {({ setFieldValue, handleSubmit }) => (
         <Form>
           <div className="skillsSections">
             {skills.length ? (

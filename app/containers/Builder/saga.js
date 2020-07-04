@@ -5,15 +5,16 @@ import {
   GET_THEME_CONTENT,
   UPDATE_CANVAS,
   UPDATE_RESUME_EVENT_HANDLER,
+  UPDATE_RESUME_KEY_VALUE_DB,
 } from './constants';
 
 export default function* builderSaga() {
   yield all([
     takeLatest(GET_DEFAULT_THEME, getThemeDetails),
     takeLatest(GET_THEME_CONTENT, getThemeContent),
-    takeLatest(`${GET_THEME_CONTENT}_TEST`, getTestDispatchReturn),
     takeLatest(UPDATE_CANVAS, updateCanvas),
     takeLatest(UPDATE_RESUME_EVENT_HANDLER, updateResumeEventHandler),
+    takeLatest(UPDATE_RESUME_KEY_VALUE_DB, updateResumeKeyValue),
   ]);
 }
 
@@ -36,7 +37,7 @@ function* getThemeContent(params) {
   }
 }
 
-export const updateResumeKeyValue = (resumeKey, data, addToast) => {
+export const updateResumeKey = (resumeKey, data) =>
   axios
     .post(
       'http://localhost:2000/builder/updateResumeJSON',
@@ -46,35 +47,27 @@ export const updateResumeKeyValue = (resumeKey, data, addToast) => {
       },
       { withCredentials: true },
     )
-    .then(response => {
-      if (response.status === 200) {
-        // addToast('Save successfully!', { appearance: 'info' });
-        console.log('succesfully submit your request.', response);
-      } else {
-        // addToast('Issue while saving! Please try later.', {
-        //   appearance: 'error',
-        // });
-        console.log('Something went wrong while submitting: ', response);
-      }
-    })
+    .then(response => response)
     .catch(error => {
-      // addToast('Issue while saving! Please try later.', {
-      //   appearance: 'error',
-      // });
-      console.log('updateResumeKeyValue error: ', error);
+      console.log('updateResumeKey error: ', error);
     });
-};
 
-function* getTestDispatchReturn(params) {
-  console.log('inside getTestDispatchRet');
+function* updateResumeKeyValue(params) {
   try {
-    const response = yield call(signup, 'jitendra990', 'jitdrapra990');
-    if (response) {
-      console.log('isAuthenticatedd', params.updateFunction);
-      yield call(params.updateFunction, response);
-      return response;
+    const response = yield call(updateResumeKey, params.key, params.data);
+    if (response.status === 200) {
+      params.addToast('Save successfully!', { appearance: 'info' });
+      console.log('succesfully submit your request.', response);
+    } else {
+      params.addToast('Issue while saving! Please try later.', {
+        appearance: 'error',
+      });
+      console.log('Something went wrong while submitting: ', response);
     }
   } catch (e) {
+    params.addToast('Issue while saving! Please try later.', {
+      appearance: 'error',
+    });
     console.log(e);
   }
 }
@@ -100,8 +93,17 @@ export function* updateResumeEventHandler(params) {
         );
         console.log('updateCanvasCount values: ', updateCanvasCount);
         if (updateCanvasCount === 0) {
-          // updateResumeKeyValue('All', storeData, params.addToast);
-          updateResumeKeyValue('all', storeData);
+          // updateResumeKey('All', storeData, params.addToast);
+          const response = updateResumeKey('all', storeData);
+          if (response.status === 200) {
+            params.addToast('Save successfully!', { appearance: 'info' });
+            console.log('succesfully submit your request.', response);
+          } else {
+            params.addToast('Issue while saving! Please try later.', {
+              appearance: 'error',
+            });
+            console.log('Something went wrong while submitting: ', response);
+          }
         }
       }
     } else {
@@ -123,8 +125,17 @@ export function* updateResumeEventHandler(params) {
         );
         console.log('updateCanvasCount values: ', updateCanvasCount);
         if (updateCanvasCount === 0) {
-          // updateResumeKeyValue('All', storeData, params.addToast);
-          updateResumeKeyValue('all', storeData);
+          // updateResumeKey('All', storeData, params.addToast);
+          const response = updateResumeKey('all', storeData);
+          if (response.status === 200) {
+            params.addToast('Save successfully!', { appearance: 'info' });
+            console.log('succesfully submit your request.', response);
+          } else {
+            params.addToast('Issue while saving! Please try later.', {
+              appearance: 'error',
+            });
+            console.log('Something went wrong while submitting: ', response);
+          }
         }
       }
     }

@@ -17,6 +17,7 @@ import {
   UPDATE_CANVAS,
   UPDATE_RESUME_EVENT_HANDLER,
   SHOW_THEMES_TOGGLE,
+  UPDATE_RESUME_KEY_VALUE_DB,
 } from './constants';
 
 export function defaultAction() {
@@ -64,13 +65,6 @@ export function getBuilderThemeContent(themeId) {
   return {
     type: GET_THEME_CONTENT,
     themeId,
-  };
-}
-// testing
-export function getBuilderThemeContentTest(updateFunction) {
-  return {
-    type: `${GET_THEME_CONTENT}_TEST`,
-    updateFunction,
   };
 }
 /**
@@ -151,6 +145,17 @@ export function updateResumeEventHanlder(
     fieldId,
     fieldIndex,
     content,
+    addToast,
+  };
+}
+/**
+ * @description function to update resume key value in DB
+ */
+export function updateResumeKeyValue(key, data, addToast) {
+  return {
+    type: UPDATE_RESUME_KEY_VALUE_DB,
+    key,
+    data,
     addToast,
   };
 }
