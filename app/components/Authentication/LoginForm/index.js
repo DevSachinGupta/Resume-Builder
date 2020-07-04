@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaGoogle, FaFacebookF } from 'react-icons/fa';
+import { FaGoogle, FaLinkedin, FaGithub } from 'react-icons/fa';
 import LoginFormFormik from './LoginForm';
 import './style.css';
 
@@ -27,8 +27,15 @@ function LoginForm() {
                   >
                     <FaGoogle />
                   </button>
+                  <button
+                    type="button"
+                    className="bg-white rounded-full p-1 mr-2"
+                  >
+                    <FaLinkedin />
+                  </button>
+
                   <button type="button" className="bg-white rounded-full p-1">
-                    <FaFacebookF />
+                    <FaGithub />
                   </button>
                 </div>
               </div>
