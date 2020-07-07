@@ -1,5 +1,5 @@
 import { takeLatest, all, call, put, select } from 'redux-saga/effects';
-import axios from 'axios';
+import apiClient from '../../utils/app/API';
 // import { useHistory } from "react-router-dom";
 // import { browserHistory } from 'react-router';
 import history from '../App/history';
@@ -33,15 +33,11 @@ export function* isAuthentication() {
 }
 
 function login(username, password) {
-  return axios
-    .post(
-      'http://localhost:2000/login',
-      {
-        username,
-        password,
-      },
-      { withCredentials: true },
-    )
+  return apiClient
+    .post('login', {
+      username,
+      password,
+    })
     .then(response => {
       if (response.status === 200) {
         return response;
@@ -54,8 +50,8 @@ function login(username, password) {
 }
 
 function logout() {
-  return axios
-    .post('http://localhost:2000/logout', {}, { withCredentials: true })
+  return apiClient
+    .post('logout', {}, { withCredentials: true })
     .then(response => {
       console.log('logout response: ', response);
       if (response.status === 200) {
@@ -70,18 +66,14 @@ function logout() {
 }
 
 function signup(registeredEmail, username, firstName, lastName, password) {
-  return axios
-    .post(
-      'http://localhost:2000/signup',
-      {
-        registeredEmail,
-        username,
-        firstName,
-        lastName,
-        password,
-      },
-      { withCredentials: true },
-    )
+  return apiClient
+    .post('signup', {
+      registeredEmail,
+      username,
+      firstName,
+      lastName,
+      password,
+    })
     .then(response => {
       console.log('register response: ', response);
       return response;
@@ -92,8 +84,8 @@ function signup(registeredEmail, username, firstName, lastName, password) {
 }
 
 function forgotPassword(username) {
-  return axios
-    .post('http://localhost:2000/forgotPassword', {
+  return apiClient
+    .post('forgotPassword', {
       username,
     })
     .then(response => {
@@ -109,8 +101,8 @@ function forgotPassword(username) {
 }
 
 function forgotPasswordReset(newPassword, token) {
-  return axios
-    .post('http://localhost:2000/resetPassword', {
+  return apiClient
+    .post('resetPassword', {
       newPassword,
       token,
     })

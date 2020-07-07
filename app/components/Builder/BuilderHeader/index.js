@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import cx from 'classnames';
-import axios from 'axios';
 import np from 'nprogress';
 import { Link } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
@@ -26,6 +25,7 @@ import { getUserLogout } from '../../../containers/Authenticate/actions';
 import Button from '../../Button';
 import './progress.css';
 import './style.scss';
+import apiClient from '../../../utils/app/API';
 
 function BuilderHeader({ dispatch, isHeaderMenuOpen, editorState }) {
   useEffect(() => {
@@ -44,16 +44,12 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen, editorState }) {
     console.log('HTML Code: ', HTMLCode);
     console.log('CSS Code: ', CSSCode);
 
-    axios
-      .post(
-        'http://localhost:2000/builder/saveBuilderSession',
-        {
-          HTMLCode,
-          CSSCode,
-          JSCode,
-        },
-        { withCredentials: true },
-      )
+    apiClient
+      .post('builder/saveBuilderSession', {
+        HTMLCode,
+        CSSCode,
+        JSCode,
+      })
       .then(response => {
         if (response.status === 200) {
           addToast('Save successfully!', { appearance: 'info' });

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Formik } from 'formik';
-import axios from 'axios';
+import apiClient from '../../../../../utils/app/API';
 import * as Yup from 'yup';
 import DotsLoading from '../../../../LoadingIndicator/dotsLoading';
 import { FormSecondStep } from './FormSecondStep';
@@ -17,13 +17,12 @@ export const FormFirstStep = () => {
 
   const checkDomainExitsInDB = values => {
     setLoadingStatus(true);
-    axios
+    apiClient
       .post(
-        'http://localhost:2000/bucket/checkDomainExitsInDB',
+        'bucket/checkDomainExitsInDB',
         {
           bucketName: values.domainName,
         },
-        { withCredentials: true },
       )
       .then(response => {
         console.log('checkDomainExitsInDB response: ', response);
@@ -52,13 +51,12 @@ export const FormFirstStep = () => {
 
   const checkoutDomainName = values => {
     setLoadingStatus(true);
-    axios
+    apiClient
       .post(
-        'http://localhost:2000/bucket/checkoutDomainName',
+        'bucket/checkoutDomainName',
         {
           bucketName: values.domainName,
         },
-        { withCredentials: true },
       )
       .then(response => {
         console.log('checkoutDomainName response: ', response);

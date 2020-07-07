@@ -1,5 +1,6 @@
 import { takeLatest, all, call, put, select } from 'redux-saga/effects';
 import axios from 'axios';
+import apiClient from '../../utils/app/API';
 import {
   GET_DEFAULT_THEME,
   GET_THEME_CONTENT,
@@ -7,6 +8,8 @@ import {
   UPDATE_RESUME_EVENT_HANDLER,
   UPDATE_RESUME_KEY_VALUE_DB,
 } from './constants';
+
+console.log('api call', apiClient);
 
 export default function* builderSaga() {
   yield all([
@@ -37,24 +40,28 @@ function* getThemeContent(params) {
   }
 }
 
-export const updateResumeKey = (resumeKey, data) =>
-  axios
+export const updateResumeKey = (resumeKey, data) => {
+  console.log('calling api');
+  return apiClient
     .post(
-      'http://localhost:2000/builder/updateResumeJSON',
+      'builder/updateResumeJSON',
+      // 'http://localhost:2000/builder/updateResumeJSON',
       {
         resumeKey,
         data,
       },
-      { withCredentials: true },
+      // { withCredentials: true },
     )
     .then(response => response)
     .catch(error => {
       console.log('updateResumeKey error: ', error);
     });
+};
 
 function* updateResumeKeyValue(params) {
   try {
     const response = yield call(updateResumeKey, params.key, params.data);
+    console.log("update resume: ", response)
     if (response.status === 200) {
       params.addToast('Save successfully!', { appearance: 'info' });
       console.log('succesfully submit your request.', response);
