@@ -31,7 +31,7 @@ export const initialState = {
   editor_state: null,
   resume_json_state: {},
   demopage_state: null,
-  template_number_state: 2,
+  templateNumberState: null,
   updateCanvasCount: 0,
   showThemeToggle: false,
 };
@@ -41,6 +41,7 @@ const canvasUpdateLimit = 2;
 /* eslint-disable default-case, no-param-reassign */
 const builderReducer = (state = initialState, action) =>
   produce(state, draft => {
+    console.log("update temp number test:", action.templateNumberState)
     switch (action.type) {
       case DEFAULT_ACTION:
         break;
@@ -72,8 +73,8 @@ const builderReducer = (state = initialState, action) =>
         draft.demopage_state = action.demopage_state;
         break;
       case UPDATE_TEMPLATE_NUMBER_STATE:
-        console.log("update temp number:", action.template_number_state)
-        draft.template_number_state = action.template_number_state;
+        console.log("update temp number:", action.templateNumberState)
+        draft.templateNumberState = action.templateNumberState;
         break;
       case UPDATE_CANVAS:
         break;

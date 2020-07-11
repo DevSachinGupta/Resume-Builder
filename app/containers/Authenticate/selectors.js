@@ -35,6 +35,11 @@ const makeSelectGetUserLoading = () =>
     selectAuthenticateDomain,
     substate => substate.loading,
   );
+const makeUpdateTemplateNumberState = () =>
+  createSelector(
+    selectAuthenticateDomain,
+    substate => substate.templateNumberState,
+  );
 
 export default makeSelectAuthenticate;
 export {
@@ -42,4 +47,5 @@ export {
   makeSelectGetUserIsAuthenticated,
   makeSelectGetCurrentUserData,
   makeSelectGetUserLoading,
+  makeUpdateTemplateNumberState,
 };

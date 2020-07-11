@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import apiClient from '../../../utils/app/API';
 import DotsLoading from '../../LoadingIndicator/dotsLoading';
 // import './style.css';
 
@@ -14,14 +14,10 @@ function AccountVerifyPage({ tokenId }) {
 
   const handleVerify = () => {
     setLoadingStatus(true);
-    axios
-      .post(
-        'http://localhost:2000/accountVerify',
-        {
-          token: tokenId,
-        },
-        { withCredentials: true },
-      )
+    apiClient
+      .post('accountVerify', {
+        token: tokenId,
+      })
       .then(response => {
         console.log('accountVerify response: ', response);
         if (response.status === 200) {
@@ -56,7 +52,7 @@ function AccountVerifyPage({ tokenId }) {
   }, []);
 
   return (
-    <section className="h-screen bg-gray-100 ">
+    <section className="bg-white">
       <div className="container mx-auto px-4 h-full">
         <div className="flex content-center items-center justify-center h-full">
           <div className="w-full lg:w-4/12 px-4 mt-5">
@@ -129,6 +125,6 @@ function AccountVerifyPage({ tokenId }) {
   );
 }
 AccountVerifyPage.propTypes = {
-  tokenId: PropTypes.number.isRequired,
+  tokenId: PropTypes.string.isRequired,
 };
 export default AccountVerifyPage;

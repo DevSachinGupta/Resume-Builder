@@ -58,7 +58,7 @@ const makeUpdateDemoPageState = () =>
 const makeUpdateTemplateNumberState = () =>
   createSelector(
     selectBuilderDomain,
-    substate => substate.template_number_state,
+    substate => substate.templateNumberState,
   );
 const makeUpdateShowThemeToggle = () =>
   createSelector(

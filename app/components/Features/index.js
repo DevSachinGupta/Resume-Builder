@@ -166,23 +166,24 @@ function Features({ user, userData, dispatch }) {
         <Header user={user} userData={userData} dispatch={dispatch} />
       </div>
       <div className="flex mb-auto">
-        <div className="container mx-auto px-8">
+        <div className="container mx-auto md:px-8">
           {/* <div className="flex px-10">
             <div className="w-full">
               <SearchBar />
             </div>
           </div> */}
           <div className="flex px-10">
-            <div className="w-1/4 mt-2">
+            <div className="w-1/4 mt-2 mr-6 sm:block hidden">
               <Sidebar updateFilter={updateFilter} />
             </div>
-            <div className="w-3/4 ml-6 mt-2">
+            <div className="w-full sm:w-3/4 mt-2">
               <BodyLayout
                 templateItems={templateList}
                 updateFilter={updateFilter}
                 filters={filters}
                 filteredItemCount={filteredItemCount}
                 updateTemplateNumber="updateTemplateNumber"
+                dispatch={dispatch}
               />
             </div>
           </div>
@@ -202,12 +203,12 @@ const mapStateToProps = createStructuredSelector({
   userData: makeSelectGetCurrentUserData(),
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     dispatch,
+//   };
+// }
+const mapDispatchToProps = null;
 const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,

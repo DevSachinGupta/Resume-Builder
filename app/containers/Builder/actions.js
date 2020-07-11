@@ -98,10 +98,11 @@ export function updateDemoPageState(demopage_state) {
 /**
  * @description function to update template_number state
  */
-export function updateTemplateNumberState(template_number_state) {
+export function updateTemplateNumberState(templateNumberState) {
+  console.log("called updateTemple: ", templateNumberState)
   return {
     type: UPDATE_TEMPLATE_NUMBER_STATE,
-    template_number_state,
+    templateNumberState,
   };
 }
 /**

@@ -64,7 +64,7 @@ Checkbox.propTypes = {
   hidden: PropTypes.bool,
   disabled: PropTypes.bool,
   clearable: PropTypes.bool,
-  validate: PropTypes.func.isRequired,
+  validate: PropTypes.func,
   value: PropTypes.string,
   allowValidation: PropTypes.bool,
 };

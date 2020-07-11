@@ -5,7 +5,7 @@ import './style.css';
 
 function ForgotPasswordForm() {
   return (
-    <section className="h-screen bg-gray-100 ">
+    <section className=" bg-white ">
       <div className="container mx-auto px-4 h-full">
         <div className="flex content-center items-center justify-center h-full">
           <div className="w-full lg:w-4/12 px-4 mt-5">
@@ -21,12 +21,6 @@ function ForgotPasswordForm() {
                 </div>
               </div>
               <div className="flex-auto px-4 lg:px-10 py-6 pt-0">
-                <div className="text-gray-600 text-center mb-3">
-                  <small>
-                    We get it, stuff happens. Just enter your email address
-                    below and we'll send you a link to reset your password!
-                  </small>
-                </div>
                 <ForgotPasswordFormFormik />
               </div>
             </div>

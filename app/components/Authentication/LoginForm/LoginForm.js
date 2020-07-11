@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { Formik, Form } from 'formik';
 import PropTypes from 'prop-types';
 import { getUserLogin } from '../../../containers/Authenticate/actions';
+import DotsLoading from '../../LoadingIndicator/dotsLoading';
 import Button from '../../Button';
 import Input from '../../FormComponents/Input';
 import { validationMap } from '../validation';
@@ -16,11 +17,20 @@ function LoginFormFormik({ dispatch }) {
     password: '',
   };
   const [login, setLogin] = useState({ ...blankLoginField });
+  // const [loginStatus, setLoginStatus] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const onSubmitFunction = values => {
-    dispatch(getUserLogin(values.username, values.password, setSubmitError));
+    setLoadingStatus(true);
+    dispatch(
+      getUserLogin(
+        values.username,
+        values.password,
+        setSubmitError,
+        setLoadingStatus,
+      ),
+    );
   };
-  console.log("msg:", submitError)
   return (
     <Formik
       initialValues={login}
@@ -33,24 +43,22 @@ function LoginFormFormik({ dispatch }) {
         <Form>
           <React.Fragment>
             <div className="loginFields">
-              <div className="relative w-full mb-3">
+              <div className="relative w-full mb-2">
                 <Input
                   placeholder="Email"
                   className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
                   label="Email"
                   name="username"
-                  fullWidth
                   validate={validationMap.username}
                 />
               </div>
-              <div className="relative w-full mb-3">
+              <div className="relative w-full mb-2">
                 <Input
                   type="password"
                   className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
                   placeholder="Password"
                   label="Password"
                   name="password"
-                  fullWidth
                   validate={validationMap.password}
                 />
               </div>
@@ -68,13 +76,17 @@ function LoginFormFormik({ dispatch }) {
                   </span>
                 </label>
               </div>
-              <div className="relative w-full mb-3">
-                {submitError && (
-                  <p className="text-red-500">
-                    <strong>{submitError.status}</strong>
-                  </p>
-                )}
-              </div>
+              {loadingStatus === true ? (
+                loadingStatus && <DotsLoading loadingText="Loading..." />
+              ) : (
+                <div className="relative w-full">
+                  {submitError && (
+                    <p className="text-red-500 pl-2">
+                      <small>{submitError.status}</small>
+                    </p>
+                  )}
+                </div>
+              )}
               <div className="text-center mt-6">
                 <Button
                   as="submit"

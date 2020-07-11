@@ -4,12 +4,18 @@
  *
  */
 import produce from 'immer';
-import { DEFAULT_ACTION, AUTHENTICATE, USER_LOADING } from './constants';
+import {
+  DEFAULT_ACTION,
+  AUTHENTICATE,
+  USER_LOADING,
+  UPDATE_TEMPLATE_NUMBER_STATE,
+} from './constants';
 
 export const initialState = {
   isAuthenticated: false,
   userData: {},
   loading: false,
+  templateNumberState: null,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -28,6 +34,10 @@ const authenticateReducer = (state = initialState, action) =>
       case `${AUTHENTICATE}_UNSET`:
         draft.userData = null;
         draft.isAuthenticated = false;
+        break;
+      case UPDATE_TEMPLATE_NUMBER_STATE:
+        console.log('update temp number:', action.templateNumberState);
+        draft.templateNumberState = action.templateNumberState;
         break;
       case `${AUTHENTICATE}_LOGIN`:
         break;

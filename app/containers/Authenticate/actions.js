@@ -4,7 +4,12 @@
  *
  */
 
-import { DEFAULT_ACTION, AUTHENTICATE, USER_LOADING } from './constants';
+import {
+  DEFAULT_ACTION,
+  AUTHENTICATE,
+  USER_LOADING,
+  UPDATE_TEMPLATE_NUMBER_STATE,
+} from './constants';
 
 export function defaultAction() {
   return {
@@ -32,20 +37,27 @@ export function setUserLoading() {
 /**
  * @description Action to be dispatched for login authentication
  */
-export function getUserLogin(username, password, setSubmitError) {
+export function getUserLogin(
+  username,
+  password,
+  setSubmitError,
+  setLoadingStatus,
+) {
   return {
     type: `${AUTHENTICATE}_LOGIN`,
     username,
     password,
     setSubmitError,
+    setLoadingStatus,
   };
 }
 /**
  * @description Action to be dispatched for logout authentication
  */
-export function getUserLogout() {
+export function getUserLogout(addToast) {
   return {
     type: `${AUTHENTICATE}_LOGOUT`,
+    addToast,
   };
 }
 /**
@@ -76,19 +88,45 @@ export function getUserSignup(
 /**
  * @description Action to be dispatched for forgot password authentication
  */
-export function getUserForgotPassword(username) {
+export function getUserForgotPassword(
+  username,
+  setSubmitError,
+  setForgotStatus,
+  setLoadingStatus,
+) {
   return {
     type: `${AUTHENTICATE}_FORGOT_PASSWORD`,
     username,
+    setSubmitError,
+    setForgotStatus,
+    setLoadingStatus,
   };
 }
 /**
  * @description Action to be dispatched for reset password
  */
-export function getUserForgotPasswordReset(newPassword, token) {
+export function getUserForgotPasswordReset(
+  newPassword,
+  token,
+  setSubmitError,
+  setForgotStatus,
+  setLoadingStatus,
+) {
   return {
     type: `${AUTHENTICATE}_FORGOT_PASSWORD_RESET`,
     newPassword,
     token,
+    setSubmitError,
+    setForgotStatus,
+    setLoadingStatus,
+  };
+}
+/**
+ * @description function to update template_number state
+ */
+export function updateTemplateNumberState(templateNumberState) {
+  return {
+    type: UPDATE_TEMPLATE_NUMBER_STATE,
+    templateNumberState,
   };
 }

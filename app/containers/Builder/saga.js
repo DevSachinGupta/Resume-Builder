@@ -40,28 +40,26 @@ function* getThemeContent(params) {
   }
 }
 
-export const updateResumeKey = (resumeKey, data) => {
-  console.log('calling api');
-  return apiClient
-    .post(
-      'builder/updateResumeJSON',
-      // 'http://localhost:2000/builder/updateResumeJSON',
-      {
-        resumeKey,
-        data,
-      },
-      // { withCredentials: true },
-    )
-    .then(response => response)
-    .catch(error => {
-      console.log('updateResumeKey error: ', error);
-    });
-};
+// export const updateResumeKey = (resumeKey, data) => {
+//   console.log('calling api');
+//   return apiClient
+//     .post('builder/updateResumeJSON', {
+//       resumeKey,
+//       data,
+//     })
+//     .then(response => response)
+//     .catch(error => {
+//       console.log('updateResumeKey error: ', error);
+//     });
+// };
 
 function* updateResumeKeyValue(params) {
   try {
-    const response = yield call(updateResumeKey, params.key, params.data);
-    console.log("update resume: ", response)
+    const response = yield call(apiClient.post, 'builder/updateResumeJSON', {
+      resumeKey: params.key,
+      data: params.data,
+    });
+    console.log('update resume: ', response);
     if (response.status === 200) {
       params.addToast('Save successfully!', { appearance: 'info' });
       console.log('succesfully submit your request.', response);
@@ -81,9 +79,6 @@ function* updateResumeKeyValue(params) {
 
 export function* updateResumeEventHandler(params) {
   console.log('inside updateResumeEventHandler: ');
-  params.addToast('Issue while saving! Please .... try later.', {
-    appearance: 'error',
-  });
   try {
     const storeData = yield select(state => state.builder.resume_json_state);
     if (params.sectionId === 'personal') {
@@ -100,8 +95,14 @@ export function* updateResumeEventHandler(params) {
         );
         console.log('updateCanvasCount values: ', updateCanvasCount);
         if (updateCanvasCount === 0) {
-          // updateResumeKey('All', storeData, params.addToast);
-          const response = updateResumeKey('all', storeData);
+          const response = yield call(
+            apiClient.post,
+            'builder/updateResumeJSON',
+            {
+              resumeKey: 'all',
+              data: storeData,
+            },
+          );
           if (response.status === 200) {
             params.addToast('Save successfully!', { appearance: 'info' });
             console.log('succesfully submit your request.', response);
@@ -132,8 +133,14 @@ export function* updateResumeEventHandler(params) {
         );
         console.log('updateCanvasCount values: ', updateCanvasCount);
         if (updateCanvasCount === 0) {
-          // updateResumeKey('All', storeData, params.addToast);
-          const response = updateResumeKey('all', storeData);
+          const response = yield call(
+            apiClient.post,
+            'builder/updateResumeJSON',
+            {
+              resumeKey: 'all',
+              data: storeData,
+            },
+          );
           if (response.status === 200) {
             params.addToast('Save successfully!', { appearance: 'info' });
             console.log('succesfully submit your request.', response);

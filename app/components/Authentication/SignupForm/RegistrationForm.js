@@ -23,6 +23,7 @@ function RegistrationFormFormik({ dispatch }) {
   const [loadingStatus, setLoadingStatus] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const onSubmitFunction = values => {
+    setLoadingStatus(true);
     dispatch(
       getUserSignup(
         values.username,
@@ -58,16 +59,14 @@ function RegistrationFormFormik({ dispatch }) {
           {() => (
             <Form>
               <React.Fragment>
-                <div>
-                  <div className="relative flex w-full">
+                <div className="loginFields">
+                  <div className="relative flex w-full mb-2">
                     <div className="w-1/2 mr-1">
                       <Input
                         placeholder="FirstName"
                         className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
-                        classNameLabel="block uppercase text-gray-700 text-xs font-bold mb-2"
                         label="FirstName"
                         name="firstName"
-                        fullWidth
                         validate={validationMap.username}
                       />
                     </div>
@@ -75,34 +74,28 @@ function RegistrationFormFormik({ dispatch }) {
                       <Input
                         placeholder="LastName"
                         className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
-                        classNameLabel="block uppercase text-gray-700 text-xs font-bold mb-2"
                         label="LastName"
                         name="lastName"
-                        fullWidth
                         validate={validationMap.username}
                       />
                     </div>
                   </div>
-                  <div className="relative w-full mb-3">
+                  <div className="relative w-full mb-2">
                     <Input
                       placeholder="Email/Username"
                       className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
-                      classNameLabel="block uppercase text-gray-700 text-xs font-bold mb-2"
                       label="Email"
                       name="username"
-                      fullWidth
                       validate={validationMap.username}
                     />
                   </div>
-                  <div className="relative w-full mb-3">
+                  <div className="relative w-full mb-2">
                     <Input
                       type="password"
                       className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
-                      classNameLabel="block uppercase text-gray-700 text-xs font-bold mb-2"
                       placeholder="Password"
                       label="Password"
                       name="password"
-                      fullWidth
                       validate={validationMap.password}
                     />
                   </div>
@@ -131,15 +124,17 @@ function RegistrationFormFormik({ dispatch }) {
                       </span>
                     </label>
                   </div>
-                  <div className="relative w-full mb-3">
-                    {submitError && (
-                      <p className="text-red-500">
-                        <strong>{submitError.status}</strong>
-                      </p>
-                    )}
-                  </div>
-                  {loadingStatus && <DotsLoading loadingText="Loading..." />}
-
+                  {loadingStatus === true ? (
+                    loadingStatus && <DotsLoading loadingText="Loading..." />
+                  ) : (
+                    <div className="relative w-full">
+                      {submitError && (
+                        <p className="text-red-500 pl-2">
+                          <small>{submitError.status}</small>
+                        </p>
+                      )}
+                    </div>
+                  )}
                   <div className="text-center mt-6">
                     <Button
                       as="submit"
