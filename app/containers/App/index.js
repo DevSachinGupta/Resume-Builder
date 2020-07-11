@@ -13,7 +13,7 @@ import Proptypes from 'prop-types';
 import { Router, Switch, Route } from 'react-router-dom';
 import { ToastProvider } from 'react-toast-notifications';
 import HomePage from 'containers/HomePage/Loadable';
-import FeaturePage from 'containers/FeaturePage/Loadable';
+import Dashboard from 'containers/Dashboard/Loadable';
 import Settings from 'containers/Settings/Loadable';
 import Preview from 'components/Preview';
 import DeleteAccountPage from 'components/SettingPage/DeleteAccount/DeleteAccountPage';
@@ -46,7 +46,7 @@ const App = ({ dispatch }) => (
       <Router history={history}>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route path="/features" component={FeaturePage} />
+          <Route path="/dashboard" component={Dashboard} />
           <Route path="/settings" component={Settings} />
           <Route path="/preview/:templateURL" component={Preview} />
           <Route

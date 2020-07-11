@@ -42,7 +42,7 @@ function* userLogin(params) {
       // const isAuthenticated = yield select(state => state.authenticate);
       // console.log(isAuthenticated);
       params.setLoadingStatus(false);
-      history.push('/features');
+      history.push('/dashboard');
     } else if (response.status === 204) {
       params.setSubmitError({
         status: 'A user is already exits with username $',

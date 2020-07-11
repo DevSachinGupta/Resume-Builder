@@ -151,20 +151,21 @@ function CardGrid({ templateItems, updateTemplateNumber, dispatch }) {
 
     <main className="py-4">
       <div className="">
-        <div className="block md:flex justify-between md:-mx-2">
-          <ul className="flex flex-wrap">
+        <div className="block px-2 md:flex justify-between md:-mx-2">
+          <ul className="flex flex-wrap -mx-2 overflow-hidden">
             {templateItems.map(item => (
-              <li className="list-none mb-4 templateGrid">
+              <li className="list-none my-2 px-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 templateGrid">
                 <div className="md:mx-2 mb-4 md:mb-0">
                   <div className="bg-white rounded-lg overflow-hidden shadow relative">
                     <div className="group ">
                       <img
-                        className="h-56 w-full object-cover object-center hover:opacity-0"
+                        className="h-48 w-full object-cover object-center hover:opacity-0"
                         src={item.imageUrl}
                         alt=""
                       />
                     </div>
-                    <div className="p-4 h-auto md:h-40 lg:h-48">
+                    {/* <div className="p-4 h-auto md:h-40 lg:h-48"> */}
+                    <div className="p-4">
                       <h1 className="text-gray-900 font-bold text-xl md:text-base lg:text-lg">
                         {item.title}
                       </h1>
@@ -184,9 +185,9 @@ function CardGrid({ templateItems, updateTemplateNumber, dispatch }) {
                           ))}
                         </div>
                       </div>
-                      <p className="mt-2 text-gray-600 text-sm">
+                      {/* <p className="mt-2 text-gray-600 text-sm">
                         {item.description}
-                      </p>
+                      </p> */}
                       <div className="flex mt-3 justify-end">
                         <div className="my-auto justtify-between mr-2">
                           {/* <button

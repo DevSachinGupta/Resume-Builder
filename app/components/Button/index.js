@@ -25,7 +25,7 @@ function Button({
   ...rest
 }) {
   return (
-    <Wrapper>
+    <Wrapper className="">
       {
         <button
           type={as}

@@ -4,8 +4,8 @@
  * List all the features
  */
 import React from 'react';
-import Features from 'components/Features';
+import DashboardPage from 'components/Dashboard';
 
 export default function FeaturePage() {
-  return <Features />;
+  return <DashboardPage />;
 }

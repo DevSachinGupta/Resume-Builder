@@ -95,13 +95,9 @@ function LoginFormFormik({ dispatch }) {
                   Login
                 </Button>
               </div>
-              <div className="text-center ">
+              <div className="text-center">
                 <small>
-                  <Link
-                    to="login"
-                    className="text-blue-500"
-                    style={{ 'padding-top': '0.5rem' }}
-                  >
+                  <Link to="login" className="pt-2 text-blue-500">
                     Forget Password
                   </Link>
                 </small>

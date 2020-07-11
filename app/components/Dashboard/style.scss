@@ -75,5 +75,14 @@
 }
 
 .templateGrid {
-  flex: 0 0 33.333333%;
+  // flex: 0 0 33.333333%;
+}
+
+.projectListConatiner{
+  .published {
+    box-shadow: 0 0 5px #48bb78;
+  }
+  .draft {
+
+  }
 }

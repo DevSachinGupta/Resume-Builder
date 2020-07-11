@@ -12,7 +12,7 @@ import {
   makeSelectGetUserIsAuthenticated,
   makeSelectGetCurrentUserData,
 } from '../../containers/Authenticate/selectors';
-import Header from '../Features/Header';
+import DashboardHeader from '../Header/DashboardHeader';
 import SettingsMenu from './SettingsMenu';
 import SettingsContent from './SettingsContent';
 import ProfilePage from './ProfilePage';
@@ -59,7 +59,7 @@ function SettingPage({ user, userData, dispatch }) {
   return (
     <div className="bg-white flex flex-col h-screen justify-between">
       <div>
-        <Header user={user} userData={userData} dispatch={dispatch} />
+        <DashboardHeader user={user} userData={userData} dispatch={dispatch} />
       </div>
       <div className="flex mb-auto">
         <div className="container mx-auto px-8">

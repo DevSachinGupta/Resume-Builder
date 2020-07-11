@@ -11,10 +11,10 @@ import axios from 'axios';
 import { IoMdSearch } from 'react-icons/io';
 import Row from 'components/Layout/Row';
 import Column from 'components/Layout/Column';
-import CardGrid from 'components/Features/CardGrid';
+import CardGrid from 'components/Dashboard/CardGrid';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
-import 'components/Features/style.scss';
+import 'components/Dashboard/style.scss';
 import './style.scss';
 
 function Themes() {

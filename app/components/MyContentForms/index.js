@@ -82,7 +82,7 @@ export const getModalContent = modelId => {
       );
       break;
     case 'myTemplates':
-      ModalComponent = React.lazy(() => import('../Features'));
+      ModalComponent = React.lazy(() => import('../Dashboard'));
       break;
     case 'feedback':
       ModalComponent = React.lazy(() =>
