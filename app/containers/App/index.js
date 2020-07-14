@@ -46,7 +46,17 @@ const App = ({ dispatch }) => (
       <Router history={history}>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route path="/dashboard" component={Dashboard} />
+          {/* <Route path="/dashboard" component={Dashboard} /> */}
+          <Route
+            path="/dashboard/new-project"
+            render={routeProps => (
+              <Dashboard {...routeProps} method="new-project" />
+            )}
+          />
+          <Route
+            path="/dashboard"
+            render={routeProps => <Dashboard {...routeProps} method="#" />}
+          />
           <Route path="/settings" component={Settings} />
           <Route path="/preview/:templateURL" component={Preview} />
           <Route
@@ -55,13 +65,15 @@ const App = ({ dispatch }) => (
               <Authenticate {...routeProps} method="login" />
             )}
           />
+          <Route path="/builder/:projectId" component={Builder} />
           <Route
-            path="/builder"
+            path="/builder/:projectId"
             component={() => {
               const location = new URLSearchParams(window.location.search);
               if (location.has('modal')) {
                 dispatch(setModalContent(location.get('modal')));
               }
+              console.log("params: ", window, location)
               return <Builder />;
             }}
           />

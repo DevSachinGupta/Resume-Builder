@@ -18,6 +18,7 @@ import {
   UPDATE_RESUME_EVENT_HANDLER,
   SHOW_THEMES_TOGGLE,
   UPDATE_RESUME_KEY_VALUE_DB,
+  UPDATE_SESSION_ARRAY,
 } from './constants';
 
 export function defaultAction() {
@@ -93,6 +94,25 @@ export function updateDemoPageState(demopage_state) {
   return {
     type: UPDATE_DEMOPAGE_STATE,
     demopage_state,
+  };
+}
+/**
+ * @description function to update session array insert
+ */
+export function updateSessionArrayInsert(projectId, projectSession) {
+  return {
+    type: `${UPDATE_SESSION_ARRAY}_INSERT`,
+    projectId,
+    projectSession,
+  };
+}
+/**
+ * @description function to update session array delete
+ */
+export function updateSessionArrayDelete(projectId) {
+  return {
+    type: `${UPDATE_SESSION_ARRAY}_DELETE`,
+    projectId,
   };
 }
 /**

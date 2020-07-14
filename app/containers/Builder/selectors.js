@@ -55,6 +55,11 @@ const makeUpdateDemoPageState = () =>
     selectBuilderDomain,
     substate => substate.demopage_state,
   );
+const makeSelectSessionArray = () =>
+  createSelector(
+    selectBuilderDomain,
+    substate => substate.sessionArray,
+  );
 const makeUpdateTemplateNumberState = () =>
   createSelector(
     selectBuilderDomain,
@@ -75,6 +80,7 @@ export {
   makeUpdateEditorState,
   makeUpdateResumeJSONState,
   makeUpdateDemoPageState,
+  makeSelectSessionArray,
   makeUpdateTemplateNumberState,
   makeUpdateShowThemeToggle,
 };

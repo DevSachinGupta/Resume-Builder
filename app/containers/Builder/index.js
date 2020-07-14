@@ -4,11 +4,10 @@
  *
  */
 
-import React, { memo, useCallback, useEffect } from 'react';
+import React, { memo, useState, useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import BuilderLayout from 'components/Builder/BuilderLayout';
@@ -17,45 +16,91 @@ import {
   updateTemplateNumberState,
   updateDemoPageState,
   getBuilderThemeContent,
+  updateSessionArrayInsert,
 } from 'containers/Builder/actions';
 import {
   makeSelectGetUserIsAuthenticated,
   makeSelectGetCurrentUserData,
   makeUpdateTemplateNumberState,
 } from 'containers/Authenticate/selectors';
-import makeSelectBuilder, { makeSelectGetThemeContent } from './selectors';
+import apiClient from '../../utils/app/API';
+import makeSelectBuilder, {
+  makeSelectGetThemeContent,
+  makeSelectSessionArray,
+} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
 // const templateNumber = '6';
-export function Builder({ templateNumber, themeContent, user, userData, dispatch }) {
+// export function Builder({ templateNumber, themeContent, user, userData, match, dispatch }) {
+export function Builder(props) {
   useInjectReducer({ key: 'builder', reducer });
   useInjectSaga({ key: 'builder', saga });
 
-  console.log('template number d:', templateNumber);
+  const { projectId } = props.match.params;
 
+  const [builderSessionState, setBuilderSessionState] = useState({});
   const getThemeContent = useCallback(() => {
-    dispatch(getBuilderThemeContent(templateNumber));
+    props.dispatch(getBuilderThemeContent(2));
   });
 
+  const handleFetchBuilderSession = () => {
+    apiClient
+      .post('builder/getProjectSession', {
+        projectId,
+      })
+      .then(response => {
+        console.log('handleCreateProject response: ', response);
+        if (response.status === 200) {
+          props.dispatch(
+            updateSessionArrayInsert(
+              projectId,
+              response.data.data.builderSession,
+            ),
+          );
+          setBuilderSessionState(response.data.data.builderSession);
+        } else {
+          console.log('Something went wrong while submitting: ');
+        }
+      })
+      .catch(error => {
+        console.log('accountVerify error: ', error.response);
+      });
+  };
+
   useEffect(() => {
-    // if(userData)
-    getThemeContent();
+    // const builderSession = makeSelectSessionArray(projectId);
+    console.log('builderSession', props.builderSession);
+    console.log('builderSession', props.builderSession[projectId]);
+    if (!props.builderSession[projectId]) {
+      handleFetchBuilderSession();
+    } else {
+      setBuilderSessionState(props.builderSession[projectId]);
+    }
+    console.log('builderSessionState: ', builderSessionState);
     const DemoPage = {
-      html: themeContent,
-      css: '{..}',
+      html: builderSessionState.templateHTML,
+      css: builderSessionState.templateCSS,
       components: null,
       style: null,
     };
-    dispatch(updateDemoPageState(DemoPage));
-  }, [themeContent]);
+
+    // getThemeContent();
+    // const DemoPage = {
+    //   html: props.themeContent,
+    //   css: '{..}',
+    //   components: null,
+    //   style: null,
+    // };
+    // props.dispatch(updateDemoPageState(DemoPage));
+  }, []);
 
   // dispatch(updateTemplateNumberState(templateNumber));
   // dispatch(updateDemoPageState(DemoPage));
   return (
     <BuilderLayout>
       <div className="builder-workspace">
-        <BuilderEditor />
+        <BuilderEditor builderSessionState={builderSessionState} />
       </div>
     </BuilderLayout>
   );
@@ -69,6 +114,7 @@ const mapStateToProps = createStructuredSelector({
   templateNumber: makeUpdateTemplateNumberState(),
   user: makeSelectGetUserIsAuthenticated(),
   userData: makeSelectGetCurrentUserData(),
+  builderSession: makeSelectSessionArray(),
 });
 
 function mapDispatchToProps(dispatch) {

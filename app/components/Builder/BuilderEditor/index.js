@@ -26,24 +26,31 @@ import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
 import './style.scss';
 
-let DemoPage = {
-  html: 'blank',
+const DemoPagePre = {
+  html: '',
   css: '{..}',
   components: null,
   style: null,
 };
 
-function BuilderEditor({ demopageState, showTemplateSelection, dispatch }) {
+function BuilderEditor({
+  builderSessionState,
+  demopageState,
+  showTemplateSelection,
+  dispatch,
+}) {
+  console.log('builderSessionState Builder: ', builderSessionState);
+  const { projectId } = builderSessionState;
   const { addToast } = useToasts();
-  DemoPage = demopageState || DemoPage;
+  // DemoPage = demopageState || DemoPage;
   useEffect(() => {
     const editor = grapesjs.init({
       container: '#gjs',
       // width: '82vw',
       width: '100%',
       // height: 'calc(100vh - 64px)',
-      components: DemoPage.components || DemoPage.html,
-      style: DemoPage.style || DemoPage.css,
+      components: builderSessionState.templateHTML || DemoPagePre.html,
+      style: builderSessionState.templateCSS || DemoPagePre.css,
       storageManager: {
         autoload: false,
       },
@@ -74,13 +81,6 @@ function BuilderEditor({ demopageState, showTemplateSelection, dispatch }) {
                 const sectionId = attrs.id.split('_')[0];
                 const fieldIndex = attrs.id.split('_')[1];
                 const fieldId = attrs.id.split('_').slice(-1)[0];
-                console.log(
-                  'add updateResume ',
-                  sectionId,
-                  fieldIndex,
-                  fieldId,
-                  content,
-                );
                 if (sectionId && fieldId) {
                   dispatch(
                     updateResumeEventHanlder(
@@ -103,7 +103,7 @@ function BuilderEditor({ demopageState, showTemplateSelection, dispatch }) {
       }
     });
     dispatch(updateEditorState(editor));
-  }, [DemoPage]);
+  }, [builderSessionState]);
   // console.log('showTemplateSelection', showTemplateSelection);
   return (
     <div>

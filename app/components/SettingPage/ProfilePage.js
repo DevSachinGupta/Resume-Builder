@@ -6,14 +6,17 @@
 
 import React, { memo, useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import axios from 'axios';
+import { Formik } from 'formik';
+import { useToasts } from 'react-toast-notifications';
+import { updateProfileInUserData } from 'containers/Authenticate/actions';
 import * as Yup from 'yup';
+import apiClient from '../../utils/app/API';
 import Button from '../Button';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
 function ProfilePage(props) {
+  const { addToast } = useToasts();
   let blankProfileFields = {
     firstName: '',
     lastName: '',
@@ -23,7 +26,8 @@ function ProfilePage(props) {
     blankProfileFields = {
       firstName: props.userData.firstName,
       lastName: props.userData.lastName,
-      profileImageUrl: props.userData.profileImageUrl,
+      profileImageUrl: null,
+      // profileImageUrl: props.userData.settings.profileImageUrl,
     };
   }
   const [submitError, setSubmitError] = useState(null);
@@ -38,8 +42,6 @@ function ProfilePage(props) {
       if (size > 15) {
         valid = false;
       }
-    } else {
-      valid = false;
     }
     return valid;
   };
@@ -50,8 +52,6 @@ function ProfilePage(props) {
       if (!['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
         valid = false;
       }
-    } else {
-      valid = false;
     }
     return valid;
   };
@@ -63,32 +63,35 @@ function ProfilePage(props) {
     formData.append('lastName', values.lastName);
     formData.append('file', values.profileImageUrl);
 
-    axios
-      .post('http://localhost:2000/setting/updateProfile', formData, {
-        withCredentials: true,
-      })
+    apiClient
+      .post('setting/updateProfile', formData)
       .then(response => {
-        console.log('updateProfile response: ', response);
         if (response.status === 200) {
           // TODO : update userData in redux
-          setSubmitError({ status: 'submitting testing' });
-          console.log('succesfully submit your request.');
+          // props.dispatch(
+          //   updateProfileInUserData(
+          //     response.data.data.firstName,
+          //     response.data.data.lastName,
+          //     response.data.data.profileImageUrl,
+          //   ),
+          // );
+          addToast('Successfully update !', { appearance: 'info' });
+          console.log('succesfully submit your request.', response);
         } else {
           setSubmitError({ status: 'Something went wrong while submitting!' });
+          addToast('Issue while updating!!!', { appearance: 'error' });
           console.log('Something went wrong while submitting: ', response);
         }
       })
       .catch(error => {
-        console.log('updateProfile error: ', error);
+        setSubmitError({ status: 'Something went wrong while submitting!' });
+        addToast('Issue while updating!!!', { appearance: 'error' });
+        console.log('updateProfile error: ', error.response);
       });
   };
   const handleDelete = () => {
-    axios
-      .post(
-        'http://localhost:2000/setting/deleteAccountRequest',
-        {},
-        { withCredentials: true },
-      )
+    apiClient
+      .post('setting/deleteAccountRequest', {})
       .then(response => {
         console.log('deleteAccountRequest response: ', response);
         if (response.status === 200) {
@@ -115,7 +118,7 @@ function ProfilePage(props) {
         validationSchema={Yup.object().shape({
           profileImageUrl: Yup.mixed()
             .nullable()
-            .required('Profile image is required')
+            // .required('Profile image is required')
             .test(
               'is-big-file',
               'Image size sholud less thwn 5 MB',
@@ -131,8 +134,11 @@ function ProfilePage(props) {
           lastName: Yup.string().required('Last Name is required'),
         })}
         onSubmit={values => {
-          console.log('onSubmit values', values);
-          handleSave(values);
+          console.log("both balues", values,blankProfileFields)
+          if(values !== blankProfileFields){
+            console.log('onSubmit values', values);
+            handleSave(values);
+          }
         }}
         render={({
           handleSubmit,
@@ -162,11 +168,11 @@ function ProfilePage(props) {
               <div className="mb-4 md:flex ">
                 <div className="mb-4 md:mr-2 md:mb-0">
                   <div className="rounded-full border-8 border-gray-200">
-                    {props.userData.profileImageUrl ? (
+                    {props.userData.settings.profileImageUrl ? (
                       <img
                         className="rounded-full"
                         // src="https://lh3.googleusercontent.com/-biPvuIkz-PE/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnj_WXp169yeuyw2n9nG3_RZFdiGg/s50/photo.jpg"
-                        src={props.userData.profileImageUrl}
+                        src={props.userData.settings.profileImageUrl}
                         width="50"
                         height="50"
                         alt=""

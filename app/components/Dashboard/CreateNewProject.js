@@ -4,36 +4,33 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { IoIosWarning, IoMdCopy } from 'react-icons/io';
-import { AiOutlineDelete } from 'react-icons/ai';
-import { FaRegEdit } from 'react-icons/fa';
+import { FaFolderPlus } from 'react-icons/fa';
+import history from 'containers/App/history';
 import { updateTemplateNumberState } from 'containers/Builder/actions';
+import { updateProjectsInUserData } from 'containers/Authenticate/actions';
+import DotsLoading from '../LoadingIndicator/dotsLoading';
+import apiClient from '../../utils/app/API';
 import {
   makeSelectGetUserIsAuthenticated,
   makeSelectGetCurrentUserData,
 } from '../../containers/Authenticate/selectors';
 import DashboardHeader from '../Header/DashboardHeader';
-import SearchBar from './SearchBar';
+import CardGrid from './CardGrid';
+import CardList from './CardList';
 import GridRow from './GridRow';
-import Sidebar from './Sidebar';
-import BodyLayout from './BodyLayout';
 import Button from '../Button';
 import Footer from './Footer';
 import './style.scss';
-import CardGrid from './CardGrid';
-import CardList from './CardList';
-// import templateList2 from './templatesList';
+
 // import PropTypes from 'prop-types';
-// import styled from 'styled-components';
 
 function CreateNewProject({ user, userData, dispatch }) {
-  const [filters, setFilters] = React.useState({
+  const [filters, setFilters] = useState({
     pricing: '-1',
     category: [],
     searchKey: [],
@@ -42,32 +39,96 @@ function CreateNewProject({ user, userData, dispatch }) {
     pagesize: 12,
     sortOrder: -1, // Relevence:- no of user === then rating
   });
-  const [templateList2, setTemplateList2] = React.useState([]);
-  const [templateList, setTemplateList] = React.useState([]);
-  const [filteredItemCount, setFilteredItemCount] = React.useState(0);
+  const [templateList2, setTemplateList2] = useState([]);
+  const [templateList, setTemplateList] = useState([]);
+  const [filteredItemCount, setFilteredItemCount] = useState(0);
 
-  React.useEffect(() => {
+  const [loadingStatus, setLoadingStatus] = useState(false);
+  const [loadingCreateStatus, setLoadingCreateStatus] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
+
+  const [layoutView, setLayoutView] = useState('Grid');
+  const [currentCategory, setCurrentCategory] = useState('Show All');
+  const [currentPricing, setPricing] = useState('All');
+  const switchLayoutView = e => {
+    setLayoutView(e.currentTarget.value);
+  };
+
+  useEffect(() => {
     getFilteredList();
   }, [filters, templateList2]);
 
-  React.useEffect(() => {
-    axios
-      // .get('http://localhost:2000/template/getAllTemplateList')
-      .get('http://localhost:2000/template/getAllTemplateList', {
-        withCredentials: true,
-      })
+  // console.log("apiclient", apiClient)
+
+  useEffect(() => {
+    setLoadingStatus(true);
+    apiClient
+      .get('template/getAllTemplateList')
       .then(response => {
         if (response.status === 200) {
           setTemplateList2(response.data.data.templateList);
+        } else {
+          setSubmitError({
+            status: 'Something went wrong while submitting !!!',
+          });
         }
+        setLoadingStatus(false);
       })
       .catch(error => {
         console.log('res err', error.response);
+        setLoadingStatus(false);
+        setSubmitError({
+          status: 'Something went wrong while submitting !!!',
+        });
       });
   }, []);
 
+  const handleCreateProject = () => {
+    setLoadingCreateStatus(true);
+    let projectName = document.getElementById('projectName').value;
+    if (projectName === '') {
+      projectName = 'My Resume Project';
+    }
+    apiClient
+      .post('builder/createProject', {
+        projectId: '2',
+        TemplateId: selectedTemplate.id,
+        projectName,
+        TemplateURL: selectedTemplate.url,
+      })
+      .then(response => {
+        console.log('handleCreateProject response: ', response);
+        if (response.status === 200) {
+          dispatch(updateProjectsInUserData(response.data.data.siteProjects));
+          // history.push(`/builder/${response.data.data.projectId}`);
+          setLoadingCreateStatus(false);
+          console.log('succesfully create new project.', response);
+        } else {
+          if (response.status === 210) {
+            setSubmitError({
+              status: 'Invalid or Expire token',
+            });
+          } else {
+            setSubmitError({
+              status: 'Something went wrong while submitting!',
+            });
+          }
+          setLoadingCreateStatus(false);
+          console.log('Something went wrong while submitting: ', response);
+        }
+      })
+      .catch(error => {
+        setLoadingCreateStatus(false);
+        setSubmitError({
+          status: 'Something went wrong while submitting!',
+        });
+        console.log('accountVerify error: ', error.response);
+      });
+  };
+
   function updateFilter(key, value) {
-    // console.log("Update Filter :- ", key, " : ", value);
     const data = { ...filters };
     if (key === 'pageChange') {
       data.pageNumber =
@@ -166,12 +227,26 @@ function CreateNewProject({ user, userData, dispatch }) {
     );
     setTemplateList(newList);
   }
-  const noProject = false;
-  const isPublished = true;
-  const [layoutView, setLayoutView] = React.useState('Grid');
-  const switchLayoutView = e => {
-    setLayoutView(e.currentTarget.value);
+
+  const selectCategory = (ev, item) => {
+    ev.preventDefault();
+    // If this is not a left click
+    if (ev.button !== 0) {
+      return;
+    }
+    setCurrentCategory(item);
+    // updateFilter('category', item);
   };
+  const selectPricing = (ev, item) => {
+    ev.preventDefault();
+    // If this is not a left click
+    if (ev.button !== 0) {
+      return;
+    }
+    setPricing(item);
+    // updateFilter('pricing', item);
+  };
+
   return (
     <div className="bg-white flex flex-col h-screen justify-between text-black">
       <div>
@@ -194,53 +269,83 @@ function CreateNewProject({ user, userData, dispatch }) {
                 id="projectName"
                 name="projectName"
                 type="text"
-                defaultValue="My First Project"
+                defaultValue="My Resume Project"
                 placeholder="Project Name"
               />
             </div>
-            {noProject === false ? (
-              <Button type="primary" className="text-white">
-                <span className="whitespace-no-wrap">Create Project</span>
+            {selectedTemplate ? (
+              <Button
+                type="primary"
+                onClick={() => {
+                  console.log('test button');
+                  handleCreateProject();
+                }}
+                className="text-white"
+              >
+                <span className="flex flex-row items-center whitespace-no-wrap ">
+                  <FaFolderPlus size={28} className="text-gray-800 pr-2" />
+                  Create Project
+                </span>
               </Button>
             ) : (
-              <> </>
+              <Button
+                type="primary"
+                className="text-white opacity-70 cursor-not-allowed"
+              >
+                <span className="flex flex-row items-center whitespace-no-wrap ">
+                  <FaFolderPlus size={28} className="text-gray-800 pr-2" />
+                  Create Project
+                </span>
+              </Button>
             )}
           </div>
-          <div className="flex pt-4 flex-col px-10">
-            <span className="text-sm">
-              Selected Template:<span className="text-xl pl-2">Template01</span>
-            </span>
+          {loadingCreateStatus === true ? (
+            <div>
+              <DotsLoading loadingText="Please Wait..." />
+            </div>
+          ) : (
+            <> </>
+          )}
+          {!loadingCreateStatus && selectedTemplate ? (
+            <div className="flex pt-4 flex-col px-10">
+              <span className="text-sm">
+                Selected Template:
+                <span className="text-xl pl-2">{selectedTemplate.name}</span>
+              </span>
+            </div>
+          ) : (
+            <> </>
+          )}
+          <div className="relative w-full text-center">
+            {submitError && (
+              <p className="pt-2 text-red-600 font-normal text-sm">
+                {submitError.status}
+              </p>
+            )}
           </div>
           <div className="flex pt-6 flex-col px-10">
             <div className="text-lg">Choosing a Starting Template</div>
-            <div className="flex-items w-full shadow-md  border-2 border-gray-300 ">
-              <div className="flex justify-between">
-                <div className="flex flex-row pl-3" id="myBtnContainer">
-                  <button
-                    type="button"
-                    className="px-2 py-1 active hover:text-xl"
-                    onClick="filterSelection('all')"
-                  >
-                    All
-                  </button>
-                  <div className="my-2 border border-gray-700" />
-                  <button
-                    type="button"
-                    className="px-2 py-1 "
-                    onClick="filterSelection('cars')"
-                  >
-                    Free
-                  </button>
-                  <div className="my-2 border border-gray-700" />
-                  <button
-                    type="button"
-                    className="px-2 py-1 "
-                    onClick="filterSelection('animals')"
-                  >
-                    Premium
-                  </button>
-                </div>
-                <div>
+            <div className="mt-2 flex-items w-full shadow-md border-2 border-gray-300 ">
+              <div className="mx-1 flex justify-between">
+                <nav className="flex flex-col sm:flex-row">
+                  {['All', 'Free', 'Premium'].map(item => {
+                    const itemsClassName =
+                      currentPricing === item
+                        ? 'text-gray-600 px-2 py-1  block hover:text-blue-500 focus:outline-none text-blue-500 border-b border-blue-500'
+                        : 'text-gray-600 px-2 py-1  block hover:text-blue-500 focus:outline-none';
+
+                    return (
+                      <button
+                        type="button"
+                        onClick={ev => selectPricing(ev, item)}
+                        className={itemsClassName}
+                      >
+                        {item}
+                      </button>
+                    );
+                  })}
+                </nav>
+                <div className="mt-1">
                   <GridRow
                     updateFilter={updateFilter}
                     switchLayoutView={switchLayoutView}
@@ -249,71 +354,54 @@ function CreateNewProject({ user, userData, dispatch }) {
                 </div>
               </div>
               <div className="flex justify-center">
-                <div className="flex flex-row pl-3" id="myBtnContainer">
-                <button
-                    type="button"
-                    className="px-2 py-1 active hover:text-xl"
-                    onClick="filterSelection('all')"
-                  >
-                    Show All
-                  </button>
-                  <div className="my-2 border border-gray-700" />
-                  <button
-                    type="button"
-                    className="px-2 py-1 "
-                    onClick="filterSelection('cars')"
-                  >
-                    Classic
-                  </button>
-                  <div className="my-2 border border-gray-700" />
-                  <button
-                    type="button"
-                    className="px-2 py-1 "
-                    onClick="filterSelection('animals')"
-                  >
-                    Modern
-                  </button>
-                  <div className="my-2 border border-gray-700" />
-                  <button
-                    type="button"
-                    className="px-2 py-1 "
-                    onClick="filterSelection('animals')"
-                  >
-                    Passionate
-                  </button>
-                </div>
+                <nav className="flex flex-col sm:flex-row">
+                  {['Show All', 'Classic', 'Modern', 'professional'].map(
+                    item => {
+                      const itemsClassName =
+                        currentCategory === item
+                          ? 'text-gray-600 py-2 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500'
+                          : 'text-gray-600 py-2 px-6 block hover:text-blue-500 focus:outline-none';
+
+                      return (
+                        <button
+                          type="button"
+                          onClick={ev => selectCategory(ev, item)}
+                          className={itemsClassName}
+                        >
+                          {item}
+                        </button>
+                      );
+                    },
+                  )}
+                </nav>
               </div>
-              <div className="mb-4">
-                {layoutView === 'Grid' ? (
-                  <CardGrid
-                    templateItems={templateList}
-                    updateTemplateNumber="{updateTemplateNumber}"
-                    dispatch={dispatch}
-                  />
+              <div className="mb-4 mx-2">
+                {loadingStatus === true ? (
+                  <div>
+                    <DotsLoading loadingText="Loading..." />
+                  </div>
                 ) : (
-                  <CardList
-                    templateItems={templateList}
-                    updateTemplateNumber="{updateTemplateNumber}"
-                    dispatch={dispatch}
-                  />
+                  <div>
+                    {layoutView === 'Grid' ? (
+                      <CardGrid
+                        templateItems={templateList}
+                        selectedTemplate={selectedTemplate}
+                        setSelectedTemplate={setSelectedTemplate}
+                        dispatch={dispatch}
+                      />
+                    ) : (
+                      <CardList
+                        templateItems={templateList}
+                        selectedTemplate={selectedTemplate}
+                        setSelectedTemplate={setSelectedTemplate}
+                        dispatch={dispatch}
+                      />
+                    )}
+                  </div>
                 )}
               </div>
             </div>
           </div>
-
-          {/* <div className="w-1/4 mt-2 mr-6 sm:block hidden">
-              <Sidebar updateFilter={updateFilter} />
-            </div>
-            <div className="w-full sm:w-3/4 mt-2">
-              <BodyLayout
-                templateItems={templateList}
-                updateFilter={updateFilter}
-                filters={filters}
-                filteredItemCount={filteredItemCount}
-                updateTemplateNumber="updateTemplateNumber"
-                dispatch={dispatch}
-              />
-            </div> */}
         </div>
       </div>
       <div className="mx-4 mt-8">
@@ -330,11 +418,6 @@ const mapStateToProps = createStructuredSelector({
   userData: makeSelectGetCurrentUserData(),
 });
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     dispatch,
-//   };
-// }
 const mapDispatchToProps = null;
 const withConnect = connect(
   mapStateToProps,

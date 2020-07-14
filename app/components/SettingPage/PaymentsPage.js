@@ -34,23 +34,32 @@ function PaymentsPage(props) {
               </tr>
             </thead>
             <tbody className="bg-white">
-              {props.userData.settings.orders.map(item => (
+              {props.userData.settings.orders.length !== 0 ? (
+                props.userData.settings.orders.map(item => (
+                  <tr>
+                    <td className="w-1/4 text-left py-3 px-4">
+                      {item.planName || '-'}
+                    </td>
+                    <td className="w-1/4 text-left py-3 px-4">
+                      {item.activetedDate || '-'}
+                    </td>
+                    <td className="w-1/4 text-left py-3 px-4">
+                      {item.expiryDate || '-'}
+                    </td>
+                    <td className="w-1/4 text-left py-3 px-4">
+                      {item.invoiceId || '-'}
+                    </td>
+                  </tr>
+                ))
+              ) : (
                 <tr>
-                  <td className="w-1/4 text-left py-3 px-4">
-                    {item.planName || '-'}
-                  </td>
-                  <td className="w-1/4 text-left py-3 px-4">
-                    {item.activetedDate || '-'}
-                  </td>
-                  <td className="w-1/4 text-left py-3 px-4">
-                    {item.expiryDate || '-'}
-                  </td>
-                  <td className="w-1/4 text-left py-3 px-4">
-                    {item.transactionID || '-'}
-                  </td>
+                  <td className="w-1/4 text-left py-3 px-4">-</td>
+                  <td className="w-1/4 text-left py-3 px-4">-</td>
+                  <td className="w-1/4 text-left py-3 px-4">-</td>
+                  <td className="w-1/4 text-left py-3 px-4">-</td>
                 </tr>
-              ))}
-              <tr>
+              )}
+              {/* <tr>
                 <td className="w-1/4 text-left py-3 px-4">Standard</td>
                 <td className="w-1/4 text-left py-3 px-4">24 Feb 2020</td>
                 <td className="w-1/4 text-left py-3 px-4">
@@ -69,7 +78,7 @@ function PaymentsPage(props) {
                 <td className="w-1/4 text-left py-3 px-4">
                   <a className="hover:text-blue-500">1234567890</a>
                 </td>
-              </tr>
+              </tr> */}
             </tbody>
           </table>
         </div>

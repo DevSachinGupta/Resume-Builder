@@ -5,15 +5,18 @@
  */
 
 import React, { memo, useState } from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import axios from 'axios';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { useToasts } from 'react-toast-notifications';
+import { updateNotificationInUserData } from 'containers/Authenticate/actions';
+import apiClient from '../../utils/app/API';
+import DotsLoading from '../LoadingIndicator/dotsLoading';
 import Button from '../Button';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
 function NotificationsPage(props) {
-  console.log('notification userdata:', props.userData);
+  const { addToast } = useToasts();
   let blankNotificationFields = {
     newFetures: true,
     newsletterAndBlogs: true,
@@ -28,28 +31,27 @@ function NotificationsPage(props) {
   const [submitError, setSubmitError] = useState(null);
   // TODO : compare with previoues data before submitting
   const handleSave = values => {
-    axios
-      .post(
-        'http://localhost:2000/setting/updateNotifications',
-        {
-          newFetures: values.newFetures,
-          newsletterAndBlogs: values.newsletterAndBlogs,
-        },
-        { withCredentials: true },
-      )
+    apiClient
+      .post('setting/updateNotifications', {
+        newFetures: values.newFetures,
+        newsletterAndBlogs: values.newsletterAndBlogs,
+      })
       .then(response => {
-        console.log('updateProfile response: ', response);
         if (response.status === 200) {
           // TODO : update userData in redux
-          setSubmitError({ status: 'submitting testing' });
+          props.dispatch(updateNotificationInUserData(values));
+          addToast('Successfully update !', { appearance: 'info' });
           console.log('succesfully submit your request.');
         } else {
           setSubmitError({ status: 'Something went wrong while submitting!' });
+          addToast('Issue while updating!!!', { appearance: 'error' });
           console.log('Something went wrong while submitting: ', response);
         }
       })
       .catch(error => {
-        console.log('updateProfile error: ', error);
+        setSubmitError({ status: 'Something went wrong while submitting!' });
+        addToast('Issue while updating!!!', { appearance: 'error' });
+        console.log('updateProfile error: ', error.response);
       });
   };
 
@@ -62,7 +64,7 @@ function NotificationsPage(props) {
           newsletterAndBlogs: Yup.bool(),
         })}
         onSubmit={values => {
-          console.log("onSubmit values ", values)
+          console.log('onSubmit values ', values);
           handleSave(values);
         }}
         render={({

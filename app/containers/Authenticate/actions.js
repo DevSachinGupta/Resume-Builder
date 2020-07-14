@@ -9,6 +9,7 @@ import {
   AUTHENTICATE,
   USER_LOADING,
   UPDATE_TEMPLATE_NUMBER_STATE,
+  UPDATE_IN_USERDATA,
 } from './constants';
 
 export function defaultAction() {
@@ -128,5 +129,34 @@ export function updateTemplateNumberState(templateNumberState) {
   return {
     type: UPDATE_TEMPLATE_NUMBER_STATE,
     templateNumberState,
+  };
+}
+/**
+ * @description function to update project in userData state
+ */
+export function updateProjectsInUserData(siteProjects) {
+  return {
+    type: `${UPDATE_IN_USERDATA}_PROJECTS`,
+    siteProjects,
+  };
+}
+/**
+ * @description function to update notifications in userData state
+ */
+export function updateNotificationInUserData(notifications) {
+  return {
+    type: `${UPDATE_IN_USERDATA}_NOTIFICATIONS`,
+    notifications,
+  };
+}
+/**
+ * @description function to update profile in userData state
+ */
+export function updateProfileInUserData(firstName, lastName, profileImageUrl) {
+  return {
+    type: `${UPDATE_IN_USERDATA}_PROFILE`,
+    firstName,
+    lastName,
+    profileImageUrl,
   };
 }

@@ -4,6 +4,7 @@
  *
  */
 import produce from 'immer';
+import { loadState, saveState } from 'utils/app/persistedStore';
 import {
   DEFAULT_ACTION,
   SET_MODEL_CONTENT,
@@ -11,15 +12,29 @@ import {
   GET_STATE_LIST,
 } from './constants';
 import { TOGGLE_MODAL } from '../App/constants';
+
+const persistedKeys = ['allCountries'];
+export const persistedState = loadState(persistedKeys);
+
 export const initialState = {
   activeModalType: '',
   allCountries: [],
   filterStates: [],
+  ...persistedState,
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const myContentReducer = (state = initialState, action) =>
-  produce(state, draft => {
+const myContentReducer = (state = initialState, action) => {
+  // For localStorage
+  switch (action.type) {
+    case `${GET_COUNTRY_LIST}_SUCCESS`:
+      saveState('allCountries', action.data);
+      break;
+    default:
+      break;
+  }
+
+  return produce(state, draft => {
     switch (action.type) {
       case DEFAULT_ACTION:
         break;
@@ -34,5 +49,5 @@ const myContentReducer = (state = initialState, action) =>
         break;
     }
   });
-
+};
 export default myContentReducer;

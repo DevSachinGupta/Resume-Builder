@@ -4,23 +4,64 @@
  *
  */
 import produce from 'immer';
+import { loadState, saveState, clearState } from 'utils/app/persistedStore';
 import {
   DEFAULT_ACTION,
   AUTHENTICATE,
   USER_LOADING,
   UPDATE_TEMPLATE_NUMBER_STATE,
+  UPDATE_IN_USERDATA,
 } from './constants';
+
+const persistedKeys = ['isAuthenticated', 'userData'];
+export const persistedState = loadState(persistedKeys);
 
 export const initialState = {
   isAuthenticated: false,
   userData: {},
   loading: false,
   templateNumberState: null,
+  ...persistedState,
 };
 
-/* eslint-disable default-case, no-param-reassign */
-const authenticateReducer = (state = initialState, action) =>
-  produce(state, draft => {
+const authenticateReducer = (state = initialState, action) => {
+  // For localStorage
+  switch (action.type) {
+    case `${AUTHENTICATE}_SET_CURRENT_USER`:
+      saveState('isAuthenticated', action.isAuthenticated);
+      saveState('userData', action.userData);
+      break;
+    case `${AUTHENTICATE}_UNSET`:
+      // saveState('isAuthenticated', false);
+      // saveState('userData', {});
+      clearState();
+      break;
+    case `${UPDATE_IN_USERDATA}_PROJECTS`:
+      let userDataUpdateProjects = state.userData;
+      userDataUpdateProjects.siteProjects = action.siteProjects;
+      console.log('update projects storage:', userDataUpdateProjects);
+      saveState('userData', userDataUpdateProjects);
+      break;
+    case `${UPDATE_IN_USERDATA}_NOTIFICATIONS`:
+      let userDataUpdateNotifications = state.userData;
+      userDataUpdateNotifications.settings.notifications = action.notifications;
+      console.log('update notification storage:', userDataUpdateNotifications);
+      saveState('userData', userDataUpdateNotifications);
+      break;
+    case `${UPDATE_IN_USERDATA}_PROFILE`:
+      console.log('update profile storage:', action);
+      let userDataUpdateProfile = state.userData;
+      userDataUpdateProfile.firstName = action.firstName;
+      userDataUpdateProfile.lastName = action.lastName;
+      userDataUpdateProfile.settings.profileImaneUrl = action.profileImaneUrl;
+      console.log('update profile storage:', userDataUpdateProfile);
+      saveState('userData', userDataUpdateProfile);
+      break;
+    default:
+      break;
+  }
+
+  return produce(state, draft => {
     switch (action.type) {
       case DEFAULT_ACTION:
         break;
@@ -32,12 +73,22 @@ const authenticateReducer = (state = initialState, action) =>
         draft.loading = true;
         break;
       case `${AUTHENTICATE}_UNSET`:
-        draft.userData = null;
+        draft.userData = {};
         draft.isAuthenticated = false;
         break;
       case UPDATE_TEMPLATE_NUMBER_STATE:
-        console.log('update temp number:', action.templateNumberState);
         draft.templateNumberState = action.templateNumberState;
+        break;
+      case `${UPDATE_IN_USERDATA}_PROJECTS`:
+        draft.userData.siteProjects = action.siteProjects;
+        break;
+      case `${UPDATE_IN_USERDATA}_NOTIFICATIONS`:
+        draft.userData.settings.notifications = action.notifications;
+        break;
+      case `${UPDATE_IN_USERDATA}_PROFILE`:
+        draft.userData.firstName = action.firstName;
+        draft.userData.lastName = action.lastName;
+        draft.userData.settings.profileImaneUrl = action.profileImaneUrl;
         break;
       case `${AUTHENTICATE}_LOGIN`:
         break;
@@ -53,5 +104,6 @@ const authenticateReducer = (state = initialState, action) =>
         break;
     }
   });
+};
 
 export default authenticateReducer;

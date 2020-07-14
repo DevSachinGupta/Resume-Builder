@@ -64,18 +64,15 @@ function* userLogin(params) {
 }
 
 function* userLogout(params) {
+  console.log("called userlogout");
   try {
     const response = yield call(apiClient.post, 'logout', {});
     if (response.status === 200) {
-      yield put({
-        type: `${AUTHENTICATE}_SET_CURRENT_USER`,
-        isAuthenticated: false,
-        userData: {},
-      });
-      const isAuthenticated = yield select(state => state.authenticate);
-      console.log(isAuthenticated);
       history.push('/login');
       params.addToast('Successfully Logout!', { appearance: 'info' });
+      yield put({
+        type: `${AUTHENTICATE}_UNSET`,
+      });
     }
   } catch (e) {
     console.log('catch err logout', e);

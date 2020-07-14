@@ -12,143 +12,13 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-function CardGrid({ templateItems, updateTemplateNumber, dispatch }) {
+function CardGrid({
+  templateItems,
+  selectedTemplate,
+  setSelectedTemplate,
+  dispatch,
+}) {
   return (
-    // <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-
-  // 	<div class="flex flex-col items-center justify-center bg-white p-4 shadow rounded-lg">
-  // 		<div class="inline-flex shadow-lg border border-gray-200 rounded-full overflow-hidden h-40 w-40">
-  // 			<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&w=128&h=128&q=60&facepad=2"
-  // 				 alt=""
-  // 				 class="h-full w-full" />
-  // 		</div>
-
-  // 		<h2 class="mt-4 font-bold text-xl">Sebastian Bennett</h2>
-  // 		<h6 class="mt-2 text-sm font-medium">Founder</h6>
-
-  // 		<p class="text-xs text-gray-500 text-center mt-3">
-  // 			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab enim molestiae nulla.
-  // 		</p>
-
-  // 		<ul class="flex flex-row mt-4 space-x-2">
-  // 			<li>
-  // 				<a href="" class="flex items-center justify-center h-8 w-8 border rounded-full text-gray-800 border-gray-800">
-  // 					<i class="fab fa-facebook"></i>
-  // 				</a>
-  // 			</li>
-  // 			<li>
-  // 				<a href="" class="flex items-center justify-center h-8 w-8 border rounded-full text-gray-800 border-gray-800">
-  // 					<i class="fab fa-twitter"></i>
-  // 				</a>
-  // 			</li>
-  // 			<li>
-  // 				<a href="" class="flex items-center justify-center h-8 w-8 border rounded-full text-gray-800 border-gray-800">
-  // 					<i class="fab fa-instagram"></i>
-  // 				</a>
-  // 			</li>
-  // 		</ul>
-  // 	</div>
-
-  // 	<div class="flex flex-col items-center justify-center bg-white p-4 shadow rounded-lg">
-  // 		<div class="inline-flex shadow-lg border border-gray-200 rounded-full overflow-hidden h-40 w-40">
-  // 			<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&w=128&h=128&q=60&facepad=2"
-  // 				 alt=""
-  // 				 class="h-full w-full" />
-  // 		</div>
-
-  // 		<h2 class="mt-4 font-bold text-xl">Sebastian Bennett</h2>
-  // 		<h6 class="mt-2 text-sm font-medium">Founder</h6>
-
-  // 		<p class="text-xs text-gray-500 text-center mt-3">
-  // 			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab enim molestiae nulla.
-  // 		</p>
-
-  // 		<ul class="flex flex-row mt-4 space-x-2">
-  // 			<li>
-  // 				<a href="" class="flex items-center justify-center h-8 w-8 border rounded-full text-gray-800 border-gray-800">
-  // 					<i class="fab fa-facebook"></i>
-  // 				</a>
-  // 			</li>
-  // 			<li>
-  // 				<a href="" class="flex items-center justify-center h-8 w-8 border rounded-full text-gray-800 border-gray-800">
-  // 					<i class="fab fa-twitter"></i>
-  // 				</a>
-  // 			</li>
-  // 			<li>
-  // 				<a href="" class="flex items-center justify-center h-8 w-8 border rounded-full text-gray-800 border-gray-800">
-  // 					<i class="fab fa-instagram"></i>
-  // 				</a>
-  // 			</li>
-  // 		</ul>
-  // 	</div>
-
-  // 	<div class="flex flex-col items-center justify-center bg-white p-4 shadow rounded-lg">
-  // 		<div class="inline-flex shadow-lg border border-gray-200 rounded-full overflow-hidden h-40 w-40">
-  // 			<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&w=128&h=128&q=60&facepad=2"
-  // 				 alt=""
-  // 				 class="h-full w-full" />
-  // 		</div>
-
-  // 		<h2 class="mt-4 font-bold text-xl">Sebastian Bennett</h2>
-  // 		<h6 class="mt-2 text-sm font-medium">Founder</h6>
-
-  // 		<p class="text-xs text-gray-500 text-center mt-3">
-  // 			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab enim molestiae nulla.
-  // 		</p>
-
-  // 		<ul class="flex flex-row mt-4 space-x-2">
-  // 			<li>
-  // 				<a href="" class="flex items-center justify-center h-8 w-8 border rounded-full text-gray-800 border-gray-800">
-  // 					<i class="fab fa-facebook"></i>
-  // 				</a>
-  // 			</li>
-  // 			<li>
-  // 				<a href="" class="flex items-center justify-center h-8 w-8 border rounded-full text-gray-800 border-gray-800">
-  // 					<i class="fab fa-twitter"></i>
-  // 				</a>
-  // 			</li>
-  // 			<li>
-  // 				<a href="" class="flex items-center justify-center h-8 w-8 border rounded-full text-gray-800 border-gray-800">
-  // 					<i class="fab fa-instagram"></i>
-  // 				</a>
-  // 			</li>
-  // 		</ul>
-  // 	</div>
-
-  // 	<div class="flex flex-col items-center justify-center bg-white p-4 shadow rounded-lg">
-  // 		<div class="inline-flex shadow-lg border border-gray-200 rounded-full overflow-hidden h-40 w-40">
-  // 			<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&w=128&h=128&q=60&facepad=2"
-  // 				 alt=""
-  // 				 class="h-full w-full" />
-  // 		</div>
-
-  // 		<h2 class="mt-4 font-bold text-xl">Sebastian Bennett</h2>
-  // 		<h6 class="mt-2 text-sm font-medium">Founder</h6>
-
-  // 		<p class="text-xs text-gray-500 text-center mt-3">
-  // 			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab enim molestiae nulla.
-  // 		</p>
-
-  // 		<ul class="flex flex-row mt-4 space-x-2">
-  // 			<li>
-  // 				<a href="" class="flex items-center justify-center h-8 w-8 border rounded-full text-gray-800 border-gray-800">
-  // 					<i class="fab fa-facebook"></i>
-  // 				</a>
-  // 			</li>
-  // 			<li>
-  // 				<a href="" class="flex items-center justify-center h-8 w-8 border rounded-full text-gray-800 border-gray-800">
-  // 					<i class="fab fa-twitter"></i>
-  // 				</a>
-  // 			</li>
-  // 			<li>
-  // 				<a href="" class="flex items-center justify-center h-8 w-8 border rounded-full text-gray-800 border-gray-800">
-  // 					<i class="fab fa-instagram"></i>
-  // 				</a>
-  // 			</li>
-  // 		</ul>
-  // 	</div>
-    // </div>
-
     <main className="py-4">
       <div className="">
         <div className="block px-2 md:flex justify-between md:-mx-2">
@@ -156,7 +26,17 @@ function CardGrid({ templateItems, updateTemplateNumber, dispatch }) {
             {templateItems.map(item => (
               <li className="list-none my-2 px-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 templateGrid">
                 <div className="md:mx-2 mb-4 md:mb-0">
-                  <div className="bg-white rounded-lg overflow-hidden shadow relative">
+                  {/* {selectedTemplate.id === item.templateID ?  */}
+                  <div
+                    className={cx(
+                      'bg-white, rounded-lg overflow-hidden shadow relative border-blue-500',
+                      {
+                        selectedBorder:
+                          selectedTemplate &&
+                          selectedTemplate.id === item.templateID,
+                      },
+                    )}
+                  >
                     <div className="group ">
                       <img
                         className="h-48 w-full object-cover object-center hover:opacity-0"
@@ -209,10 +89,33 @@ function CardGrid({ templateItems, updateTemplateNumber, dispatch }) {
                         </div>
 
                         <div className="my-auto justtify-between">
-                          {/* {console.log("template umber",item.templateID)} */}
-                          <Link
+                          <button
+                            type="button"
+                            className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black"
+                            data-templateid={item.templateID}
+                            data-templatetitle={item.title}
+                            data-templateurl={item.imageUrl}
+                            onClick={e => {
+                              setSelectedTemplate({
+                                name: e.target.dataset.templatetitle,
+                                id: e.target.dataset.templateid,
+                                url: e.target.dataset.templateurl,
+                              });
+                            }}
+                          >
+                            <IoIosRocket
+                              size={22}
+                              class="bg-white text-teal-500"
+                            />{' '}
+                            Select
+                          </button>
+                          {/* <Link
                             onClick={e =>
-                              dispatch(updateTemplateNumberState(e.target.dataset.templateid))
+                              dispatch(
+                                updateTemplateNumberState(
+                                  e.target.dataset.templateid,
+                                ),
+                              )
                             }
                             data-templateid={item.templateID}
                             to="/builder"
@@ -223,7 +126,7 @@ function CardGrid({ templateItems, updateTemplateNumber, dispatch }) {
                               class="bg-white text-teal-500"
                             />{' '}
                             Select
-                          </Link>
+                          </Link> */}
                         </div>
                       </div>
                     </div>

@@ -76,6 +76,7 @@ function ForgotPasswordResetFormFormik({ tokenId, dispatch }) {
                         placeholder="New Password"
                         label="New Password"
                         name="newPassword"
+                        autoFocus
                         validate={validationMap.password}
                       />
                     </div>
