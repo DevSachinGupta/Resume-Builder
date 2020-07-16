@@ -44,6 +44,11 @@ const makeSelectIsModalOpen = () =>
     selectGlobal,
     globalState => get(globalState, 'modalState.isOpen', false),
   );
+const makeSelectPublishType = () =>
+  createSelector(
+    selectGlobal,
+    globalState => get(globalState, 'publishType', false),
+  );
 const makeSelectIsUserMenuOpen = () =>
   createSelector(
     selectGlobal,
@@ -57,5 +62,6 @@ export {
   makeSelectRepos,
   makeSelectLocation,
   makeSelectIsModalOpen,
+  makeSelectPublishType,
   makeSelectIsUserMenuOpen,
 };

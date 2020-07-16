@@ -8,6 +8,7 @@ import React, { memo, useState } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useToasts } from 'react-toast-notifications';
+import { isEqual } from 'lodash';
 import { updateNotificationInUserData } from 'containers/Authenticate/actions';
 import apiClient from '../../utils/app/API';
 import DotsLoading from '../LoadingIndicator/dotsLoading';
@@ -64,8 +65,10 @@ function NotificationsPage(props) {
           newsletterAndBlogs: Yup.bool(),
         })}
         onSubmit={values => {
-          console.log('onSubmit values ', values);
-          handleSave(values);
+          console.log('both values ', values,blankNotificationFields );
+          if (!(isEqual(values, blankNotificationFields))) {
+            handleSave(values);
+          }
         }}
         render={({
           handleSubmit,

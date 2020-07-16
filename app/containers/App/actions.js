@@ -20,6 +20,7 @@ import {
   LOAD_REPOS_SUCCESS,
   LOAD_REPOS_ERROR,
   TOGGLE_MODAL,
+  UPDATE_PUBLISH_TYPE,
   TOGGLE_HEADER_USER_PILL,
 } from './constants';
 
@@ -69,6 +70,15 @@ export function repoLoadingError(error) {
 export function toggleModal() {
   return {
     type: TOGGLE_MODAL,
+  };
+}
+/**
+ * Dispatched when to update publish type
+ */
+export function updatePublishType(publishType) {
+  return {
+    type: UPDATE_PUBLISH_TYPE,
+    publishType,
   };
 }
 /**

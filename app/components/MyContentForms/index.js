@@ -92,8 +92,13 @@ export const getModalContent = modelId => {
     case 'publish':
       ModalComponent = React.lazy(() => import('./SecondaryForms/PublishForm'));
       break;
-    case 'setting':
-      ModalComponent = React.lazy(() => import('./SecondaryForms/SettingForm'));
+    case 'pricing':
+      ModalComponent = React.lazy(() => import('../Pricing'));
+      break;
+    case 'customDomain':
+      ModalComponent = React.lazy(() =>
+        import('../SettingPage/CustomDomainInfo'),
+      );
       break;
     default:
       ModalComponent = React.lazy(() => import('./EducationForm'));

@@ -31,8 +31,8 @@ import './style.scss';
 
 function CreateNewProject({ user, userData, dispatch }) {
   const [filters, setFilters] = useState({
-    pricing: '-1',
-    category: [],
+    pricing: 'All',
+    category: 'Show All',
     searchKey: [],
     rating: -1,
     pageNumber: 1,
@@ -58,7 +58,7 @@ function CreateNewProject({ user, userData, dispatch }) {
 
   useEffect(() => {
     getFilteredList();
-  }, [filters, templateList2]);
+  }, [filters, templateList2, currentPricing, currentCategory]);
 
   // console.log("apiclient", apiClient)
 
@@ -134,7 +134,7 @@ function CreateNewProject({ user, userData, dispatch }) {
       data.pageNumber =
         value === '++' ? data.pageNumber + 1 : data.pageNumber - 1;
     } else if (key === 'clearFilter') {
-      data.pricing = '-1';
+      data.pricing = 'All';
       data.category = [];
       data.rating = -1;
       data.pageNumber = 1;
@@ -149,30 +149,25 @@ function CreateNewProject({ user, userData, dispatch }) {
   // console.log(filters)
   function getFilteredList() {
     let newList = [];
-    if (filters.pricing != '-1') {
-      const data = filters.pricing.split('-');
-      newList = templateList2.filter(d => {
-        if (data.length > 1) {
-          return (
-            parseFloat(data[0]) <= parseFloat(d.price) &&
-            parseFloat(data[1]) >= parseFloat(d.price)
-          );
-        }
-        if (data[0].indexOf('>') > -1) {
-          return parseFloat(d.price) >= parseFloat(data[0].replace('>', ''));
-        }
-        if (data[0].indexOf('<') > -1) {
-          return parseFloat(d.price) <= parseFloat(data[0].replace('<', ''));
-        }
-      });
+    if (currentPricing !== 'All') {
+      if (currentPricing === 'Free') {
+        newList = templateList2.filter(
+          d => parseFloat(d.price) <= parseFloat(0),
+        );
+      } else if (currentPricing === 'Premium') {
+        newList = templateList2.filter(
+          d => parseFloat(d.price) > parseFloat(0),
+        );
+      }
     } else {
       newList = templateList2;
     }
-    if (filters.category.length !== 0) {
+    if (currentCategory !== 'Show All') {
       newList = newList.filter(d =>
-        d.category.some(s => filters.category.includes(s)),
+        d.category.some(s => currentCategory === s),
       );
     }
+
     if (filters.searchKey.length !== 0) {
       newList = newList.filter(d =>
         d.searchBag.some(s => filters.searchKey.includes(s)),

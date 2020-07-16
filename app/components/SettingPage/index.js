@@ -16,6 +16,7 @@ import DashboardHeader from '../Header/DashboardHeader';
 import SettingsMenu from './SettingsMenu';
 import SettingsContent from './SettingsContent';
 import ProfilePage from './ProfilePage';
+import PublishPage from './PublishPage';
 import PlansPage from './PlansPage';
 import NotificationsPage from './NotificationsPage';
 import PaymentsPage from './PaymentsPage';
@@ -36,6 +37,10 @@ function SettingPage({ user, userData, dispatch }) {
     {
       title: 'Plans',
       url: '/settings/plans',
+    },
+    {
+      title: 'Publish/SEO',
+      url: '/settings/domain',
     },
     {
       title: 'Notifications',
@@ -82,6 +87,11 @@ function SettingPage({ user, userData, dispatch }) {
                   userData={userData}
                   dispatch={dispatch}
                   handler="/settings/profile"
+                />
+                <PublishPage
+                  userData={userData}
+                  dispatch={dispatch}
+                  handler="/settings/domain"
                 />
                 <PlansPage
                   userData={userData}

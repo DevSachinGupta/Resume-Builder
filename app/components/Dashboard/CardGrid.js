@@ -5,7 +5,6 @@
  */
 
 import React, { memo } from 'react';
-import { updateTemplateNumberState } from 'containers/Authenticate/actions';
 import cx from 'classnames';
 import { IoIosRocket } from 'react-icons/io';
 import { Link } from 'react-router-dom';
@@ -18,15 +17,15 @@ function CardGrid({
   setSelectedTemplate,
   dispatch,
 }) {
+  console.log("templa", templateItems)
   return (
     <main className="py-4">
       <div className="">
         <div className="block px-2 md:flex justify-between md:-mx-2">
           <ul className="flex flex-wrap -mx-2 overflow-hidden">
             {templateItems.map(item => (
-              <li className="list-none my-2 px-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 templateGrid">
+              <li className="list-none my-2 px-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 templateCard">
                 <div className="md:mx-2 mb-4 md:mb-0">
-                  {/* {selectedTemplate.id === item.templateID ?  */}
                   <div
                     className={cx(
                       'bg-white, rounded-lg overflow-hidden shadow relative border-blue-500',
@@ -70,13 +69,6 @@ function CardGrid({
                       </p> */}
                       <div className="flex mt-3 justify-end">
                         <div className="my-auto justtify-between mr-2">
-                          {/* <button
-                            type="button"
-                            className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black"
-                          >
-                            Preview
-                          </button> */}
-
                           <Link
                             to={`/preview/${encodeURIComponent(
                               item.templateURL,
@@ -109,24 +101,6 @@ function CardGrid({
                             />{' '}
                             Select
                           </button>
-                          {/* <Link
-                            onClick={e =>
-                              dispatch(
-                                updateTemplateNumberState(
-                                  e.target.dataset.templateid,
-                                ),
-                              )
-                            }
-                            data-templateid={item.templateID}
-                            to="/builder"
-                            className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black"
-                          >
-                            <IoIosRocket
-                              size={22}
-                              class="bg-white text-teal-500"
-                            />{' '}
-                            Select
-                          </Link> */}
                         </div>
                       </div>
                     </div>

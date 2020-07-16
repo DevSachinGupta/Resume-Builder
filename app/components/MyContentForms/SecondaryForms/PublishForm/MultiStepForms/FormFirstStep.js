@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Formik } from 'formik';
-import apiClient from '../../../../../utils/app/API';
 import * as Yup from 'yup';
+import apiClient from '../../../../../utils/app/API';
 import DotsLoading from '../../../../LoadingIndicator/dotsLoading';
 import { FormSecondStep } from './FormSecondStep';
 import { Row, Column } from '../../../../Layout';
 
-export const FormFirstStep = () => {
+export const FormFirstStep = ({publishType}) => {
+  console.log("publishType :", publishType);
   const blankDomainNameFields = {
     domainName: '',
   };

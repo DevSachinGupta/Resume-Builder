@@ -32,12 +32,10 @@ const authenticateReducer = (state = initialState, action) => {
       saveState('userData', action.userData);
       break;
     case `${AUTHENTICATE}_UNSET`:
-      // saveState('isAuthenticated', false);
-      // saveState('userData', {});
       clearState();
       break;
     case `${UPDATE_IN_USERDATA}_PROJECTS`:
-      let userDataUpdateProjects = state.userData;
+      let  userDataUpdateProjects = state.userData;
       userDataUpdateProjects.siteProjects = action.siteProjects;
       console.log('update projects storage:', userDataUpdateProjects);
       saveState('userData', userDataUpdateProjects);
@@ -49,13 +47,20 @@ const authenticateReducer = (state = initialState, action) => {
       saveState('userData', userDataUpdateNotifications);
       break;
     case `${UPDATE_IN_USERDATA}_PROFILE`:
-      console.log('update profile storage:', action);
       let userDataUpdateProfile = state.userData;
       userDataUpdateProfile.firstName = action.firstName;
       userDataUpdateProfile.lastName = action.lastName;
-      userDataUpdateProfile.settings.profileImaneUrl = action.profileImaneUrl;
+      userDataUpdateProfile.settings.profileImageUrl = action.profileImageUrl;
       console.log('update profile storage:', userDataUpdateProfile);
       saveState('userData', userDataUpdateProfile);
+      break;
+    case `${UPDATE_IN_USERDATA}_SEO`:
+      let userDataUpdateSEO = state.userData;
+      userDataUpdateSEO.settings.SEO.title = action.title;
+      userDataUpdateSEO.settings.SEO.profession = action.profession;
+      userDataUpdateSEO.settings.SEO.description = action.description;
+      console.log('update profile storage:', userDataUpdateSEO);
+      saveState('userData', userDataUpdateSEO);
       break;
     default:
       break;
@@ -88,7 +93,11 @@ const authenticateReducer = (state = initialState, action) => {
       case `${UPDATE_IN_USERDATA}_PROFILE`:
         draft.userData.firstName = action.firstName;
         draft.userData.lastName = action.lastName;
-        draft.userData.settings.profileImaneUrl = action.profileImaneUrl;
+        draft.userData.settings.profileImageUrl = action.profileImageUrl;
+        break;
+      case `${UPDATE_IN_USERDATA}_SEO`:
+        const { title, profession, description } = { ...action };
+        draft.userData.settings.SEO = { title, profession, description };
         break;
       case `${AUTHENTICATE}_LOGIN`:
         break;

@@ -13,4 +13,5 @@ export const LOAD_REPOS = 'boilerplate/App/LOAD_REPOS';
 export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS';
 export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR';
 export const TOGGLE_MODAL = 'app/TOGGLE_MODAL';
+export const UPDATE_PUBLISH_TYPE = 'app/UPDATE_PUBLISH_TYPE';
 export const TOGGLE_HEADER_USER_PILL = 'app/TOGGLE_HEADER_USER_PILL';

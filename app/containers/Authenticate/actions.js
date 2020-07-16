@@ -160,3 +160,14 @@ export function updateProfileInUserData(firstName, lastName, profileImageUrl) {
     profileImageUrl,
   };
 }
+/**
+ * @description function to update SEO in userData state
+ */
+export function updatePublishSEOInUserData(title, profession, description) {
+  return {
+    type: `${UPDATE_IN_USERDATA}_SEO`,
+    title,
+    profession,
+    description,
+  };
+}

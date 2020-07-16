@@ -8,6 +8,7 @@ import React, { memo, useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import { Formik } from 'formik';
 import { useToasts } from 'react-toast-notifications';
+import { isEqual } from 'lodash';
 import { updateProfileInUserData } from 'containers/Authenticate/actions';
 import * as Yup from 'yup';
 import apiClient from '../../utils/app/API';
@@ -64,17 +65,17 @@ function ProfilePage(props) {
     formData.append('file', values.profileImageUrl);
 
     apiClient
-      .post('setting/updateProfile', formData)
+      .post('setting/updateProfile', formData, {"Accept": "application/json"})
       .then(response => {
         if (response.status === 200) {
           // TODO : update userData in redux
-          // props.dispatch(
-          //   updateProfileInUserData(
-          //     response.data.data.firstName,
-          //     response.data.data.lastName,
-          //     response.data.data.profileImageUrl,
-          //   ),
-          // );
+          props.dispatch(
+            updateProfileInUserData(
+              response.data.data.firstName,
+              response.data.data.lastName,
+              response.data.data.profileImageUrl,
+            ),
+          );
           addToast('Successfully update !', { appearance: 'info' });
           console.log('succesfully submit your request.', response);
         } else {
@@ -86,7 +87,7 @@ function ProfilePage(props) {
       .catch(error => {
         setSubmitError({ status: 'Something went wrong while submitting!' });
         addToast('Issue while updating!!!', { appearance: 'error' });
-        console.log('updateProfile error: ', error.response);
+        console.log('updateProfile error: ', error, error.response);
       });
   };
   const handleDelete = () => {
@@ -135,7 +136,7 @@ function ProfilePage(props) {
         })}
         onSubmit={values => {
           console.log("both balues", values,blankProfileFields)
-          if(values !== blankProfileFields){
+          if (!(isEqual(values, blankProfileFields))) {
             console.log('onSubmit values', values);
             handleSave(values);
           }
@@ -186,9 +187,9 @@ function ProfilePage(props) {
                   <label className="block mb-2 text-sm  text-gray-700">
                     Upload your avatar image (size up to 256 x 256)
                   </label>
-                  <Button type="primary" className="text-white">
+                  <label htmlFor="upload" className="my-2 py-1 px-2 text-white rounded bg-blue-500 cursor-pointer">
                     Upload
-                  </Button>
+                  </label>
                   {/* <button class="bg-blue-500 hover:bg-blue-light py-2 px-4 rounded inline-flex items-center">
               <svg fill="#FFF" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
                   <path d="M0 0h24v24H0z" fill="none"/>
@@ -197,7 +198,7 @@ function ProfilePage(props) {
                 <span class="ml-2">Upload</span>
             </button> */}
                   <input
-                    className="cursor-pointer absolute block py-2 px-4 w-full opacity-0 pin-r pin-t"
+                    className="cursor-pointer absolute block py-2 px-4 w-full opacity-0 pin-r pin-t appearance-none "
                     id="upload"
                     type="file"
                     name="profileImageUrl"

@@ -6,7 +6,9 @@
 
 import React, { memo, useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaUserCircle, FaRegUser } from 'react-icons/fa';
+import { IoIosPower } from 'react-icons/io';
+
 import cx from 'classnames';
 import { useToasts } from 'react-toast-notifications';
 import { getUserLogout } from '../../containers/Authenticate/actions';
@@ -97,28 +99,26 @@ function DashboardHeader(props) {
               )}
               {user && (
                 <div
-                  className="inline-flex"
+                  className="inline-flex items-center cursor-pointer"
                   onClick={() => toggleHeaderUserMenu(!isHeaderMenuOpen)}
                 >
                   <div className="">
-                    <span className="no-underline whitespace-no-wrap ">{`${
+                    <span className="no-underline whitespace-no-wrap pr-2">{`${
                       userData.firstName
                     } ${userData.lastName}`}</span>
                   </div>
                   <div className={cx('navAccountPill')}>
-                    {props.userData.userProfileUrl ? (
+                    {props.userData.settings.profileImageUrl ? (
                       <img
-                        className="rounded-full"
-                        src={props.userData.userProfileUrl}
-                        width="25"
-                        height="25"
+                        className="rounded-full max-w-6xl max-w-none"
+                        // src="https://lh3.googleusercontent.com/-biPvuIkz-PE/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnj_WXp169yeuyw2n9nG3_RZFdiGg/s50/photo.jpg"
+                        src={props.userData.settings.profileImageUrl}
+                        width="30"
+                        height="30"
                         alt=""
                       />
                     ) : (
-                      <FaUserCircle
-                        size={24}
-                        className="bg-white rounded-full"
-                      />
+                      <FaUserCircle size={24} class="bg-white rounded-full" />
                     )}
                     <div
                       className={cx(
@@ -134,15 +134,21 @@ function DashboardHeader(props) {
                       <ul className="text-left">
                         <li
                           onClick={() => {
-                            console.log("dispatch header:", props.dispatch, getUserLogout)
+                            console.log(
+                              'dispatch header:',
+                              props.dispatch,
+                              getUserLogout,
+                            );
                             props.dispatch(getUserLogout(addToast));
                             toggleHeaderUserMenu(!isHeaderMenuOpen);
                           }}
                         >
-                          Logout
+                          <div className="flex flex-row text-center"><IoIosPower className="w-auto my-auto pr-2"/> Logout</div>
                         </li>
                         <Link to="settings" className="no-underline">
-                          <li>Profile</li>
+                          <li>
+                          <div className="flex flex-row text-center"><FaRegUser className="w-auto my-auto pr-2 font-light"/> Profile</div>
+                          </li>
                         </Link>
                       </ul>
                     </div>

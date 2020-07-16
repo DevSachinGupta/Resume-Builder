@@ -13,6 +13,7 @@ import {
   LOAD_REPOS,
   LOAD_REPOS_ERROR,
   TOGGLE_MODAL,
+  UPDATE_PUBLISH_TYPE,
   TOGGLE_HEADER_USER_PILL,
 } from './constants';
 
@@ -21,6 +22,7 @@ export const initialState = {
   loading: false,
   error: false,
   currentUser: false,
+  publishType: '',
   modalState: {
     isOpen: false,
   },
@@ -49,6 +51,9 @@ const appReducer = (state = initialState, action) =>
         break;
       case TOGGLE_MODAL:
         draft.modalState.isOpen = !state.modalState.isOpen;
+        break;
+      case UPDATE_PUBLISH_TYPE:
+        draft.publishType = action.publishType;
         break;
       case TOGGLE_HEADER_USER_PILL:
         draft.headerState.isUserPillOpen = !state.headerState.isUserPillOpen;

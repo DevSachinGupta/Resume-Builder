@@ -7,15 +7,29 @@
 import React, { memo } from 'react';
 import cx from 'classnames';
 import { IoIosRocket } from 'react-icons/io';
-// import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-function CardList(props) {
+function CardList({
+  templateItems,
+  selectedTemplate,
+  setSelectedTemplate,
+  dispatch,
+}) {
   return (
     <div>
-      {props.templateItems.map(item => (
-        <div className="pb-6">
-          <div className="flex bg-white shadow-md rounded-lg overflow-hidden">
+      {templateItems.map(item => (
+        <div className="py-4 px-1 templateCard">
+          <div
+            className={cx(
+              'flex bg-white shadow-md rounded-lg overflow-hidden shadow border-blue-500',
+              {
+                selectedBorder:
+                  selectedTemplate && selectedTemplate.id === item.templateID,
+              },
+            )}
+          >
             <div
               className="w-1/3 bg-cover"
               style={{
@@ -42,14 +56,32 @@ function CardList(props) {
                 </h1>
                 <div className="flex mt-3 justify-end">
                   <div className="my-auto justtify-between mr-2">
-                    <button button="button" className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black">
+                    <Link
+                      to={`/preview/${encodeURIComponent(item.templateURL)}`}
+                      target="_blank"
+                      className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black"
+                    >
                       Preview
-                    </button>
+                    </Link>
                   </div>
 
                   <div className="my-auto justtify-between">
-                    <button type="button" className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black ">
-                    <IoIosRocket size={22} className="bg-white text-teal-500" /> Select
+                    <button
+                      type="button"
+                      className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black"
+                      data-templateid={item.templateID}
+                      data-templatetitle={item.title}
+                      data-templateurl={item.imageUrl}
+                      onClick={e => {
+                        setSelectedTemplate({
+                          name: e.target.dataset.templatetitle,
+                          id: e.target.dataset.templateid,
+                          url: e.target.dataset.templateurl,
+                        });
+                      }}
+                    >
+                      <IoIosRocket size={22} class="bg-white text-teal-500" />{' '}
+                      Select
                     </button>
                   </div>
                 </div>

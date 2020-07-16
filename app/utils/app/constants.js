@@ -43,8 +43,11 @@ const Constants = {
     publish: {
       title: '',
     },
-    setting: {
-      title: 'Setting',
+    pricing: {
+      title: 'Account Plan',
+    },
+    customDomain: {
+      title: 'Connect with custom domain',
     },
   },
 };
