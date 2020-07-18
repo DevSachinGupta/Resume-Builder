@@ -13,6 +13,7 @@ import {
 import { formatDateValue } from '../../../utils/app/textFormating';
 import { getCountryList } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
+import { componentMapPersonal, formatValuesPersonal } from '../dataLoadStructure';
 import PersonalDetailsForms from './PersonalDetailsForms';
 import Button from '../../Button';
 import './style.scss';

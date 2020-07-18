@@ -15,6 +15,7 @@ import {
 } from 'containers/Builder/actions';
 import { setModalContent } from '../../../containers/MyContent/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
+import { componentMapAffiliation, formatValuesAffiliation } from '../dataLoadStructure';
 import Accordian from '../../Accordion';
 import AffiliationInputs from './AffiliationItems';
 import Button from '../../Button';
@@ -60,12 +61,12 @@ function AffiliationForm({ resumeJSONState, dispatch }) {
     return tempValues;
   };
   const handleSave = values => {
-    const updatedAff = formatValues(
+    const updatedAff = formatValuesAffiliation(
       JSON.parse(JSON.stringify(values.affiliation)),
     );
     const history = { history: values.affiliation };
     dispatch(
-      updateEditorCanvas('affiliation', 'ADD', updatedAff, componentMap),
+      updateEditorCanvas('affiliation', 'ADD', updatedAff, componentMapAffiliation),
     );
     dispatch(updateResumeJSONState(history, 'affiliation'));
     dispatch(updateResumeKeyValue('affiliation', values.affiliation, addToast));

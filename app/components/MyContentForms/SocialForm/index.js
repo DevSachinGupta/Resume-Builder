@@ -21,6 +21,7 @@ import {
   updateResumeKeyValue,
 } from 'containers/Builder/actions';
 import { setModalContent } from '../../../containers/MyContent/actions';
+import { componentMapSocial, formatValuesSocial } from '../dataLoadStructure';
 import { validationMap } from './validation';
 import Button from '../../Button';
 import Input from '../../FormComponents/Input';

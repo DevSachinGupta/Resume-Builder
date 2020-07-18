@@ -15,6 +15,7 @@ import {
 } from 'containers/Builder/actions';
 import { setModalContent } from '../../../containers/MyContent/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
+import { componentMapPublication, formatValuesPublication } from '../dataLoadStructure';
 import Accordian from '../../Accordion';
 import PublicationInputs from './PublicationItems';
 import Button from '../../Button';
@@ -54,12 +55,12 @@ function PublicationForm({ resumeJSONState, dispatch }) {
     return tempValues;
   };
   const handleSave = values => {
-    const updatedPub = formatValues(
+    const updatedPub = formatValuesPublication(
       JSON.parse(JSON.stringify(values.publication)),
     );
     const history = { history: values.publication };
     dispatch(
-      updateEditorCanvas('publication', 'ADD', updatedPub, componentMap),
+      updateEditorCanvas('publication', 'ADD', updatedPub, componentMapPublication),
     );
     dispatch(updateResumeJSONState(history, 'publication'));
     dispatch(updateResumeKeyValue('publication', values.publication, addToast));

@@ -15,6 +15,7 @@ import {
 } from 'containers/Builder/actions';
 import { setModalContent } from '../../../containers/MyContent/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
+import { componentMapAccomplishment, formatValuesAccomplishment } from '../dataLoadStructure';
 import Accordian from '../../Accordion';
 import AccomplishmentInputs from './AccomplishmentItems';
 import Button from '../../Button';
@@ -52,12 +53,12 @@ function AccomplishmentForm({ resumeJSONState, dispatch }) {
     return tempValues;
   };
   const handleSave = values => {
-    const updatedAccom = formatValues(
+    const updatedAccom = formatValuesAccomplishment(
       JSON.parse(JSON.stringify(values.accomplishment)),
     );
     const history = { history: values.accomplishment };
     dispatch(
-      updateEditorCanvas('accomplishment', 'ADD', updatedAccom, componentMap),
+      updateEditorCanvas('accomplishment', 'ADD', updatedAccom, componentMapAccomplishment),
     );
     dispatch(updateResumeJSONState(history, 'accomplishment'));
     dispatch(updateResumeKeyValue('accomplishment', values.accomplishment, addToast));

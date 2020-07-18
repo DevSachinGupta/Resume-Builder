@@ -15,7 +15,7 @@ import {
 import { FaTimes } from 'react-icons/fa';
 import { toggleModal } from 'containers/App/actions';
 import { setModalContent } from '../../../containers/MyContent/actions';
-// import { updateResumeKeyValue } from '../index';
+import { componentMapHobbies } from '../dataLoadStructure';
 import Input from '../../FormComponents/Input';
 import Button from '../../Button';
 import Icons from '../../Icons';
@@ -116,7 +116,7 @@ function HobbiesForm({ resumeJSONState, dispatch }) {
   const handleSave = values => {
     const updatedHob = values;
     const history = { history: updatedHob };
-    dispatch(updateEditorCanvas('hobbies', 'ADD', values, componentMap));
+    dispatch(updateEditorCanvas('hobbies', 'ADD', values, componentMapHobbies));
     dispatch(updateResumeJSONState(history, 'hobbies'));
     dispatch(updateResumeKeyValue('hobbies', values, addToast));
     dispatch(toggleModal());

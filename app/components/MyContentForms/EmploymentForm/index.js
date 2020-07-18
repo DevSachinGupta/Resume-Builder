@@ -14,6 +14,7 @@ import {
 } from 'containers/Builder/actions';
 import { toggleModal } from 'containers/App/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
+import { componentMapEmployement, formatValuesEmployement } from '../dataLoadStructure';
 import {
   getCountryList,
   setModalContent,
@@ -76,11 +77,14 @@ function EmploymentForm({ allCountries, resumeJSONState, dispatch }) {
     return tempValues;
   };
   const handleSave = values => {
-    const updatedEmp = formatValues(
+    const updatedEmp = formatValuesEmployement(
       JSON.parse(JSON.stringify(values.employment)),
     );
+    // const updatedEmp = formatValues(
+    //   JSON.parse(JSON.stringify(values.employment)),
+    // );
     const history = { history: values.employment };
-    dispatch(updateEditorCanvas('employment', 'ADD', updatedEmp, componentMap));
+    dispatch(updateEditorCanvas('employment', 'ADD', updatedEmp, componentMapEmployement));
     dispatch(updateResumeJSONState(history, 'employment'));
     dispatch(updateResumeKeyValue('employment', values.employment, addToast));
     dispatch(toggleModal());

@@ -15,6 +15,7 @@ import {
 } from 'containers/Builder/actions';
 import { FaTimes } from 'react-icons/fa';
 import { setModalContent } from '../../../containers/MyContent/actions';
+import { componentMapSkills, formatValuesSkills } from '../dataLoadStructure';
 import Button from '../../Button';
 import Input from '../../FormComponents/Input';
 import './style.scss';

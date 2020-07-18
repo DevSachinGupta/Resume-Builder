@@ -16,6 +16,7 @@ import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
   updateResumeJSONState,
   updateEditorCanvas,
+  updateResumeKeyValue,
 } from 'containers/Builder/actions';
 import { toggleModal } from 'containers/App/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
@@ -24,7 +25,7 @@ import {
   setModalContent,
 } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
-import { updateResumeKeyValue, formatValuesEmployement, componentMapEmployement } from '../index';
+import { componentMapEducation, formatValuesEducation } from '../dataLoadStructure';
 import EducationInputs from './EducationItems';
 import Accordian from '../../Accordion';
 import Button from '../../Button';
@@ -84,13 +85,16 @@ function EducationForm({ allCountries, resumeJSONState, dispatch }) {
     return tempValues;
   };
   const handleSave = values => {
-    const updatedEdu = formatValues(
+    // const updatedEdu = formatValues(
+    //   JSON.parse(JSON.stringify(values.education)),
+    // );
+    const updatedEdu = formatValuesEducation(
       JSON.parse(JSON.stringify(values.education)),
     );
     const history = { history: values.education };
-    dispatch(updateEditorCanvas('education', 'ADD', updatedEdu, componentMap));
+    dispatch(updateEditorCanvas('education', 'ADD', updatedEdu, componentMapEducation));
     dispatch(updateResumeJSONState(history, 'education'));
-    updateResumeKeyValue('education', values.education, addToast);
+    dispatch(updateResumeKeyValue('education', values.education, addToast));
     dispatch(toggleModal());
   };
   const handleSaveAndNext = values => {

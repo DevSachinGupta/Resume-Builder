@@ -16,6 +16,7 @@ import {
 import { defaultTo } from 'lodash';
 import { setModalContent } from '../../../containers/MyContent/actions';
 import { formatDateValue } from '../../../utils/app/textFormating';
+import { componentMapProject, formatValuesProject } from '../dataLoadStructure';
 import Accordian from '../../Accordion';
 import ProjectInputs from './ProjectItems';
 import Button from '../../Button';
@@ -48,7 +49,7 @@ function ProjectForm({ resumeJSONState, dispatch }) {
     tillDate: false,
     description: '',
   };
-  const componentMap = {
+  const componentMap1 = {
     title: { valueMap: 'title', componentType: 'content' },
     summary: { valueMap: 'summary', componentType: 'content' },
     keywords: { valueMap: 'keywords', componentType: 'content' },
@@ -100,7 +101,12 @@ function ProjectForm({ resumeJSONState, dispatch }) {
     return tempValues;
   };
   const handleSave = values => {
-    const updatedPro = formatValues(JSON.parse(JSON.stringify(values.project)));
+    const formatObject = formatValuesProject(
+      JSON.parse(JSON.stringify(values.project)),
+      componentMapProject,
+    );
+    const updatedPro = formatObject.tempValues;
+    const { componentMap } = formatObject;
     const history = { history: values.project };
     dispatch(updateEditorCanvas('project', 'ADD', updatedPro, componentMap));
     dispatch(updateResumeJSONState(history, 'project'));

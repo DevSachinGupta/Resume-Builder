@@ -3,6 +3,7 @@ import { get } from 'lodash';
 import axios from 'axios';
 import Button from '../Button';
 import { AppUtils } from '../../utils/app';
+
 /**
  *
  * MyContentForms
@@ -138,32 +139,3 @@ export const getModalHeader = modelId => {
       );
   }
 };
-
-// Education
-
-
-// Employement
-export const componentMapEmployement = {
-  position: { valueMap: 'position', componentType: 'content' },
-  employer: { valueMap: 'employer', componentType: 'content' },
-  state: { valueMap: 'state', componentType: 'content' },
-  country: { valueMap: 'country', componentType: 'content' },
-  start: { valueMap: 'start', componentType: 'content' },
-  end: { valueMap: 'end', componentType: 'content' },
-  summary: { valueMap: 'summary', componentType: 'content' },
-};
-export const formatValuesEmployement = values => {
-  const tempValues = values;
-  tempValues.forEach((value, index) => {
-    tempValues[index].start = formatDateValue(tempValues[index].start);
-    if (tempValues[index].tillDate === true) {
-      tempValues[index].end = 'Present';
-    } else {
-      tempValues[index].end = formatDateValue(tempValues[index].end);
-    }
-  });
-  return tempValues;
-};
-
-
-
