@@ -39,7 +39,6 @@ function BuilderEditor({
   showTemplateSelection,
   dispatch,
 }) {
-  console.log('builderSessionState Builder: ', builderSessionState);
   const { projectId } = builderSessionState;
   const { addToast } = useToasts();
   // DemoPage = demopageState || DemoPage;
@@ -60,12 +59,20 @@ function BuilderEditor({
       canvas: {
         styles: [
           'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
-          'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style.css', // template 2
+          `${builderSessionState.CSSLink}`,
+          // 'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style.css', // template 2
           // 'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style-9.css', // template 9
           // 'https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style-10.css', // template 10
         ],
       },
     });
+
+    const updateAll = model => {
+      model.set({ hoverable: false });
+      model.get('components').each(model1 => updateAll(model1));
+    };
+
+    updateAll(editor.DomComponents.getWrapper());
 
     editor.on('change:changesCount', (editorModel, changes, changesArray) => {
       if (changes) {

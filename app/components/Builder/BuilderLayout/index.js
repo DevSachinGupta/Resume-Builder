@@ -15,10 +15,10 @@ import BuilderSidebar from 'components/Builder/BuilderSidebar';
 import BuilderHeader from 'components/Builder/BuilderHeader';
 import { makeSelectIsSidebarOpen } from 'containers/Builder/selectors';
 import './style.scss';
-function BuilderLayout({ isSidebarOpen, ...rest }) {
+function BuilderLayout({ isSidebarOpen, projectId, ...rest }) {
   return (
     <div className={cx('builderLayout')}>
-      <BuilderHeader />
+      <BuilderHeader projectId={projectId} />
       <div className={cx('appContainer')}>
         {isSidebarOpen && (
           <div
@@ -43,6 +43,7 @@ const mapStateToProps = createStructuredSelector({
 BuilderLayout.propTypes = {
   children: PropTypes.node,
   isSidebarOpen: PropTypes.bool.isRequired,
+  projectId: PropTypes.string.isRequired,
 };
 const withConnect = connect(
   mapStateToProps,

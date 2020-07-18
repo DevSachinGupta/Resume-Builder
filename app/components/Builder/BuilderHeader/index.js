@@ -20,14 +20,28 @@ import { toggleHeaderUserMenu } from 'containers/App/actions';
 import { makeSelectIsUserMenuOpen } from 'containers/App/selectors';
 import { setModalContent } from 'containers/MyContent/actions';
 import { makeUpdateEditorState } from 'containers/Builder/selectors';
-import { toggleSidebar } from '../../../containers/Builder/actions';
+import {
+  makeSelectGetUserIsAuthenticated,
+  makeSelectGetCurrentUserData,
+} from '../../../containers/Authenticate/selectors';
+import {
+  toggleSidebar,
+  updateSessionArrayInsert,
+} from '../../../containers/Builder/actions';
 import { getUserLogout } from '../../../containers/Authenticate/actions';
 import Button from '../../Button';
 import './progress.css';
 import './style.scss';
 import apiClient from '../../../utils/app/API';
 
-function BuilderHeader({ dispatch, isHeaderMenuOpen, editorState }) {
+function BuilderHeader({
+  dispatch,
+  isHeaderMenuOpen,
+  editorState,
+  user,
+  userData,
+  projectId,
+}) {
   useEffect(() => {
     np.configure({
       showSpinner: false,
@@ -36,23 +50,35 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen, editorState }) {
     // np.start({});
   }, []);
   const { addToast } = useToasts();
-
-  const saveBuilderSession = editor => {
-    const HTMLCode = editor.getHtml();
-    const CSSCode = editor.getCss();
-    const JSCode = '';
-    console.log('HTML Code: ', HTMLCode);
-    console.log('CSS Code: ', CSSCode);
+  console.log("BuilderHeader userData:", projectId, userData)
+  let projectName = '';
+  if (userData.siteProjects) {
+    projectName = userData.siteProjects.filter(
+      item => item.projectId === projectId,
+    )[0].projectName;
+  }
+  const saveBuilderSession = (editor, projectId) => {
+    const templateHTML = editor.getHtml();
+    const templateCSS = editor.getCss();
+    const templateJS = '';
 
     apiClient
       .post('builder/saveBuilderSession', {
-        HTMLCode,
-        CSSCode,
-        JSCode,
+        templateHTML,
+        templateCSS,
+        templateJS,
+        projectId,
       })
       .then(response => {
         if (response.status === 200) {
           addToast('Save successfully!', { appearance: 'info' });
+          dispatch(
+            updateSessionArrayInsert(projectId, {
+              templateCSS,
+              templateHTML,
+              templateJS,
+            }),
+          );
           console.log('succesfully submit your request.', response);
         } else {
           addToast('Issue while saving! Please try later.', {
@@ -68,18 +94,22 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen, editorState }) {
         console.log('saveBuilderSession error: ', error);
       });
   };
-
   return (
     <div className="header-container flex bg-white border-b border-gray-200 inset-x-0 z-100 h-16 items-center shadow-lg">
-      <Button
-        handleRoute
-        iconButton
-        circular
-        type=""
-        onClick={() => dispatch(toggleSidebar())}
-      >
-        <GoThreeBars size={22} />
-      </Button>
+      <div className="flex flex-row items-center justify-right">
+        <Button
+          handleRoute
+          iconButton
+          circular
+          type=""
+          onClick={() => dispatch(toggleSidebar())}
+        >
+          <GoThreeBars size={22} />
+        </Button>
+        <span className="ml-2 truncate text-xl max-w-xs">
+          {projectName ? <span>{projectName}</span> : <></>}
+        </span>
+      </div>
       <div className={cx('deviceContainer')}>
         <div className="panel__top">
           <div className="w-1/4 flex items-center ">
@@ -132,7 +162,9 @@ function BuilderHeader({ dispatch, isHeaderMenuOpen, editorState }) {
           <Button onClick={() => dispatch(toggleSidebar())}>Preview</Button>
         </div>
         <div className={cx('publishButton')}>
-          <Button onClick={() => saveBuilderSession(editorState)}>Save</Button>
+          <Button onClick={() => saveBuilderSession(editorState, projectId)}>
+            Save
+          </Button>
         </div>
         <div className={cx('publishButton')}>
           <Button onClick={() => dispatch(setModalContent('publish'))}>
@@ -183,6 +215,8 @@ const withConnect = connect(
   createStructuredSelector({
     isHeaderMenuOpen: makeSelectIsUserMenuOpen(),
     editorState: makeUpdateEditorState(),
+    user: makeSelectGetUserIsAuthenticated(),
+    userData: makeSelectGetCurrentUserData(),
   }),
   null,
 );

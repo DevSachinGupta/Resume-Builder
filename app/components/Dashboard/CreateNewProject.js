@@ -93,7 +93,6 @@ function CreateNewProject({ user, userData, dispatch }) {
     }
     apiClient
       .post('builder/createProject', {
-        projectId: '2',
         TemplateId: selectedTemplate.id,
         projectName,
         TemplateURL: selectedTemplate.url,
@@ -102,7 +101,7 @@ function CreateNewProject({ user, userData, dispatch }) {
         console.log('handleCreateProject response: ', response);
         if (response.status === 200) {
           dispatch(updateProjectsInUserData(response.data.data.siteProjects));
-          // history.push(`/builder/${response.data.data.projectId}`);
+          history.push(`/builder/${response.data.data.projectId}`);
           setLoadingCreateStatus(false);
           console.log('succesfully create new project.', response);
         } else {

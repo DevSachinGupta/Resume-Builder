@@ -9,7 +9,7 @@ import {
   UPDATE_RESUME_KEY_VALUE_DB,
 } from './constants';
 
-console.log('api call', apiClient);
+// console.log('api call', apiClient);
 
 export default function* builderSaga() {
   yield all([
@@ -59,6 +59,28 @@ function* updateResumeKeyValue(params) {
       resumeKey: params.key,
       data: params.data,
     });
+    console.log('update resume: ', response);
+    if (response.status === 200) {
+      params.addToast('Save successfully!', { appearance: 'info' });
+      console.log('succesfully submit your request.', response);
+    } else {
+      params.addToast('Issue while saving! Please try later.', {
+        appearance: 'error',
+      });
+      console.log('Something went wrong while submitting: ', response);
+    }
+  } catch (e) {
+    params.addToast('Issue while saving! Please try later.', {
+      appearance: 'error',
+    });
+    console.log(e);
+  }
+}
+
+function* updateResumeJsonOnCanvas(params) {
+  try {
+    const storeData = yield select(state => state.builder.resume_json_state);
+
     console.log('update resume: ', response);
     if (response.status === 200) {
       params.addToast('Save successfully!', { appearance: 'info' });
@@ -161,6 +183,8 @@ export function* updateResumeEventHandler(params) {
 export function* updateCanvas(params) {
   try {
     const editorState = yield select(state => state.builder.editor_state);
+    // console.log("Editor State: ", editorState )
+    // const editorState = yield select(state => state.builder.editorArray[params.projectId]);
     yield call(
       updateCanvasFunction,
       params.sectionId,

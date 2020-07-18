@@ -38,6 +38,7 @@ export function Builder(props) {
   useInjectSaga({ key: 'builder', saga });
 
   const { projectId } = props.match.params;
+  let projectName = '';
 
   const [builderSessionState, setBuilderSessionState] = useState({});
   const getThemeContent = useCallback(() => {
@@ -50,7 +51,7 @@ export function Builder(props) {
         projectId,
       })
       .then(response => {
-        console.log('handleCreateProject response: ', response);
+        console.log('handleFetchBuilderSession response: ', response);
         if (response.status === 200) {
           props.dispatch(
             updateSessionArrayInsert(
@@ -70,8 +71,6 @@ export function Builder(props) {
 
   useEffect(() => {
     // const builderSession = makeSelectSessionArray(projectId);
-    console.log('builderSession', props.builderSession);
-    console.log('builderSession', props.builderSession[projectId]);
     if (!props.builderSession[projectId]) {
       handleFetchBuilderSession();
     } else {
@@ -97,8 +96,9 @@ export function Builder(props) {
 
   // dispatch(updateTemplateNumberState(templateNumber));
   // dispatch(updateDemoPageState(DemoPage));
+  // console.log("project: ", projectName, props.userData.siteProjects[projectId].projectName)
   return (
-    <BuilderLayout>
+    <BuilderLayout projectId={projectId}>
       <div className="builder-workspace">
         <BuilderEditor builderSessionState={builderSessionState} />
       </div>

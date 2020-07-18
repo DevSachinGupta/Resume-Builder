@@ -23,7 +23,11 @@ import {
   UPDATE_SESSION_ARRAY,
 } from './constants';
 
-const persistedKeys = ['editor_state', 'resume_json_state', 'sessionArray'];
+const persistedKeys = [
+  'resume_json_state',
+  'sessionArray',
+  'editorArray',
+];
 export const persistedState = loadState(persistedKeys);
 
 export const initialState = {
@@ -34,6 +38,7 @@ export const initialState = {
     isLoaded: false,
   },
   editor_state: null,
+  editorArray: {},
   resume_json_state: {},
   demopage_state: null,
   sessionArray: {},
@@ -48,11 +53,10 @@ const canvasUpdateLimit = 2;
 /* eslint-disable default-case, no-param-reassign */
 const builderReducer = (state = initialState, action) => {
   // For localStorage
-  console.log('state: ', state);
   switch (action.type) {
-    case UPDATE_EDITOR_STATE:
-      saveState('editor_state', action.editor_state);
-      break;
+    // case UPDATE_EDITOR_STATE:
+    //   saveState('editor_state', action.editor_state);
+    //   break;
     case UPDATE_RESUMEJSON_STATE:
       saveState('resume_json_state', {
         ...state.resume_json_state,
@@ -62,8 +66,9 @@ const builderReducer = (state = initialState, action) => {
     case `${UPDATE_SESSION_ARRAY}_INSERT`:
       saveState('sessionArray', {
         ...state.sessionArray,
-        [action.projectId]: action.projectSession,
+        [action.projectId]: {...state.sessionArray[action.projectId] , ...action.projectSession},
       });
+      console.log('insert sessionArrayUpdate: ', state.sessionArray[action.projectId]);
       break;
     case `${UPDATE_SESSION_ARRAY}_DELETE`:
       const sessionArrayUpdate = delete state.sessionArray[action.projectId];
@@ -96,6 +101,15 @@ const builderReducer = (state = initialState, action) => {
       case UPDATE_EDITOR_STATE:
         draft.editor_state = action.editor_state;
         break;
+      case `${UPDATE_EDITOR_STATE}_INSERT`:
+        draft.editorArray = {
+          ...state.editorArray,
+          [action.projectId]: action.editorState,
+        };
+        break;
+      case `${UPDATE_EDITOR_STATE}_DELETE`:
+        delete draft.editorArray[action.projectId];
+        break;
       case UPDATE_RESUMEJSON_STATE:
         draft.resume_json_state = {
           ...state.resume_json_state,
@@ -108,7 +122,8 @@ const builderReducer = (state = initialState, action) => {
       case `${UPDATE_SESSION_ARRAY}_INSERT`:
         draft.sessionArray = {
           ...state.sessionArray,
-          [action.projectId]: action.projectSession,
+          // [action.projectId]: action.projectSession,
+          [action.projectId]: {...state.sessionArray[action.projectId] , ...action.projectSession},
         };
         break;
       case `${UPDATE_SESSION_ARRAY}_DELETE`:

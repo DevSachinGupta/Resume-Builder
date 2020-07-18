@@ -8,6 +8,10 @@ const primarySidebar = [
     id: 'myThemes',
   },
   {
+    title: 'My Projects',
+    id: 'myProject',
+  },
+  {
     title: 'Share Online',
     id: 'shareOnline',
   },

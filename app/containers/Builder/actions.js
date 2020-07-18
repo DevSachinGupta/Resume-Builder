@@ -119,7 +119,6 @@ export function updateSessionArrayDelete(projectId) {
  * @description function to update template_number state
  */
 export function updateTemplateNumberState(templateNumberState) {
-  console.log("called updateTemple: ", templateNumberState)
   return {
     type: UPDATE_TEMPLATE_NUMBER_STATE,
     templateNumberState,
@@ -133,6 +132,7 @@ export function updateEditorCanvas(
   operation,
   payload,
   componentMap,
+  projectId,
 ) {
   return {
     type: UPDATE_CANVAS,
@@ -140,6 +140,7 @@ export function updateEditorCanvas(
     operation,
     payload,
     componentMap,
+    projectId,
   };
 }
 /**

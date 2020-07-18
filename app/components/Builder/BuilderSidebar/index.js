@@ -36,6 +36,11 @@ function BuilderSidebar({ isSecondarySidebarOpen, dispatch }) {
               ? () => dispatch(toggleSecondarySidebar())
               : item.id === 'myThemes'
                 ? () => dispatch(showThemeToggle())
+                : item.id === 'myProject'
+                ? 
+                  () => {dispatch(showThemeToggle());console.log("open project ")}
+                  // dispatch save session and call history
+                
                 : () => dispatch(setModalContent(item.id))
           }
           title={item.title}

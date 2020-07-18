@@ -24,7 +24,7 @@ import {
   setModalContent,
 } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
-import { updateResumeKeyValue } from '../index';
+import { updateResumeKeyValue, formatValuesEmployement, componentMapEmployement } from '../index';
 import EducationInputs from './EducationItems';
 import Accordian from '../../Accordion';
 import Button from '../../Button';
