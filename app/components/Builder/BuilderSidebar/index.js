@@ -34,8 +34,8 @@ function BuilderSidebar({ isSecondarySidebarOpen, dispatch }) {
             // item.hasSecondary ? () => dispatch(toggleSecondarySidebar()) : null
             item.hasSecondary
               ? () => dispatch(toggleSecondarySidebar())
-              : item.id === 'myThemes'
-                ? () => dispatch(showThemeToggle())
+              //: item.id === 'myThemes'
+               // ? () => dispatch(showThemeToggle())
                 : item.id === 'myProject'
                 ? 
                   () => {dispatch(showThemeToggle());console.log("open project ")}
