@@ -16,6 +16,7 @@ import { createStructuredSelector } from 'reselect';
 import {
   toggleSecondarySidebar,
   showThemeToggle,
+  handleMyProjectClick,
 } from 'containers/Builder/actions';
 import { setModalContent } from 'containers/MyContent/actions';
 import { makeSelectIsSecondarySidebarOpen } from 'containers/Builder/selectors';
@@ -23,7 +24,7 @@ import SidebarItem from '../../Sidebar/SidebarItem';
 import { primarySidebar, secondarySidebar } from './sidebarItems';
 import './style.scss';
 
-function BuilderSidebar({ isSecondarySidebarOpen, dispatch }) {
+function BuilderSidebar({ isSecondarySidebarOpen, projectId, dispatch }) {
   return (
     <div className="builder-sidebar-container">
       {primarySidebar.map((item, index) => (
@@ -34,14 +35,9 @@ function BuilderSidebar({ isSecondarySidebarOpen, dispatch }) {
             // item.hasSecondary ? () => dispatch(toggleSecondarySidebar()) : null
             item.hasSecondary
               ? () => dispatch(toggleSecondarySidebar())
-              : item.id === 'myThemes'
-                ? () => dispatch(showThemeToggle())
-                : item.id === 'myProject'
-                ? 
-                  () => {dispatch(showThemeToggle());console.log("open project ")}
-                  // dispatch save session and call history
-                
-                : () => dispatch(setModalContent(item.id))
+              : item.id === 'myProject'
+              ? () => dispatch(handleMyProjectClick(projectId))
+              : () => dispatch(setModalContent(item.id))
           }
           title={item.title}
         />

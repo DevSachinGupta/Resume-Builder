@@ -1,26 +1,28 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Formik, Form } from 'formik';
 import cx from 'classnames';
 import { useToasts } from 'react-toast-notifications';
-import { toggleModal } from 'containers/App/actions';
 import { createStructuredSelector } from 'reselect';
-import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  updateResumeJSONState,
+  toggleModal,
+  updateResumeJsonInUserData,
+} from 'containers/App/actions';
+import {
   updateEditorCanvas,
   updateResumeKeyValue,
 } from 'containers/Builder/actions';
 import { FaTimes } from 'react-icons/fa';
+import { makeSelectResumeJsonStateFromUserData } from '../../../containers/App/selectors';
 import { setModalContent } from '../../../containers/MyContent/actions';
 import { componentMapSkills, formatValuesSkills } from '../dataLoadStructure';
 import Button from '../../Button';
 import Input from '../../FormComponents/Input';
 import './style.scss';
 
-function SkillsForm({ resumeJSONState, dispatch }) {
+function SkillsForm({ resumeDataStore, dispatch }) {
   let skillData = [
     { key: 'Music', value: 'Music' },
     { key: 'B', value: 'B' },
@@ -31,22 +33,10 @@ function SkillsForm({ resumeJSONState, dispatch }) {
     { key: 'Ghaziabad', value: 'Ghaziabad' },
     { key: 'Other', value: 'Other' },
   ];
-  const componentMap = {
-    value: {
-      valueMap: 'value',
-      componentType: 'content',
-    },
-    progress: {
-      key: ['style'],
-      valueMap: ['rangeVal'],
-      styleMap: { '0': 'width' },
-      componentType: 'attribute',
-    },
-  };
 
   let storeSkill = null;
-  if (resumeJSONState.skills) {
-    storeSkill = resumeJSONState.skills.history;
+  if (resumeDataStore.skills) {
+    storeSkill = resumeDataStore.skills.history;
     skillData = skillData.filter(
       data =>
         !storeSkill
@@ -54,7 +44,6 @@ function SkillsForm({ resumeJSONState, dispatch }) {
           .includes(data.value.toLowerCase()),
     );
   }
-
   const [skills, setSkills] = useState(storeSkill || []);
   const [skillsData, setSkillsData] = useState(skillData);
 
@@ -80,19 +69,15 @@ function SkillsForm({ resumeJSONState, dispatch }) {
 
   const { addToast } = useToasts();
 
-  const formatValues = values => {
-    const tempValues = values;
-    tempValues.forEach((value, index) => {
-      tempValues[index].rangeVal = `${value.rangeVal * 10}%`;
-    });
-    return tempValues;
-  };
-
   const handleSave = values => {
-    const updatedSkills = formatValues(JSON.parse(JSON.stringify(values)));
+    const updatedSkills = formatValuesSkills(
+      JSON.parse(JSON.stringify(values)),
+    );
     const history = { history: values };
-    dispatch(updateEditorCanvas('skills', 'ADD', updatedSkills, componentMap));
-    dispatch(updateResumeJSONState(history, 'skills'));
+    dispatch(
+      updateEditorCanvas('skills', 'ADD', updatedSkills, componentMapSkills),
+    );
+    dispatch(updateResumeJsonInUserData('skills', history));
     dispatch(updateResumeKeyValue('skills', values, addToast));
     dispatch(toggleModal());
   };
@@ -232,12 +217,12 @@ function SkillsForm({ resumeJSONState, dispatch }) {
 }
 
 SkillsForm.propTypes = {
-  resumeJSONState: PropTypes.object,
+  resumeDataStore: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  resumeJSONState: makeUpdateResumeJSONState(),
+  resumeDataStore: makeSelectResumeJsonStateFromUserData(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(

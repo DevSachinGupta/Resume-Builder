@@ -10,35 +10,6 @@ import { AppUtils } from '../../utils/app';
  *
  */
 
-export const updateResumeKeyValue = (resumeKey, data, addToast) => {
-  axios
-    .post(
-      'http://localhost:2000/builder/updateResumeJSON',
-      {
-        resumeKey,
-        data,
-      },
-      { withCredentials: true },
-    )
-    .then(response => {
-      if (response.status === 200) {
-        addToast('Save successfully!', { appearance: 'info' });
-        console.log('succesfully submit your request.', response);
-      } else {
-        addToast('Issue while saving! Please try later.', {
-          appearance: 'error',
-        });
-        console.log('Something went wrong while submitting: ', response);
-      }
-    })
-    .catch(error => {
-      addToast('Issue while saving! Please try later.', {
-        appearance: 'error',
-      });
-      console.log('updateResumeKeyValue error: ', error);
-    });
-};
-
 export const getModalContent = modelId => {
   let ModalComponent = null;
   switch (modelId) {
@@ -82,7 +53,7 @@ export const getModalContent = modelId => {
         import('./SecondaryForms/ContactUsForm'),
       );
       break;
-    case 'myTemplates':
+    case 'myThemes':
       ModalComponent = React.lazy(() => import('../Dashboard'));
       break;
     case 'feedback':

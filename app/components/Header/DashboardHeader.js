@@ -8,7 +8,6 @@ import React, { memo, useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaUserCircle, FaRegUser } from 'react-icons/fa';
 import { IoIosPower } from 'react-icons/io';
-
 import cx from 'classnames';
 import { useToasts } from 'react-toast-notifications';
 import { getUserLogout } from '../../containers/Authenticate/actions';

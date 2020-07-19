@@ -9,7 +9,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import { Formik } from 'formik';
 import { useToasts } from 'react-toast-notifications';
 import { isEqual } from 'lodash';
-import { updateProfileInUserData } from 'containers/Authenticate/actions';
+import { updateProfileInUserData } from 'containers/App/actions';
 import * as Yup from 'yup';
 import apiClient from '../../utils/app/API';
 import Button from '../Button';

@@ -11,14 +11,13 @@ import { compose } from 'redux';
 import { Link } from 'react-router-dom';
 import { FaFolderPlus } from 'react-icons/fa';
 import history from 'containers/App/history';
-import { updateTemplateNumberState } from 'containers/Builder/actions';
-import { updateProjectsInUserData } from 'containers/Authenticate/actions';
+import { updateProjectsInUserData } from 'containers/App/actions';
 import DotsLoading from '../LoadingIndicator/dotsLoading';
 import apiClient from '../../utils/app/API';
 import {
   makeSelectGetUserIsAuthenticated,
   makeSelectGetCurrentUserData,
-} from '../../containers/Authenticate/selectors';
+} from '../../containers/App/selectors';
 import DashboardHeader from '../Header/DashboardHeader';
 import CardGrid from './CardGrid';
 import CardList from './CardList';

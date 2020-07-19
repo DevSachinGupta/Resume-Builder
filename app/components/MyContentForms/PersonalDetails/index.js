@@ -5,20 +5,31 @@ import { compose } from 'redux';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
-import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
+import { useToasts } from 'react-toast-notifications';
 import {
-  updateResumeJSONState,
+  toggleModal,
+  updateResumeJsonInUserData,
+} from 'containers/App/actions';
+import {
   updateEditorCanvas,
+  updateResumeKeyValue,
 } from 'containers/Builder/actions';
-import { formatDateValue } from '../../../utils/app/textFormating';
-import { getCountryList } from '../../../containers/MyContent/actions';
+import { makeSelectResumeJsonStateFromUserData } from '../../../containers/App/selectors';
+import {
+  setModalContent,
+  getCountryList,
+} from '../../../containers/MyContent/actions';
+
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
-import { componentMapPersonal, formatValuesPersonal } from '../dataLoadStructure';
+import {
+  componentMapPersonal,
+  formatValuesPersonal,
+} from '../dataLoadStructure';
 import PersonalDetailsForms from './PersonalDetailsForms';
 import Button from '../../Button';
 import './style.scss';
 
-function PersonalDetails({ allCountries, resumeJSONState, dispatch }) {
+function PersonalDetails({ allCountries, resumeDataStore, dispatch }) {
   const blankPersonalFields = {
     firstName: '',
     lastName: '',
@@ -34,32 +45,11 @@ function PersonalDetails({ allCountries, resumeJSONState, dispatch }) {
     country: '',
     brief: '',
   };
-  const componentMap = {
-    firstName: { valueMap: 'firstName', componentType: 'content' },
-    lastName: { valueMap: 'lastName', componentType: 'content' },
-    fullName: { valueMap: 'fullName', componentType: 'content' },
-    email: { valueMap: 'email', componentType: 'content' },
-    phone: {
-      valueMap: 'phone',
-      componentType: 'content',
-      addHiddenClass: false,
-    },
-    dateOfBirth: { valueMap: 'dateOfBirth', componentType: 'content' },
-    gender: { valueMap: 'gender', componentType: 'content' },
-    address1: { valueMap: 'address1', componentType: 'content' },
-    address2: { valueMap: 'address2', componentType: 'content' },
-    city: { valueMap: 'city', componentType: 'content' },
-    state: { valueMap: 'state', componentType: 'content' },
-    country: { valueMap: 'country', componentType: 'content' },
-    pincode: { valueMap: 'pincode', componentType: 'content' },
-    brief: { valueMap: 'brief', componentType: 'content' },
-  };
 
   let storePersonal = null;
-  if (resumeJSONState.personal) {
-    storePersonal = resumeJSONState.personal.history;
+  if (resumeDataStore.personal) {
+    storePersonal = resumeDataStore.personal.history;
   }
-
   const [personal, setPersonal] = useState(
     storePersonal || { ...blankPersonalFields },
   );
@@ -72,43 +62,96 @@ function PersonalDetails({ allCountries, resumeJSONState, dispatch }) {
     getCountires();
   }, []);
 
-  const formatValues = values => {
-    const tempValues = values;
-    tempValues.fullName = `${tempValues.firstName} ${tempValues.lastName}`;
-    tempValues.dateOfBirth = formatDateValue(tempValues.dateOfBirth);
-    if (tempValues.phone === '') {
-      componentMap.phone.addHiddenClass = true;
-    } else {
-      componentMap.phone.addHiddenClass = false;
-    }
-    return tempValues;
-  };
+  const { addToast } = useToasts();
+
   const handleSave = values => {
-    const updatedPer = formatValues(JSON.parse(JSON.stringify(values)));
+    const formatObject = formatValuesPersonal(
+      JSON.parse(JSON.stringify(values)),
+      componentMapPersonal,
+    );
+    const updatedPer = formatObject.tempValues;
+    const { componentMap } = formatObject;
     const history = { history: values };
     dispatch(updateEditorCanvas('personal', 'ADD', updatedPer, componentMap));
-    dispatch(updateResumeJSONState(history, 'personal'));
+    dispatch(updateResumeJsonInUserData('personal', history));
+    dispatch(updateResumeKeyValue('personal', values, addToast));
+    dispatch(toggleModal());
   };
+  const handleSaveAndNext = values => {
+    handleSave(values);
+    dispatch(setModalContent('education'));
+  };
+  // const handlePrevious = () => {
+  //   dispatch(toggleModal());
+  //   dispatch(setModalContent('employmentDetails'));
+  // };
 
   return (
     <div>
       <Formik
         initialValues={personal}
         onSubmit={(values, actions) => {
-          console.log(values);
-          handleSave(values);
+          console.log('val and action', values, actions);
+          if (values.publish === 0) {
+            handleSave(values);
+          } else if (values.publish === 1) {
+            handleSaveAndNext(values);
+            // } else if (values.publish === 2) {
+            //   handlePrevious(values);
+          }
         }}
       >
-        {() => (
+        {({ setFieldValue, handleSubmit }) => (
           <Form>
             <React.Fragment>
               <PersonalDetailsForms countriesList={allCountries} />
 
               <div className={cx('footerContainer')}>
+                <div className="mx-2 flex justify-between">
+                  <div className="flex justify-left">
+                    {/* <div className="pr-2">
+                      <Button
+                        type="primary"
+                        onClick={() => {
+                          setFieldValue('publish', 2, false);
+                          handleSubmit();
+                        }}
+                      >
+                        Previous
+                      </Button>
+                    </div> */}
+                    <div className="pr-2">
+                      <Button
+                        type="primary"
+                        onClick={() => {
+                          setFieldValue('publish', 0, false);
+                          handleSubmit();
+                        }}
+                      >
+                        Save
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="flex justify-end">
+                    <div className="pl-6 pr-2">
+                      <Button
+                        type="primary"
+                        onClick={() => {
+                          setFieldValue('publish', 1, false);
+                          handleSubmit();
+                        }}
+                      >
+                        Save and Next
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* <div className={cx('footerContainer')}>
                 <Button as="submit" fullWidth type="primary">
                   Save Details
                 </Button>
-              </div>
+              </div> */}
             </React.Fragment>
           </Form>
         )}
@@ -118,14 +161,14 @@ function PersonalDetails({ allCountries, resumeJSONState, dispatch }) {
 }
 PersonalDetails.propTypes = {
   allCountries: PropTypes.array.isRequired,
-  resumeJSONState: PropTypes.object,
+  resumeDataStore: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = () =>
   createStructuredSelector({
     allCountries: makeSelectAllCountiesOptions(),
-    resumeJSONState: makeUpdateResumeJSONState(),
+    resumeDataStore: makeSelectResumeJsonStateFromUserData(),
   });
 const mapDispatchToProps = dispatch => ({
   dispatch,

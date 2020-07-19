@@ -11,7 +11,8 @@ import { compose } from 'redux';
 import {
   makeSelectGetUserIsAuthenticated,
   makeSelectGetCurrentUserData,
-} from '../../containers/Authenticate/selectors';
+} from '../../containers/App/selectors';
+import { updatePublishType } from '../../containers/App/actions';
 import DashboardHeader from '../Header/DashboardHeader';
 import SettingsMenu from './SettingsMenu';
 import SettingsContent from './SettingsContent';
@@ -29,6 +30,9 @@ import './style.scss';
 function SettingPage({ user, userData, dispatch }) {
   console.log('SettingPage userData', userData);
   console.log('SettingPage user', user);
+
+  dispatch(updatePublishType('Testing01'));
+
   const settingMenu = [
     {
       title: 'Profile',

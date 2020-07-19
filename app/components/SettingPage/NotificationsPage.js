@@ -9,7 +9,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useToasts } from 'react-toast-notifications';
 import { isEqual } from 'lodash';
-import { updateNotificationInUserData } from 'containers/Authenticate/actions';
+import { updateNotificationInUserData } from 'containers/App/actions';
 import apiClient from '../../utils/app/API';
 import DotsLoading from '../LoadingIndicator/dotsLoading';
 import Button from '../Button';

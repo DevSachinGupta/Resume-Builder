@@ -9,16 +9,11 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { useToasts } from 'react-toast-notifications';
-import {
-  makeUpdateDemoPageState,
-  makeUpdateResumeJSONState,
-  makeSelectGetThemeContent,
-  makeUpdateShowThemeToggle,
-} from 'containers/Builder/selectors';
+import { makeUpdateShowThemeToggle } from 'containers/Builder/selectors';
 import {
   updateEditorState,
-  getBuilderThemeContent,
   updateResumeEventHanlder,
+  updateCanvasOnFirstLoad,
 } from 'containers/Builder/actions';
 import Themes from 'components/Themes';
 import PropTypes from 'prop-types';
@@ -35,13 +30,11 @@ const DemoPagePre = {
 
 function BuilderEditor({
   builderSessionState,
-  demopageState,
   showTemplateSelection,
   dispatch,
 }) {
   const { projectId } = builderSessionState;
   const { addToast } = useToasts();
-  // DemoPage = demopageState || DemoPage;
   useEffect(() => {
     const editor = grapesjs.init({
       container: '#gjs',
@@ -96,6 +89,7 @@ function BuilderEditor({
                       fieldIndex,
                       content,
                       addToast,
+                      projectId,
                     ),
                   );
                 }
@@ -110,6 +104,11 @@ function BuilderEditor({
       }
     });
     dispatch(updateEditorState(editor));
+    // console.log("builderSessionState.autoLoadFlag:", builderSessionState.autoLoadFlag)
+    if (builderSessionState.autoLoadFlag === true) {
+      dispatch(updateCanvasOnFirstLoad(projectId));
+      console.log('called updateCanvasOnFirstLoad');
+    }
   }, [builderSessionState]);
   // console.log('showTemplateSelection', showTemplateSelection);
   return (
@@ -133,7 +132,6 @@ BuilderEditor.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  demopageState: makeUpdateDemoPageState(),
   showTemplateSelection: makeUpdateShowThemeToggle(),
 });
 const mapDispatchToProps = null;

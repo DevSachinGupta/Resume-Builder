@@ -12,25 +12,29 @@ import cx from 'classnames';
 import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
 import { useToasts } from 'react-toast-notifications';
-import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  updateResumeJSONState,
   updateEditorCanvas,
   updateResumeKeyValue,
 } from 'containers/Builder/actions';
-import { toggleModal } from 'containers/App/actions';
-import { formatDateValue } from '../../../utils/app/textFormating';
+import {
+  toggleModal,
+  updateResumeJsonInUserData,
+} from 'containers/App/actions';
+import { makeSelectResumeJsonStateFromUserData } from '../../../containers/App/selectors';
 import {
   getCountryList,
   setModalContent,
 } from '../../../containers/MyContent/actions';
 import { makeSelectAllCountiesOptions } from '../../../containers/MyContent/selectors';
-import { componentMapEducation, formatValuesEducation } from '../dataLoadStructure';
+import {
+  componentMapEducation,
+  formatValuesEducation,
+} from '../dataLoadStructure';
 import EducationInputs from './EducationItems';
 import Accordian from '../../Accordion';
 import Button from '../../Button';
 
-function EducationForm({ allCountries, resumeJSONState, dispatch }) {
+function EducationForm({ allCountries, resumeDataStore, dispatch }) {
   const blankEduFields = {
     title: '',
     institution: '',
@@ -42,22 +46,10 @@ function EducationForm({ allCountries, resumeJSONState, dispatch }) {
     tillDate: false,
     summary: '',
   };
-  const componentMap = {
-    title: { valueMap: 'title', componentType: 'content' },
-    institution: { valueMap: 'institution', componentType: 'content' },
-    fieldOfStudy: { valueMap: 'fieldOfStudy', componentType: 'content' },
-    state: { valueMap: 'state', componentType: 'content' },
-    country: { valueMap: 'country', componentType: 'content' },
-    start: { valueMap: 'start', componentType: 'content' },
-    end: { valueMap: 'end', componentType: 'content' },
-    summary: { valueMap: 'summary', componentType: 'content' },
-  };
-
   let storeEducation = null;
-  if (resumeJSONState.education) {
-    storeEducation = resumeJSONState.education.history;
+  if (resumeDataStore.education) {
+    storeEducation = resumeDataStore.education.history;
   }
-  console.log(resumeJSONState);
   const [educations, setEducations] = useState(
     storeEducation || [{ ...blankEduFields }],
   );
@@ -72,28 +64,15 @@ function EducationForm({ allCountries, resumeJSONState, dispatch }) {
 
   const { addToast } = useToasts();
 
-  const formatValues = values => {
-    const tempValues = values;
-    tempValues.forEach((value, index) => {
-      tempValues[index].start = formatDateValue(tempValues[index].start);
-      if (tempValues[index].tillDate === true) {
-        tempValues[index].end = 'Present';
-      } else {
-        tempValues[index].end = formatDateValue(tempValues[index].end);
-      }
-    });
-    return tempValues;
-  };
   const handleSave = values => {
-    // const updatedEdu = formatValues(
-    //   JSON.parse(JSON.stringify(values.education)),
-    // );
     const updatedEdu = formatValuesEducation(
       JSON.parse(JSON.stringify(values.education)),
     );
     const history = { history: values.education };
-    dispatch(updateEditorCanvas('education', 'ADD', updatedEdu, componentMapEducation));
-    dispatch(updateResumeJSONState(history, 'education'));
+    dispatch(
+      updateEditorCanvas('education', 'ADD', updatedEdu, componentMapEducation),
+    );
+    dispatch(updateResumeJsonInUserData('education', history));
     dispatch(updateResumeKeyValue('education', values.education, addToast));
     dispatch(toggleModal());
   };
@@ -207,14 +186,14 @@ function EducationForm({ allCountries, resumeJSONState, dispatch }) {
 }
 EducationForm.propTypes = {
   allCountries: PropTypes.array.isRequired,
-  resumeJSONState: PropTypes.object,
+  resumeDataStore: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = () =>
   createStructuredSelector({
     allCountries: makeSelectAllCountiesOptions(),
-    resumeJSONState: makeUpdateResumeJSONState(),
+    resumeDataStore: makeSelectResumeJsonStateFromUserData(),
   });
 
 const mapDispatchToProps = null;

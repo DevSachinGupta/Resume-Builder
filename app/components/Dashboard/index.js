@@ -14,18 +14,17 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { FaRegEdit } from 'react-icons/fa';
 import { useToasts } from 'react-toast-notifications';
 import history from 'containers/App/history';
-import { updateProjectsInUserData } from 'containers/Authenticate/actions';
+import { updateProjectsInUserData } from 'containers/App/actions';
 import { updateSessionArrayDelete } from 'containers/Builder/actions';
 import {
   makeSelectGetUserIsAuthenticated,
   makeSelectGetCurrentUserData,
-} from '../../containers/Authenticate/selectors';
+} from '../../containers/App/selectors';
 import apiClient from '../../utils/app/API';
 import DashboardHeader from '../Header/DashboardHeader';
 import Button from '../Button';
 import Footer from './Footer';
 import './style.scss';
-// import templateList2 from './templatesList';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
@@ -49,6 +48,7 @@ function DashboardPage({ user, userData, dispatch }) {
       .then(response => {
         console.log('handleDeleteProject response: ', response);
         if (response.status === 200) {
+          console.log("dispatch from dash: ", dispatch, updateProjectsInUserData)
           dispatch(updateProjectsInUserData(response.data.data.siteProjects));
           // dispatch(updateSessionArrayDelete(projectId));
           addToast('Deleted Successfully!', { appearance: 'info' });

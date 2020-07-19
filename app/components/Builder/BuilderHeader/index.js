@@ -17,13 +17,14 @@ import { GoThreeBars } from 'react-icons/go';
 import { FaUserCircle, FaMobileAlt } from 'react-icons/fa';
 import { IoIosDesktop, IoIosTabletPortrait } from 'react-icons/io';
 import { toggleHeaderUserMenu } from 'containers/App/actions';
-import { makeSelectIsUserMenuOpen } from 'containers/App/selectors';
-import { setModalContent } from 'containers/MyContent/actions';
-import { makeUpdateEditorState } from 'containers/Builder/selectors';
 import {
+  makeSelectIsUserMenuOpen,
   makeSelectGetUserIsAuthenticated,
   makeSelectGetCurrentUserData,
-} from '../../../containers/Authenticate/selectors';
+} from 'containers/App/selectors';
+import { setModalContent } from 'containers/MyContent/actions';
+import { makeUpdateEditorState } from 'containers/Builder/selectors';
+
 import {
   toggleSidebar,
   updateSessionArrayInsert,
@@ -50,7 +51,7 @@ function BuilderHeader({
     // np.start({});
   }, []);
   const { addToast } = useToasts();
-  console.log("BuilderHeader userData:", projectId, userData)
+  console.log('BuilderHeader userData:', projectId, userData);
   let projectName = '';
   if (userData.siteProjects) {
     projectName = userData.siteProjects.filter(
@@ -77,6 +78,7 @@ function BuilderHeader({
               templateCSS,
               templateHTML,
               templateJS,
+              autoLoadFlag: false,
             }),
           );
           console.log('succesfully submit your request.', response);

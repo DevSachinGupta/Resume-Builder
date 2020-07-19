@@ -8,17 +8,13 @@ import {
   DEFAULT_ACTION,
   HANDLE_SIDEBAR_STATE,
   HANDLE_SECONDARY_SIDEBAR_STATE,
-  GET_DEFAULT_THEME,
-  GET_THEME_CONTENT,
   UPDATE_EDITOR_STATE,
-  UPDATE_RESUMEJSON_STATE,
-  UPDATE_DEMOPAGE_STATE,
-  UPDATE_TEMPLATE_NUMBER_STATE,
   UPDATE_CANVAS,
   UPDATE_RESUME_EVENT_HANDLER,
   SHOW_THEMES_TOGGLE,
   UPDATE_RESUME_KEY_VALUE_DB,
   UPDATE_SESSION_ARRAY,
+  HANDLE_PROJECT_CLICK,
 } from './constants';
 
 export function defaultAction() {
@@ -51,49 +47,12 @@ export function toggleSecondarySidebar() {
   };
 }
 /**
- * @description function to be dispatched when new theme added
- */
-export function getBuilderTheme(theme) {
-  return {
-    type: GET_DEFAULT_THEME,
-    theme,
-  };
-}
-/**
- * @description function to be dispatched the fetched theme
- */
-export function getBuilderThemeContent(themeId) {
-  return {
-    type: GET_THEME_CONTENT,
-    themeId,
-  };
-}
-/**
  * @description function to update editor state
  */
-export function updateEditorState(editor_state) {
+export function updateEditorState(editorState) {
   return {
     type: UPDATE_EDITOR_STATE,
-    editor_state,
-  };
-}
-/**
- * @description function to update resume_json state
- */
-export function updateResumeJSONState(resume_json_state, section_key_state) {
-  return {
-    type: UPDATE_RESUMEJSON_STATE,
-    resume_json_state,
-    section_key_state,
-  };
-}
-/**
- * @description function to update demopage state
- */
-export function updateDemoPageState(demopage_state) {
-  return {
-    type: UPDATE_DEMOPAGE_STATE,
-    demopage_state,
+    editorState,
   };
 }
 /**
@@ -116,15 +75,6 @@ export function updateSessionArrayDelete(projectId) {
   };
 }
 /**
- * @description function to update template_number state
- */
-export function updateTemplateNumberState(templateNumberState) {
-  return {
-    type: UPDATE_TEMPLATE_NUMBER_STATE,
-    templateNumberState,
-  };
-}
-/**
  * @description function to update canvas
  */
 export function updateEditorCanvas(
@@ -140,6 +90,15 @@ export function updateEditorCanvas(
     operation,
     payload,
     componentMap,
+    projectId,
+  };
+}
+/**
+ * @description function to update canvas on first load
+ */
+export function updateCanvasOnFirstLoad(projectId) {
+  return {
+    type: `${UPDATE_CANVAS}_ON_FIRST_LOAD`,
     projectId,
   };
 }
@@ -160,6 +119,7 @@ export function updateResumeEventHanlder(
   fieldIndex,
   content,
   addToast,
+  projectId,
 ) {
   return {
     type: UPDATE_RESUME_EVENT_HANDLER,
@@ -168,6 +128,7 @@ export function updateResumeEventHanlder(
     fieldIndex,
     content,
     addToast,
+    projectId,
   };
 }
 /**
@@ -179,5 +140,14 @@ export function updateResumeKeyValue(key, data, addToast) {
     key,
     data,
     addToast,
+  };
+}
+/**
+ * @description function to update resume key value in DB
+ */
+export function handleMyProjectClick(projectId) {
+  return {
+    type: HANDLE_PROJECT_CLICK,
+    projectId,
   };
 }

@@ -22,6 +22,8 @@ import {
   TOGGLE_MODAL,
   UPDATE_PUBLISH_TYPE,
   TOGGLE_HEADER_USER_PILL,
+  UPDATE_IN_USERDATA,
+  AUTHENTICATE_USER,
 } from './constants';
 
 /**
@@ -73,6 +75,14 @@ export function toggleModal() {
   };
 }
 /**
+ * Dispatches when Header user Menu is Toggled
+ */
+export function toggleHeaderUserMenu() {
+  return {
+    type: TOGGLE_HEADER_USER_PILL,
+  };
+}
+/**
  * Dispatched when to update publish type
  */
 export function updatePublishType(publishType) {
@@ -82,10 +92,73 @@ export function updatePublishType(publishType) {
   };
 }
 /**
- * Dispatches when Header user Menu is Toggled
+ * @description Action to be set current user after authentication
  */
-export function toggleHeaderUserMenu() {
+export function setCurrentUser(isAuthenticated, userData) {
   return {
-    type: TOGGLE_HEADER_USER_PILL,
+    type: `${AUTHENTICATE_USER}_SET`,
+    isAuthenticated,
+    userData,
   };
 }
+/**
+ * @description function to update project in userData state
+ */
+export function updateProjectsInUserData(siteProjects) {
+  console.log('project action trigger');
+  return {
+    type: `${UPDATE_IN_USERDATA}_PROJECTS`,
+    siteProjects,
+  };
+}
+/**
+ * @description function to update resume JSON in userData state
+ */
+export function updateResumeJsonInUserData(sectionKey, resumeJsonState) {
+  return {
+    type: `${UPDATE_IN_USERDATA}_RESUME_JSON`,
+    sectionKey,
+    resumeJsonState,
+  };
+}
+/**
+ * @description function to update resume JSON Object in userData state
+ */
+export function updateResumeJsonAllInUserData(resumeDataStoreAll) {
+  return {
+    type: `${UPDATE_IN_USERDATA}_RESUME_JSON_ALL`,
+    resumeDataStoreAll,
+  };
+}
+/**
+ * @description function to update notifications in userData state
+ */
+export function updateNotificationInUserData(notifications) {
+  return {
+    type: `${UPDATE_IN_USERDATA}_NOTIFICATIONS`,
+    notifications,
+  };
+}
+/**
+ * @description function to update profile in userData state
+ */
+export function updateProfileInUserData(firstName, lastName, profileImageUrl) {
+  return {
+    type: `${UPDATE_IN_USERDATA}_PROFILE`,
+    firstName,
+    lastName,
+    profileImageUrl,
+  };
+}
+/**
+ * @description function to update SEO in userData state
+ */
+export function updatePublishSEOInUserData(title, profession, description) {
+  return {
+    type: `${UPDATE_IN_USERDATA}_SEO`,
+    title,
+    profession,
+    description,
+  };
+}
+

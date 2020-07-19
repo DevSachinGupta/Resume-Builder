@@ -6,22 +6,23 @@ import cx from 'classnames';
 import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
 import { useToasts } from 'react-toast-notifications';
-import { toggleModal } from 'containers/App/actions';
-import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  updateResumeJSONState,
+  toggleModal,
+  updateResumeJsonInUserData,
+} from 'containers/App/actions';
+import {
   updateEditorCanvas,
   updateResumeKeyValue,
 } from 'containers/Builder/actions';
 import { defaultTo } from 'lodash';
+import { makeSelectResumeJsonStateFromUserData } from '../../../containers/App/selectors';
 import { setModalContent } from '../../../containers/MyContent/actions';
-import { formatDateValue } from '../../../utils/app/textFormating';
 import { componentMapProject, formatValuesProject } from '../dataLoadStructure';
 import Accordian from '../../Accordion';
 import ProjectInputs from './ProjectItems';
 import Button from '../../Button';
 
-function ProjectForm({ resumeJSONState, dispatch }) {
+function ProjectForm({ resumeDataStore, dispatch }) {
   const skillData = [
     'Music',
     'Singing',
@@ -49,33 +50,19 @@ function ProjectForm({ resumeJSONState, dispatch }) {
     tillDate: false,
     description: '',
   };
-  const componentMap1 = {
-    title: { valueMap: 'title', componentType: 'content' },
-    summary: { valueMap: 'summary', componentType: 'content' },
-    keywords: { valueMap: 'keywords', componentType: 'content' },
-    url: {
-      key: ['href'],
-      valueMap: ['url'],
-      componentType: 'attribute',
-      addHiddenClass: [],
-    },
-    start: { valueMap: 'start', componentType: 'content' },
-    end: { valueMap: 'end', componentType: 'content' },
-    description: { valueMap: 'description', componentType: 'content' },
-  };
 
   // useEffect(() => {
-  //   console.log(resumeJSONState);
-  //   const storeProject = defaultTo(resumeJSONState, 'project.history', null);
+  //   console.log(resumeDataStore);
+  //   const storeProject = defaultTo(resumeDataStore, 'project.history', null);
   //   if (storeProject) {
   //     setProjects([{ ...storeProject }]);
   //   }
-  // }, [resumeJSONState]);
+  // }, [resumeDataStore]);
   // const [projects, setProjects] = useState([{ ...blankProFields }]);
 
   let storeProject = null;
-  if (resumeJSONState.project) {
-    storeProject = resumeJSONState.project.history;
+  if (resumeDataStore.project) {
+    storeProject = resumeDataStore.project.history;
   }
   const [projects, setProjects] = useState(
     storeProject || [{ ...blankProFields }],
@@ -83,23 +70,6 @@ function ProjectForm({ resumeJSONState, dispatch }) {
 
   const { addToast } = useToasts();
 
-  const formatValues = values => {
-    const tempValues = values;
-    tempValues.forEach((value, index) => {
-      tempValues[index].start = formatDateValue(tempValues[index].start);
-      if (tempValues[index].tillDate === true) {
-        tempValues[index].end = 'Present';
-      } else {
-        tempValues[index].end = formatDateValue(tempValues[index].end);
-      }
-      if (tempValues[index].url === '') {
-        componentMap.url.addHiddenClass.push(true);
-      } else {
-        componentMap.url.addHiddenClass.push(false);
-      }
-    });
-    return tempValues;
-  };
   const handleSave = values => {
     const formatObject = formatValuesProject(
       JSON.parse(JSON.stringify(values.project)),
@@ -109,7 +79,7 @@ function ProjectForm({ resumeJSONState, dispatch }) {
     const { componentMap } = formatObject;
     const history = { history: values.project };
     dispatch(updateEditorCanvas('project', 'ADD', updatedPro, componentMap));
-    dispatch(updateResumeJSONState(history, 'project'));
+    dispatch(updateResumeJsonInUserData('project', history));
     dispatch(updateResumeKeyValue('project', values.project, addToast));
     dispatch(toggleModal());
   };
@@ -223,12 +193,12 @@ function ProjectForm({ resumeJSONState, dispatch }) {
 }
 
 ProjectForm.propTypes = {
-  resumeJSONState: PropTypes.object,
+  resumeDataStore: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  resumeJSONState: makeUpdateResumeJSONState(),
+  resumeDataStore: makeSelectResumeJsonStateFromUserData(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(

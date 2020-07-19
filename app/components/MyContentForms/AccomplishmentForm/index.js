@@ -6,62 +6,59 @@ import cx from 'classnames';
 import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
 import { useToasts } from 'react-toast-notifications';
-import { toggleModal } from 'containers/App/actions';
-import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  updateResumeJSONState,
+  toggleModal,
+  updateResumeJsonInUserData,
+} from 'containers/App/actions';
+import {
   updateEditorCanvas,
   updateResumeKeyValue,
 } from 'containers/Builder/actions';
+import { makeSelectResumeJsonStateFromUserData } from '../../../containers/App/selectors';
 import { setModalContent } from '../../../containers/MyContent/actions';
-import { formatDateValue } from '../../../utils/app/textFormating';
-import { componentMapAccomplishment, formatValuesAccomplishment } from '../dataLoadStructure';
+import {
+  componentMapAccomplishment,
+  formatValuesAccomplishment,
+} from '../dataLoadStructure';
 import Accordian from '../../Accordion';
 import AccomplishmentInputs from './AccomplishmentItems';
 import Button from '../../Button';
 
-function AccomplishmentForm({ resumeJSONState, dispatch }) {
+function AccomplishmentForm({ resumeDataStore, dispatch }) {
   const blankAccompFields = {
     title: '',
     date: null,
     rank: '',
     summary: '',
   };
-  const componentMap = {
-    title: { valueMap: 'title', componentType: 'content' },
-    date: { valueMap: 'date', componentType: 'content' },
-    rank: { valueMap: 'rank', componentType: 'content' },
-    summary: { valueMap: 'summary', componentType: 'content' },
-  };
 
   let storeAccomplishment = null;
-  if (resumeJSONState.accomplishment) {
-    storeAccomplishment = resumeJSONState.accomplishment.history;
+  if (resumeDataStore.accomplishment) {
+    storeAccomplishment = resumeDataStore.accomplishment.history;
   }
-
   const [accomplishments, setAccomplishments] = useState(
     storeAccomplishment || [{ ...blankAccompFields }],
   );
 
   const { addToast } = useToasts();
 
-  const formatValues = values => {
-    const tempValues = values;
-    tempValues.forEach((value, index) => {
-      tempValues[index].date = formatDateValue(tempValues[index].date);
-    });
-    return tempValues;
-  };
   const handleSave = values => {
     const updatedAccom = formatValuesAccomplishment(
       JSON.parse(JSON.stringify(values.accomplishment)),
     );
     const history = { history: values.accomplishment };
     dispatch(
-      updateEditorCanvas('accomplishment', 'ADD', updatedAccom, componentMapAccomplishment),
+      updateEditorCanvas(
+        'accomplishment',
+        'ADD',
+        updatedAccom,
+        componentMapAccomplishment,
+      ),
     );
-    dispatch(updateResumeJSONState(history, 'accomplishment'));
-    dispatch(updateResumeKeyValue('accomplishment', values.accomplishment, addToast));
+    dispatch(updateResumeJsonInUserData('accomplishment', history));
+    dispatch(
+      updateResumeKeyValue('accomplishment', values.accomplishment, addToast),
+    );
     dispatch(toggleModal());
   };
 
@@ -179,12 +176,12 @@ function AccomplishmentForm({ resumeJSONState, dispatch }) {
 }
 
 AccomplishmentForm.propTypes = {
-  resumeJSONState: PropTypes.object,
+  resumeDataStore: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  resumeJSONState: makeUpdateResumeJSONState(),
+  resumeDataStore: makeSelectResumeJsonStateFromUserData(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(

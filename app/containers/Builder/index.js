@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useState, useCallback, useEffect } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -12,39 +12,24 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import BuilderLayout from 'components/Builder/BuilderLayout';
 import BuilderEditor from 'components/Builder/BuilderEditor';
-import {
-  updateTemplateNumberState,
-  updateDemoPageState,
-  getBuilderThemeContent,
-  updateSessionArrayInsert,
-} from 'containers/Builder/actions';
+import { updateSessionArrayInsert } from 'containers/Builder/actions';
 import {
   makeSelectGetUserIsAuthenticated,
   makeSelectGetCurrentUserData,
-  makeUpdateTemplateNumberState,
-} from 'containers/Authenticate/selectors';
+} from 'containers/App/selectors';
 import apiClient from '../../utils/app/API';
-import makeSelectBuilder, {
-  makeSelectGetThemeContent,
-  makeSelectSessionArray,
-} from './selectors';
+import makeSelectBuilder, { makeSelectSessionArray } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
-// const templateNumber = '6';
 // export function Builder({ templateNumber, themeContent, user, userData, match, dispatch }) {
 export function Builder(props) {
   useInjectReducer({ key: 'builder', reducer });
   useInjectSaga({ key: 'builder', saga });
 
   const { projectId } = props.match.params;
-  let projectName = '';
 
   const [builderSessionState, setBuilderSessionState] = useState({});
-  const getThemeContent = useCallback(() => {
-    props.dispatch(getBuilderThemeContent(2));
-  });
-
   const handleFetchBuilderSession = () => {
     apiClient
       .post('builder/getProjectSession', {
@@ -84,18 +69,14 @@ export function Builder(props) {
       style: null,
     };
 
-    // getThemeContent();
     // const DemoPage = {
     //   html: props.themeContent,
     //   css: '{..}',
     //   components: null,
     //   style: null,
     // };
-    // props.dispatch(updateDemoPageState(DemoPage));
   }, []);
 
-  // dispatch(updateTemplateNumberState(templateNumber));
-  // dispatch(updateDemoPageState(DemoPage));
   // console.log("project: ", projectName, props.userData.siteProjects[projectId].projectName)
   return (
     <BuilderLayout projectId={projectId}>
@@ -110,8 +91,6 @@ Builder.propTypes = {};
 
 const mapStateToProps = createStructuredSelector({
   builder: makeSelectBuilder(),
-  themeContent: makeSelectGetThemeContent(),
-  templateNumber: makeUpdateTemplateNumberState(),
   user: makeSelectGetUserIsAuthenticated(),
   userData: makeSelectGetCurrentUserData(),
   builderSession: makeSelectSessionArray(),

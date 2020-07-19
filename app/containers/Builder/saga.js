@@ -1,67 +1,43 @@
 import { takeLatest, all, call, put, select } from 'redux-saga/effects';
-import axios from 'axios';
 import apiClient from '../../utils/app/API';
 import {
-  GET_DEFAULT_THEME,
-  GET_THEME_CONTENT,
   UPDATE_CANVAS,
+  UPDATE_SESSION_ARRAY,
   UPDATE_RESUME_EVENT_HANDLER,
   UPDATE_RESUME_KEY_VALUE_DB,
+  HANDLE_PROJECT_CLICK,
 } from './constants';
+import history from '../App/history';
+import * as dataStructure from '../../components/MyContentForms/dataLoadStructure';
+import { UPDATE_IN_USERDATA } from '../App/constants';
 
 // console.log('api call', apiClient);
 
 export default function* builderSaga() {
   yield all([
-    takeLatest(GET_DEFAULT_THEME, getThemeDetails),
-    takeLatest(GET_THEME_CONTENT, getThemeContent),
     takeLatest(UPDATE_CANVAS, updateCanvas),
+    takeLatest(`${UPDATE_CANVAS}_ON_FIRST_LOAD`, updateCanvasOnFirstLoad),
     takeLatest(UPDATE_RESUME_EVENT_HANDLER, updateResumeEventHandler),
     takeLatest(UPDATE_RESUME_KEY_VALUE_DB, updateResumeKeyValue),
+    takeLatest(HANDLE_PROJECT_CLICK, handleMyProjectClick),
   ]);
 }
 
-function* getThemeDetails() {
-  console.log('HELLO WORLD');
-}
-
-function* getThemeContent(params) {
-  try {
-    const response = yield call(
-      axios.get,
-      `https://resumebuilder.s3.ap-south-1.amazonaws.com/templates/template_1/index-${
-        params.themeId
-      }.html`,
-    );
-    yield put({ type: `${GET_THEME_CONTENT}_SUCCESS`, data: response.data });
-    console.log(response);
-  } catch (e) {
-    console.log(e);
-  }
-}
-
-// export const updateResumeKey = (resumeKey, data) => {
-//   console.log('calling api');
-//   return apiClient
-//     .post('builder/updateResumeJSON', {
-//       resumeKey,
-//       data,
-//     })
-//     .then(response => response)
-//     .catch(error => {
-//       console.log('updateResumeKey error: ', error);
-//     });
-// };
-
 function* updateResumeKeyValue(params) {
+  console.log('update resume update: ', params.data);
   try {
     const response = yield call(apiClient.post, 'builder/updateResumeJSON', {
       resumeKey: params.key,
       data: params.data,
     });
-    console.log('update resume: ', response);
+
     if (response.status === 200) {
       params.addToast('Save successfully!', { appearance: 'info' });
+      // yield put({
+      //   type: `${UPDATE_IN_USERDATA}_RESUME_JSON`,
+      //   sectionKey: params.key,
+      //   resumeJsonState: { history: params.data },
+      // });
       console.log('succesfully submit your request.', response);
     } else {
       params.addToast('Issue while saving! Please try later.', {
@@ -77,32 +53,99 @@ function* updateResumeKeyValue(params) {
   }
 }
 
-function* updateResumeJsonOnCanvas(params) {
+function* handleMyProjectClick(params) {
+  console.log('called handleMyProjectClick');
+  // TODO: save builder session and open projectpage using history
   try {
-    const storeData = yield select(state => state.builder.resume_json_state);
+    const editorState = yield select(state => state.builder.editorState);
+    yield put({
+      type: `${UPDATE_SESSION_ARRAY}_INSERT`,
+      projectId: params.projectId,
+      projectSession: {
+        templateCSS: editorState.getCss(),
+        templateHTML: editorState.getHtml(),
+        templateJS: {},
+        autoLoadFlag: false,
+      },
+    });
+    history.push('/dashboard');
+  } catch (error) {
+    console.log('error handleMyProjectClick:', error);
+  }
+}
 
-    console.log('update resume: ', response);
-    if (response.status === 200) {
-      params.addToast('Save successfully!', { appearance: 'info' });
-      console.log('succesfully submit your request.', response);
-    } else {
-      params.addToast('Issue while saving! Please try later.', {
-        appearance: 'error',
+function* updateCanvasOnFirstLoad(params) {
+  console.log('handling updateCanvasOnFirstLoad');
+  let updateAnyFlag = false;
+  try {
+    // const storeData = yield select(state => state.builder.resume_json_state);
+    const storeData = yield select(
+      state => state.global.userData.resumeDataStore,
+    );
+    console.log('storeData State: ', storeData);
+    // Personal
+    if (storeData.personal.history.length > 0) {
+      const formatObject = dataStructure.formatValuesPersonal(
+        JSON.parse(JSON.stringify(storeData.personal.history)),
+        dataStructure.componentMapPersonal,
+      );
+      const updatedPer = formatObject.tempValues;
+      yield put({
+        type: UPDATE_CANVAS,
+        sectionId: 'personal',
+        operation: 'ADD',
+        payload: updatedPer,
+        componentMap: formatObject.componentMap,
       });
-      console.log('Something went wrong while submitting: ', response);
+      updateAnyFlag = true;
+    } else {
+      console.log('leng < 0 personal');
+    }
+
+    // Education
+    if (storeData.education.history.length > 0) {
+      const updatedEdu = dataStructure.formatValuesEducation(
+        JSON.parse(JSON.stringify(storeData.education.history)),
+      );
+      yield put({
+        type: UPDATE_CANVAS,
+        sectionId: 'education',
+        operation: 'ADD',
+        payload: updatedEdu,
+        componentMap: dataStructure.componentMapEducation,
+      });
+      updateAnyFlag = true;
+    } else {
+      console.log('leng < 0 education');
+    }
+
+    // TODO: Dispatch to sessionArray and update AutoloadData Flag
+    if (updateAnyFlag === true) {
+      const editorState = yield select(state => state.builder.editorState);
+      yield put({
+        type: `${UPDATE_SESSION_ARRAY}_INSERT`,
+        projectId: params.projectId,
+        projectSession: {
+          templateCSS: editorState.getCss(),
+          templateHTML: editorState.getHtml(),
+          templateJS: {},
+          autoLoadFlag: false,
+        },
+      });
     }
   } catch (e) {
-    params.addToast('Issue while saving! Please try later.', {
-      appearance: 'error',
-    });
+    // params.addToast('Issue while saving! Please try later.', {
+    //   appearance: 'error',
+    // });
     console.log(e);
   }
 }
 
 export function* updateResumeEventHandler(params) {
-  console.log('inside updateResumeEventHandler: ');
   try {
-    const storeData = yield select(state => state.builder.resume_json_state);
+    const storeData = yield select(
+      state => state.global.userData.resumeDataStore,
+    );
     if (params.sectionId === 'personal') {
       if (
         storeData &&
@@ -111,6 +154,7 @@ export function* updateResumeEventHandler(params) {
       ) {
         storeData[`${params.sectionId}`].history[`${params.fieldId}`] =
           params.content;
+        // TODO: put content on resumeJson in userdata !important
         yield put({ type: `${UPDATE_CANVAS}_COUNT` });
         const updateCanvasCount = yield select(
           state => state.builder.updateCanvasCount,
@@ -126,6 +170,24 @@ export function* updateResumeEventHandler(params) {
             },
           );
           if (response.status === 200) {
+            // TODO: put resume Json in store and also save session
+            const editorState = yield select(
+              state => state.builder.editorState,
+            );
+            yield put({
+              type: `${UPDATE_SESSION_ARRAY}_INSERT`,
+              projectId: params.projectId,
+              projectSession: {
+                templateCSS: editorState.getCss(),
+                templateHTML: editorState.getHtml(),
+                templateJS: {},
+                autoLoadFlag: false,
+              },
+            });
+            yield put({
+              type: `${UPDATE_IN_USERDATA}_RESUME_JSON_ALL`,
+              resumeDataStoreAll: storeData,
+            });
             params.addToast('Save successfully!', { appearance: 'info' });
             console.log('succesfully submit your request.', response);
           } else {
@@ -153,7 +215,7 @@ export function* updateResumeEventHandler(params) {
         const updateCanvasCount = yield select(
           state => state.builder.updateCanvasCount,
         );
-        console.log('updateCanvasCount values: ', updateCanvasCount);
+        console.log('updateCanvasCouunt values: ', updateCanvasCount);
         if (updateCanvasCount === 0) {
           const response = yield call(
             apiClient.post,
@@ -164,6 +226,24 @@ export function* updateResumeEventHandler(params) {
             },
           );
           if (response.status === 200) {
+            // TODO: put resume Json in store and also save session
+            const editorState = yield select(
+              state => state.builder.editorState,
+            );
+            yield put({
+              type: `${UPDATE_SESSION_ARRAY}_INSERT`,
+              projectId: params.projectId,
+              projectSession: {
+                templateCSS: editorState.getCss(),
+                templateHTML: editorState.getHtml(),
+                templateJS: {},
+                autoLoadFlag: false,
+              },
+            });
+            yield put({
+              type: `${UPDATE_IN_USERDATA}_RESUME_JSON_ALL`,
+              resumeDataStoreAll: storeData,
+            });
             params.addToast('Save successfully!', { appearance: 'info' });
             console.log('succesfully submit your request.', response);
           } else {
@@ -182,9 +262,8 @@ export function* updateResumeEventHandler(params) {
 
 export function* updateCanvas(params) {
   try {
-    const editorState = yield select(state => state.builder.editor_state);
-    // console.log("Editor State: ", editorState )
-    // const editorState = yield select(state => state.builder.editorArray[params.projectId]);
+    const editorState = yield select(state => state.builder.editorState);
+    // const storeDataWhole = yield select(state => state);
     yield call(
       updateCanvasFunction,
       params.sectionId,
@@ -289,10 +368,14 @@ async function getJsonFromDataIdBased(
   const id = `${sectionId}_0`;
   const component = editor.DomComponents.componentsById[id];
   if (payload.length > 0) {
+    console.log(
+      'component error:',
+      editor.DomComponents.componentsById[id],
+      id,
+    );
     editor.DomComponents.componentsById[`${sectionId}Section`].removeClass(
       'd-none',
     );
-    // console.log("component:", JSON.parse(JSON.stringify(component)) )
     const parentComponent = editor.DomComponents.componentsById[id].parent();
     const parseParentComponent = JSON.parse(JSON.stringify(parentComponent));
     const tempComponent = [];

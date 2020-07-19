@@ -6,15 +6,19 @@ import { createStructuredSelector } from 'reselect';
 import { useToasts } from 'react-toast-notifications';
 import cx from 'classnames';
 import { Formik, Form, FieldArray } from 'formik';
-import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  updateResumeJSONState,
   updateEditorCanvas,
   updateResumeKeyValue,
 } from 'containers/Builder/actions';
-import { toggleModal } from 'containers/App/actions';
-import { formatDateValue } from '../../../utils/app/textFormating';
-import { componentMapEmployement, formatValuesEmployement } from '../dataLoadStructure';
+import {
+  toggleModal,
+  updateResumeJsonInUserData,
+} from 'containers/App/actions';
+import { makeSelectResumeJsonStateFromUserData } from '../../../containers/App/selectors';
+import {
+  componentMapEmployement,
+  formatValuesEmployement,
+} from '../dataLoadStructure';
 import {
   getCountryList,
   setModalContent,
@@ -24,7 +28,7 @@ import Accordian from '../../Accordion';
 import EmploymentInputs from './EmploymentItems';
 import Button from '../../Button';
 
-function EmploymentForm({ allCountries, resumeJSONState, dispatch }) {
+function EmploymentForm({ allCountries, resumeDataStore, dispatch }) {
   const blankEmpFields = {
     position: '',
     employer: '',
@@ -35,19 +39,10 @@ function EmploymentForm({ allCountries, resumeJSONState, dispatch }) {
     tillDate: false,
     summary: '',
   };
-  const componentMap = {
-    position: { valueMap: 'position', componentType: 'content' },
-    employer: { valueMap: 'employer', componentType: 'content' },
-    state: { valueMap: 'state', componentType: 'content' },
-    country: { valueMap: 'country', componentType: 'content' },
-    start: { valueMap: 'start', componentType: 'content' },
-    end: { valueMap: 'end', componentType: 'content' },
-    summary: { valueMap: 'summary', componentType: 'content' },
-  };
 
   let empStoreState = null;
-  if (resumeJSONState.employment) {
-    empStoreState = resumeJSONState.employment.history;
+  if (resumeDataStore.employment) {
+    empStoreState = resumeDataStore.employment.history;
   }
 
   const [employments, setEmployments] = useState(
@@ -64,28 +59,20 @@ function EmploymentForm({ allCountries, resumeJSONState, dispatch }) {
 
   const { addToast } = useToasts();
 
-  const formatValues = values => {
-    const tempValues = values;
-    tempValues.forEach((value, index) => {
-      tempValues[index].start = formatDateValue(tempValues[index].start);
-      if (tempValues[index].tillDate === true) {
-        tempValues[index].end = 'Present';
-      } else {
-        tempValues[index].end = formatDateValue(tempValues[index].end);
-      }
-    });
-    return tempValues;
-  };
   const handleSave = values => {
     const updatedEmp = formatValuesEmployement(
       JSON.parse(JSON.stringify(values.employment)),
     );
-    // const updatedEmp = formatValues(
-    //   JSON.parse(JSON.stringify(values.employment)),
-    // );
     const history = { history: values.employment };
-    dispatch(updateEditorCanvas('employment', 'ADD', updatedEmp, componentMapEmployement));
-    dispatch(updateResumeJSONState(history, 'employment'));
+    dispatch(
+      updateEditorCanvas(
+        'employment',
+        'ADD',
+        updatedEmp,
+        componentMapEmployement,
+      ),
+    );
+    dispatch(updateResumeJsonInUserData('employment', history));
     dispatch(updateResumeKeyValue('employment', values.employment, addToast));
     dispatch(toggleModal());
   };
@@ -202,14 +189,14 @@ function EmploymentForm({ allCountries, resumeJSONState, dispatch }) {
 
 EmploymentForm.propTypes = {
   allCountries: PropTypes.array.isRequired,
-  resumeJSONState: PropTypes.object,
+  resumeDataStore: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = () =>
   createStructuredSelector({
     allCountries: makeSelectAllCountiesOptions(),
-    resumeJSONState: makeUpdateResumeJSONState(),
+    resumeDataStore: makeSelectResumeJsonStateFromUserData(),
   });
 const mapDispatchToProps = null;
 const withConnect = connect(

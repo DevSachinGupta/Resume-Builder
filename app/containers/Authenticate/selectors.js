@@ -20,32 +20,11 @@ const makeSelectAuthenticate = () =>
     selectAuthenticateDomain,
     substate => substate,
   );
-const makeSelectGetUserIsAuthenticated = () =>
-  createSelector(
-    selectAuthenticateDomain,
-    substate => substate.isAuthenticated,
-  );
-const makeSelectGetCurrentUserData = () =>
-  createSelector(
-    selectAuthenticateDomain,
-    substate => substate.userData,
-  );
 const makeSelectGetUserLoading = () =>
   createSelector(
     selectAuthenticateDomain,
     substate => substate.loading,
   );
-const makeUpdateTemplateNumberState = () =>
-  createSelector(
-    selectAuthenticateDomain,
-    substate => substate.templateNumberState,
-  );
 
 export default makeSelectAuthenticate;
-export {
-  selectAuthenticateDomain,
-  makeSelectGetUserIsAuthenticated,
-  makeSelectGetCurrentUserData,
-  makeSelectGetUserLoading,
-  makeUpdateTemplateNumberState,
-};
+export { selectAuthenticateDomain, makeSelectGetUserLoading };

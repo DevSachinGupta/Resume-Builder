@@ -12,14 +12,16 @@ import {
 import { Formik, Form, FieldArray } from 'formik';
 import cx from 'classnames';
 import { useToasts } from 'react-toast-notifications';
-import { toggleModal } from 'containers/App/actions';
 import { createStructuredSelector } from 'reselect';
-import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  updateResumeJSONState,
+  toggleModal,
+  updateResumeJsonInUserData,
+} from 'containers/App/actions';
+import {
   updateEditorCanvas,
   updateResumeKeyValue,
 } from 'containers/Builder/actions';
+import { makeSelectResumeJsonStateFromUserData } from '../../../containers/App/selectors';
 import { setModalContent } from '../../../containers/MyContent/actions';
 import { componentMapSocial, formatValuesSocial } from '../dataLoadStructure';
 import { validationMap } from './validation';
@@ -27,21 +29,13 @@ import Button from '../../Button';
 import Input from '../../FormComponents/Input';
 import './style.scss';
 
-function SocialForm({ resumeJSONState, dispatch }) {
+function SocialForm({ resumeDataStore, dispatch }) {
   const blankSocialFields = {
     icon: FaGlobeAsia,
     name: 'other',
     placeholder: 'Other',
     url: '',
     icon_temp: 'icon-github',
-  };
-  const componentMap = {
-    url: { key: ['href'], valueMap: ['url'], componentType: 'attribute' },
-    icon: {
-      key: ['class'],
-      valueMap: ['icon_temp'],
-      componentType: 'attribute',
-    },
   };
 
   const allInputs = [
@@ -83,8 +77,8 @@ function SocialForm({ resumeJSONState, dispatch }) {
   ];
 
   let storeSocial = null;
-  if (resumeJSONState.social) {
-    storeSocial = resumeJSONState.social.history;
+  if (resumeDataStore.social) {
+    storeSocial = resumeDataStore.social.history;
   }
   const [socials, setSocials] = useState(storeSocial || allInputs);
 
@@ -138,7 +132,6 @@ function SocialForm({ resumeJSONState, dispatch }) {
       if (baseURL.substr(0, prefixHttps.length) !== prefixHttps) {
         baseURL = prefixHttps + baseURL;
       }
-
       e.target.value = baseURL;
       setFieldValue(`social.${idx}.url`, baseURL);
     }
@@ -146,16 +139,15 @@ function SocialForm({ resumeJSONState, dispatch }) {
 
   const { addToast } = useToasts();
 
-  const formatValues = values => {
-    let tempValues = values;
-    tempValues = tempValues.filter(data => data.url !== '');
-    return tempValues;
-  };
   const handleSave = values => {
-    const updatedSoc = formatValues(JSON.parse(JSON.stringify(values.social)));
+    const updatedSoc = formatValuesSocial(
+      JSON.parse(JSON.stringify(values.social)),
+    );
     const history = { history: values.social };
-    dispatch(updateEditorCanvas('social', 'ADD', updatedSoc, componentMap));
-    dispatch(updateResumeJSONState(history, 'social'));
+    dispatch(
+      updateEditorCanvas('social', 'ADD', updatedSoc, componentMapSocial),
+    );
+    dispatch(updateResumeJsonInUserData('social', history));
     dispatch(updateResumeKeyValue('social', values.social, addToast));
     dispatch(toggleModal());
   };
@@ -282,12 +274,12 @@ function SocialForm({ resumeJSONState, dispatch }) {
 }
 
 SocialForm.propTypes = {
-  resumeJSONState: PropTypes.object,
+  resumeDataStore: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  resumeJSONState: makeUpdateResumeJSONState(),
+  resumeDataStore: makeSelectResumeJsonStateFromUserData(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(

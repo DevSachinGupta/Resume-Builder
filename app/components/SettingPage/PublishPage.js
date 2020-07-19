@@ -10,8 +10,10 @@ import { FaRegEdit } from 'react-icons/fa';
 import { Formik } from 'formik';
 import { useToasts } from 'react-toast-notifications';
 import { isEqual } from 'lodash';
-import { updatePublishType } from 'containers/App/actions';
-import { updatePublishSEOInUserData } from 'containers/Authenticate/actions';
+import {
+  updatePublishType,
+  updatePublishSEOInUserData,
+} from 'containers/App/actions';
 import { setModalContent } from 'containers/MyContent/actions';
 import * as Yup from 'yup';
 import apiClient from '../../utils/app/API';
@@ -62,7 +64,7 @@ function PublishPage(props) {
       .catch(error => {
         setSubmitError({ status: 'Something went wrong while submitting!' });
         addToast('Issue while updating!!!', { appearance: 'error' });
-        console.log('updateProfile error: ', error,  error.response);
+        console.log('updateProfile error: ', error, error.response);
       });
   };
   return (
@@ -138,8 +140,8 @@ function PublishPage(props) {
                     title="Edit"
                     className="ml-2 text-gray-700 border-gray-200 px-1 py-1 text-sm"
                     onClick={() => {
-                      props.dispatch(updatePublishType('CopyDomain'))
-                      props.dispatch(setModalContent('publish'))
+                      props.dispatch(updatePublishType('CopyDomain'));
+                      props.dispatch(setModalContent('publish'));
                     }}
                   >
                     <FaRegEdit size={22} className="bg-white text-teal-500" />
@@ -172,7 +174,7 @@ function PublishPage(props) {
         })}
         onSubmit={values => {
           console.log('both balues', values, blankSEOFields);
-          if (!(isEqual(values, blankSEOFields))) {
+          if (!isEqual(values, blankSEOFields)) {
             console.log('onSubmit values', values);
             handleSEOSave(values);
           }

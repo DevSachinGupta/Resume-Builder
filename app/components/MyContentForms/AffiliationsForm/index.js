@@ -6,21 +6,25 @@ import cx from 'classnames';
 import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
 import { useToasts } from 'react-toast-notifications';
-import { toggleModal } from 'containers/App/actions';
-import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  updateResumeJSONState,
+  toggleModal,
+  updateResumeJsonInUserData,
+} from 'containers/App/actions';
+import {
   updateEditorCanvas,
   updateResumeKeyValue,
 } from 'containers/Builder/actions';
+import { makeSelectResumeJsonStateFromUserData } from '../../../containers/App/selectors';
 import { setModalContent } from '../../../containers/MyContent/actions';
-import { formatDateValue } from '../../../utils/app/textFormating';
-import { componentMapAffiliation, formatValuesAffiliation } from '../dataLoadStructure';
+import {
+  componentMapAffiliation,
+  formatValuesAffiliation,
+} from '../dataLoadStructure';
 import Accordian from '../../Accordion';
 import AffiliationInputs from './AffiliationItems';
 import Button from '../../Button';
 
-function AffiliationForm({ resumeJSONState, dispatch }) {
+function AffiliationForm({ resumeDataStore, dispatch }) {
   const blankAffFields = {
     organization: '',
     role: '',
@@ -29,46 +33,31 @@ function AffiliationForm({ resumeJSONState, dispatch }) {
     tillDate: false,
     summary: '',
   };
-  const componentMap = {
-    organization: { valueMap: 'organization', componentType: 'content' },
-    role: { valueMap: 'role', componentType: 'content' },
-    start: { valueMap: 'start', componentType: 'content' },
-    end: { valueMap: 'end', componentType: 'content' },
-    summary: { valueMap: 'summary', componentType: 'content' },
-  };
 
   let storeAffiliation = null;
-  if (resumeJSONState.affiliation) {
-    storeAffiliation = resumeJSONState.affiliation.history;
+  if (resumeDataStore.affiliation) {
+    storeAffiliation = resumeDataStore.affiliation.history;
   }
-
   const [affiliations, setAffiliations] = useState(
     storeAffiliation || [{ ...blankAffFields }],
   );
 
   const { addToast } = useToasts();
 
-  const formatValues = values => {
-    const tempValues = values;
-    tempValues.forEach((value, index) => {
-      tempValues[index].start = formatDateValue(tempValues[index].start);
-      if (tempValues[index].tillDate === true) {
-        tempValues[index].end = 'Present';
-      } else {
-        tempValues[index].end = formatDateValue(tempValues[index].end);
-      }
-    });
-    return tempValues;
-  };
   const handleSave = values => {
     const updatedAff = formatValuesAffiliation(
       JSON.parse(JSON.stringify(values.affiliation)),
     );
     const history = { history: values.affiliation };
     dispatch(
-      updateEditorCanvas('affiliation', 'ADD', updatedAff, componentMapAffiliation),
+      updateEditorCanvas(
+        'affiliation',
+        'ADD',
+        updatedAff,
+        componentMapAffiliation,
+      ),
     );
-    dispatch(updateResumeJSONState(history, 'affiliation'));
+    dispatch(updateResumeJsonInUserData('affiliation', history));
     dispatch(updateResumeKeyValue('affiliation', values.affiliation, addToast));
     dispatch(toggleModal());
   };
@@ -186,12 +175,12 @@ function AffiliationForm({ resumeJSONState, dispatch }) {
 }
 
 AffiliationForm.propTypes = {
-  resumeJSONState: PropTypes.object,
+  resumeDataStore: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  resumeJSONState: makeUpdateResumeJSONState(),
+  resumeDataStore: makeSelectResumeJsonStateFromUserData(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(

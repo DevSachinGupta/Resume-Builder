@@ -20,16 +20,6 @@ const makeSelectBuilder = () =>
     selectBuilderDomain,
     substate => substate,
   );
-const makeSelectGetDefaultTheme = () =>
-  createSelector(
-    selectBuilderDomain,
-    substate => substate.theme.isLoaded,
-  );
-const makeSelectGetThemeContent = () =>
-  createSelector(
-    selectBuilderDomain,
-    substate => substate.theme.data,
-  );
 const makeSelectIsSidebarOpen = () =>
   createSelector(
     selectBuilderDomain,
@@ -43,32 +33,12 @@ const makeSelectIsSecondarySidebarOpen = () =>
 const makeUpdateEditorState = () =>
   createSelector(
     selectBuilderDomain,
-    substate => substate.editor_state,
-  );
-const makeUpdateResumeJSONState = () =>
-  createSelector(
-    selectBuilderDomain,
-    substate => substate.resume_json_state,
-  );
-const makeUpdateDemoPageState = () =>
-  createSelector(
-    selectBuilderDomain,
-    substate => substate.demopage_state,
+    substate => substate.editorState,
   );
 const makeSelectSessionArray = () =>
   createSelector(
     selectBuilderDomain,
     substate => substate.sessionArray,
-  );
-const makeSelectEditorArray = () =>
-  createSelector(
-    selectBuilderDomain,
-    substate => substate.editorArray,
-  );
-const makeUpdateTemplateNumberState = () =>
-  createSelector(
-    selectBuilderDomain,
-    substate => substate.templateNumberState,
   );
 const makeUpdateShowThemeToggle = () =>
   createSelector(
@@ -78,15 +48,9 @@ const makeUpdateShowThemeToggle = () =>
 export default makeSelectBuilder;
 export {
   selectBuilderDomain,
-  makeSelectGetDefaultTheme,
-  makeSelectGetThemeContent,
   makeSelectIsSidebarOpen,
   makeSelectIsSecondarySidebarOpen,
   makeUpdateEditorState,
-  makeUpdateResumeJSONState,
-  makeUpdateDemoPageState,
   makeSelectSessionArray,
-  makeSelectEditorArray,
-  makeUpdateTemplateNumberState,
   makeUpdateShowThemeToggle,
 };

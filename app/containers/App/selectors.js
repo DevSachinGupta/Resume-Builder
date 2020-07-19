@@ -44,15 +44,30 @@ const makeSelectIsModalOpen = () =>
     selectGlobal,
     globalState => get(globalState, 'modalState.isOpen', false),
   );
+const makeSelectIsUserMenuOpen = () =>
+  createSelector(
+    selectGlobal,
+    globalState => get(globalState, 'headerState.isUserPillOpen', false),
+  );
 const makeSelectPublishType = () =>
   createSelector(
     selectGlobal,
     globalState => get(globalState, 'publishType', false),
   );
-const makeSelectIsUserMenuOpen = () =>
+const makeSelectGetUserIsAuthenticated = () =>
   createSelector(
     selectGlobal,
-    globalState => get(globalState, 'headerState.isUserPillOpen', false),
+    substate => substate.isAuthenticated,
+  );
+const makeSelectResumeJsonStateFromUserData = () =>
+  createSelector(
+    selectGlobal,
+    substate => substate.userData.resumeDataStore,
+  );
+const makeSelectGetCurrentUserData = () =>
+  createSelector(
+    selectGlobal,
+    substate => substate.userData,
   );
 export {
   selectGlobal,
@@ -64,4 +79,7 @@ export {
   makeSelectIsModalOpen,
   makeSelectPublishType,
   makeSelectIsUserMenuOpen,
+  makeSelectGetUserIsAuthenticated,
+  makeSelectResumeJsonStateFromUserData,
+  makeSelectGetCurrentUserData,
 };

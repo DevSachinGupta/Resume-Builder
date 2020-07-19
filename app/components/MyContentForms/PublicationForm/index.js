@@ -6,21 +6,25 @@ import cx from 'classnames';
 import { Formik, Form, FieldArray } from 'formik';
 import { createStructuredSelector } from 'reselect';
 import { useToasts } from 'react-toast-notifications';
-import { toggleModal } from 'containers/App/actions';
-import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  updateResumeJSONState,
+  toggleModal,
+  updateResumeJsonInUserData,
+} from 'containers/App/actions';
+import {
   updateEditorCanvas,
   updateResumeKeyValue,
 } from 'containers/Builder/actions';
+import { makeSelectResumeJsonStateFromUserData } from '../../../containers/App/selectors';
 import { setModalContent } from '../../../containers/MyContent/actions';
-import { formatDateValue } from '../../../utils/app/textFormating';
-import { componentMapPublication, formatValuesPublication } from '../dataLoadStructure';
+import {
+  componentMapPublication,
+  formatValuesPublication,
+} from '../dataLoadStructure';
 import Accordian from '../../Accordion';
 import PublicationInputs from './PublicationItems';
 import Button from '../../Button';
 
-function PublicationForm({ resumeJSONState, dispatch }) {
+function PublicationForm({ resumeDataStore, dispatch }) {
   const blankPubFields = {
     title: '',
     summary: '',
@@ -37,32 +41,29 @@ function PublicationForm({ resumeJSONState, dispatch }) {
   };
 
   let storePublication = null;
-  if (resumeJSONState.publication) {
-    storePublication = resumeJSONState.publication.history;
+  if (resumeDataStore.publication) {
+    storePublication = resumeDataStore.publication.history;
   }
-
   const [publications, setPublications] = useState(
     storePublication || [{ ...blankPubFields }],
   );
 
   const { addToast } = useToasts();
 
-  const formatValues = values => {
-    const tempValues = values;
-    tempValues.forEach((value, index) => {
-      tempValues[index].date = formatDateValue(tempValues[index].date);
-    });
-    return tempValues;
-  };
   const handleSave = values => {
     const updatedPub = formatValuesPublication(
       JSON.parse(JSON.stringify(values.publication)),
     );
     const history = { history: values.publication };
     dispatch(
-      updateEditorCanvas('publication', 'ADD', updatedPub, componentMapPublication),
+      updateEditorCanvas(
+        'publication',
+        'ADD',
+        updatedPub,
+        componentMapPublication,
+      ),
     );
-    dispatch(updateResumeJSONState(history, 'publication'));
+    dispatch(updateResumeJsonInUserData('publication', history));
     dispatch(updateResumeKeyValue('publication', values.publication, addToast));
     dispatch(toggleModal());
   };
@@ -171,12 +172,12 @@ function PublicationForm({ resumeJSONState, dispatch }) {
 }
 
 PublicationForm.propTypes = {
-  resumeJSONState: PropTypes.object,
+  resumeDataStore: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  resumeJSONState: makeUpdateResumeJSONState(),
+  resumeDataStore: makeSelectResumeJsonStateFromUserData(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(

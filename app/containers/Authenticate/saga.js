@@ -2,6 +2,7 @@ import { takeLatest, all, call, put, select } from 'redux-saga/effects';
 import apiClient from '../../utils/app/API';
 import history from '../App/history';
 import { AUTHENTICATE } from './constants';
+import { UPDATE_PUBLISH_TYPE, AUTHENTICATE_USER } from '../App/constants';
 
 export default function* authenticateSaga() {
   yield all([
@@ -35,12 +36,10 @@ function* userLogin(params) {
     });
     if (response.status === 200) {
       yield put({
-        type: `${AUTHENTICATE}_SET_CURRENT_USER`,
+        type: `${AUTHENTICATE_USER}_SET`,
         isAuthenticated: true,
         userData: response.data.data.user,
       });
-      // const isAuthenticated = yield select(state => state.authenticate);
-      // console.log(isAuthenticated);
       params.setLoadingStatus(false);
       history.push('/dashboard');
     } else if (response.status === 204) {
@@ -64,14 +63,14 @@ function* userLogin(params) {
 }
 
 function* userLogout(params) {
-  console.log("called userlogout");
+  console.log('called userlogout');
   try {
     const response = yield call(apiClient.post, 'logout', {});
     if (response.status === 200) {
       history.push('/login');
       params.addToast('Successfully Logout!', { appearance: 'info' });
       yield put({
-        type: `${AUTHENTICATE}_UNSET`,
+        type: `${AUTHENTICATE_USER}_UNSET`,
       });
     }
   } catch (e) {

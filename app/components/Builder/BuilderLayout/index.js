@@ -28,7 +28,7 @@ function BuilderLayout({ isSidebarOpen, projectId, ...rest }) {
               'shadow',
             )}
           >
-            <BuilderSidebar />
+            <BuilderSidebar projectId={projectId} />
           </div>
         )}
         <div className={cx('editorContainer')}>{rest.children}</div>

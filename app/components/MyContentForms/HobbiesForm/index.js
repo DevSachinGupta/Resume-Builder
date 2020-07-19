@@ -6,14 +6,16 @@ import { Formik, Form } from 'formik';
 import cx from 'classnames';
 import { createStructuredSelector } from 'reselect';
 import { useToasts } from 'react-toast-notifications';
-import { makeUpdateResumeJSONState } from 'containers/Builder/selectors';
 import {
-  updateResumeJSONState,
   updateEditorCanvas,
   updateResumeKeyValue,
 } from 'containers/Builder/actions';
 import { FaTimes } from 'react-icons/fa';
-import { toggleModal } from 'containers/App/actions';
+import {
+  toggleModal,
+  updateResumeJsonInUserData,
+} from 'containers/App/actions';
+import { makeSelectResumeJsonStateFromUserData } from '../../../containers/App/selectors';
 import { setModalContent } from '../../../containers/MyContent/actions';
 import { componentMapHobbies } from '../dataLoadStructure';
 import Input from '../../FormComponents/Input';
@@ -21,7 +23,7 @@ import Button from '../../Button';
 import Icons from '../../Icons';
 import './style.scss';
 
-function HobbiesForm({ resumeJSONState, dispatch }) {
+function HobbiesForm({ resumeDataStore, dispatch }) {
   let hobbyData = [
     { icon_temp: 'icon-adventurer', value: 'Music', icon: <Icons icon="music" /> },
     { icon_temp: 'icon-adventurer', value: 'Singing', icon: <Icons icon="singing" /> },
@@ -52,22 +54,10 @@ function HobbiesForm({ resumeJSONState, dispatch }) {
     { icon_temp: 'icon-adventurer', value: 'Art & Craft', icon: <Icons icon="artandcraft" /> },
     { icon_temp: 'icon-adventurer', value: 'Gardening', icon: <Icons icon="gardening" /> },
   ];
-  const componentMap = {
-    url: {
-      key: ['href', 'title'],
-      valueMap: ['value', 'value'],
-      componentType: 'attribute',
-    },
-    icon: {
-      key: ['class'],
-      valueMap: ['icon_temp'],
-      componentType: 'attribute',
-    },
-  };
 
   let storeHobbies = null;
-  if (resumeJSONState.hobbies) {
-    storeHobbies = resumeJSONState.hobbies.history;
+  if (resumeDataStore.hobbies) {
+    storeHobbies = resumeDataStore.hobbies.history;
     hobbyData = hobbyData.filter(
       data =>
         !storeHobbies
@@ -114,10 +104,10 @@ function HobbiesForm({ resumeJSONState, dispatch }) {
   const { addToast } = useToasts();
 
   const handleSave = values => {
-    const updatedHob = values;
-    const history = { history: updatedHob };
+    // const updatedHob = values;
+    const history = { history: values };
     dispatch(updateEditorCanvas('hobbies', 'ADD', values, componentMapHobbies));
-    dispatch(updateResumeJSONState(history, 'hobbies'));
+    dispatch(updateResumeJsonInUserData('hobbies', history));
     dispatch(updateResumeKeyValue('hobbies', values, addToast));
     dispatch(toggleModal());
   };
@@ -224,12 +214,12 @@ function HobbiesForm({ resumeJSONState, dispatch }) {
   );
 }
 HobbiesForm.propTypes = {
-  resumeJSONState: PropTypes.object,
+  resumeDataStore: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  resumeJSONState: makeUpdateResumeJSONState(),
+  resumeDataStore: makeSelectResumeJsonStateFromUserData(),
 });
 const mapDispatchToProps = null;
 const withConnect = connect(
