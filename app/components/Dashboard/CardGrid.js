@@ -7,7 +7,7 @@
 import React, { memo } from 'react';
 import cx from 'classnames';
 import { IoIosRocket } from 'react-icons/io';
-import { Link } from 'react-router-dom';
+import { BrowserRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
@@ -15,9 +15,11 @@ function CardGrid({
   templateItems,
   selectedTemplate,
   setSelectedTemplate,
+  selectTemplateOny,
+  switchTemplate,
   dispatch,
 }) {
-  console.log("templa", templateItems)
+  // console.log("templa", templateItems)
   return (
     <main className="py-4">
       <div className="">
@@ -69,38 +71,68 @@ function CardGrid({
                       </p> */}
                       <div className="flex mt-3 justify-end">
                         <div className="my-auto justtify-between mr-2">
-                          <Link
-                            to={`/preview/${encodeURIComponent(
-                              item.templateURL,
-                            )}`}
-                            target="_blank"
-                            className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black"
-                          >
-                            Preview
-                          </Link>
+                          <BrowserRouter>
+                            <Link
+                              to={`/preview/${encodeURIComponent(
+                                item.templateURL,
+                              )}`}
+                              target="_blank"
+                              className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black"
+                            >
+                              Preview
+                            </Link>
+                          </BrowserRouter>
                         </div>
 
                         <div className="my-auto justtify-between">
-                          <button
-                            type="button"
-                            className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black"
-                            data-templateid={item.templateID}
-                            data-templatetitle={item.title}
-                            data-templateurl={item.imageUrl}
-                            onClick={e => {
-                              setSelectedTemplate({
-                                name: e.target.dataset.templatetitle,
-                                id: e.target.dataset.templateid,
-                                url: e.target.dataset.templateurl,
-                              });
-                            }}
-                          >
-                            <IoIosRocket
-                              size={22}
-                              class="bg-white text-teal-500"
-                            />{' '}
-                            Select
-                          </button>
+                          {selectTemplateOny === true ? (
+                            <button
+                              type="button"
+                              className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black"
+                              data-templateid={item.templateID}
+                              data-templatetitle={item.title}
+                              data-templateurl={item.imageUrl}
+                              onClick={e => {
+                                switchTemplate({
+                                  name: e.target.dataset.templatetitle,
+                                  id: e.target.dataset.templateid,
+                                  url: e.target.dataset.templateurl,
+                                });
+                                // setSelectedTemplate({
+                                //   name: e.target.dataset.templatetitle,
+                                //   id: e.target.dataset.templateid,
+                                //   url: e.target.dataset.templateurl,
+                                // });
+                              }}
+                            >
+                              <IoIosRocket
+                                size={22}
+                                class="bg-white text-teal-500"
+                              />{' '}
+                              Select
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              className="flex text-gray-700 border-black border px-2 py-1 text-sm hover:border-teal-400 hover:text-black"
+                              data-templateid={item.templateID}
+                              data-templatetitle={item.title}
+                              data-templateurl={item.imageUrl}
+                              onClick={e => {
+                                setSelectedTemplate({
+                                  name: e.target.dataset.templatetitle,
+                                  id: e.target.dataset.templateid,
+                                  url: e.target.dataset.templateurl,
+                                });
+                              }}
+                            >
+                              <IoIosRocket
+                                size={22}
+                                class="bg-white text-teal-500"
+                              />{' '}
+                              Select
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>

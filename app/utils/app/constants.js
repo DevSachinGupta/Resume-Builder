@@ -46,6 +46,9 @@ const Constants = {
     pricing: {
       title: 'Account Plan',
     },
+    myThemes: {
+      title: 'Try others themes...',
+    },
     customDomain: {
       title: 'Connect with custom domain',
     },

@@ -66,9 +66,13 @@ const appReducer = (state = initialState, action) => {
         ...userDataUpdateResume.resumeDataStore,
         [action.sectionKey]: action.resumeJsonState,
       };
+      saveState('userData', userDataUpdateResume);
+      break;
     case `${UPDATE_IN_USERDATA}_RESUME_JSON_ALL`:
-      console.log('update resume all storage:', action.resumeDataStoreAll);
-      saveState('userData', action.resumeDataStoreAll);
+      const userDataUpdateResumeAll = state.userData;
+      userDataUpdateResumeAll.resumeDataStore = action.resumeDataStoreAll;
+      console.log('update resume all storage:', userDataUpdateResumeAll);
+      saveState('userData', userDataUpdateResumeAll);
       break;
     case `${UPDATE_IN_USERDATA}_NOTIFICATIONS`:
       const userDataUpdateNotifications = state.userData;

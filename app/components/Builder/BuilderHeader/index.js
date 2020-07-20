@@ -14,11 +14,9 @@ import np from 'nprogress';
 import { Link } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { GoThreeBars } from 'react-icons/go';
-import { FaUserCircle, FaMobileAlt } from 'react-icons/fa';
-import { IoIosDesktop, IoIosTabletPortrait } from 'react-icons/io';
-import { toggleHeaderUserMenu } from 'containers/App/actions';
+import { FaUserCircle, FaMobileAlt, FaRegUser } from 'react-icons/fa';
+import { IoIosPower, IoIosDesktop, IoIosTabletPortrait } from 'react-icons/io';
 import {
-  makeSelectIsUserMenuOpen,
   makeSelectGetUserIsAuthenticated,
   makeSelectGetCurrentUserData,
 } from 'containers/App/selectors';
@@ -35,14 +33,7 @@ import './progress.css';
 import './style.scss';
 import apiClient from '../../../utils/app/API';
 
-function BuilderHeader({
-  dispatch,
-  isHeaderMenuOpen,
-  editorState,
-  user,
-  userData,
-  projectId,
-}) {
+function BuilderHeader({ dispatch, editorState, user, userData, projectId }) {
   useEffect(() => {
     np.configure({
       showSpinner: false,
@@ -50,6 +41,7 @@ function BuilderHeader({
     });
     // np.start({});
   }, []);
+  const [isHeaderMenuOpen, toggleHeaderUserMenu] = useState(false);
   const { addToast } = useToasts();
   console.log('BuilderHeader userData:', projectId, userData);
   let projectName = '';
@@ -173,37 +165,66 @@ function BuilderHeader({
             Publish
           </Button>
         </div>
-        <div className={cx('navAccountPill')}>
-          <FaUserCircle
-            onClick={() => dispatch(toggleHeaderUserMenu())}
-            size={24}
-          />
+        {user && (
           <div
-            className={cx('accountMenu', 'bg-white', 'rounded', 'shadow', {
-              hideMenu: !isHeaderMenuOpen,
-            })}
+            className="inline-flex items-center cursor-pointer"
+            onClick={() => toggleHeaderUserMenu(!isHeaderMenuOpen)}
           >
-            <ul>
-              <li
-                onClick={() => {
-                  dispatch(getUserLogout());
-                  dispatch(toggleHeaderUserMenu());
-                }}
+            {/* <div className="">
+              <span className="no-underline whitespace-no-wrap pr-2">{`${
+                userData.firstName
+              } ${userData.lastName}`}</span>
+            </div> */}
+            <div className={cx('navAccountPill')}>
+              {userData.settings.profileImageUrl ? (
+                <img
+                  className="rounded-full max-w-6xl max-w-none"
+                  // src="https://lh3.googleusercontent.com/-biPvuIkz-PE/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnj_WXp169yeuyw2n9nG3_RZFdiGg/s50/photo.jpg"
+                  src={userData.settings.profileImageUrl}
+                  width="30"
+                  height="30"
+                  alt=""
+                />
+              ) : (
+                <FaUserCircle size={24} class="bg-white rounded-full" />
+              )}
+              <div
+                className={cx('accountMenu', 'bg-white', 'rounded', 'shadow', {
+                  hideMenu: !isHeaderMenuOpen,
+                })}
               >
-                Logout
-              </li>
-              <li>
-                <Link
-                  to="settings"
-                  target="_blank"
-                  className="no-underline  pr-3"
-                >
-                  Settings
-                </Link>
-              </li>
-            </ul>
+                <ul className="text-left">
+                  <li>
+                    <div className="flex flex-row text-center">
+                      {/* <IoIosPower className="w-auto my-auto pr-2" />{' '} */}
+                      <span className="no-underline whitespace-no-wrap pr-2 truncate max-w-xs">{`${
+                        userData.firstName
+                      } ${userData.lastName}`}</span>
+                    </div>
+                  </li>
+                  <li
+                    onClick={() => {
+                      dispatch(getUserLogout(addToast));
+                      toggleHeaderUserMenu(!isHeaderMenuOpen);
+                    }}
+                  >
+                    <div className="flex flex-row text-center">
+                      <IoIosPower className="w-auto my-auto pr-2" /> Logout
+                    </div>
+                  </li>
+                  <Link to="/settings" target="_blank" className="no-underline">
+                    <li>
+                      <div className="flex flex-row text-center">
+                        <FaRegUser className="w-auto my-auto pr-2 font-light" />{' '}
+                        settings
+                      </div>
+                    </li>
+                  </Link>
+                </ul>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
@@ -215,7 +236,7 @@ BuilderHeader.propTypes = {
 };
 const withConnect = connect(
   createStructuredSelector({
-    isHeaderMenuOpen: makeSelectIsUserMenuOpen(),
+    // isHeaderMenuOpen: makeSelectIsUserMenuOpen(),
     editorState: makeUpdateEditorState(),
     user: makeSelectGetUserIsAuthenticated(),
     userData: makeSelectGetCurrentUserData(),

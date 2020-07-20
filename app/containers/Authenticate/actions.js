@@ -40,6 +40,7 @@ export function getUserLogin(
  * @description Action to be dispatched for logout authentication
  */
 export function getUserLogout(addToast) {
+  console.log("called getUserLogout action")
   return {
     type: `${AUTHENTICATE}_LOGOUT`,
     addToast,

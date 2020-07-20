@@ -25,7 +25,7 @@ export function Dashboard(props) {
   let renderObj = null;
   switch (props.method) {
     case 'new-project':
-      renderObj = <CreateNewProject />;
+      renderObj = <CreateNewProject selectTemplateOny={false} />;
       break;
     default:
       renderObj = <DashboardPage />;

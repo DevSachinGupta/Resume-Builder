@@ -10,10 +10,10 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import axios from 'axios';
 import { Formik, Form } from 'formik';
 import { useToasts } from 'react-toast-notifications';
 import { toggleModal } from 'containers/App/actions';
+import apiClient from '../../../../utils/app/API';
 import DotsLoading from '../../../LoadingIndicator/dotsLoading';
 import ContactUsInputs from './ContactUsItems';
 import Button from '../../../Button';
@@ -48,15 +48,11 @@ function ContactUsForm({ dispatch }) {
 
   const handleSave = values => {
     setLoadingStatus(true);
-    axios
-      .post(
-        'http://localhost:2000/contactUs/addContactUs',
-        {
-          subject: values.subject,
-          message: values.message,
-        },
-        { withCredentials: true },
-      )
+    apiClient
+      .post('/contactUs/addContactUs', {
+        subject: values.subject,
+        message: values.message,
+      })
       .then(response => {
         console.log('addContactUs response: ', response);
         if (response.status === 200) {

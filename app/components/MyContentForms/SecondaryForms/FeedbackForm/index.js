@@ -11,9 +11,9 @@ import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Formik, Form } from 'formik';
-import axios from 'axios';
 import { useToasts } from 'react-toast-notifications';
 import { toggleModal } from 'containers/App/actions';
+import apiClient from '../../../../utils/app/API';
 import FeedbackInputs from './FeedbackItems';
 import Button from '../../../Button';
 import './style.scss';
@@ -33,15 +33,11 @@ function FeedbackForm({ dispatch }) {
     setFeedback(feedbackTemp);
   };
   const handleSave = values => {
-    axios
-      .post(
-        'http://localhost:2000/feedback/addRating',
-        {
-          rating: values.rating,
-          message: values.message,
-        },
-        { withCredentials: true },
-      )
+    apiClient
+      .post('/feedback/addRating', {
+        rating: values.rating,
+        message: values.message,
+      })
       .then(response => {
         console.log('handleSubmitRating response: ', response);
         if (response.status === 200) {

@@ -12,7 +12,10 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import BuilderLayout from 'components/Builder/BuilderLayout';
 import BuilderEditor from 'components/Builder/BuilderEditor';
-import { updateSessionArrayInsert } from 'containers/Builder/actions';
+import {
+  updateSessionArrayInsert,
+  updateProjectId,
+} from 'containers/Builder/actions';
 import {
   makeSelectGetUserIsAuthenticated,
   makeSelectGetCurrentUserData,
@@ -28,6 +31,7 @@ export function Builder(props) {
   useInjectSaga({ key: 'builder', saga });
 
   const { projectId } = props.match.params;
+  props.dispatch(updateProjectId(projectId));
 
   const [builderSessionState, setBuilderSessionState] = useState({});
   const handleFetchBuilderSession = () => {

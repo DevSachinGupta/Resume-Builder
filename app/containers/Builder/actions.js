@@ -15,6 +15,7 @@ import {
   UPDATE_RESUME_KEY_VALUE_DB,
   UPDATE_SESSION_ARRAY,
   HANDLE_PROJECT_CLICK,
+  UPDATE_PROJECT_ID,
 } from './constants';
 
 export function defaultAction() {
@@ -149,5 +150,23 @@ export function handleMyProjectClick(projectId) {
   return {
     type: HANDLE_PROJECT_CLICK,
     projectId,
+  };
+}
+/**
+ * @description function to update projectId
+ */
+export function updateProjectId(projectId) {
+  return {
+    type: UPDATE_PROJECT_ID,
+    projectId,
+  };
+}
+/**
+ * @description function to handle switch template
+ */
+export function handleSwitchTemplate(data) {
+  return {
+    type: `${UPDATE_CANVAS}_SWITCH_TEMPLATE`,
+    data,
   };
 }

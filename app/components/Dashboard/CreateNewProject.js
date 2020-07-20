@@ -8,7 +8,6 @@ import React, { memo, useState, useEffect } from 'react';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { Link } from 'react-router-dom';
 import { FaFolderPlus } from 'react-icons/fa';
 import history from 'containers/App/history';
 import { updateProjectsInUserData } from 'containers/App/actions';
@@ -18,17 +17,16 @@ import {
   makeSelectGetUserIsAuthenticated,
   makeSelectGetCurrentUserData,
 } from '../../containers/App/selectors';
+import { handleSwitchTemplate } from '../../containers/Builder/actions';
 import DashboardHeader from '../Header/DashboardHeader';
-import CardGrid from './CardGrid';
-import CardList from './CardList';
-import GridRow from './GridRow';
+import TemplateContainer from './TemplateContainer';
 import Button from '../Button';
 import Footer from './Footer';
 import './style.scss';
 
 // import PropTypes from 'prop-types';
 
-function CreateNewProject({ user, userData, dispatch }) {
+function CreateNewProject({ user, userData, selectTemplateOny, dispatch }) {
   const [filters, setFilters] = useState({
     pricing: 'All',
     category: 'Show All',
@@ -83,6 +81,12 @@ function CreateNewProject({ user, userData, dispatch }) {
         });
       });
   }, []);
+
+  const switchTemplate = params => {
+    console.log('called handleSwitchTemplate', params);
+    // TODO dispatch switchTemplate
+    dispatch(handleSwitchTemplate(params));
+  };
 
   const handleCreateProject = () => {
     setLoadingCreateStatus(true);
@@ -241,170 +245,141 @@ function CreateNewProject({ user, userData, dispatch }) {
   };
 
   return (
-    <div className="bg-white flex flex-col h-screen justify-between text-black">
-      <div>
-        <DashboardHeader user={user} userData={userData} dispatch={dispatch} />
-      </div>
-      <div className="flex mb-auto">
-        <div className="container mx-auto md:px-8">
-          <div className="flex px-10 justify-between">
-            <div className="w-full pl-6 text-4xl text-gray-800">
-              Create New Project
-            </div>
+    <div>
+      {selectTemplateOny === true ? (
+        <TemplateContainer
+          currentPricing={currentPricing}
+          selectPricing={selectPricing}
+          updateFilter={updateFilter}
+          switchLayoutView={switchLayoutView}
+          layoutView={layoutView}
+          currentCategory={currentCategory}
+          selectCategory={selectCategory}
+          loadingStatus={loadingStatus}
+          templateList={templateList}
+          selectedTemplate={selectedTemplate}
+          setSelectedTemplate={setSelectedTemplate}
+          selectTemplateOny={selectTemplateOny}
+          switchTemplate={switchTemplate}
+          dispatch={dispatch}
+        />
+      ) : (
+        <div className="bg-white flex flex-col h-screen justify-between text-black">
+          <div>
+            <DashboardHeader
+              user={user}
+              userData={userData}
+              dispatch={dispatch}
+            />
           </div>
-          <div className="flex px-10 items-end justify-between">
-            <div className="my-4 md:mr-2 md:mb-0 w-1/2">
-              <label className="block mb-2 text-sm" htmlFor="projectName">
-                Project Name
-              </label>
-              <input
-                className="w-full px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-700 border focus:outline-none focus:shadow-outline"
-                id="projectName"
-                name="projectName"
-                type="text"
-                defaultValue="My Resume Project"
-                placeholder="Project Name"
-              />
-            </div>
-            {selectedTemplate ? (
-              <Button
-                type="primary"
-                onClick={() => {
-                  console.log('test button');
-                  handleCreateProject();
-                }}
-                className="text-white"
-              >
-                <span className="flex flex-row items-center whitespace-no-wrap ">
-                  <FaFolderPlus size={28} className="text-gray-800 pr-2" />
-                  Create Project
-                </span>
-              </Button>
-            ) : (
-              <Button
-                type="primary"
-                className="text-white opacity-70 cursor-not-allowed"
-              >
-                <span className="flex flex-row items-center whitespace-no-wrap ">
-                  <FaFolderPlus size={28} className="text-gray-800 pr-2" />
-                  Create Project
-                </span>
-              </Button>
-            )}
-          </div>
-          {loadingCreateStatus === true ? (
-            <div>
-              <DotsLoading loadingText="Please Wait..." />
-            </div>
-          ) : (
-            <> </>
-          )}
-          {!loadingCreateStatus && selectedTemplate ? (
-            <div className="flex pt-4 flex-col px-10">
-              <span className="text-sm">
-                Selected Template:
-                <span className="text-xl pl-2">{selectedTemplate.name}</span>
-              </span>
-            </div>
-          ) : (
-            <> </>
-          )}
-          <div className="relative w-full text-center">
-            {submitError && (
-              <p className="pt-2 text-red-600 font-normal text-sm">
-                {submitError.status}
-              </p>
-            )}
-          </div>
-          <div className="flex pt-6 flex-col px-10">
-            <div className="text-lg">Choosing a Starting Template</div>
-            <div className="mt-2 flex-items w-full shadow-md border-2 border-gray-300 ">
-              <div className="mx-1 flex justify-between">
-                <nav className="flex flex-col sm:flex-row">
-                  {['All', 'Free', 'Premium'].map(item => {
-                    const itemsClassName =
-                      currentPricing === item
-                        ? 'text-gray-600 px-2 py-1  block hover:text-blue-500 focus:outline-none text-blue-500 border-b border-blue-500'
-                        : 'text-gray-600 px-2 py-1  block hover:text-blue-500 focus:outline-none';
-
-                    return (
-                      <button
-                        type="button"
-                        onClick={ev => selectPricing(ev, item)}
-                        className={itemsClassName}
-                      >
-                        {item}
-                      </button>
-                    );
-                  })}
-                </nav>
-                <div className="mt-1">
-                  <GridRow
-                    updateFilter={updateFilter}
-                    switchLayoutView={switchLayoutView}
-                    layoutView={layoutView}
-                  />
+          <div className="flex mb-auto">
+            <div className="container mx-auto md:px-8">
+              <div className="flex px-10 justify-between">
+                <div className="w-full pl-6 text-4xl text-gray-800">
+                  Create New Project
                 </div>
               </div>
-              <div className="flex justify-center">
-                <nav className="flex flex-col sm:flex-row">
-                  {['Show All', 'Classic', 'Modern', 'professional'].map(
-                    item => {
-                      const itemsClassName =
-                        currentCategory === item
-                          ? 'text-gray-600 py-2 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500'
-                          : 'text-gray-600 py-2 px-6 block hover:text-blue-500 focus:outline-none';
-
-                      return (
-                        <button
-                          type="button"
-                          onClick={ev => selectCategory(ev, item)}
-                          className={itemsClassName}
-                        >
-                          {item}
-                        </button>
-                      );
-                    },
-                  )}
-                </nav>
-              </div>
-              <div className="mb-4 mx-2">
-                {loadingStatus === true ? (
-                  <div>
-                    <DotsLoading loadingText="Loading..." />
-                  </div>
+              <div className="flex px-10 items-end justify-between">
+                <div className="my-4 md:mr-2 md:mb-0 w-1/2">
+                  <label className="block mb-2 text-sm" htmlFor="projectName">
+                    Project Name
+                  </label>
+                  <input
+                    className="w-full px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-700 border focus:outline-none focus:shadow-outline"
+                    id="projectName"
+                    name="projectName"
+                    type="text"
+                    defaultValue="My Resume Project"
+                    placeholder="Project Name"
+                  />
+                </div>
+                {selectedTemplate ? (
+                  <Button
+                    type="primary"
+                    onClick={() => {
+                      console.log('test button');
+                      handleCreateProject();
+                    }}
+                    className="text-white"
+                  >
+                    <span className="flex flex-row items-center whitespace-no-wrap ">
+                      <FaFolderPlus size={28} className="text-gray-800 pr-2" />
+                      Create Project
+                    </span>
+                  </Button>
                 ) : (
-                  <div>
-                    {layoutView === 'Grid' ? (
-                      <CardGrid
-                        templateItems={templateList}
-                        selectedTemplate={selectedTemplate}
-                        setSelectedTemplate={setSelectedTemplate}
-                        dispatch={dispatch}
-                      />
-                    ) : (
-                      <CardList
-                        templateItems={templateList}
-                        selectedTemplate={selectedTemplate}
-                        setSelectedTemplate={setSelectedTemplate}
-                        dispatch={dispatch}
-                      />
-                    )}
-                  </div>
+                  <Button
+                    type="primary"
+                    className="text-white opacity-70 cursor-not-allowed"
+                  >
+                    <span className="flex flex-row items-center whitespace-no-wrap ">
+                      <FaFolderPlus size={28} className="text-gray-800 pr-2" />
+                      Create Project
+                    </span>
+                  </Button>
                 )}
+              </div>
+              {loadingCreateStatus === true ? (
+                <div>
+                  <DotsLoading loadingText="Please Wait..." />
+                </div>
+              ) : (
+                <> </>
+              )}
+              {!loadingCreateStatus && selectedTemplate ? (
+                <div className="flex pt-4 flex-col px-10">
+                  <span className="text-sm">
+                    Selected Template:
+                    <span className="text-xl pl-2">
+                      {selectedTemplate.name}
+                    </span>
+                  </span>
+                </div>
+              ) : (
+                <> </>
+              )}
+              <div className="relative w-full text-center">
+                {submitError && (
+                  <p className="pt-2 text-red-600 font-normal text-sm">
+                    {submitError.status}
+                  </p>
+                )}
+              </div>
+              <div className="flex pt-6 flex-col px-10">
+                <div className="text-lg mb-2">Choosing a Starting Template</div>
+                <TemplateContainer
+                  currentPricing={currentPricing}
+                  selectPricing={selectPricing}
+                  updateFilter={updateFilter}
+                  switchLayoutView={switchLayoutView}
+                  layoutView={layoutView}
+                  currentCategory={currentCategory}
+                  selectCategory={selectCategory}
+                  loadingStatus={loadingStatus}
+                  templateList={templateList}
+                  selectedTemplate={selectedTemplate}
+                  setSelectedTemplate={setSelectedTemplate}
+                  selectTemplateOny={selectTemplateOny}
+                  switchTemplate={switchTemplate}
+                  dispatch={dispatch}
+                />
               </div>
             </div>
           </div>
+          <div className="mx-4 mt-8">
+            <Footer />
+          </div>
         </div>
-      </div>
-      <div className="mx-4 mt-8">
-        <Footer />
-      </div>
+      )}
     </div>
   );
 }
 
 CreateNewProject.propTypes = {};
+
+CreateNewProject.defaultProps = {
+  selectTemplateOny: true,
+};
 
 const mapStateToProps = createStructuredSelector({
   user: makeSelectGetUserIsAuthenticated(),

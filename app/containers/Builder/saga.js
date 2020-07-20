@@ -7,9 +7,9 @@ import {
   UPDATE_RESUME_KEY_VALUE_DB,
   HANDLE_PROJECT_CLICK,
 } from './constants';
+import { TOGGLE_MODAL, UPDATE_IN_USERDATA } from '../App/constants';
 import history from '../App/history';
 import * as dataStructure from '../../components/MyContentForms/dataLoadStructure';
-import { UPDATE_IN_USERDATA } from '../App/constants';
 
 // console.log('api call', apiClient);
 
@@ -17,6 +17,7 @@ export default function* builderSaga() {
   yield all([
     takeLatest(UPDATE_CANVAS, updateCanvas),
     takeLatest(`${UPDATE_CANVAS}_ON_FIRST_LOAD`, updateCanvasOnFirstLoad),
+    takeLatest(`${UPDATE_CANVAS}_SWITCH_TEMPLATE`, handleSwitchTemplate),
     takeLatest(UPDATE_RESUME_EVENT_HANDLER, updateResumeEventHandler),
     takeLatest(UPDATE_RESUME_KEY_VALUE_DB, updateResumeKeyValue),
     takeLatest(HANDLE_PROJECT_CLICK, handleMyProjectClick),
@@ -53,6 +54,62 @@ function* updateResumeKeyValue(params) {
   }
 }
 
+function* handleSwitchTemplate(params) {
+  console.log('called handleswitchTemplate saga', params);
+  try {
+    const projectId = yield select(state => state.builder.projectId);
+    // TODO : Intead of insert, delete selete session in local and update projectMeta data in DB
+    const response = yield call(
+      apiClient.post,
+      'builder/handleSwitchTemplate',
+      {
+        projectId,
+        TemplateId: params.data.id,
+        TemplateURL: params.data.url,
+      },
+    );
+
+    if (response.status === 200) {
+      // params.addToast('Save successfully!', { appearance: 'info' });
+      yield put({
+        type: `${UPDATE_SESSION_ARRAY}_DELETE`,
+        projectId,
+      });
+      console.log('succesfully submit your request.', response);
+      yield put({
+        type: TOGGLE_MODAL,
+      });
+      history.push(`/builder/${projectId}`);
+    } else {
+      params.addToast('Issue while saving! Please try later.', {
+        appearance: 'error',
+      });
+      console.log('Something went wrong while submitting: ', response);
+    }
+    // yield put({
+    //   type: `${UPDATE_SESSION_ARRAY}_INSERT`,
+    //   projectId,
+    //   projectSession: {
+    //     templateCSS: `{}`,
+    //     templateHTML: '<h1>hello world</h1>',
+    //     templateJS: {},
+    //     CSSLink: `https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style_002.css`,
+    //     // templateCSS: params.templateCSS,
+    //     // templateHTML: params.templateHTML,
+    //     // templateJS: {},
+    //     // CSSLink: params.CSSLink,
+    //     autoLoadFlag: true,
+    //   },
+    // });
+    // history.push(`/builder/${projectId}`);
+    // yield put({
+    //   type: TOGGLE_MODAL,
+    // });
+  } catch (error) {
+    console.log('error handleswitchTemplate:', error);
+  }
+}
+
 function* handleMyProjectClick(params) {
   console.log('called handleMyProjectClick');
   // TODO: save builder session and open projectpage using history
@@ -64,7 +121,7 @@ function* handleMyProjectClick(params) {
       projectSession: {
         templateCSS: editorState.getCss(),
         templateHTML: editorState.getHtml(),
-        templateJS: {},
+        templateJS: '{}',
         autoLoadFlag: false,
       },
     });

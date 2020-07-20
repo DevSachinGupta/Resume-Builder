@@ -16,6 +16,7 @@ import {
   UPDATE_RESUME_KEY_VALUE_DB,
   UPDATE_SESSION_ARRAY,
   HANDLE_PROJECT_CLICK,
+  UPDATE_PROJECT_ID,
 } from './constants';
 
 const persistedKeys = ['sessionArray'];
@@ -25,6 +26,7 @@ export const initialState = {
   isSidebarOpen: true,
   isSecondarySidebarOpen: false,
   editorState: null,
+  projectId: null,
   sessionArray: {},
   updateCanvasCount: 0,
   showThemeToggle: false,
@@ -46,14 +48,15 @@ const builderReducer = (state = initialState, action) => {
         },
       });
       console.log(
-        'insert sessionArray: ',action.projectId,
+        'insert sessionArray: ',
+        action.projectId,
         state.sessionArray[action.projectId],
       );
       break;
     case `${UPDATE_SESSION_ARRAY}_DELETE`:
       const sessionArrayUpdate = delete state.sessionArray[action.projectId];
-      console.log('delete sessionArrayUpdate: ', sessionArrayUpdate);
-      saveState('sessionArray', sessionArrayUpdate);
+      console.log('delete sessionArrayUpdate: ', state.sessionArray);
+      saveState('sessionArray', state.sessionArray);
       break;
     default:
       break;
@@ -72,6 +75,9 @@ const builderReducer = (state = initialState, action) => {
       case UPDATE_EDITOR_STATE:
         draft.editorState = action.editorState;
         break;
+      case UPDATE_PROJECT_ID:
+        draft.projectId = action.projectId;
+        break;
       case `${UPDATE_SESSION_ARRAY}_INSERT`:
         draft.sessionArray = {
           ...state.sessionArray,
@@ -85,6 +91,8 @@ const builderReducer = (state = initialState, action) => {
         delete draft.sessionArray[action.projectId];
         break;
       case UPDATE_CANVAS:
+        break;
+      case `${UPDATE_CANVAS}_SWITCH_TEMPLATE`:
         break;
       case `${UPDATE_CANVAS}_COUNT`:
         if (draft.updateCanvasCount === canvasUpdateLimit) {
