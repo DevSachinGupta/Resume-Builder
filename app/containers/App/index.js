@@ -27,6 +27,7 @@ import history from './history';
 import GlobalStyle from '../../global-styles';
 
 import '../../main.css';
+import { Checkout } from '../Checkout';
 const AppWrapper = styled.div`
   margin: 0 auto;
   display: flex;
@@ -56,6 +57,14 @@ const App = ({ dispatch }) => (
           <Route
             path="/dashboard"
             render={routeProps => <Dashboard {...routeProps} method="#" />}
+          />
+          <Route
+            path="/checkoutStatus"
+            render={routeProps => <Checkout {...routeProps} method="checkoutStatus" />}
+          />
+          <Route
+            path="/checkout"
+            render={routeProps => <Checkout {...routeProps} method="#" />}
           />
           <Route path="/settings" component={Settings} />
           <Route path="/preview/:templateURL" component={Preview} />
