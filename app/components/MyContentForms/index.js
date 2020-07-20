@@ -54,7 +54,9 @@ export const getModalContent = modelId => {
       );
       break;
     case 'myThemes':
-      ModalComponent = React.lazy(() => import('../Dashboard/CreateNewProject'));
+      ModalComponent = React.lazy(() =>
+        import('../Dashboard/CreateNewProject'),
+      );
       break;
     case 'feedback':
       ModalComponent = React.lazy(() =>
