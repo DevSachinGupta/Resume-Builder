@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import axios from 'axios';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
@@ -16,15 +16,15 @@ function CheckoutPage() {
     console.log('inside handleCheckout');
     const postData = {
       appId: '754585f7b68e3d3e737777c75457',
-      orderId: 'order00001',
+      orderId: 'order00005',
       orderAmount: '100',
       orderCurrency: 'INR',
       orderNote: 'test',
       customerName: 'John ',
       customerEmail: 'gocv.co.in@gmail.com',
       customerPhone: '9999999999',
-      returnUrl: 'http://localhost:3000/checkoutStatus',
-      notifyUrl: 'http://localhost:2000/checkoutNotify',
+      returnUrl: 'https://front.gocv.co.in/checkoutStatus',
+      notifyUrl: 'https://back.gocv.co.in/billing/checkoutNotify',
     };
     axios
       .post(
@@ -37,16 +37,25 @@ function CheckoutPage() {
       .then(response => {
         if (response.status === 200) {
           // TODO : update userData in redux
-          setGenerateSignature(
-            JSON.parse(JSON.stringify(response.data.data.postData)),
-          );
+          setGenerateSignature(JSON.parse(response.data.data.postData));
           console.log(
             'succesfully submit your request.',
             response,
-            JSON.parse(JSON.stringify(response.data.data.postData)),
-            document.getElementById('redirectForm').innerText,
+            JSON.parse(response.data.data.postData),
+            document.getElementById('redirectForm').innerHTML,
           );
           document.getElementById('redirectForm').submit();
+          // setTimeout(function() {
+          //   document.getElementById('redirectForm').submit();
+          // }, 5000);
+
+          // axios.post('https://test.cashfree.com/billpay/checkout/post/submit',
+          //   { ...JSON.parse(response.data.data.postData) },
+          //   {
+          //     withCredentials: true,
+          //   },
+          // )
+          // .then(response => {console.log("response from payment", response)})
         } else {
           console.log('Something went wrong while submitting: ', response);
         }
@@ -55,6 +64,22 @@ function CheckoutPage() {
         console.log('updateProfile error: ', error, error.response);
       });
   };
+
+  const renderObj = (
+    <div>
+      {Object.keys(generateSignature).map(item => (
+        <input type="hidden" name={item} value={generateSignature[item]} />
+      ))}
+    </div>
+  );
+  console.log('renderObj: ', renderObj);
+
+  useEffect(() => {
+    console.log('generateSignature: ', generateSignature);
+    const html = document.getElementById('redirectForm').innerHTML;
+    console.log('html: ', html);
+    // document.getElementById('redirectForm').submit();
+  }, [generateSignature]);
 
   return (
     <div className="flex justify-center my-6">
@@ -300,7 +325,7 @@ function CheckoutPage() {
                     17,859.3€
                   </div>
                 </div>
-                <form
+                {/* <form
                   id="redirectForm"
                   method="post"
                   action="https://test.cashfree.com/billpay/checkout/post/submit"
@@ -312,6 +337,14 @@ function CheckoutPage() {
                       value={generateSignature[item]}
                     />;
                   })}
+                </form> */}
+
+                <form
+                  id="redirectForm"
+                  method="post"
+                  action="https://test.cashfree.com/billpay/checkout/post/submit"
+                >
+                  {renderObj}
                 </form>
 
                 <button
