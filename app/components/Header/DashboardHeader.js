@@ -55,7 +55,7 @@ function DashboardHeader(props) {
                   </Link>
                 </div>
                 <div>
-                  <Link to="settings" className="no-underline  pr-3">
+                  <Link to="/settings" className="no-underline  pr-3">
                     Settings
                   </Link>
                 </div>

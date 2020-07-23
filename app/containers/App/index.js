@@ -22,12 +22,13 @@ import Authenticate from 'containers/Authenticate/Loadable';
 import Builder from 'containers/Builder/Loadable';
 import MyContentContainer from 'containers/MyContent/Loadable';
 import { connect } from 'react-redux';
+import { Checkout } from '../Checkout';
 import { setModalContent } from '../MyContent/actions';
 import history from './history';
 import GlobalStyle from '../../global-styles';
 
 import '../../main.css';
-import { Checkout } from '../Checkout';
+
 const AppWrapper = styled.div`
   margin: 0 auto;
   display: flex;
@@ -60,7 +61,9 @@ const App = ({ dispatch }) => (
           />
           <Route
             path="/checkoutStatus"
-            render={routeProps => <Checkout {...routeProps} method="checkoutStatus" />}
+            render={routeProps => (
+              <Checkout {...routeProps} method="checkoutStatus" />
+            )}
           />
           <Route
             path="/checkout"
@@ -82,7 +85,7 @@ const App = ({ dispatch }) => (
               if (location.has('modal')) {
                 dispatch(setModalContent(location.get('modal')));
               }
-              console.log("params: ", window, location)
+              console.log('params: ', window, location);
               return <Builder />;
             }}
           />

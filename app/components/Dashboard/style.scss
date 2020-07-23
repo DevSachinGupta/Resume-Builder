@@ -79,6 +79,17 @@
   .selectedBorder{
     border-width: 2px;
   }
+  .content-div:hover .fd-cl { 
+    opacity: 0.25;
+  }
+  .content-div:hover .fd-sh{ 
+    opacity: 1;
+    /* right: 50%; */
+    top: 50%;
+    /* bottom: 50%; */
+    transform: translate(-50%, -50%);
+    left: 50%;
+  }
 }
 
 .projectListConatiner{

@@ -79,7 +79,9 @@ function* handleSwitchTemplate(params) {
       yield put({
         type: TOGGLE_MODAL,
       });
-      history.push(`/builder/${projectId}`);
+      history.go(0);
+      // window.location.reload();
+      // history.push(`/builder/${projectId}`);
     } else {
       params.addToast('Issue while saving! Please try later.', {
         appearance: 'error',

@@ -30,7 +30,7 @@ function CardGrid({
                 <div className="md:mx-2 mb-4 md:mb-0">
                   <div
                     className={cx(
-                      'bg-white, rounded-lg overflow-hidden shadow relative border-blue-500',
+                      'bg-white, rounded-lg overflow-hidden shadow relative group border-blue-500',
                       {
                         selectedBorder:
                           selectedTemplate &&
@@ -38,16 +38,75 @@ function CardGrid({
                       },
                     )}
                   >
-                    <div className="group ">
+                    <div className="relative content-div">
                       <img
-                        className="h-48 w-full object-cover object-center hover:opacity-0"
+                        className="h-48 w-full object-cover object-center group-hover:opacity-25 fd-cl"
                         src={item.imageUrl}
                         alt=""
                       />
+                      <div className="absolute mx-auto my-auto opacity-0 fd-sh">
+                        <div className="my-auto justtify-between">
+                          <BrowserRouter>
+                            <Link
+                              to={`/preview/${encodeURIComponent(
+                                item.templateURL,
+                              )}`}
+                              target="_blank"
+                              className="flex text-gray-700 border-black border  px-3 py-1 text-base hover:border-teal-400 hover:text-black"
+                            >
+                              Preview
+                            </Link>
+                          </BrowserRouter>
+                        </div>
+                        <div className="w-full my-auto items-center justtify-between">
+                          {selectTemplateOny === true ? (
+                            <button
+                              type="button"
+                              className="flex mt-2 text-gray-700 border-black border px-2 py-1 text-sm border-teal-400 hover:text-black"
+                              data-templateid={item.templateID}
+                              data-templatetitle={item.title}
+                              data-templateurl={item.imageUrl}
+                              onClick={e => {
+                                switchTemplate({
+                                  name: e.target.dataset.templatetitle,
+                                  id: e.target.dataset.templateid,
+                                  url: e.target.dataset.templateurl,
+                                });
+                                // setSelectedTemplate({
+                                //   name: e.target.dataset.templatetitle,
+                                //   id: e.target.dataset.templateid,
+                                //   url: e.target.dataset.templateurl,
+                                // });
+                              }}
+                            >
+                              Select
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              className="w-full mt-2 flex text-gray-700 border-black border px-3 py-1 text-base bg-teal-400 hover:text-black justify-center"
+                              data-templateid={item.templateID}
+                              data-templatetitle={item.title}
+                              data-templateurl={item.imageUrl}
+                              onClick={e => {
+                                setSelectedTemplate({
+                                  name: e.target.dataset.templatetitle,
+                                  id: e.target.dataset.templateid,
+                                  url: e.target.dataset.templateurl,
+                                });
+                              }}
+                            >
+                              Select
+                            </button>
+                          )}
+                        </div>
+
+                        
+                      </div>
                     </div>
                     {/* <div className="p-4 h-auto md:h-40 lg:h-48"> */}
                     <div className="p-4">
-                      <h1 className="text-gray-900 font-bold text-xl md:text-base lg:text-lg">
+                      <h1 className="text-gray-900 font-bold text-xl md:text-base lg:text-lg  group group-hover:text-white">
                         {item.title}
                       </h1>
                       <div className="flex mt-3">
@@ -69,6 +128,7 @@ function CardGrid({
                       {/* <p className="mt-2 text-gray-600 text-sm">
                         {item.description}
                       </p> */}
+
                       <div className="flex mt-3 justify-end">
                         <div className="my-auto justtify-between mr-2">
                           <BrowserRouter>
@@ -134,6 +194,7 @@ function CardGrid({
                             </button>
                           )}
                         </div>
+
                       </div>
                     </div>
                   </div>
