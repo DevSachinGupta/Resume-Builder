@@ -58,11 +58,11 @@ function CardGrid({
                             </Link>
                           </BrowserRouter>
                         </div>
-                        <div className="w-full my-auto items-center justtify-between">
+                        <div className="w-full my-auto justtify-between">
                           {selectTemplateOny === true ? (
                             <button
                               type="button"
-                              className="flex mt-2 text-gray-700 border-black border px-2 py-1 text-sm border-teal-400 hover:text-black"
+                              className="w-full mt-2 flex text-gray-700 border-black border px-3 py-1 text-base bg-teal-400 hover:text-black justify-center"
                               data-templateid={item.templateID}
                               data-templatetitle={item.title}
                               data-templateurl={item.imageUrl}

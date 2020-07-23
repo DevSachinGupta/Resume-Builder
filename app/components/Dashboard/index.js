@@ -48,7 +48,11 @@ function DashboardPage({ user, userData, dispatch }) {
       .then(response => {
         console.log('handleDeleteProject response: ', response);
         if (response.status === 200) {
-          console.log("dispatch from dash: ", dispatch, updateProjectsInUserData)
+          console.log(
+            'dispatch from dash: ',
+            dispatch,
+            updateProjectsInUserData,
+          );
           dispatch(updateProjectsInUserData(response.data.data.siteProjects));
           // dispatch(updateSessionArrayDelete(projectId));
           addToast('Deleted Successfully!', { appearance: 'info' });
@@ -175,33 +179,45 @@ function DashboardPage({ user, userData, dispatch }) {
                 {userData.siteProjects.map(item => (
                   <div className="my-4 px-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4">
                     <div className="bg-white shadow-lg">
-                      <img
-                        className="h-48 w-full object-cover object-center hover:opacity-0"
-                        // src="https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80"
-                        src={item.TemplateURL}
-                        alt=""
-                      />
+                      <div className="relative">
+                        <img
+                          className="h-48 w-full object-cover object-center hover:opacity-0"
+                          // src="https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80"
+                          src={item.TemplateURL}
+                          alt=""
+                        />
+                        {item.projectId === publishedId ? (
+                          <div
+                            title="Published"
+                            className="absolute mx-1 my-auto w-3 h-3 rounded-full border-1 bg-green-400 published"
+                            style={{ top: '6px', right: '6px' }}
+                          />
+                        ) : (
+                          <div />
+                        )}
+                      </div>
                       <div className="flex flex-col justigy-between">
                         <div className="pt-1 px-2 pt-2 flex flex-row flex-wrap justify-between">
-                          <h1 className=" text-xl front-bold md:text-base lg:text-lg">
+                          <h1
+                            title={item.projectName}
+                            className=" text-xl front-bold truncate md:text-base lg:text-lg"
+                          >
                             {item.projectName}
                           </h1>
-                          {item.projectId === publishedId ? (
-                            <div
-                              title="Published"
-                              className="mx-1 my-auto w-3 h-3 rounded-full border-1 bg-green-400 published"
-                            />
-                          ) : (
-                            <div
-                              title="Draft"
-                              className="mx-1 my-auto w-3 h-3 rounded-full border-1 bg-gray-400 draft"
-                            />
-                          )}
                         </div>
-                        <div className="px-2  h-8">
+                        <div className="px-2  h-8 truncate">
                           {item.projectId === publishedId ? (
                             <small className="pt-1">
-                              {userData.settings.publishDetails.subDomain}
+                              <span
+                                title={
+                                  userData.settings.publishDetails.subDomain
+                                }
+                              >
+                                Publish :{' '}
+                                <span>
+                                  {userData.settings.publishDetails.subDomain}
+                                </span>
+                              </span>
                             </small>
                           ) : (
                             <div />
