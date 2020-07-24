@@ -88,7 +88,7 @@ export const FormFirstStep = ({publishType}) => {
   return (
     <>
       <Row>
-        {currentPage === 0 ? (
+        {currentPage === 1 ? (
           <div>
             <Row>
               <div className="flex flex-col min-w-0 w-full mb-6 text-center">

@@ -40,7 +40,7 @@ function DashboardHeader(props) {
   console.log('userData 1', userData);
   console.log('user', user);
   return (
-    <div className="bg-white text-black shadow-lg mb-6">
+    <div className="bg-white text-black shadow-lg mb-6 w-full">
       <div className="container mx-auto px-8">
         <div className="flex items-center py-2 px-10">
           <div className="w-3/4 flex items-center">

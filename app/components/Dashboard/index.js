@@ -23,7 +23,7 @@ import {
 import apiClient from '../../utils/app/API';
 import DashboardHeader from '../Header/DashboardHeader';
 import Button from '../Button';
-import Footer from './Footer';
+import Footer from '../Footer';
 import './style.scss';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
