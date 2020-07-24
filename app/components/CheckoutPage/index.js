@@ -33,14 +33,14 @@ function CheckoutPage({ user, userData, dispatch }) {
     console.log('inside handleCheckout');
     const postData = {
       appId: '754585f7b68e3d3e737777c75457',
-      orderId: 'order00005',
+      orderId: 'order00015',
       orderAmount: '100',
       orderCurrency: 'INR',
       orderNote: 'test',
       customerName: 'John ',
       customerEmail: 'gocv.co.in@gmail.com',
       customerPhone: '9999999999',
-      returnUrl: 'https://front.gocv.co.in/checkoutStatus',
+      returnUrl: 'https://back.gocv.co.in/billing/paymentReturnUrl',
       notifyUrl: 'https://back.gocv.co.in/billing/checkoutNotify',
     };
     apiClient
@@ -59,20 +59,8 @@ function CheckoutPage({ user, userData, dispatch }) {
             'succesfully submit your request.',
             response,
             JSON.parse(response.data.data.postData),
-            // document.getElementById('redirectForm').innerHTML,
           );
           document.getElementById('redirectForm').submit();
-          // setTimeout(function() {
-          //   document.getElementById('redirectForm').submit();
-          // }, 5000);
-
-          // axios.post('https://test.cashfree.com/billpay/checkout/post/submit',
-          //   { ...JSON.parse(response.data.data.postData) },
-          //   {
-          //     withCredentials: true,
-          //   },
-          // )
-          // .then(response => {console.log("response from payment", response)})
         } else {
           console.log('Something went wrong while submitting: ', response);
         }
@@ -89,14 +77,6 @@ function CheckoutPage({ user, userData, dispatch }) {
       ))}
     </div>
   );
-  console.log('renderObj: ', renderObj);
-
-  useEffect(() => {
-    console.log('generateSignature: ', generateSignature);
-    // const html = document.getElementById('redirectForm').innerHTML;
-    // console.log('html: ', html);
-    // document.getElementById('redirectForm').submit();
-  }, [generateSignature]);
 
   return (
     <div className="bg-white flex flex-col h-screen justify-between text-black">
