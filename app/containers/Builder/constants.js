@@ -18,3 +18,5 @@ export const UPDATE_RESUME_KEY_VALUE_DB = 'app/Builder/UPDATE_RESUME_KEY_VALUE_D
 export const UPDATE_SESSION_ARRAY = 'app/Builder/UPDATE_SESSION_ARRAY';
 export const HANDLE_PROJECT_CLICK = 'app/Builder/HANDLE_PROJECT_CLICK';
 export const UPDATE_PROJECT_ID = 'app/Builder/UPDATE_PROJECT_ID';
+// export const UPDATE_PUBLISH_DETAILS = 'app/Builder/UPDATE_PUBLISH_DETAILS';
+export const UPDATE_PUBLISH = 'app/Builder/UPDATE_PUBLISH';

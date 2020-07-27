@@ -14,7 +14,9 @@ import {
   updateEditorState,
   updateResumeEventHanlder,
   updateCanvasOnFirstLoad,
+  handlePublishOnPaymentSuccess,
 } from 'containers/Builder/actions';
+import { setModalContent } from 'containers/MyContent/actions';
 import Themes from 'components/Themes';
 import PropTypes from 'prop-types';
 import grapesjs from 'grapesjs';
@@ -31,6 +33,7 @@ const DemoPagePre = {
 function BuilderEditor({
   builderSessionState,
   showTemplateSelection,
+  publishFlag,
   dispatch,
 }) {
   const { projectId } = builderSessionState;
@@ -108,6 +111,10 @@ function BuilderEditor({
     if (builderSessionState.autoLoadFlag === true) {
       dispatch(updateCanvasOnFirstLoad(projectId));
       console.log('called updateCanvasOnFirstLoad');
+    }
+
+    if (publishFlag) {
+      dispatch(setModalContent('publishStatus'));
     }
   }, [builderSessionState]);
   // console.log('showTemplateSelection', showTemplateSelection);

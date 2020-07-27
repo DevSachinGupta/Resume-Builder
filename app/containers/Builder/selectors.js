@@ -40,6 +40,16 @@ const makeSelectSessionArray = () =>
     selectBuilderDomain,
     substate => substate.sessionArray,
   );
+// const makeSelectPublishDetails = () =>
+//   createSelector(
+//     selectBuilderDomain,
+//     substate => substate.publishDetails,
+//   );
+const makeSelectProjectId = () =>
+  createSelector(
+    selectBuilderDomain,
+    substate => substate.projectId,
+  );
 const makeUpdateShowThemeToggle = () =>
   createSelector(
     selectBuilderDomain,
@@ -52,5 +62,7 @@ export {
   makeSelectIsSecondarySidebarOpen,
   makeUpdateEditorState,
   makeSelectSessionArray,
+  // makeSelectPublishDetails,
+  makeSelectProjectId,
   makeUpdateShowThemeToggle,
 };

@@ -54,6 +54,16 @@ const makeSelectPublishType = () =>
     selectGlobal,
     globalState => get(globalState, 'publishType', false),
   );
+const makeSelectRedirectionUrl = () =>
+  createSelector(
+    selectGlobal,
+    globalState => get(globalState, 'redirectionUrl', false),
+  );
+const makeSelectPublishDetails = () =>
+  createSelector(
+    selectGlobal,
+    globalState => get(globalState, 'publishDetails', false),
+  );
 const makeSelectGetUserIsAuthenticated = () =>
   createSelector(
     selectGlobal,
@@ -78,6 +88,8 @@ export {
   makeSelectLocation,
   makeSelectIsModalOpen,
   makeSelectPublishType,
+  makeSelectRedirectionUrl,
+  makeSelectPublishDetails,
   makeSelectIsUserMenuOpen,
   makeSelectGetUserIsAuthenticated,
   makeSelectResumeJsonStateFromUserData,

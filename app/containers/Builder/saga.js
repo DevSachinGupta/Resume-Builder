@@ -6,8 +6,10 @@ import {
   UPDATE_RESUME_EVENT_HANDLER,
   UPDATE_RESUME_KEY_VALUE_DB,
   HANDLE_PROJECT_CLICK,
+  UPDATE_PUBLISH,
 } from './constants';
 import { TOGGLE_MODAL, UPDATE_IN_USERDATA } from '../App/constants';
+import { SET_MODEL_CONTENT } from '../MyContent/constants';
 import history from '../App/history';
 import * as dataStructure from '../../components/MyContentForms/dataLoadStructure';
 
@@ -21,6 +23,7 @@ export default function* builderSaga() {
     takeLatest(UPDATE_RESUME_EVENT_HANDLER, updateResumeEventHandler),
     takeLatest(UPDATE_RESUME_KEY_VALUE_DB, updateResumeKeyValue),
     takeLatest(HANDLE_PROJECT_CLICK, handleMyProjectClick),
+    takeLatest(UPDATE_PUBLISH, handlePublishOnPaymentSuccess),
   ]);
 }
 
@@ -88,25 +91,6 @@ function* handleSwitchTemplate(params) {
       });
       console.log('Something went wrong while submitting: ', response);
     }
-    // yield put({
-    //   type: `${UPDATE_SESSION_ARRAY}_INSERT`,
-    //   projectId,
-    //   projectSession: {
-    //     templateCSS: `{}`,
-    //     templateHTML: '<h1>hello world</h1>',
-    //     templateJS: {},
-    //     CSSLink: `https://resumebuilder.s3.ap-south-1.amazonaws.com/css/style_002.css`,
-    //     // templateCSS: params.templateCSS,
-    //     // templateHTML: params.templateHTML,
-    //     // templateJS: {},
-    //     // CSSLink: params.CSSLink,
-    //     autoLoadFlag: true,
-    //   },
-    // });
-    // history.push(`/builder/${projectId}`);
-    // yield put({
-    //   type: TOGGLE_MODAL,
-    // });
   } catch (error) {
     console.log('error handleswitchTemplate:', error);
   }
@@ -130,6 +114,30 @@ function* handleMyProjectClick(params) {
     history.push('/dashboard');
   } catch (error) {
     console.log('error handleMyProjectClick:', error);
+  }
+}
+
+// discard 
+function* handlePublishOnPaymentSuccess(params) {
+  console.log('called handlePublishOnPaymentSuccess');
+  try {
+    // TODO : 1. show publishing Model
+    yield put({ type: SET_MODEL_CONTENT, contentType: 'publishStatus' });
+    yield put({ type: TOGGLE_MODAL });
+    // TODO : 2. check account limits | 2.1 if under limit continue to step 3 | 2.2 if overlimit ask for upgrade
+    // TODO : 3. called publishbuckect and show status with share Online option asnd resume_pdf(optional)
+  } catch (error) {
+    console.log('error handlePublishOnPaymentSuccess:', error);
+  }
+}
+
+function* handlePublishToDomain(params) {
+  console.log('called handlePublishToDomain');
+  try {
+    // TODO : 2. check account limits | 2.1 if under limit continue to step 3 | 2.2 if overlimit ask for upgrade
+    // TODO : 3. called publishbuckect and show status with share Online option asnd resume_pdf(optional)
+  } catch (error) {
+    console.log('error handlePublishToDomain:', error);
   }
 }
 

@@ -66,6 +66,9 @@ export const getModalContent = modelId => {
     case 'publish':
       ModalComponent = React.lazy(() => import('./SecondaryForms/PublishForm'));
       break;
+    case 'publishStatus':
+      ModalComponent = React.lazy(() => import('./SecondaryForms/PublishStatusForm'));
+      break;
     case 'pricing':
       ModalComponent = React.lazy(() => import('../Pricing'));
       break;

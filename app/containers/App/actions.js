@@ -24,6 +24,8 @@ import {
   TOGGLE_HEADER_USER_PILL,
   UPDATE_IN_USERDATA,
   AUTHENTICATE_USER,
+  UPDATE_REDIRECTION_URL,
+  UPDATE_PUBLISH_DETAILS,
 } from './constants';
 
 /**
@@ -89,6 +91,42 @@ export function updatePublishType(publishType) {
   return {
     type: UPDATE_PUBLISH_TYPE,
     publishType,
+  };
+}
+/**
+ * Dispatched when to update publish type
+ */
+export function updateRedirectionUrl(redirectionUrl) {
+  return {
+    type: UPDATE_REDIRECTION_URL,
+    redirectionUrl,
+  };
+}
+/**
+ * @description function to set publish details
+ */
+export function setPublishDetails(data) {
+  console.log("setPublishDetails action called: ", data)
+  return {
+    type: `${UPDATE_PUBLISH_DETAILS}_SET`,
+    data,
+  };
+}
+/**
+ * @description function to unset publish details
+ */
+export function unsetPublishDetails() {
+  return {
+    type: `${UPDATE_PUBLISH_DETAILS}_UNSET`,
+  };
+}
+/**
+ * @description function to update settings details
+ */
+export function updateSettings(settings) {
+  return {
+    type: `${UPDATE_IN_USERDATA}_SETTINGS`,
+    settings,
   };
 }
 /**

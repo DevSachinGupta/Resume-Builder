@@ -16,6 +16,8 @@ import {
   UPDATE_SESSION_ARRAY,
   HANDLE_PROJECT_CLICK,
   UPDATE_PROJECT_ID,
+  // UPDATE_PUBLISH_DETAILS,
+  UPDATE_PUBLISH,
 } from './constants';
 
 export function defaultAction() {
@@ -168,5 +170,31 @@ export function handleSwitchTemplate(data) {
   return {
     type: `${UPDATE_CANVAS}_SWITCH_TEMPLATE`,
     data,
+  };
+}
+// /**
+//  * @description function to set publish details
+//  */
+// export function setPublishDetails(data) {
+//   console.log("setPublishDetails action called: ", data)
+//   return {
+//     type: `${UPDATE_PUBLISH_DETAILS}_SET`,
+//     data,
+//   };
+// }
+// /**
+//  * @description function to unset publish details
+//  */
+// export function unsetPublishDetails() {
+//   return {
+//     type: `${UPDATE_PUBLISH_DETAILS}_UNSET`,
+//   };
+// }
+/**
+ * @description function to trigger publish
+ */
+export function handlePublishOnPaymentSuccess() {
+  return {
+    type: `${UPDATE_PUBLISH}`,
   };
 }

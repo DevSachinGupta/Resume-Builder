@@ -17,6 +17,8 @@ import {
   UPDATE_SESSION_ARRAY,
   HANDLE_PROJECT_CLICK,
   UPDATE_PROJECT_ID,
+  // UPDATE_PUBLISH_DETAILS,
+  UPDATE_PUBLISH,
 } from './constants';
 
 const persistedKeys = ['sessionArray'];
@@ -37,6 +39,7 @@ const canvasUpdateLimit = 2;
 
 /* eslint-disable default-case, no-param-reassign */
 const builderReducer = (state = initialState, action) => {
+  console.log("reducer builder called: ", action)
   // For localStorage
   switch (action.type) {
     case `${UPDATE_SESSION_ARRAY}_INSERT`:
@@ -58,6 +61,13 @@ const builderReducer = (state = initialState, action) => {
       console.log('delete sessionArrayUpdate: ', state.sessionArray);
       saveState('sessionArray', state.sessionArray);
       break;
+    // case `${UPDATE_PUBLISH_DETAILS}_SET`:
+    //   saveState('publishDetails', { ...action.data });
+    //   console.log('set publishDetails storage: ', ...action.data);
+    //   break;
+    // case `${UPDATE_PUBLISH_DETAILS}_UNSET`:
+    //   saveState('publishDetails', null);
+    //   break;
     default:
       break;
   }
@@ -90,6 +100,13 @@ const builderReducer = (state = initialState, action) => {
       case `${UPDATE_SESSION_ARRAY}_DELETE`:
         delete draft.sessionArray[action.projectId];
         break;
+      // case `${UPDATE_PUBLISH_DETAILS}_SET`:
+      //   draft.publishDetails = { ...action.data };
+      //   console.log('set publishDetails redux: ', ...action.data);
+      //   break;
+      // case `${UPDATE_PUBLISH_DETAILS}_UNSET`:
+      //   draft.publishDetails = null;
+      //   break;
       case UPDATE_CANVAS:
         break;
       case `${UPDATE_CANVAS}_SWITCH_TEMPLATE`:
@@ -106,6 +123,8 @@ const builderReducer = (state = initialState, action) => {
       case UPDATE_RESUME_KEY_VALUE_DB:
         break;
       case HANDLE_PROJECT_CLICK:
+        break;
+      case UPDATE_PUBLISH:
         break;
       case SHOW_THEMES_TOGGLE:
         draft.showThemeToggle = !state.showThemeToggle;

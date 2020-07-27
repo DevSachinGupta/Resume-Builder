@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { updateRedirectionUrl } from 'containers/App/actions';
 import apiClient from '../../../../../utils/app/API';
 import DotsLoading from '../../../../LoadingIndicator/dotsLoading';
 import { FormSecondStep } from './FormSecondStep';
 import { Row, Column } from '../../../../Layout';
 
-export const FormFirstStep = ({ publishType, projectId, dispatch }) => {
-  console.log('publishType :', publishType);
-
-  // testing dispatch redirectionURL
-  useEffect(() => {
-    dispatch(updateRedirectionUrl(`/builder/${projectId}`));
-  }, []);
-
+export const FormFirstStep = ({publishType}) => {
+  console.log("publishType :", publishType);
   const blankDomainNameFields = {
     domainName: '',
   };
@@ -26,9 +19,12 @@ export const FormFirstStep = ({ publishType, projectId, dispatch }) => {
   const checkDomainExitsInDB = values => {
     setLoadingStatus(true);
     apiClient
-      .post('bucket/checkDomainExitsInDB', {
-        bucketName: values.domainName,
-      })
+      .post(
+        'bucket/checkDomainExitsInDB',
+        {
+          bucketName: values.domainName,
+        },
+      )
       .then(response => {
         console.log('checkDomainExitsInDB response: ', response);
         if (response.status === 200) {
@@ -57,9 +53,12 @@ export const FormFirstStep = ({ publishType, projectId, dispatch }) => {
   const checkoutDomainName = values => {
     setLoadingStatus(true);
     apiClient
-      .post('bucket/checkoutDomainName', {
-        bucketName: values.domainName,
-      })
+      .post(
+        'bucket/checkoutDomainName',
+        {
+          bucketName: values.domainName,
+        },
+      )
       .then(response => {
         console.log('checkoutDomainName response: ', response);
         if (response.status === 200) {

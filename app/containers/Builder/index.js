@@ -19,6 +19,7 @@ import {
 import {
   makeSelectGetUserIsAuthenticated,
   makeSelectGetCurrentUserData,
+  makeSelectPublishDetails,
 } from 'containers/App/selectors';
 import apiClient from '../../utils/app/API';
 import makeSelectBuilder, { makeSelectSessionArray } from './selectors';
@@ -66,6 +67,15 @@ export function Builder(props) {
       setBuilderSessionState(props.builderSession[projectId]);
     }
     console.log('builderSessionState: ', builderSessionState);
+
+    if (
+      props.publishDetails.publishOnLoadFlag &&
+      props.publishDetails.publishOnLoadFlag === true
+    ) {
+      console.log('publishDetails: ', props.publishDetails);
+      props.publishFlag = true;
+    }
+
     const DemoPage = {
       html: builderSessionState.templateHTML,
       css: builderSessionState.templateCSS,
@@ -85,7 +95,10 @@ export function Builder(props) {
   return (
     <BuilderLayout projectId={projectId}>
       <div className="builder-workspace">
-        <BuilderEditor builderSessionState={builderSessionState} />
+        <BuilderEditor
+          builderSessionState={builderSessionState}
+          publishFlag={props.publishFlag}
+        />
       </div>
     </BuilderLayout>
   );
@@ -93,11 +106,16 @@ export function Builder(props) {
 
 Builder.propTypes = {};
 
+Builder.defaultProps = {
+  publishFlag: false,
+};
+
 const mapStateToProps = createStructuredSelector({
   builder: makeSelectBuilder(),
   user: makeSelectGetUserIsAuthenticated(),
   userData: makeSelectGetCurrentUserData(),
   builderSession: makeSelectSessionArray(),
+  publishDetails: makeSelectPublishDetails(),
 });
 
 function mapDispatchToProps(dispatch) {

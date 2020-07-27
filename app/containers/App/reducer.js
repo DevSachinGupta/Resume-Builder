@@ -18,9 +18,11 @@ import {
   TOGGLE_HEADER_USER_PILL,
   UPDATE_IN_USERDATA,
   AUTHENTICATE_USER,
+  UPDATE_REDIRECTION_URL,
+  UPDATE_PUBLISH_DETAILS,
 } from './constants';
 
-const persistedKeys = ['publishType', 'isAuthenticated', 'userData'];
+const persistedKeys = ['publishType', 'redirectionUrl', 'isAuthenticated', 'userData'];
 export const persistedState = loadState(persistedKeys);
 
 // The initial state of the App
@@ -35,6 +37,12 @@ export const initialState = {
     isUserPillOpen: false,
   },
   publishType: '',
+  redirectionUrl: '',
+  publishDetails: {
+    publishOnLoadFlag: false,
+    publishOnExistingDomain: false,
+  },
+  // publishDetails: {pusblishFlag: true},
   isAuthenticated: false,
   userData: {},
   ...persistedState,
@@ -46,6 +54,17 @@ const appReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_PUBLISH_TYPE:
       saveState('publishType', action.publishType);
+      break;
+    case UPDATE_REDIRECTION_URL:
+      saveState('redirectionUrl', action.redirectionUrl);
+      console.log('update redirectionUrl storage:', action.redirectionUrl);
+      break;
+    case `${UPDATE_PUBLISH_DETAILS}_SET`:
+      saveState('publishDetails', { ...state.publishDetails, ...action.data });
+      console.log('set publishDetails storage: ', {...action.data});
+      break;
+    case `${UPDATE_PUBLISH_DETAILS}_UNSET`:
+      saveState('publishDetails', null);
       break;
     case `${AUTHENTICATE_USER}_SET`:
       saveState('isAuthenticated', action.isAuthenticated);
@@ -59,6 +78,12 @@ const appReducer = (state = initialState, action) => {
       userDataUpdateProjects.siteProjects = action.siteProjects;
       console.log('update projects storage:', userDataUpdateProjects);
       saveState('userData', userDataUpdateProjects);
+      break;
+    case `${UPDATE_IN_USERDATA}_SETTINGS`:
+      const userDataUpdateSettings = state.userData;
+      userDataUpdateSettings.settings = action.settings;
+      console.log('update projects storage:', userDataUpdateSettings);
+      saveState('userData', userDataUpdateSettings);
       break;
     case `${UPDATE_IN_USERDATA}_RESUME_JSON`:
       const userDataUpdateResume = state.userData;
@@ -118,6 +143,15 @@ const appReducer = (state = initialState, action) => {
       case UPDATE_PUBLISH_TYPE:
         draft.publishType = action.publishType;
         break;
+      case UPDATE_REDIRECTION_URL:
+        draft.redirectionUrl = action.redirectionUrl;
+        break;
+      case `${UPDATE_PUBLISH_DETAILS}_SET`:
+        draft.publishDetails = { ...state.publishDetails, ...action.data };
+        break;
+      case `${UPDATE_PUBLISH_DETAILS}_UNSET`:
+        draft.publishDetails = null;
+        break;
       case TOGGLE_HEADER_USER_PILL:
         draft.headerState.isUserPillOpen = !state.headerState.isUserPillOpen;
         break;
@@ -136,6 +170,9 @@ const appReducer = (state = initialState, action) => {
         break;
       case `${UPDATE_IN_USERDATA}_PROJECTS`:
         draft.userData.siteProjects = action.siteProjects;
+        break;
+      case `${UPDATE_IN_USERDATA}_SETTINGS`:
+        draft.userData.settings = action.settings;
         break;
       case `${UPDATE_IN_USERDATA}_RESUME_JSON`:
         draft.userData.resumeDataStore = {
