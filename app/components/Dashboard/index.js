@@ -36,7 +36,7 @@ function DashboardPage({ user, userData, dispatch }) {
   if (userData.siteProjects.length !== 0) {
     projectCountStatus = false;
   }
-  const { publishedId } = userData.settings.publishDetails;
+  const publishedId = userData.settings.publishDetails.projectId;
 
   const handleDeleteProject = projectId => {
     console.log('project id:', projectId);

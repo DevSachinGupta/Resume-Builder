@@ -23,7 +23,7 @@ function PlansPage(props) {
           <label className="block text-sm  text-gray-700">Current Plan</label>
         </div>
         <div className="mb-4 md:flex ">
-          <div className="border border-gray-600">
+          <div className="w-full border border-gray-600">
             <table className="min-w-full bg-white">
               <thead className="bg-green-600 text-white">
                 <tr>
@@ -44,16 +44,24 @@ function PlansPage(props) {
               <tbody className="bg-white">
                 <tr>
                   <td className="w-1/5 text-left py-3 px-4">
-                    {props.userData.settings.activePlan && props.userData.settings.activePlan.planName || '-'}
+                    {(props.userData.settings.activePlan &&
+                      props.userData.settings.activePlan.planName) ||
+                      '-'}
                   </td>
                   <td className="w-1/5 text-left py-3 px-4">
-                    {props.userData.settings.activePlan && props.userData.settings.activePlan.activetedDate || '-'}
+                    {(props.userData.settings.activePlan &&
+                      props.userData.settings.activePlan.activetedDate) ||
+                      '-'}
                   </td>
                   <td className="w-1/5 text-left py-3 px-4">
-                    {props.userData.settings.activePlan && props.userData.settings.activePlan.expiryDate || '-'}
+                    {(props.userData.settings.activePlan &&
+                      props.userData.settings.activePlan.expiryDate) ||
+                      '-'}
                   </td>
                   <td className="w-2/5 text-sm text-left py-3 px-4">
-                    {props.userData.settings.activePlan && props.userData.settings.activePlan.planDescription || '-'}
+                    {(props.userData.settings.activePlan &&
+                      props.userData.settings.activePlan.planDescription) ||
+                      '-'}
                   </td>
                 </tr>
               </tbody>
@@ -65,7 +73,9 @@ function PlansPage(props) {
         <div className="mb-4 md:flex ">
           <div className="md:ml-2">
             {/* TODO : Code the plans */}
-            <Button type="primary" className="text-white" onClick={e => {}}>
+            <Button type="primary" className="text-white" onClick={e => {
+              // dispatch();
+            }}>
               Upgrade Your Plan
             </Button>
           </div>

@@ -108,7 +108,8 @@ function PricingCardContainer({ showStaterPlan, dispatch }) {
           setPaymentVerifyStatus(true);
           setLoadingStatus(false);
           dispatch(updateSettings(response.data.data.settings));
-          // dispatch(toggleModal());
+          dispatch(toggleModal());
+          dispatch(setModalContent('publishStatus'));
           // TODO : update plan details on local redux
           // dispatch(setPublishDetails({ pusblishFlag: true }));
           // dispatch(setPublishDetails({ pusblishFlag: true }));

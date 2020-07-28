@@ -129,11 +129,12 @@ function PublishForm({ publishType, projectId, userData, dispatch }) {
     return true;
   };
   const checkAcctExpiryStatus = acctExpirySettings => {
-    console.log('acctExpirySettings Settings: ', acctExpirySettings.expiryDate , "jsdbkj", new Date());
-    console.log('acctExpirySettings Settings1 : ' , new Date( acctExpirySettings.expiryDate));
+    console.log('acctExpirySettings Settings: ', acctExpirySettings);
+    // console.log('acctExpirySettings Settings: ', acctExpirySettings, new Date(acctExpirySettings.activePlan.expiryDate), new Date(acctExpirySettings.activePlan.expiryDate) > new Date());
     if (
-      acctExpirySettings.expiryDate &&
-      new Date(acctExpirySettings.expiryDate) > new Date()
+      acctExpirySettings.activePlan &&
+      acctExpirySettings.activePlan.expiryDate &&
+      new Date(acctExpirySettings.activePlan.expiryDate) > new Date()
     ) {
       return false;
     }
@@ -145,9 +146,7 @@ function PublishForm({ publishType, projectId, userData, dispatch }) {
     const underLimitStatus = checkPublishLimitStatus(
       userData.settings.accountLimits,
     );
-    const acctExpiryStatus = checkAcctExpiryStatus(
-      userData.settings.activePlan,
-    );
+    const acctExpiryStatus = checkAcctExpiryStatus(userData.settings);
     console.log("premium  underLimitStatus  acctExpiryStatus", premium, underLimitStatus, acctExpiryStatus )
     if (
       premium === true &&
@@ -176,9 +175,7 @@ function PublishForm({ publishType, projectId, userData, dispatch }) {
     const underLimitStatus = checkChangeDomainLimitStatus(
       userData.settings.accountLimits,
     );
-    const acctExpiryStatus = checkAcctExpiryStatus(
-      userData.settings.activePlan,
-    );
+    const acctExpiryStatus = checkAcctExpiryStatus(userData.settings);
     if (
       premium === true &&
       underLimitStatus === true &&

@@ -88,19 +88,33 @@ function PublishPage(props) {
             <div className="mb-2 pr-2 text-sm  text-gray-700">
               Prublished Project:
             </div>
-            {props.userData.settings.PublishDetails &&
-            props.userData.settings.PublishDetails.projectId ? (
-              <div className="px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-700 border focus:outline-none focus:shadow-outline">
-                  {props.userData.settings.PublishDetails.projectId}
+
+            {(() => {
+              // fetch the project name based on project id
+              if (props.userData.settings.publishDetails &&
+                props.userData.settings.publishDetails.projectId
+              ) {
+                const { projectId } = props.userData.settings.publishDetails;
+                let projectName = '-';
+                props.userData.siteProjects.forEach(item => {
+                  if (item.projectId === projectId)
+                    projectName = item.projectName;
+                });
+                return (
+                  <div className="px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-700 border focus:outline-none focus:shadow-outline">
+                    {projectName}
+                  </div>
+                );
+              }
+              return (
+                <div
+                  className="px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-500 border focus:outline-none focus:shadow-outline"
+                  style={{ 'min-width': '50%' }}
+                >
+                  Not Published
                 </div>
-              ) : (
-              <div
-                className="px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-500 border focus:outline-none focus:shadow-outline"
-                style={{ 'min-width': '50%' }}
-              >
-                Not Published
-              </div>
-            )}
+              );
+            })()}
           </div>
         </div>
         <div className="mb-4 md:flex flex-row ">
@@ -129,29 +143,29 @@ function PublishPage(props) {
             <div className="mb-2 pr-2 text-sm  text-gray-700 whitespace-no-wrap">
               Published Subdomain:
             </div>
-            {props.userData.settings.PublishDetails &&
-            props.userData.settings.PublishDetails.projectId ? (
-                <div className="flex flex-row justify-between">
-                  <div className=" w-full px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-700 border focus:outline-none focus:shadow-outline">
-                  {props.userData.settings.PublishDetails.projectId}
-                  {/* jitendra-prajapati.netcv.co.in */}
+            {props.userData.settings.publishDetails &&
+            props.userData.settings.publishDetails.subDomain ? (
+              <div className="flex flex-row justify-between">
+                <div className=" w-full px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-700 border focus:outline-none focus:shadow-outline">
+                    {props.userData.settings.publishDetails.subDomain}
+                    {/* jitendra-prajapati.netcv.co.in */}
+                  </div>
+                  <Button
+                  title="Edit"
+                  className="ml-2 text-gray-700 border-gray-200 px-1 py-1 text-sm"
+                  onClick={() => {
+                    props.dispatch(updatePublishType('CopyDomain'));
+                    props.dispatch(setModalContent('publish'));
+                  }}
+                >
+                  <FaRegEdit size={22} className="bg-white text-teal-500" />
+                  </Button>
                 </div>
-                <Button
-                    title="Edit"
-                    className="ml-2 text-gray-700 border-gray-200 px-1 py-1 text-sm"
-                    onClick={() => {
-                      props.dispatch(updatePublishType('CopyDomain'));
-                      props.dispatch(setModalContent('publish'));
-                    }}
-                  >
-                    <FaRegEdit size={22} className="bg-white text-teal-500" />
-                </Button>
-              </div>
-              ) : (
-              <div className="w-full px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-500 border focus:outline-none focus:shadow-outline">
+            ) : (
+                <div className="w-full px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-500 border focus:outline-none focus:shadow-outline">
                 -
-              </div>
-            )}
+                </div>
+              )}
           </div>
           <div className="w-full flex flex-row items-center mb-4 md:mr-2 md:mb-0">
             <a

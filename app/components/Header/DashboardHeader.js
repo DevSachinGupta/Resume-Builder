@@ -144,7 +144,7 @@ function DashboardHeader(props) {
                         >
                           <div className="flex flex-row text-center"><IoIosPower className="w-auto my-auto pr-2"/> Logout</div>
                         </li>
-                        <Link to="settings" className="no-underline">
+                        <Link to="/settings" className="no-underline">
                           <li>
                           <div className="flex flex-row text-center"><FaRegUser className="w-auto my-auto pr-2 font-light"/> Profile</div>
                           </li>
