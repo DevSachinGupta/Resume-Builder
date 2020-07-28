@@ -41,7 +41,7 @@ function PricingCardContainer({ showStaterPlan, dispatch }) {
       {
         planCode: '001',
         planName: 'Basic',
-        planPrice: 'INR 250',
+        planPrice: '250',
         planDuration: '1 Year',
         planFeaturesList: [
           '5 Projects',
@@ -57,7 +57,7 @@ function PricingCardContainer({ showStaterPlan, dispatch }) {
       {
         planCode: '002',
         planName: 'Premium',
-        planPrice: 'INR 300',
+        planPrice: '300',
         planDuration: '1 Year',
         planFeaturesList: [
           '5 Projects',
@@ -74,7 +74,7 @@ function PricingCardContainer({ showStaterPlan, dispatch }) {
       {
         planCode: '003',
         planName: 'Advanced',
-        planPrice: 'INR 400',
+        planPrice: '400',
         planDuration: '2 Year',
         planFeaturesList: [
           '5 Projects',
@@ -152,7 +152,11 @@ function PricingCardContainer({ showStaterPlan, dispatch }) {
                 {item.planName}
               </h3>
               <p className="text-xl font-bold text-center whitespace-no-wrap text-teal-500">
-                {item.planPrice}
+                {item.planCode === '000' ? (
+                  <span>{item.planPrice}</span>
+                ) : (
+                  <span>INR {item.planPrice}</span>
+                )}
               </p>
               <p className="text-xs text-center uppercase text-teal-500">
                 {item.planDuration}

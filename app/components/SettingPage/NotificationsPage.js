@@ -97,7 +97,7 @@ function NotificationsPage(props) {
             <div className="md:px-16 pt-5 w-full">
               <div className="mb-4 md:flex ">
                 <label className="block text-sm  text-gray-700">
-                  Upload your avatar image (size up to 256 x 256)
+                  Select your notifications options...
                 </label>
               </div>
             </div>

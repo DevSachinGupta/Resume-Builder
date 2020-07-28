@@ -25,7 +25,8 @@ export function Checkout(props) {
   console.log("props from checout container: ", props)
   switch (props.method) {
     case 'checkoutStatus':
-      renderObj = <CheckoutStatus />;
+      const { orderId } = props.match.params;
+      renderObj = <CheckoutStatus orderId={orderId} />;
       break;
     default:
       renderObj = <CheckoutPage />;

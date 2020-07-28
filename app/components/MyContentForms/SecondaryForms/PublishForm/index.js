@@ -128,17 +128,39 @@ function PublishForm({ publishType, projectId, userData, dispatch }) {
     }
     return true;
   };
+  const checkAcctExpiryStatus = acctExpirySettings => {
+    console.log('acctExpirySettings Settings: ', acctExpirySettings.expiryDate , "jsdbkj", new Date());
+    console.log('acctExpirySettings Settings1 : ' , new Date( acctExpirySettings.expiryDate));
+    if (
+      acctExpirySettings.expiryDate &&
+      new Date(acctExpirySettings.expiryDate) > new Date()
+    ) {
+      return false;
+    }
+    return true;
+  };
 
   const handleContinueWithExisting = () => {
     const premium = userData.settings.premiumAccount;
-    const limitStatus = checkPublishLimitStatus(
+    const underLimitStatus = checkPublishLimitStatus(
       userData.settings.accountLimits,
     );
-    if (premium === true && limitStatus === true) {
+    const acctExpiryStatus = checkAcctExpiryStatus(
+      userData.settings.activePlan,
+    );
+    console.log("premium  underLimitStatus  acctExpiryStatus", premium, underLimitStatus, acctExpiryStatus )
+    if (
+      premium === true &&
+      underLimitStatus === true &&
+      acctExpiryStatus === false
+    ) {
       // dispatch publishing function directly
       dispatch(toggleModal());
       dispatch(setModalContent('publishStatus'));
-    } else if (premium === true && limitStatus === false) {
+    } else if (
+      premium === true &&
+      (underLimitStatus === false || acctExpiryStatus === true)
+    ) {
       // setCurrentPage == 2 and promt to upgrade account as existing publish limit exceeds
       dispatch(updateRedirectionUrl(`/builder/${projectId}`)); // for payment redirection
       setCurrentPage(2);
@@ -151,13 +173,23 @@ function PublishForm({ publishType, projectId, userData, dispatch }) {
 
   const handleChangeExistingSubdomain = () => {
     const premium = userData.settings.premiumAccount;
-    const limitStatus = checkChangeDomainLimitStatus(
+    const underLimitStatus = checkChangeDomainLimitStatus(
       userData.settings.accountLimits,
     );
-    if (premium === true && limitStatus === true) {
+    const acctExpiryStatus = checkAcctExpiryStatus(
+      userData.settings.activePlan,
+    );
+    if (
+      premium === true &&
+      underLimitStatus === true &&
+      acctExpiryStatus === false
+    ) {
       // promt for changing sub domain
       setCurrentPage(0);
-    } else if (premium === true && limitStatus === false) {
+    } else if (
+      premium === true &&
+      (underLimitStatus === false || acctExpiryStatus === true)
+    ) {
       // setCurrentPage == 2 and promt to upgrade account as existing publish limit exceeds
       dispatch(updateRedirectionUrl(`/builder/${projectId}`)); // for payment redirection
       setCurrentPage(2);

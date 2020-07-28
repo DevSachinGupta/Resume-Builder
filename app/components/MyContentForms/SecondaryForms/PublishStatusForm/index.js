@@ -16,7 +16,7 @@ import {
   makeSelectPublishType,
   makeSelectPublishDetails,
 } from 'containers/App/selectors';
-import { updateSettings } from 'containers/App/actions';
+import { updateSettings, setPublishDetails } from 'containers/App/actions';
 import {
   makeSelectProjectId,
   makeUpdateEditorState,
@@ -61,6 +61,7 @@ function PublishStatusForm({
       .then(response => {
         console.log('handlePublishWebsite response: ', response);
         if (response.status === 200) {
+          // TODO: update session Data in builderSession
           setPublshingStatus(true);
           dispatch(updateSettings(response.data.data.settings));
           setSubmitError({
@@ -77,6 +78,7 @@ function PublishStatusForm({
           console.log('Something went wrong while submitting: ', response);
         }
         setLoadingStatus(false);
+        dispatch(setPublishDetails({ publishOnLoadFlag: false }));
       })
       .catch(error => {
         setLoadingStatus(false);

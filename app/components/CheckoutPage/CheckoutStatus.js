@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Link } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
-import { setPublishDetails } from 'containers/App/actions';
+import { updateSettings, setPublishDetails } from 'containers/App/actions';
 import { makeSelectRedirectionUrl } from 'containers/App/selectors';
 import apiClient from '../../utils/app/API';
 import history from '../../containers/App/history';
@@ -18,12 +18,10 @@ import DotsLoading from '../LoadingIndicator/dotsLoading';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-function CheckoutStatus({ redirectUrl, dispatch }) {
-  // console.log('page props: ', props);
-
+function CheckoutStatus({ orderId, redirectUrl, dispatch }) {
   let checkoutStatus = '';
   const { addToast } = useToasts();
-  const [paymentVerifyStatus, setPaymentVerifyStatus] = useState(true);
+  const [paymentVerifyStatus, setPaymentVerifyStatus] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(false);
   const [submitError, setSubmitError] = useState(null);
 
@@ -33,14 +31,16 @@ function CheckoutStatus({ redirectUrl, dispatch }) {
       .post('billing/handlePaymentCheck', { orderId })
       .then(response => {
         if (response.status === 200) {
-          // TODO : update userData in redux and dispatch to update publishDetails
           console.log('succesfully submit your request.', response);
-          setPaymentVerifyStatus(true);
+          dispatch(updateSettings(response.data.data.settings));
           setLoadingStatus(false);
-          setTimeout(() => {
-            dispatch(setPublishDetails({ pusblishFlag: true }));
-            history.push(redirectUrl);
-          }, 3000);
+          if (response.data.data.paymentStatus === true) {
+            setPaymentVerifyStatus(true);
+            setTimeout(() => {
+              dispatch(setPublishDetails({ publishOnLoadFlag: true }));
+              history.push(redirectUrl);
+            }, 3000);
+          }
         } else {
           console.log('Something went wrong while submitting: ', response);
           setSubmitError({
@@ -61,17 +61,17 @@ function CheckoutStatus({ redirectUrl, dispatch }) {
   useEffect(() => {
     checkoutStatus = window.sessionStorage.getItem('paymentStatus');
     console.log('payemnt Status session: ', checkoutStatus);
-    // setTimeout(() => history.push('/builder/97a9ce10-ca6f-11ea-8747-0b9c766c3d99'), 3000);
-    // dispatch(setPublishDetails({pusblishFlag: true}));
-    // setPublishDetails({pusblishFlag: true})
-    setTimeout(() => {
-      dispatch(setPublishDetails({ pusblishFlag: true }));
-      history.push(redirectUrl);
-    }, 3000);
+
+    console.log('page orderId: ', orderId);
+
+    // setTimeout(() => {
+    //   dispatch(setPublishDetails({ publishOnLoadFlag: true }));
+    //   history.push(redirectUrl);
+    // }, 3000);
     // setSubmitError({
     //   status: 'Something went wrong while submitting!',
     // });
-    // handlePaymentCheck();
+    handlePaymentCheck(orderId);
   }, []);
 
   return (
@@ -128,9 +128,9 @@ function CheckoutStatus({ redirectUrl, dispatch }) {
                       <div className="text-center mt-6">
                         <Link
                           to="/dashboard"
-                          className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+                          className="bg-gray-900 text-white active:bg-gray-700 text-sm  uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
                         >
-                          Dashboard
+                          Go To Dashboard
                         </Link>
                       </div>
                     </div>

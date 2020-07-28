@@ -60,7 +60,7 @@ const App = ({ dispatch }) => (
             render={routeProps => <Dashboard {...routeProps} method="#" />}
           />
           <Route
-            path="/checkoutStatus"
+            path="/checkoutStatus/:orderId"
             render={routeProps => (
               <Checkout {...routeProps} method="checkoutStatus" />
             )}

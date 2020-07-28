@@ -42,12 +42,22 @@ function CheckoutPage({
     setLoadingStatus(true);
     console.log('inside handleCheckout');
     const postData = {
-      orderAmount: '100',
-      orderCurrency: 'INR',
-      customerName: 'John ',
-      customerEmail: 'gocv.co.in@gmail.com',
+      planCode: planItem.planCode,
+      planName: planItem.planCode,
+      orderAmount: planItem.planCode,
+      customerName: `${userData.firstName} ${userData.lastName}`,
+      customerEmail: userData.registeredEmail,
       customerPhone: '9999999999',
     };
+    // const postData = {
+    //   planCode: '002',
+    //   planName: 'Basic',
+    //   orderAmount: '100',
+    //   orderCurrency: 'INR',
+    //   customerName: 'John ',
+    //   customerEmail: 'gocv.co.in@gmail.com',
+    //   customerPhone: '9999999999',
+    // };
     apiClient
       .post(
         '/billing/generateSignature',
