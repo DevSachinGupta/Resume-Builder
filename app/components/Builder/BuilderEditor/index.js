@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { useToasts } from 'react-toast-notifications';
-import { makeUpdateShowThemeToggle } from 'containers/Builder/selectors';
 import {
   updateEditorState,
   updateResumeEventHanlder,
@@ -24,8 +23,8 @@ import 'grapesjs/dist/css/grapes.min.css';
 import './style.scss';
 
 const DemoPagePre = {
-  html: '',
-  css: '{..}',
+  html: '<p class="center">Loading...</p>',
+  css: '.center {text-align: center; margin-top: 15px}',
   components: null,
   style: null,
 };
@@ -38,6 +37,7 @@ function BuilderEditor({
 }) {
   const { projectId } = builderSessionState;
   const { addToast } = useToasts();
+
   useEffect(() => {
     const editor = grapesjs.init({
       container: '#gjs',
@@ -120,11 +120,6 @@ function BuilderEditor({
   // console.log('showTemplateSelection', showTemplateSelection);
   return (
     <div>
-      {showTemplateSelection ? (
-        <div id="myTheme" className="mytheme-container hbjh">
-          <Themes />
-        </div>
-      ) : null}
       <div
         id="gjs"
         className="editor-container"
@@ -138,9 +133,7 @@ BuilderEditor.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-  showTemplateSelection: makeUpdateShowThemeToggle(),
-});
+const mapStateToProps = createStructuredSelector({});
 const mapDispatchToProps = null;
 const withConnect = connect(
   mapStateToProps,

@@ -50,7 +50,7 @@ const Constants = {
       title: 'Try others themes...',
     },
     customDomain: {
-      title: 'Connect with custom domain',
+      title: 'Connect with custom domain?',
     },
   },
 };

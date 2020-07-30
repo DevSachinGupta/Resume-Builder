@@ -40,6 +40,9 @@ function DatePicker(props) {
     // return dateFormated;
     return date;
   };
+  let dateValue = field.value;
+  if (dateValue && dateValue !== null) dateValue = new Date(field.value);
+  // console.log("field.value", field.value , new Date(field.value))
 
   return (
     <div className={cx('calenderWrapper')} hidden={props.hidden}>
@@ -55,7 +58,7 @@ function DatePicker(props) {
         )}
 
         <ReactDatePicker
-          selected={field.value}
+          selected={dateValue}
           onChange={date => {
             helpers.setValue(formatDateValue(date));
           }}

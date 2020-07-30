@@ -22,6 +22,7 @@ import Authenticate from 'containers/Authenticate/Loadable';
 import Builder from 'containers/Builder/Loadable';
 import MyContentContainer from 'containers/MyContent/Loadable';
 import { connect } from 'react-redux';
+import AuthRoute from './authRoute';
 import { Checkout } from '../Checkout';
 import { setModalContent } from '../MyContent/actions';
 import history from './history';
@@ -55,6 +56,11 @@ const App = ({ dispatch }) => (
               <Dashboard {...routeProps} method="new-project" />
             )}
           />
+          {/* <AuthRoute
+            path="/dashboard"
+            type="private"
+            render={routeProps => <Dashboard {...routeProps} method="#" />}
+          /> */}
           <Route
             path="/dashboard"
             render={routeProps => <Dashboard {...routeProps} method="#" />}
