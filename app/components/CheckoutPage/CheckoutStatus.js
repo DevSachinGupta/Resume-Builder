@@ -11,14 +11,17 @@ import { compose } from 'redux';
 import { Link } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { updateSettings, setPublishDetails } from 'containers/App/actions';
-import { makeSelectRedirectionUrl } from 'containers/App/selectors';
+import {
+  makeSelectRedirectionUrl,
+  makeSelectPublishDetails,
+} from 'containers/App/selectors';
 import apiClient from '../../utils/app/API';
 import history from '../../containers/App/history';
 import DotsLoading from '../LoadingIndicator/dotsLoading';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-function CheckoutStatus({ orderId, redirectUrl, dispatch }) {
+function CheckoutStatus({ orderId, redirectUrl, publishDetails, dispatch }) {
   let checkoutStatus = '';
   const { addToast } = useToasts();
   const [paymentVerifyStatus, setPaymentVerifyStatus] = useState(false);
@@ -37,7 +40,14 @@ function CheckoutStatus({ orderId, redirectUrl, dispatch }) {
           if (response.data.data.paymentStatus === true) {
             setPaymentVerifyStatus(true);
             setTimeout(() => {
-              dispatch(setPublishDetails({ publishOnLoadFlag: true }));
+              if (
+                publishDetails.paymentOnlyFlag &&
+                publishDetails.paymentOnlyFlag === true
+              ) {
+                dispatch(setPublishDetails({ publishOnLoadFlag: false }));
+              } else {
+                dispatch(setPublishDetails({ publishOnLoadFlag: true }));
+              }
               history.push(redirectUrl);
             }, 3000);
           }
@@ -152,6 +162,7 @@ CheckoutStatus.defaultProps = {
 
 const mapStateToProps = createStructuredSelector({
   redirectUrl: makeSelectRedirectionUrl(),
+  publishDetails: makeSelectPublishDetails(),
 });
 
 const mapDispatchToProps = null;

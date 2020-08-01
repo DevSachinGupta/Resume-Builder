@@ -5,9 +5,6 @@
  */
 
 // import PropTypes from 'prop-types';
-import './style.scss';
-
-// Helper styles for demo
 import React, { memo, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -21,11 +18,11 @@ import {
   makeSelectProjectId,
   makeUpdateEditorState,
 } from 'containers/Builder/selectors';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
+import { updateSessionArrayInsert } from 'containers/Builder/actions';
 import apiClient from '../../../../utils/app/API';
 import DotsLoading from '../../../LoadingIndicator/dotsLoading';
 import { Row, Column } from '../../../Layout';
+import './style.scss';
 
 function PublishStatusForm({
   publishType,
@@ -42,7 +39,11 @@ function PublishStatusForm({
   if (publishDetails.publishOnExistingDomain)
     publishOnExistingDomain = publishDetails.publishOnExistingDomain;
 
-  console.log("publishOnExistingDomain: ", publishOnExistingDomain, publishDetails.publishOnExistingDomain);
+  console.log(
+    'publishOnExistingDomain: ',
+    publishOnExistingDomain,
+    publishDetails.publishOnExistingDomain,
+  );
   const [currentPage, setCurrentPage] = useState(0);
   const [publshingStatus, setPublshingStatus] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(false);
@@ -62,6 +63,14 @@ function PublishStatusForm({
         console.log('handlePublishWebsite response: ', response);
         if (response.status === 200) {
           // TODO: update session Data in builderSession
+          dispatch(
+            updateSessionArrayInsert(projectId, {
+              templateCSS: editorState.getCss(),
+              templateHTML: editorState.getHtml(),
+              templateJS: '{}',
+              autoLoadFlag: false,
+            }),
+          );
           setPublshingStatus(true);
           dispatch(updateSettings(response.data.data.settings));
           setSubmitError({

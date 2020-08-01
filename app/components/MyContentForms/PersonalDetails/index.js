@@ -47,11 +47,12 @@ function PersonalDetails({ allCountries, resumeDataStore, dispatch }) {
   };
 
   let storePersonal = null;
+
   if (resumeDataStore.personal) {
     storePersonal = resumeDataStore.personal.history;
   }
   const [personal, setPersonal] = useState(
-    storePersonal || { ...blankPersonalFields },
+    { ...blankPersonalFields, ...storePersonal } || { ...blankPersonalFields },
   );
 
   const getCountires = useCallback(() => {

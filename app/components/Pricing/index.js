@@ -19,7 +19,7 @@ import {
 import { makeSelectRedirectionUrl } from 'containers/App/selectors';
 import apiClient from '../../utils/app/API';
 import history from '../../containers/App/history';
-import './style.scss';
+// import './style.scss';
 
 function PricingCardContainer({ showStaterPlan, dispatch }) {
   const pricingDataAll = {

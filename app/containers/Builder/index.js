@@ -21,6 +21,7 @@ import {
   makeSelectGetCurrentUserData,
   makeSelectPublishDetails,
 } from 'containers/App/selectors';
+import { setPublishDetails } from 'containers/App/actions';
 import apiClient from '../../utils/app/API';
 import makeSelectBuilder, { makeSelectSessionArray } from './selectors';
 import reducer from './reducer';
@@ -75,7 +76,9 @@ export function Builder(props) {
       console.log('publishDetails: ', props.publishDetails);
       props.publishFlag = true;
     }
-
+    props.dispatch(
+      setPublishDetails({ paymentOnlyFlag: false, copySubDomainFlag: false }),
+    );
     const DemoPage = {
       html: builderSessionState.templateHTML,
       css: builderSessionState.templateCSS,

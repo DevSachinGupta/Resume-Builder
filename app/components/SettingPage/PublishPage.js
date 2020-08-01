@@ -13,6 +13,7 @@ import { isEqual } from 'lodash';
 import {
   updatePublishType,
   updatePublishSEOInUserData,
+  setPublishDetails,
 } from 'containers/App/actions';
 import { setModalContent } from 'containers/MyContent/actions';
 import * as Yup from 'yup';
@@ -154,7 +155,8 @@ function PublishPage(props) {
                   title="Edit"
                   className="ml-2 text-gray-700 border-gray-200 px-1 py-1 text-sm"
                   onClick={() => {
-                    props.dispatch(updatePublishType('CopyDomain'));
+                    // props.dispatch(updatePublishType('CopyDomain'));
+                    props.dispatch(setPublishDetails({ copySubDomainFlag: true, paymentOnlyFlag: false }));
                     props.dispatch(setModalContent('publish'));
                   }}
                 >

@@ -116,6 +116,8 @@ function BuilderEditor({
     if (publishFlag) {
       dispatch(setModalContent('publishStatus'));
     }
+
+    window.editor = editor;
   }, [builderSessionState]);
   // console.log('showTemplateSelection', showTemplateSelection);
   return (

@@ -7,3 +7,12 @@ export function formatDateValue(date) {
   const dateFormated = `${splitDate[2]} ${splitDate[1]} ${splitDate[3]}`;
   return dateFormated;
 }
+
+export function formatDateDB(date) {
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  const dateFormated = `${day} ${month} ${year}`;
+  return dateFormated;
+}

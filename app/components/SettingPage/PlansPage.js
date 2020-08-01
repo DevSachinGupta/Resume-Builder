@@ -5,7 +5,14 @@
  */
 
 import React, { memo } from 'react';
+import {
+  updateRedirectionUrl,
+  setPublishDetails,
+} from 'containers/App/actions';
+import { setModalContent } from 'containers/MyContent/actions';
+import { formatDateDB } from 'utils/app/textFormating';
 import Button from '../Button';
+
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
@@ -50,12 +57,12 @@ function PlansPage(props) {
                   </td>
                   <td className="w-1/5 text-left py-3 px-4">
                     {(props.userData.settings.activePlan &&
-                      props.userData.settings.activePlan.activetedDate) ||
+                      formatDateDB(new Date(props.userData.settings.activePlan.activetedDate))) ||
                       '-'}
                   </td>
                   <td className="w-1/5 text-left py-3 px-4">
                     {(props.userData.settings.activePlan &&
-                      props.userData.settings.activePlan.expiryDate) ||
+                      formatDateDB(new Date(props.userData.settings.activePlan.expiryDate))) ||
                       '-'}
                   </td>
                   <td className="w-2/5 text-sm text-left py-3 px-4">
@@ -73,9 +80,15 @@ function PlansPage(props) {
         <div className="mb-4 md:flex ">
           <div className="md:ml-2">
             {/* TODO : Code the plans */}
-            <Button type="primary" className="text-white" onClick={e => {
-              // dispatch();
-            }}>
+            <Button
+              type="primary"
+              className="text-white"
+              onClick={e => {
+                props.dispatch(setModalContent('publish'))
+                props.dispatch(setPublishDetails({ paymentOnlyFlag: true, copySubDomainFlag: false }));
+                props.dispatch(updateRedirectionUrl(`/settings`)); // for payment redirection
+              }}
+            >
               Upgrade Your Plan
             </Button>
           </div>

@@ -13,11 +13,13 @@ import * as Yup from 'yup';
 import {
   updateRedirectionUrl,
   setPublishDetails,
+  updateSettings,
   toggleModal,
 } from 'containers/App/actions';
 import {
   makeSelectPublishType,
   makeSelectGetCurrentUserData,
+  makeSelectPublishDetails,
 } from 'containers/App/selectors';
 import { setModalContent } from 'containers/MyContent/actions';
 import { makeSelectProjectId } from 'containers/Builder/selectors';
@@ -26,25 +28,43 @@ import DotsLoading from '../../../LoadingIndicator/dotsLoading';
 import { Row } from '../../../Layout';
 import Button from '../../../Button';
 import PricingCardContainer from '../../../Pricing';
-import { FormSecondStep } from './MultiStepForms/FormSecondStep';
 // import PropTypes from 'prop-types';
-import './style.scss';
+// import './style.scss';
 
-function PublishForm({ publishType, projectId, userData, dispatch }) {
-  console.log('publishType :', publishType);
+function PublishForm({
+  publishType,
+  publishDetails,
+  projectId,
+  userData,
+  dispatch,
+}) {
+  const [currentPage, setCurrentPage] = useState(0);
+  const [checkoutStatus, setCheckoutStatus] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+
+  const { paymentOnlyFlag, copySubDomainFlag } = publishDetails;
   useEffect(() => {
-    // TODO: check wheather subdomain already published then set page 1 else set page 0
-    const { publishFlag } = userData.settings.publishDetails;
-    if (publishFlag === true) setCurrentPage(1);
+    // TODO: check it is a payment only or both(publish and payment)
+    if (
+      paymentOnlyFlag &&
+      paymentOnlyFlag === true &&
+      copySubDomainFlag === false
+    ) {
+      setCurrentPage(3);
+    } else if (copySubDomainFlag && copySubDomainFlag === true) {
+      // setCurrentPage(0);
+      handleChangeExistingSubdomain();
+    } else {
+      // TODO: check wheather subdomain already published then set page 1 else set page 0
+      const { publishFlag } = userData.settings.publishDetails;
+      if (publishFlag === true) setCurrentPage(1);
+    }
   }, []);
 
   const blankDomainNameFields = {
     domainName: '',
   };
-  const [currentPage, setCurrentPage] = useState(0);
-  const [checkoutStatus, setCheckoutStatus] = useState(false);
-  const [loadingStatus, setLoadingStatus] = useState(false);
-  const [submitError, setSubmitError] = useState(null);
 
   const checkDomainExitsInDB = values => {
     setLoadingStatus(true);
@@ -77,6 +97,45 @@ function PublishForm({ publishType, projectId, userData, dispatch }) {
       });
   };
 
+  const handleCopySubDomain = values => {
+    setLoadingStatus(true);
+    setSubmitError(null);
+    apiClient
+      .post('builder/tranferDomainName', {
+        destBucketName: values.domainName,
+      })
+      .then(response => {
+        console.log('handleCopySubDomain response: ', response);
+        if (response.status === 200) {
+          dispatch(updateSettings(response.data.data.settings));
+          setSubmitError({
+            statusSuccess: 'Successfully transfer your resume!',
+          });
+          console.log('succesfully transfer your resume.');
+        } else if (response.status === 204) {
+          setSubmitError({
+            statusFailer: 'Something went wrong while transfering!!',
+          });
+          console.log('Something went wrong while submitting: ', response);
+        } else {
+          setSubmitError({
+            statusFailer: 'Something went wrong while submitting!',
+          });
+          console.log('Something went wrong while submitting: ', response);
+        }
+        setLoadingStatus(false);
+      })
+      .catch(error => {
+        setLoadingStatus(false);
+        setSubmitError({
+          statusFailer: 'Something went wrong while submitting!',
+        });
+        console.log('handleCopySubDomain error: ', error, error.response);
+      });
+  };
+
+  console.log("loadingStatus", loadingStatus)
+
   const checkoutDomainName = values => {
     setLoadingStatus(true);
     apiClient
@@ -86,21 +145,29 @@ function PublishForm({ publishType, projectId, userData, dispatch }) {
       .then(response => {
         console.log('checkoutDomainName response: ', response);
         if (response.status === 200) {
-          dispatch(setPublishDetails({ publishOnExistingDomain: false }));
-          handleContinueWithExisting();
-          dispatch(updateRedirectionUrl(`/builder/${projectId}`));
+          if (copySubDomainFlag && copySubDomainFlag === true) {
+            setCurrentPage(4);
+            handleCopySubDomain(values);
+          } else {
+            dispatch(setPublishDetails({ publishOnExistingDomain: false }));
+            handleContinueWithExisting();
+            dispatch(updateRedirectionUrl(`/builder/${projectId}`));
+            setLoadingStatus(false);
+          }
           // setSubmitError({ statusSuccess: 'Domain does exists!' });
           console.log('succesfully submit your request.');
         } else if (response.status === 204) {
           setSubmitError({ statusFailer: 'Domain already taken!' });
           console.log('Something went wrong while submitting: ', response);
+          setLoadingStatus(false);
         } else {
           setSubmitError({
             statusFailer: 'Something went wrong while submitting!',
           });
           console.log('Something went wrong while submitting: ', response);
+          setLoadingStatus(false);
         }
-        setLoadingStatus(false);
+       
       })
       .catch(error => {
         setLoadingStatus(false);
@@ -147,7 +214,12 @@ function PublishForm({ publishType, projectId, userData, dispatch }) {
       userData.settings.accountLimits,
     );
     const acctExpiryStatus = checkAcctExpiryStatus(userData.settings);
-    console.log("premium  underLimitStatus  acctExpiryStatus", premium, underLimitStatus, acctExpiryStatus )
+    console.log(
+      'premium  underLimitStatus  acctExpiryStatus',
+      premium,
+      underLimitStatus,
+      acctExpiryStatus,
+    );
     if (
       premium === true &&
       underLimitStatus === true &&
@@ -219,7 +291,7 @@ function PublishForm({ publishType, projectId, userData, dispatch }) {
                     initialValues={{ ...blankDomainNameFields }}
                     validationSchema={Yup.object().shape({
                       domainName: Yup.string().required(
-                        'First Name is required',
+                        'profile link is required',
                       ),
                     })}
                     onSubmit={values => {
@@ -405,29 +477,73 @@ function PublishForm({ publishType, projectId, userData, dispatch }) {
                 <div>
                   <Row>
                     <div className="flex flex-col min-w-0 w-full mb-6 text-center">
-                      <div className="text-center leading-none text-2xl  mb-0 px-6 pb-3">
-                        Get Ready to Publish your Resume.
-                      </div>
+                      {paymentOnlyFlag && paymentOnlyFlag === true ? (
+                        <></>
+                      ) : (
+                        <div className="text-center leading-none text-2xl  mb-0 px-6 pb-3">
+                          Get Ready to Publish your Resume.
+                        </div>
+                      )}
                       <div className="text-base">
                         Choose a plan for your online Resume.
                       </div>
                     </div>
                   </Row>
-                  {(() => {
-                    let showStaterPlan = true;
-                    let expirenceStaterAlready = false;
-                    const premium = userData.settings.premiumAccount;
-                    userData.settings.orders.forEach(item => {
-                      if (item.planCode === '000')
-                        expirenceStaterAlready = true;
-                    });
-                    // check wheather acct is premium or in past taken stater plan
-                    if (premium || expirenceStaterAlready)
-                      showStaterPlan = false;
-                    return (
-                      <PricingCardContainer showStaterPlan={showStaterPlan} />
-                    );
-                  })()}
+                  {paymentOnlyFlag && paymentOnlyFlag === true ? (
+                    <PricingCardContainer showStaterPlan={false} />
+                  ) : (
+                    <>
+                      {(() => {
+                        let showStaterPlan = true;
+                        let expirenceStaterAlready = false;
+                        const premium = userData.settings.premiumAccount;
+                        userData.settings.orders.forEach(item => {
+                          if (item.planCode === '000')
+                            expirenceStaterAlready = true;
+                        });
+                        // check wheather acct is premium or in past taken stater plan
+                        if (premium || expirenceStaterAlready)
+                          showStaterPlan = false;
+                        return (
+                          <PricingCardContainer
+                            showStaterPlan={showStaterPlan}
+                          />
+                        );
+                      })()}
+                    </>
+                  )}
+                </div>
+              );
+            case 4:
+              return (
+                <div>
+                  <Row>
+                    <div className="flex flex-col min-w-0 w-full mb-6 text-center">
+                      <div className="text-center leading-none text-2xl  mb-0 px-6 pb-3">
+                        Transfering your Resume.
+                      </div>
+                      <div className="text-base">
+                        Please Wait While We tranfer your Resume.
+                      </div>
+                    </div>
+                  </Row>
+                  <div className="text-center">
+                    {submitError && submitError.statusFailer && (
+                      <p className="text-red-500">
+                        <small>{submitError.statusFailer}</small>
+                      </p>
+                    )}
+                    {submitError && submitError.statusSuccess && (
+                      <p className="text-green-500">
+                        <small>{submitError.statusSuccess}</small>
+                      </p>
+                    )}
+                  </div>
+                  {loadingStatus && (
+                    <div className="text-center mt-4">
+                      <DotsLoading loadingText="Please Wait..." />
+                    </div>
+                  )}
                 </div>
               );
             default:
@@ -444,6 +560,7 @@ PublishForm.propTypes = {};
 const mapStateToProps = () =>
   createStructuredSelector({
     publishType: makeSelectPublishType(),
+    publishDetails: makeSelectPublishDetails(),
     projectId: makeSelectProjectId(),
     userData: makeSelectGetCurrentUserData(),
   });

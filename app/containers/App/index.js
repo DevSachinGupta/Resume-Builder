@@ -56,15 +56,15 @@ const App = ({ dispatch }) => (
               <Dashboard {...routeProps} method="new-project" />
             )}
           />
-          {/* <AuthRoute
+          <AuthRoute
             path="/dashboard"
             type="private"
             render={routeProps => <Dashboard {...routeProps} method="#" />}
-          /> */}
-          <Route
+          />
+          {/* <Route
             path="/dashboard"
             render={routeProps => <Dashboard {...routeProps} method="#" />}
-          />
+          /> */}
           <Route
             path="/checkoutStatus/:orderId"
             render={routeProps => (

@@ -5,6 +5,7 @@
  */
 
 import React, { memo } from 'react';
+import { formatDateDB } from 'utils/app/textFormating';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
@@ -41,10 +42,10 @@ function PaymentsPage(props) {
                       {item.planName || '-'}
                     </td>
                     <td className="w-1/4 text-left py-3 px-4">
-                      {item.activetedDate || '-'}
+                      {formatDateDB(new Date(item.activetedDate)) || '-'}
                     </td>
                     <td className="w-1/4 text-left py-3 px-4">
-                      {item.expiryDate || '-'}
+                      {formatDateDB(new Date(item.expiryDate)) || '-'}
                     </td>
                     <td className="w-1/4 text-left py-3 px-4">
                       {item.invoiceId || '-'}
