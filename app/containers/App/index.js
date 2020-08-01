@@ -50,8 +50,9 @@ const App = ({ dispatch }) => (
         <Switch>
           <Route exact path="/" component={HomePage} />
           {/* <Route path="/dashboard" component={Dashboard} /> */}
-          <Route
+          <AuthRoute
             path="/dashboard/new-project"
+            type="private"
             render={routeProps => (
               <Dashboard {...routeProps} method="new-project" />
             )}
@@ -65,17 +66,19 @@ const App = ({ dispatch }) => (
             path="/dashboard"
             render={routeProps => <Dashboard {...routeProps} method="#" />}
           /> */}
-          <Route
+          <AuthRoute
             path="/checkoutStatus/:orderId"
+            type="private"
             render={routeProps => (
               <Checkout {...routeProps} method="checkoutStatus" />
             )}
           />
-          <Route
+          <AuthRoute
             path="/checkout"
+            type="private"
             render={routeProps => <Checkout {...routeProps} method="#" />}
           />
-          <Route path="/settings" component={Settings} />
+          <AuthRoute path="/settings" type="private" component={Settings} />
           <Route path="/preview/:templateURL" component={Preview} />
           <Route
             path="/login"
@@ -83,9 +86,14 @@ const App = ({ dispatch }) => (
               <Authenticate {...routeProps} method="login" />
             )}
           />
-          <Route path="/builder/:projectId" component={Builder} />
-          <Route
+          <AuthRoute
             path="/builder/:projectId"
+            type="private"
+            component={Builder}
+          />
+          <AuthRoute
+            path="/builder/:projectId"
+            type="private"
             component={() => {
               const location = new URLSearchParams(window.location.search);
               if (location.has('modal')) {
