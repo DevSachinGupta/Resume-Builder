@@ -102,7 +102,7 @@ function ForgotPasswordResetFormFormik({ tokenId, dispatch }) {
                     <div className="text-center ">
                       <small>
                         <Link
-                          to="signup"
+                          to="/signup"
                           className="text-blue-500"
                           style={{ 'padding-top': '0.5rem' }}
                         >

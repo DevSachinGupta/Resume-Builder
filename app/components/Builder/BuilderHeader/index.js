@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -43,6 +43,23 @@ function BuilderHeader({ dispatch, editorState, user, userData, projectId }) {
   }, []);
   const [isHeaderMenuOpen, toggleHeaderUserMenu] = useState(false);
   const { addToast } = useToasts();
+  const ref = useRef(null);
+  const handleGlobalClickForHeader = e => {
+    if (ref.current && !ref.current.contains(e.target)) {
+      toggleHeaderUserMenu(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener('mousedown', handleGlobalClickForHeader, true);
+    return function cleanup() {
+      document.removeEventListener(
+        'mousedown',
+        handleGlobalClickForHeader,
+        false,
+      );
+    };
+  }, []);
+
   console.log('BuilderHeader userData:', projectId, userData);
   let projectName = '';
   if (userData.siteProjects) {
@@ -175,7 +192,7 @@ function BuilderHeader({ dispatch, editorState, user, userData, projectId }) {
                 userData.firstName
               } ${userData.lastName}`}</span>
             </div> */}
-            <div className={cx('navAccountPill')}>
+            <div className={cx('navAccountPill')} ref={ref}>
               {userData.settings.profileImageUrl ? (
                 <img
                   className="rounded-full max-w-6xl max-w-none"
@@ -202,6 +219,14 @@ function BuilderHeader({ dispatch, editorState, user, userData, projectId }) {
                       } ${userData.lastName}`}</span>
                     </div>
                   </li>
+                  <Link to="/settings" target="_blank" className="no-underline">
+                    <li>
+                      <div className="flex flex-row text-center">
+                        <FaRegUser className="w-auto my-auto pr-2 font-light" />{' '}
+                        settings
+                      </div>
+                    </li>
+                  </Link>
                   <li
                     onClick={() => {
                       dispatch(getUserLogout(addToast));
@@ -212,14 +237,6 @@ function BuilderHeader({ dispatch, editorState, user, userData, projectId }) {
                       <IoIosPower className="w-auto my-auto pr-2" /> Logout
                     </div>
                   </li>
-                  <Link to="/settings" target="_blank" className="no-underline">
-                    <li>
-                      <div className="flex flex-row text-center">
-                        <FaRegUser className="w-auto my-auto pr-2 font-light" />{' '}
-                        settings
-                      </div>
-                    </li>
-                  </Link>
                 </ul>
               </div>
             </div>

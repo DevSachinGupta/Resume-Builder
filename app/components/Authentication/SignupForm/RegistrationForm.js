@@ -10,7 +10,7 @@ import Button from '../../Button';
 import Input from '../../FormComponents/Input';
 import { validationMap } from '../validation';
 
-function RegistrationFormFormik({ dispatch }) {
+function RegistrationFormFormik({ referralCode, dispatch }) {
   const blankSignupField = {
     username: '',
     password: '',
@@ -31,6 +31,7 @@ function RegistrationFormFormik({ dispatch }) {
         values.firstName,
         values.lastName,
         values.password,
+        referralCode,
         setSubmitError,
         setSignupStatus,
         setLoadingStatus,

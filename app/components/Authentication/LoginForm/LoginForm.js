@@ -98,7 +98,7 @@ function LoginFormFormik({ dispatch }) {
               </div>
               <div className="text-center">
                 <small>
-                  <Link to="login" className="pt-2 text-blue-500">
+                  <Link to="/forgotpwd" className="pt-2 text-blue-500">
                     Forget Password
                   </Link>
                 </small>

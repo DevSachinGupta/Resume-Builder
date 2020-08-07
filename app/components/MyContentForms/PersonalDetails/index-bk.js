@@ -25,11 +25,6 @@ import {
   componentMapPersonal,
   formatValuesPersonal,
 } from '../dataLoadStructure';
-import MultiStepForm from '../../MultiStepForm';
-import { FormFirstStep } from './FormFirstStep';
-import { FormSecondStep } from './FormSecondStep';
-import { FormThirdStep } from './FormThirdStep';
-
 import PersonalDetailsForms from './PersonalDetailsForms';
 import Button from '../../Button';
 import './style.scss';
@@ -87,37 +82,14 @@ function PersonalDetails({ allCountries, resumeDataStore, dispatch }) {
     handleSave(values);
     dispatch(setModalContent('education'));
   };
+  // const handlePrevious = () => {
+  //   dispatch(toggleModal());
+  //   dispatch(setModalContent('employmentDetails'));
+  // };
 
   return (
     <div>
-      <MultiStepForm
-        initialValues={personal}
-        onSubmit={(values, actions) => {
-          console.log('val and action', values, actions);
-          handleSave(values);
-        }}
-      >
-        <FormFirstStep />
-        <FormSecondStep countriesList={allCountries} />
-        <FormThirdStep />
-      </MultiStepForm>
-
-      {/* <Formik
-        // enableReinitialize
-        initialValues={personal}
-        onSubmit={(values, actions) => {
-          console.log('val and action', values, actions);
-          handleSave(values);
-        }}
-      >
-        {({ isValid, setTouched, submitForm, validateForm }) => (
-          <Form>
-            
-          </Form>
-        )}
-      </Formik> */}
-
-      {/* <Formik
+      <Formik
         initialValues={personal}
         onSubmit={(values, actions) => {
           console.log('val and action', values, actions);
@@ -125,6 +97,8 @@ function PersonalDetails({ allCountries, resumeDataStore, dispatch }) {
             handleSave(values);
           } else if (values.publish === 1) {
             handleSaveAndNext(values);
+            // } else if (values.publish === 2) {
+            //   handlePrevious(values);
           }
         }}
       >
@@ -136,6 +110,17 @@ function PersonalDetails({ allCountries, resumeDataStore, dispatch }) {
               <div className={cx('footerContainer')}>
                 <div className="mx-2 flex justify-between">
                   <div className="flex justify-left">
+                    {/* <div className="pr-2">
+                      <Button
+                        type="primary"
+                        onClick={() => {
+                          setFieldValue('publish', 2, false);
+                          handleSubmit();
+                        }}
+                      >
+                        Previous
+                      </Button>
+                    </div> */}
                     <div className="pr-2">
                       <Button
                         type="primary"
@@ -163,10 +148,15 @@ function PersonalDetails({ allCountries, resumeDataStore, dispatch }) {
                   </div>
                 </div>
               </div>
+              {/* <div className={cx('footerContainer')}>
+                <Button as="submit" fullWidth type="primary">
+                  Save Details
+                </Button>
+              </div> */}
             </React.Fragment>
           </Form>
         )}
-      </Formik> */}
+      </Formik>
     </div>
   );
 }

@@ -22,21 +22,20 @@ function DashboardHeader(props) {
   const { addToast } = useToasts();
   const ref = useRef(null);
   const handleGlobalClickForHeader = e => {
-    console.log('set header', e.target, ref.current);
     if (ref.current && !ref.current.contains(e.target)) {
-      toggleHeaderUserMenu(!isHeaderMenuOpen);
+      toggleHeaderUserMenu(false);
     }
   };
-  // useEffect(() => {
-  //   document.addEventListener('mousedown', handleGlobalClickForHeader, true);
-  //   return function cleanup() {
-  //     document.removeEventListener(
-  //       'mousedown',
-  //       handleGlobalClickForHeader,
-  //       false,
-  //     );
-  //   };
-  // }, []);
+  useEffect(() => {
+    document.addEventListener('mousedown', handleGlobalClickForHeader, true);
+    return function cleanup() {
+      document.removeEventListener(
+        'mousedown',
+        handleGlobalClickForHeader,
+        false,
+      );
+    };
+  }, []);
   console.log('userData 1', userData);
   console.log('user', user);
   return (
@@ -106,7 +105,7 @@ function DashboardHeader(props) {
                       userData.firstName
                     } ${userData.lastName}`}</span>
                   </div>
-                  <div className={cx('navAccountPill')}>
+                  <div className={cx('navAccountPill')} ref={ref}>
                     {props.userData.settings.profileImageUrl ? (
                       <img
                         className="rounded-full max-w-6xl max-w-none"
@@ -129,8 +128,14 @@ function DashboardHeader(props) {
                           hideMenu: !isHeaderMenuOpen,
                         },
                       )}
+                      
                     >
                       <ul className="text-left">
+                        <Link to="/settings" className="no-underline">
+                          <li>
+                          <div className="flex flex-row text-center"><FaRegUser className="w-auto my-auto pr-2 font-light"/> Profile</div>
+                          </li>
+                        </Link>
                         <li
                           onClick={() => {
                             console.log(
@@ -144,11 +149,6 @@ function DashboardHeader(props) {
                         >
                           <div className="flex flex-row text-center"><IoIosPower className="w-auto my-auto pr-2"/> Logout</div>
                         </li>
-                        <Link to="/settings" className="no-underline">
-                          <li>
-                          <div className="flex flex-row text-center"><FaRegUser className="w-auto my-auto pr-2 font-light"/> Profile</div>
-                          </li>
-                        </Link>
                       </ul>
                     </div>
                   </div>

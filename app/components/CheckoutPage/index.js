@@ -16,6 +16,7 @@ import {
   makeSelectGetUserIsAuthenticated,
   makeSelectGetCurrentUserData,
 } from 'containers/App/selectors';
+import { setModalContent } from 'containers/MyContent/actions';
 import apiClient from '../../utils/app/API';
 import DashboardHeader from '../Header/DashboardHeader';
 import DotsLoading from '../LoadingIndicator/dotsLoading';
@@ -38,6 +39,53 @@ function CheckoutPage({
   const [submitError, setSubmitError] = useState(null);
   const [generateSignature, setGenerateSignature] = useState({});
 
+  const handleApplyCoupon = () => {
+    setSubmitError(null);
+    const referralId = document.getElementById('referralInput').value;
+    if (referralId === null || referralId === '') {
+      setSubmitError({
+        statusCouponFailer: 'Not a valid coupon!',
+      });
+      return;
+    }
+    apiClient
+      .post('/referral/applyReferral', { referralId })
+      .then(response => {
+        console.log('response handleApplyCoupon: ', response);
+        if (response.status === 200) {
+          // TODO : update pricing details
+          if (publishDetails.planData)
+            publishDetails.planData.planPrice = String(
+              parseInt(publishDetails.planData.planPrice) -
+                parseInt(response.data.data.offAmount),
+            );
+          console.log(
+            'updated Amount: ',
+            publishDetails.planData.planPrice,
+            'offAmount: ',
+            response.data.data.offAmount,
+          );
+          setSubmitError({
+            statusCouponSuccess: 'Successfully apply Coupon Code!',
+          });
+        } else if (response.status === 204) {
+          setSubmitError({
+            statusCouponFailer: 'Not a valid coupon!',
+          });
+        } else {
+          setSubmitError({
+            statusCouponFailer: 'Something went wrong while submitting!',
+          });
+        }
+      })
+      .catch(error => {
+        console.log('handleApplyCoupon error: ', error, error.response);
+        setSubmitError({
+          status: 'Something went wrong while submitting!',
+        });
+      });
+  };
+
   const handleCheckout = planItem => {
     setLoadingStatus(true);
     console.log('inside handleCheckout');
@@ -59,13 +107,7 @@ function CheckoutPage({
     //   customerPhone: '9999999999',
     // };
     apiClient
-      .post(
-        '/billing/generateSignature',
-        { ...postData },
-        {
-          withCredentials: true,
-        },
-      )
+      .post('/billing/generateSignature', { ...postData })
       .then(response => {
         if (response.status === 200) {
           // TODO : update userData in redux
@@ -285,12 +327,14 @@ function CheckoutPage({
                               <input
                                 type="coupon"
                                 name="code"
-                                id="coupon"
+                                id="referralInput"
                                 placeholder="Apply coupon"
                                 className="w-full outline-none appearance-none focus:outline-none active:outline-none"
                               />
                               <button
-                                type="submit"
+                                // type="submit"
+                                type="button"
+                                onClick={() => handleApplyCoupon()}
                                 className="text-sm flex items-center px-3 py-1 text-white bg-gray-800 rounded-full outline-none md:px-4 hover:bg-gray-700 focus:outline-none active:outline-none"
                               >
                                 <svg
@@ -310,6 +354,23 @@ function CheckoutPage({
                                   Apply coupon
                                 </span>
                               </button>
+                              <div className="text-center">
+                                {submitError && submitError.statusCouponFailer && (
+                                  <p className="text-red-500">
+                                    <small>
+                                      {submitError.statusCouponFailer}
+                                    </small>
+                                  </p>
+                                )}
+                                {submitError &&
+                                  submitError.statusCouponSuccess && (
+                                  <p className="text-green-500">
+                                    <small>
+                                      {submitError.statusCouponSuccess}
+                                    </small>
+                                  </p>
+                                )}
+                              </div>
                             </div>
                           </form>
                         </div>
@@ -323,7 +384,12 @@ function CheckoutPage({
                             <span>
                               Refer & Register any two member and get INR 50 Off
                               Coupon.{' '}
-                              <span className="text-blue-500 cursor-pointer">
+                              <span
+                                className="text-blue-500 cursor-pointer"
+                                onClick={() =>
+                                  dispatch(setModalContent('referralLink'))
+                                }
+                              >
                                 Click here
                               </span>
                             </span>
@@ -352,6 +418,15 @@ function CheckoutPage({
       ) : (
         <>
           <p> pls select a valid plan </p>
+          <span>
+            Refer & Register any two member and get INR 50 Off Coupon.{' '}
+            <span
+              className="text-blue-500 cursor-pointer"
+              onClick={() => dispatch(setModalContent('referralLink'))}
+            >
+              Click here
+            </span>
+          </span>
         </>
       )}
     </>

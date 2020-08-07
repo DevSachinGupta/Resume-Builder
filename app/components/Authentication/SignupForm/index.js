@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaGoogle, FaFacebookF } from 'react-icons/fa';
 import RegistrationFormFormik from './RegistrationForm';
 import './style.css';
-function RegistrationForm() {
+function RegistrationForm({referralCode}) {
   return (
     <section className="bg-white ">
       <div className="container mx-auto px-4 h-full">
@@ -35,7 +35,7 @@ function RegistrationForm() {
                 <div className="text-gray-500 text-center mb-3 font-bold">
                   <small>Or Sign up with credentials</small>
                 </div>
-                <RegistrationFormFormik />
+                <RegistrationFormFormik referralCode={referralCode} />
               </div>
             </div>
 

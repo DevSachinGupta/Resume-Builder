@@ -99,6 +99,7 @@
     "react-helmet": "6.0.0-beta",
     "react-icons": "^3.8.0",
     "react-intl": "2.8.0",
+    "react-list": "^0.8.15",
     "react-redux": "7.0.2",
     "react-router": "^5.2.0",
     "react-router-dom": "5.0.0",

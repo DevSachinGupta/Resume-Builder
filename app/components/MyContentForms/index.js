@@ -77,6 +77,11 @@ export const getModalContent = modelId => {
         import('../SettingPage/CustomDomainInfo'),
       );
       break;
+    case 'referralLink':
+      ModalComponent = React.lazy(() =>
+        import('./SecondaryForms/ReferralForm'),
+      );
+      break;
     default:
       ModalComponent = React.lazy(() => import('./EducationForm'));
       break;

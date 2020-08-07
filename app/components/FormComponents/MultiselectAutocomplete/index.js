@@ -9,6 +9,7 @@ import cx from 'classnames';
 import { useField } from 'formik';
 import { FaTimes } from 'react-icons/fa';
 import { MdCancel } from 'react-icons/md';
+import ReactList from 'react-list';
 import PropTypes from 'prop-types';
 import './style.scss';
 
@@ -170,7 +171,40 @@ function MultiselectSkill(props) {
       optionList = (
         <div>
           <ul className="optionsListItems">
-            {filteredOptions.map((optionName, index) => {
+            <ReactList
+              itemRenderer={(index, key) => {
+                let className;
+                if (index === activeOption) {
+                  className = 'option-active';
+                }
+                return (
+                  <li className={className} key={key}>
+                    <div className="">
+                      <span className="ml-2">
+                        <input
+                          type="checkbox"
+                          id={`checkbox-${index}`}
+                          checked={userRangeVal[userData.indexOf(filteredOptions[index])]}
+                          // value="green" isChecked={currentValues.indexOf('green') > -1}
+                          onChange={e => {
+                            // e.preventDefault();
+                            updateRange(e, userData.indexOf(filteredOptions[index]));
+                          }}
+                          value={filteredOptions[index]}
+                        />
+                        <label htmlFor={`checkbox-${index}`}>
+                          {filteredOptions[index]}
+                        </label>
+                      </span>
+                    </div>
+                  </li>
+                );
+              }}
+              length={filteredOptions.length}
+              type="uniform"
+            />
+
+            {/* {filteredOptions.map((optionName, index) => {
               let className;
               if (index === activeOption) {
                 className = 'option-active';
@@ -195,7 +229,7 @@ function MultiselectSkill(props) {
                   </div>
                 </li>
               );
-            })}
+            })} */}
           </ul>
         </div>
       );

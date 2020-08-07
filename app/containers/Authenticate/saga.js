@@ -87,6 +87,7 @@ function* userSignup(params) {
       firstName: params.firstName,
       lastName: params.lastName,
       password: params.password,
+      referralId: params.referralCode,
     });
     if (response.status === 200) {
       params.setSignupStatus(true);

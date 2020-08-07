@@ -104,6 +104,12 @@ const App = ({ dispatch }) => (
             }}
           />
           <Route
+            path="/signup/:referralCode"
+            render={routeProps => (
+              <Authenticate {...routeProps} method="signup" />
+            )}
+          />
+          <Route
             path="/signup"
             render={routeProps => (
               <Authenticate {...routeProps} method="signup" />

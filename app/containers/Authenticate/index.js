@@ -31,7 +31,16 @@ export function Authenticate(props) {
       renderObj = <LoginFrom />;
       break;
     case 'signup':
-      renderObj = <RegistrationFrom />;
+      let referralCode = null;
+      if (
+        props.match &&
+        props.match.params &&
+        props.match.params.referralCode
+      ) {
+        referralCode = props.match.params.referralCode;
+        console.log('inside referral: ', referralCode);
+      }
+      renderObj = <RegistrationFrom referralCode={referralCode} />;
       break;
     case 'forgotpwd':
       renderObj = <ForgotPasswordForm />;
