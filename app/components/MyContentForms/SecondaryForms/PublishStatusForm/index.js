@@ -51,6 +51,7 @@ function PublishStatusForm({
 
   const handlePublishWebsite = () => {
     setLoadingStatus(true);
+    console.log("data html css", editorState.getCss(), editorState.getHtml(),)
     apiClient
       .post('builder/publishWebsite', {
         projectId,

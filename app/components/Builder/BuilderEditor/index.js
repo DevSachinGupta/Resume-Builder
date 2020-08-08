@@ -74,6 +74,7 @@ function BuilderEditor({
       if (changes) {
         if (changesArray.add) {
           if (changesArray.add === true) {
+            dispatch(updateEditorState(editor));
             const modelComponent = editor.getSelected();
             if (modelComponent) {
               const attrs = modelComponent.getAttributes();
