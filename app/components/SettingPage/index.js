@@ -84,7 +84,7 @@ function SettingPage({ user, userData, dispatch }) {
               />
             </div>
           </div>
-          <div className="px-10">
+          <div className="px-10 pb-3">
             <div className="px-4 mt-2">
               <SettingsContent currentPage={currentPage}>
                 <ProfilePage
@@ -122,9 +122,9 @@ function SettingPage({ user, userData, dispatch }) {
           </div>
         </div>
       </div>
-      <div className="mx-4 mt-8">
+      {/* <div className="mx-4 mt-8">
         <Footer />
-      </div>
+      </div> */}
     </div>
   );
 }

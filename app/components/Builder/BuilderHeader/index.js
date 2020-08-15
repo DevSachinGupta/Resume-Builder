@@ -71,7 +71,7 @@ function BuilderHeader({ dispatch, editorState, user, userData, projectId }) {
     const templateHTML = editor.getHtml();
     const templateCSS = editor.getCss();
     const templateJS = '';
-
+    console.log("data html: ", editor.getHtml(), editor.getCss())
     apiClient
       .post('builder/saveBuilderSession', {
         templateHTML,

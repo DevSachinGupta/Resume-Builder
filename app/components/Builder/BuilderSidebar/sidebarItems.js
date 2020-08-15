@@ -8,13 +8,13 @@ const primarySidebar = [
     id: 'myThemes',
   },
   {
-    title: 'My Projects',
+    title: 'My Dashboard',
     id: 'myProject',
   },
-  {
-    title: 'Share Online',
-    id: 'shareOnline',
-  },
+  // {
+  //   title: 'Share Online',
+  //   id: 'shareOnline',
+  // },
   {
     title: 'Contact us',
     id: 'contactUs',

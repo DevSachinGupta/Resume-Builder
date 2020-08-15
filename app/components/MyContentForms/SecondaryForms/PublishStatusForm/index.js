@@ -10,6 +10,18 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import {
+  FacebookShareButton,
+  WhatsappShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  EmailShareButton,
+  FacebookIcon,
+  WhatsappIcon,
+  LinkedinIcon,
+  TwitterIcon,
+  EmailIcon,
+} from 'react-share';
+import {
   makeSelectPublishType,
   makeSelectPublishDetails,
 } from 'containers/App/selectors';
@@ -35,6 +47,8 @@ function PublishStatusForm({
   const blankDomainNameFields = {
     domainName: '',
   };
+  const url = window.location.href;
+  const text = 'test';
   let publishOnExistingDomain = false;
   if (publishDetails.publishOnExistingDomain)
     publishOnExistingDomain = publishDetails.publishOnExistingDomain;
@@ -51,7 +65,7 @@ function PublishStatusForm({
 
   const handlePublishWebsite = () => {
     setLoadingStatus(true);
-    console.log("data html css", editorState.getCss(), editorState.getHtml(),)
+    console.log('data html css', editorState.getCss(), editorState.getHtml());
     apiClient
       .post('builder/publishWebsite', {
         projectId,
@@ -128,9 +142,44 @@ function PublishStatusForm({
                 </p>
               )}
               {submitError && submitError.statusSuccess && (
-                <p className="text-green-500">
-                  <small>{submitError.statusSuccess}</small>
-                </p>
+                <div>
+                  <p className="text-green-500">
+                    <small>{submitError.statusSuccess}</small>
+                  </p>
+                  <Row>
+                    <div className="flex w-full mt-4 mx-10 border-t-2 border-gray-400" />
+                  </Row>
+                  <div className="mt-4 px-12 flex justify-center">
+                    <div className="px-2">
+                      <FacebookShareButton url={url} quote={text}>
+                        <FacebookIcon size={32} round />
+                      </FacebookShareButton>
+                    </div>
+                    <div className="px-2">
+                      <WhatsappShareButton url={url} quote="sample text">
+                        <WhatsappIcon size={32} round />
+                      </WhatsappShareButton>
+                    </div>
+                    <div className="px-2">
+                      <LinkedinShareButton url={url} quote={text}>
+                        <LinkedinIcon size={32} round />
+                      </LinkedinShareButton>
+                    </div>
+                    <div className="px-2">
+                      <TwitterShareButton url={url} title={text}>
+                        <TwitterIcon size={32} round />
+                      </TwitterShareButton>
+                    </div>
+                    <div className="px-2">
+                      <EmailShareButton
+                        subject="Check out what I did on NetCV."
+                        body={`${text}: ${url}`}
+                      >
+                        <EmailIcon size={32} round />
+                      </EmailShareButton>
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
             {loadingStatus && (

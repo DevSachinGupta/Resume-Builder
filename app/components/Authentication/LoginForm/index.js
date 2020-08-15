@@ -21,7 +21,7 @@ function LoginForm() {
                   </h6>
                 </div>
                 <div className="btn-wrapper text-center social-login">
-                  {/* <a
+                  <a
                     href="http://localhost:2000/auth/google"
                     className="bg-white rounded-full p-1 mr-2"
                   >
@@ -35,11 +35,11 @@ function LoginForm() {
                   </a>
 
                   <a
-                    href="http://localhost:2000/auth/google"
+                    href="http://localhost:2000/auth/github"
                     className="bg-white rounded-full p-1"
                   >
                     <FaGithub />
-                  </a> */}
+                  </a>
                   <button
                     type="button"
                     className="bg-white rounded-full p-1 mr-2"

@@ -5,29 +5,47 @@
  */
 
 // import PropTypes from 'prop-types';
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import {
-  makeSelectPublishType,
-  makeSelectPublishDetails,
-} from 'containers/App/selectors';
-import { updateSettings, setPublishDetails } from 'containers/App/actions';
-import {
-  makeSelectProjectId,
-  makeUpdateEditorState,
-} from 'containers/Builder/selectors';
-import { updateSessionArrayInsert } from 'containers/Builder/actions';
+  FacebookShareButton,
+  WhatsappShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  EmailShareButton,
+  FacebookIcon,
+  WhatsappIcon,
+  LinkedinIcon,
+  TwitterIcon,
+  EmailIcon,
+} from 'react-share';
+import { toggleModal } from 'containers/App/actions';
 import apiClient from '../../../../utils/app/API';
 import DotsLoading from '../../../LoadingIndicator/dotsLoading';
 import { Row, Column } from '../../../Layout';
+import Button from '../../../Button';
 import './style.scss';
 
 function ReferralForm({ dispatch }) {
-  const [referralStatus, setReferralStatus] = useState(false);
+  const url = window.location.href;
+  const text = 'test';
+
+  const [referralLink, setreferralLink] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+  // const [submitError, setSubmitError] = useState(null);
+
+  const copyRef = useRef(null);
+
+  const copyToClipboard = e => {
+    copyRef.current.select();
+    document.execCommand('copy');
+    // This is just personal preference.
+    // I prefer to not show the whole text area selected.
+    e.target.focus();
+  };
 
   const generateReferralLink = () => {
     setLoadingStatus(true);
@@ -36,7 +54,7 @@ function ReferralForm({ dispatch }) {
       .then(response => {
         console.log('generateReferralLink response: ', response);
         if (response.status === 200) {
-          setReferralStatus(true);
+          setreferralLink(response.data.data.referralLink);
           // TODO: update in store
           // dispatch(updateSettings(response.data.data.settings));
           setSubmitError({
@@ -81,14 +99,80 @@ function ReferralForm({ dispatch }) {
       </Row>
       <div className="text-center">
         {submitError && submitError.statusFailer && (
-          <p className="text-red-500">
-            <small>{submitError.statusFailer}</small>
-          </p>
+          <div>
+            <p className="text-red-500">
+              <small>{submitError.statusFailer}</small>
+            </p>
+            <Button
+              type="primary"
+              className="py-1 px-2 mt-4 text-sm"
+              onClick={() => {
+                dispatch(toggleModal());
+              }}
+            >
+              Close
+            </Button>
+          </div>
         )}
         {submitError && submitError.statusSuccess && (
-          <p className="text-green-500">
-            <small>{submitError.statusSuccess}</small>
-          </p>
+          <div>
+            {/* <p className="text-green-500">
+              <small>{submitError.statusSuccess}</small>
+            </p>
+            <p className="text-green-500" >
+              <small>{referralLink}</small>
+            </p> */}
+            <div className="flex justify-center">
+              <input
+                className="text-green-500 text-sm"
+                readOnly
+                value={referralLink}
+                ref={copyRef}
+              />
+              {document.queryCommandSupported('copy') && (
+                <Button
+                  type="primary"
+                  className="py-1 px-2 ml-2 text-sm"
+                  onClick={copyToClipboard}
+                >
+                  Copy
+                </Button>
+              )}
+            </div>
+            <Row>
+              <div className="flex w-full mt-4 mx-10 border-t-2 border-gray-400" />
+            </Row>
+            <div className="mt-4 px-12 flex justify-center">
+              <div className="px-2">
+                <FacebookShareButton url={referralLink} quote={text}>
+                  <FacebookIcon size={32} round />
+                </FacebookShareButton>
+              </div>
+              <div className="px-2">
+                <WhatsappShareButton url={referralLink} quote={"sample text"}>
+                  <WhatsappIcon size={32} round />
+                </WhatsappShareButton>
+              </div>
+              <div className="px-2">
+                <LinkedinShareButton url={referralLink} quote={text}>
+                  <LinkedinIcon size={32} round />
+                </LinkedinShareButton>
+              </div>
+              <div className="px-2">
+                <TwitterShareButton url={referralLink} title={text}>
+                  <TwitterIcon size={32} round />
+                </TwitterShareButton>
+              </div>
+              <div className="px-2">
+                <EmailShareButton
+                  subject="Check out what I did on NetCV."
+                  body={`${text}: ${referralLink}`}
+                >
+                  <EmailIcon size={32} round />
+                </EmailShareButton>
+              </div>
+            </div>
+          </div>
         )}
       </div>
       {loadingStatus && (

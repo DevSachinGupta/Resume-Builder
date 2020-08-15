@@ -94,7 +94,7 @@ function DashboardPage({ user, userData, dispatch }) {
         console.log('handleCopyProject response: ', response);
         if (response.status === 200) {
           dispatch(updateProjectsInUserData(response.data.data.siteProjects));
-          addToast('Deleted Successfully!', { appearance: 'info' });
+          addToast('Copy Successfully!', { appearance: 'info' });
           setLoadingStatus(false);
           console.log('succesfully create new project.', response);
         } else {
@@ -116,9 +116,9 @@ function DashboardPage({ user, userData, dispatch }) {
         setSubmitError({
           status: 'Something went wrong while submitting!',
         });
-        addToast('Something went wrong!', { appearance: 'error' });
+        addToast('Something went wrong!!', { appearance: 'error' });
         setLoadingStatus(false);
-        console.log('accountVerify error: ', error.response);
+        console.log('accountVerify error: ', error, error.response);
       });
   };
 
@@ -272,9 +272,9 @@ function DashboardPage({ user, userData, dispatch }) {
           )}
         </div>
       </div>
-      <div className="mx-4 mt-8">
+      {/* <div className="mx-4 mt-8">
         <Footer />
-      </div>
+      </div> */}
     </div>
   );
 }
