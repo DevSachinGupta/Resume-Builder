@@ -129,7 +129,7 @@ function DashboardPage({ user, userData, dispatch }) {
   return (
     <div className="bg-white flex flex-col h-screen justify-between text-black">
       <div>
-        <DashboardHeader user={user} userData={userData} dispatch={dispatch} />
+        <DashboardHeader user={user} userData={userData} dispatch={dispatch} activeLink="dashboard" />
       </div>
       <div className="flex mb-auto">
         <div className="container mx-auto md:px-8">
@@ -175,7 +175,7 @@ function DashboardPage({ user, userData, dispatch }) {
             </div>
           ) : (
             <div className="flex px-10 pt-6 projectListConatiner">
-              <div className="flex flex-wrap -mx-2 overflow-hidden">
+              <div className="w-full flex flex-wrap -mx-2 overflow-hidden">
                 {userData.siteProjects.map(item => (
                   <div className="my-4 px-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4">
                     <div className="bg-white shadow-lg">

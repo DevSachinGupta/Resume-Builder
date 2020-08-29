@@ -59,7 +59,7 @@ function TemplateContainer({
       </div>
       <div className="flex justify-center">
         <nav className="flex flex-col sm:flex-row">
-          {['Show All', 'Classic', 'Modern', 'professional'].map(item => {
+          {['Show All', 'Classic', 'Modern', 'Professional'].map(item => {
             const itemsClassName =
               currentCategory === item
                 ? 'text-gray-600 py-2 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500'

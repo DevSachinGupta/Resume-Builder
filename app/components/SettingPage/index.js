@@ -68,7 +68,7 @@ function SettingPage({ user, userData, dispatch }) {
   return (
     <div className="bg-white flex flex-col h-screen justify-between">
       <div>
-        <DashboardHeader user={user} userData={userData} dispatch={dispatch} />
+        <DashboardHeader user={user} userData={userData} dispatch={dispatch} activeLink="settings" />
       </div>
       <div className="flex mb-auto">
         <div className="container mx-auto px-8">

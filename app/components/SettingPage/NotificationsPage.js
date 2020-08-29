@@ -30,8 +30,10 @@ function NotificationsPage(props) {
     };
   }
   const [submitError, setSubmitError] = useState(null);
+  const [loadingStatus, setLoadingStatus] = useState(false);
   // TODO : compare with previoues data before submitting
   const handleSave = values => {
+    setLoadingStatus(true);
     apiClient
       .post('setting/updateNotifications', {
         newFetures: values.newFetures,
@@ -48,11 +50,13 @@ function NotificationsPage(props) {
           addToast('Issue while updating!!!', { appearance: 'error' });
           console.log('Something went wrong while submitting: ', response);
         }
+        setLoadingStatus(false);
       })
       .catch(error => {
         setSubmitError({ status: 'Something went wrong while submitting!' });
         addToast('Issue while updating!!!', { appearance: 'error' });
         console.log('updateProfile error: ', error.response);
+        setLoadingStatus(false);
       });
   };
 
@@ -93,6 +97,12 @@ function NotificationsPage(props) {
                 </p>
               )}
             </div>
+
+            {loadingStatus && (
+              <div className="text-center mt-4">
+                <DotsLoading loadingText="Please Wait..." />
+              </div>
+            )}
 
             <div className="md:px-16 pt-5 w-full">
               <div className="mb-4 md:flex ">

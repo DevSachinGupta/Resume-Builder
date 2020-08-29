@@ -21,7 +21,7 @@ function GridRow(props) {
     <div className="flex text-center justify-end my-auto GridRow">
       <div className="ml-3 featureDropdown">
         <Select
-          placeholder="Default"
+          placeholder="Revalance"
           className="border-0"
           labelField="name"
           searchable={false}

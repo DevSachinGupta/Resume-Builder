@@ -45,6 +45,7 @@ function ForgotPasswordFormFormik({ dispatch }) {
             console.log(values);
             onSubmitFunction(values);
           }}
+          validateOnBlur={false}
         >
           {() => (
             <Form>

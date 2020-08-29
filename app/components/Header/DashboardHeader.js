@@ -49,14 +49,26 @@ function DashboardHeader(props) {
             <div className="ml-4">
               <div className="text-sm flex items-center my-auto">
                 <div>
-                  <Link to="/dashboard" className="no-underline  pr-3">
-                    Projects
-                  </Link>
+                  {props.activeLink === 'dashboard' ? (
+                    <Link to="/dashboard" className="no-underline  pr-3 activeLink">
+                      Dashboard
+                    </Link>
+                  ) : (
+                    <Link to="/dashboard" className="no-underline  pr-3">
+                      Dashboard
+                    </Link>
+                  )}
                 </div>
                 <div>
-                  <Link to="/settings" className="no-underline  pr-3">
-                    Settings
-                  </Link>
+                  {props.activeLink === 'settings' ? (
+                    <Link to="/settings" className="no-underline  pr-3 activeLink">
+                      Settings
+                    </Link>
+                  ) : (
+                    <Link to="/settings" className="no-underline  pr-3">
+                      Settings
+                    </Link>
+                  )}
                 </div>
                 <div>
                   <a
@@ -128,12 +140,14 @@ function DashboardHeader(props) {
                           hideMenu: !isHeaderMenuOpen,
                         },
                       )}
-                      
                     >
                       <ul className="text-left">
                         <Link to="/settings" className="no-underline">
                           <li>
-                          <div className="flex flex-row text-center"><FaRegUser className="w-auto my-auto pr-2 font-light"/> Profile</div>
+                            <div className="flex flex-row text-center">
+                              <FaRegUser className="w-auto my-auto pr-2 font-light" />{' '}
+                              Profile
+                            </div>
                           </li>
                         </Link>
                         <li
@@ -147,7 +161,10 @@ function DashboardHeader(props) {
                             toggleHeaderUserMenu(!isHeaderMenuOpen);
                           }}
                         >
-                          <div className="flex flex-row text-center"><IoIosPower className="w-auto my-auto pr-2"/> Logout</div>
+                          <div className="flex flex-row text-center">
+                            <IoIosPower className="w-auto my-auto pr-2" />{' '}
+                            Logout
+                          </div>
                         </li>
                       </ul>
                     </div>

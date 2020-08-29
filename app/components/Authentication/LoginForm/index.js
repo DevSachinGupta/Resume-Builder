@@ -1,10 +1,56 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaGoogle, FaLinkedin, FaGithub } from 'react-icons/fa';
+import GoogleLogin from 'react-google-login';
+import axios from 'axios';
 import LoginFormFormik from './LoginForm';
 import './style.css';
 
 function LoginForm() {
+  const responseGoogle = res => {
+    console.log(
+      'google data:', res, 'data res json',
+      JSON.stringify({ access_token: res.accessToken }, null, 2),
+    );
+    console.log('google data res:', res);
+    // const tokenBlob = new Blob([JSON.stringify({access_token: res.accessToken}, null, 2)], {type : 'application/json'});
+    // axios
+    //   .post('http://localhost:2000/auth/googletoken', 
+    //     tokenBlob
+    //   , {withCredentials: true, header: {'content-type': 'application/json'}})
+    //   .then(response => {
+    //     console.log('handlePublishWebsite response: ', response);
+    //     if (response.status === 200) {
+    //       // TODO: update session Data in builderSession
+    //       console.log('succesfully publish your resume.');
+    //     } else {
+    //       console.log('Something went wrong while submitting: ', response);
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.log('handlePublishWebsite error: ', error, error.response);
+    //   });
+
+      const tokenBlob = new Blob([JSON.stringify({access_token: res.accessToken}, null, 2)], {type : 'application/json'});
+        const options = {
+            method: 'POST',
+            body: tokenBlob,
+            mode: 'cors',
+            cache: 'default'
+        };
+        fetch('http://localhost:2000/auth/googletoken', options).then(r => {
+            const token = r.headers.get('x-auth-token');
+            console.log("res", r)
+        })
+
+
+  };
+  const responseGoogle1 = response => {
+    console.log(
+      'google data1:',
+      JSON.stringify({ access_token: response.accessToken }, null, 2),
+    );
+  };
   return (
     <section className="bg-white">
       <div className="container mx-auto px-4 h-full">
@@ -21,6 +67,22 @@ function LoginForm() {
                   </h6>
                 </div>
                 <div className="btn-wrapper text-center social-login">
+                  <GoogleLogin
+                    clientId="901701543566-5gnuj2hbhas5t6gt5l60a8e2odamokhm.apps.googleusercontent.com"
+                    render={renderProps => (
+                      <button
+                        className="btn btn-danger"
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                      >
+                        Google
+                      </button>
+                    )}
+                    // redirectUri="postmessage"
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle1}
+                    className="btn btn-outline-danger"
+                  />
                   <a
                     href="http://localhost:2000/auth/google"
                     className="bg-white rounded-full p-1 mr-2"

@@ -170,15 +170,15 @@ function BuilderHeader({ dispatch, editorState, user, userData, projectId }) {
           >
             Preview
           </Link> */}
-          <Button onClick={() => dispatch(toggleSidebar())}>Preview</Button>
+          <Button className="border-none" onClick={() => dispatch(toggleSidebar())}>Preview</Button>
         </div>
         <div className={cx('publishButton')}>
-          <Button onClick={() => saveBuilderSession(editorState, projectId)}>
+          <Button className="border-none" onClick={() => saveBuilderSession(editorState, projectId)}>
             Save
           </Button>
         </div>
         <div className={cx('publishButton')}>
-          <Button onClick={() => dispatch(setModalContent('publish'))}>
+          <Button className="border-none" onClick={() => dispatch(setModalContent('publish'))}>
             Publish
           </Button>
         </div>

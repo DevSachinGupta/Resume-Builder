@@ -38,6 +38,7 @@ function LoginFormFormik({ dispatch }) {
         console.log(values);
         onSubmitFunction(values);
       }}
+      validateOnBlur={false}
     >
       {() => (
         <Form>
@@ -50,6 +51,7 @@ function LoginFormFormik({ dispatch }) {
                   label="Email"
                   name="username"
                   autoFocus
+                  // onBlur={()=>{}}
                   validate={validationMap.username}
                 />
               </div>

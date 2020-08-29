@@ -24,7 +24,7 @@ function CardGrid({
     <main className="py-4">
       <div className="">
         <div className="block px-2 md:flex justify-between md:-mx-2">
-          <ul className="flex flex-wrap -mx-2 overflow-hidden">
+          <ul className="w-full flex flex-wrap -mx-2 overflow-hidden">
             {templateItems.map(item => (
               <li className="list-none my-2 px-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 templateCard">
                 <div className="md:mx-2 mb-4 md:mb-0">
@@ -100,8 +100,6 @@ function CardGrid({
                             </button>
                           )}
                         </div>
-
-                        
                       </div>
                     </div>
                     {/* <div className="p-4 h-auto md:h-40 lg:h-48"> */}
@@ -129,7 +127,7 @@ function CardGrid({
                         {item.description}
                       </p> */}
 
-                      <div className="flex mt-3 justify-end">
+                      {/* <div className="flex mt-3 justify-end">
                         <div className="my-auto justtify-between mr-2">
                           <BrowserRouter>
                             <Link
@@ -194,8 +192,7 @@ function CardGrid({
                             </button>
                           )}
                         </div>
-
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>

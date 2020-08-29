@@ -268,7 +268,7 @@ function ProfilePage(props) {
                   Email
                 </label>
                 <input
-                  className="w-full px-3 py-2 mb-3 text-sm leading-tight bg-gray-200 text-gray-700 border focus:outline-none focus:shadow-outline"
+                  className="w-full px-3 py-2 mb-3 text-sm leading-tight bg-gray-200 text-gray-700 border focus:outline-none focus:shadow-outline cursor-not-allowed"
                   id="email"
                   name="registeredEmail"
                   type="email"

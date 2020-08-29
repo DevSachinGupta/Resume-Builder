@@ -109,7 +109,7 @@ function PublishPage(props) {
               }
               return (
                 <div
-                  className="px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-500 border focus:outline-none focus:shadow-outline"
+                  className="px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-500 border focus:outline-none focus:shadow-outline cursor-not-allowed"
                   style={{ 'min-width': '50%' }}
                 >
                   Not Published
@@ -147,7 +147,7 @@ function PublishPage(props) {
             {props.userData.settings.publishDetails &&
             props.userData.settings.publishDetails.subDomain ? (
               <div className="flex flex-row justify-between">
-                <div className=" w-full px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-700 border focus:outline-none focus:shadow-outline">
+                <div className=" w-full px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-700 border focus:outline-none focus:shadow-outline cursor-not-allowed">
                     {props.userData.settings.publishDetails.subDomain}
                     {/* jitendra-prajapati.netcv.co.in */}
                   </div>
@@ -164,7 +164,7 @@ function PublishPage(props) {
                   </Button>
                 </div>
             ) : (
-                <div className="w-full px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-500 border focus:outline-none focus:shadow-outline">
+                <div className="w-full px-3 py-2 text-sm leading-tight bg-gray-200 text-gray-500 border focus:outline-none focus:shadow-outline cursor-not-allowed">
                 -
                 </div>
               )}
